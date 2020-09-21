@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>image/delete.png</file>
+        <file>image/close.png</file>
+        <file>image/max.png</file>
+        <file>image/min.png</file>
+        <file>image/funclist.png</file>
+        <file>image/top.png</file>
+        <file>image/downward.png</file>
+        <file>image/update.png</file>
+    </qresource>
+</RCC>

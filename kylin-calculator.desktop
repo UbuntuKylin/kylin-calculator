@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=kylin-calculator
+Name[zh_CN]=麒麟计算器
+Exec=/usr/bin/kylin-calculator %u
+Icon=accessories-calculator
+Type=Application
+Categories=GNOME;Utility;
