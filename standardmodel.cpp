@@ -11,9 +11,9 @@ StandardOutput::StandardOutput(QWidget *parent)
     // 预测输出
     this->staLabPre = new QLabel(this);
 
-    staLabNow->setWordWrap(true);
-    staLabLast->setWordWrap(true);
-    staLabPre->setWordWrap(true);
+//    staLabNow->setWordWrap(true);
+//    staLabLast->setWordWrap(true);
+//    staLabPre->setWordWrap(true);
 
     QFont staLabLastFont("SourceHanSansCN-Light", 40, 15);
     this->staLabLast->setAlignment(Qt::AlignRight | Qt::AlignTop);
@@ -35,7 +35,7 @@ StandardOutput::StandardOutput(QWidget *parent)
     this->staLabNow->setFont(staLabNowFont);
     this->staLabNow->setText("0");
     this->staLabNow->setFixedHeight(65);
-    this->staLabNow->setStyleSheet("color:#FFFFFF;font-size:48px;font-weight:15px;line-height:50px;margin:0 0 5px 7px;");
+    this->staLabNow->setStyleSheet("color:#FFFFFF;font-size:47px;font-weight:15px;line-height:50px;margin:0 0 5px 7px;");
     this->staLabNow->show();
 
     this->staLabNow->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);

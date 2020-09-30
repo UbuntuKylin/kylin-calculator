@@ -8,10 +8,10 @@ ScientificOutput::ScientificOutput(QWidget *parent)
     this->sciLabPre = new QLabel(this);
     this->sciLabNow = new QLabel(this);
 
-    sciLabLastL->setWordWrap(true);
-    sciLabLastR->setWordWrap(true);
-    sciLabPre->setWordWrap(true);
-    sciLabNow->setWordWrap(true);
+//    sciLabLastL->setWordWrap(true);
+//    sciLabLastR->setWordWrap(true);
+//    sciLabPre->setWordWrap(true);
+//    sciLabNow->setWordWrap(true);
 
     QFont labLastFont("SourceHanSansCN-Light", 40, 15);
     this->sciLabLastL->setAlignment(Qt::AlignRight | Qt::AlignTop);
@@ -41,7 +41,7 @@ ScientificOutput::ScientificOutput(QWidget *parent)
     this->sciLabNow->setFont(sciLabNowFont);
     this->sciLabNow->setText("0");
     this->sciLabNow->setFixedHeight(65);
-    this->sciLabNow->setStyleSheet("color:white;font-size:48px;font-weight:15px;margin:0 0 0 7px;");
+    this->sciLabNow->setStyleSheet("color:white;font-size:47px;font-weight:15px;margin:0 0 0 7px;");
     this->sciLabNow->setContentsMargins(0, 0, 0, 0);
     this->sciLabNow->show();
 

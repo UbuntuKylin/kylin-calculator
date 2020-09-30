@@ -121,9 +121,9 @@ void MainWindow::setOutputUi()
     // 预测输出
     this->lab_prepare = new QLabel(this);
 
-    lab_now->setWordWrap(true);
-    lab_last->setWordWrap(true);
-    lab_prepare->setWordWrap(true);
+//    lab_now->setWordWrap(true);
+//    lab_last->setWordWrap(true);
+//    lab_prepare->setWordWrap(true);
 
     QFont lab_last_font("SourceHanSansCN-Light", 40, 15);
     this->lab_last->setAlignment(Qt::AlignRight | Qt::AlignTop);
@@ -145,7 +145,7 @@ void MainWindow::setOutputUi()
     this->lab_now->setFont(lab_now_font);
     this->lab_now->setText("0");
     this->lab_now->setFixedHeight(65);
-    this->lab_now->setStyleSheet("color:#FFFFFF;font-size:48px;font-weight:15px;line-height:50px;margin:0 0 5px 7px;");
+    this->lab_now->setStyleSheet("color:#FFFFFF;font-size:47px;font-weight:15px;line-height:50px;margin:0 0 5px 7px;");
     this->lab_now->show();
 
     this->lab_now->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
