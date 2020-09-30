@@ -1,6 +1,12 @@
-kylin-calculator (1.0.1kord) v101; urgency=medium
+kylin-calculator (1.0.2) unstable; urgency=medium
+
+  * 修复输入框换行后，数据显示不全的bug. 
+
+ -- caoliang <caoliang@kylinos.cn>  Wed, 30 Sep 2020 11:11:00 +0800
+
+kylin-calculator (1.0.1) unstable; urgency=medium
 
   * Initial release.
   * Finish standard calculate function. 
 
- -- fengyongfan <fengyongfan@kylinos.cn>  Wed, 16 Sep 2020 15:06:06 +0800
+ -- caoliang <caoliang@kylinos.cn>  Wed, 16 Sep 2020 15:06:06 +0800
