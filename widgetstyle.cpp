@@ -1,4 +1,5 @@
 #include "widgetstyle.h"
+#include <QPainterPath>
 
 //WidgetStyle::WidgetStyle(QWidget *parent)
 //{
