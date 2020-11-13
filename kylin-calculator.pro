@@ -1,15 +1,18 @@
 
-QT       += core gui network
-
-VERSION = 1.0.1
+QT       += core gui network KWindowSystem dbus
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += \
+    c++11 \
+    link_pkgconfig
+
+PKGCONFIG += \
+    gsl
 
 TARGET = kylin-calculator
 
-VERSION = 1.0.0
+VERSION = 1.0.4
 
 target.path = /usr/bin
 target.source += $$TARGET
@@ -24,34 +27,56 @@ appdesktop.path = /usr/share/applications/
 appdesktop.files = kylin-calculator.desktop
 
 
-INSTALLS += target \
-    icon \
-    desktop \
+INSTALLS += \
+    target     \
+    icon       \
+    desktop    \
     appdesktop
 
 #TEMPLATE = app
 
+INCLUDEPATH += \
+    $$PWD/src/cal/      \
+    $$PWD/src/BigFloat/ \
+    $$PWD/src/input/    \
+    $$PWD/src/symbols/
+
 SOURCES += \
-    main.cpp \
-    mainwindow.cpp \
-    titlebar.cpp \
-    cal.cpp \
-    widgetstyle.cpp \
-    funclist.cpp \
-    standardmodel.cpp \
-    scientificmodel.cpp \
-    toolmodel.cpp
+    $$PWD/src/symbols/InputSymbols.cpp     \
+    $$PWD/src/BigFloat/BigFloat.cpp        \
+    $$PWD/src/cal/QStringCalculator.cpp    \
+    $$PWD/src/input/InputJudgmentGraph.cpp \
+    $$PWD/src/input/InputTools.cpp         \
+    $$PWD/src/input/InputProcess.cpp       \
+    $$PWD/src/main.cpp                     \
+    $$PWD/src/mainwindow.cpp               \
+    $$PWD/src/titlebar.cpp                 \
+    $$PWD/src/widgetstyle.cpp              \
+    $$PWD/src/funclist.cpp                 \
+    $$PWD/src/standardmodel.cpp            \
+    $$PWD/src/scientificmodel.cpp          \
+    $$PWD/src/toolmodel.cpp                \
+    $$PWD/src/basicbutton.cpp              \
+    $$PWD/src/daemonipcdbus.cpp            
+
 
 HEADERS += \
-    mainwindow.h \
-    titlebar.h \
-    widgetstyle.h \
-    cal.h \
-    scientificmodel.h \
-    funclist.h \
-    standardmodel.h \
-    parentbutton.h \
-    toolmodel.h
+    $$PWD/src/symbols/InputSymbols.h       \
+    $$PWD/src/BigFloat/BigFloat.h          \
+    $$PWD/src/cal/QStringCalculator.h      \
+    $$PWD/src/input/InputJudgmentGraph.h   \
+    $$PWD/src/input/InputTools.h           \
+    $$PWD/src/input/InputProcess.h         \
+    $$PWD/src/mainwindow.h                 \
+    $$PWD/src/titlebar.h                   \
+    $$PWD/src/widgetstyle.h                \
+    $$PWD/src/scientificmodel.h            \
+    $$PWD/src/funclist.h                   \
+    $$PWD/src/standardmodel.h              \
+    $$PWD/src/toolmodel.h                  \
+    $$PWD/src/basicbutton.h                \
+    $$PWD/src/cal.h                        \
+    $$PWD/src/daemonipcdbus.h
 
 RESOURCES += \
     image.qrc

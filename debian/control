@@ -2,13 +2,17 @@ Source: kylin-calculator
 Section: utils
 Priority: optional
 Maintainer: caoliang <caoliang@kylinos.cn>
+			jiangdingyuan <jiangdingyuan@kylinos.cn>
 Build-Depends: debhelper,
 			qtbase5-dev,
             qt5-qmake,
             qtchooser,
             qtscript5-dev,
             qttools5-dev-tools,
-            qtbase5-dev-tools,	
+            qtbase5-dev-tools,
+			libkf5windowsystem-dev,
+			pkgconf,
+			libgsl-dev,
 Standards-Version: 4.4.1
 Homepage: https://github.com/ubuntukylin/kylin-calculator
 #Vcs-Browser: https://github.com/ubuntukylin/kylin-calculator
