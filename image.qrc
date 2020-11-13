@@ -8,5 +8,50 @@
         <file>image/top.png</file>
         <file>image/downward.png</file>
         <file>image/update.png</file>
+        <file>image/scientific/btn2nd.png</file>
+        <file>image/scientific/btnAcos.png</file>
+        <file>image/scientific/btnAns.png</file>
+        <file>image/scientific/btnAsin.png</file>
+        <file>image/scientific/btnAtan.png</file>
+        <file>image/scientific/btnCos.png</file>
+        <file>image/scientific/btnDeg.png</file>
+        <file>image/scientific/btnE.png</file>
+        <file>image/scientific/btnFac.png</file>
+        <file>image/scientific/btnLbra.png</file>
+        <file>image/scientific/btnLn.png</file>
+        <file>image/scientific/btnLog.png</file>
+        <file>image/scientific/btnRad.png</file>
+        <file>image/scientific/btnRbra.png</file>
+        <file>image/scientific/btnReci.png</file>
+        <file>image/scientific/btnSin.png</file>
+        <file>image/scientific/btnTan.png</file>
+        <file>image/scientific/btnXPower2.png</file>
+        <file>image/scientific/btnXPower3.png</file>
+        <file>image/scientific/btnXSquare2.png</file>
+        <file>image/scientific/btnXSquare3.png</file>
+        <file>image/scientific/btnYPowerX.png</file>
+        <file>image/scientific/btnYSquareX.png</file>
+        <file>image/standard/btnAC.png</file>
+        <file>image/standard/btnAdd.png</file>
+        <file>image/standard/btnClear.png</file>
+        <file>image/standard/btnDelete.png</file>
+        <file>image/standard/btnDiv.png</file>
+        <file>image/standard/btnEqual.png</file>
+        <file>image/standard/btnMulti.png</file>
+        <file>image/standard/btnNum0.png</file>
+        <file>image/standard/btnNum1.png</file>
+        <file>image/standard/btnNum2.png</file>
+        <file>image/standard/btnNum3.png</file>
+        <file>image/standard/btnNum4.png</file>
+        <file>image/standard/btnNum5.png</file>
+        <file>image/standard/btnNum6.png</file>
+        <file>image/standard/btnNum7.png</file>
+        <file>image/standard/btnNum8.png</file>
+        <file>image/standard/btnNum9.png</file>
+        <file>image/standard/btnPer.png</file>
+        <file>image/standard/btnPoint.png</file>
+        <file>image/standard/btnSub.png</file>
+        <file>image/standard/btnNum00.png</file>
+        <file>image/scientific/btnPi.png</file>
     </qresource>
 </RCC>

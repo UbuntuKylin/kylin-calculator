@@ -1,6 +1,7 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: kylin-calculator
 Upstream-Contact: Kylin Development Team <caoliang@kylinos.cn>
+				  Kylin Development Team <jiangidngyuan@kylinos.cn>
 Source: https://launchpad.dev/kylin-calculator
 
 Files: *
