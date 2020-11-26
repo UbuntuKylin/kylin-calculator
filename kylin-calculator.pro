@@ -27,11 +27,15 @@ appdesktop.path = /usr/share/applications/
 appdesktop.files = kylin-calculator.desktop
 
 
+
+
 INSTALLS += \
     target     \
     icon       \
     desktop    \
     appdesktop
+
+TRANSLATIONS += ./data/kylin-calculator_zh_CN.ts
 
 #TEMPLATE = app
 
