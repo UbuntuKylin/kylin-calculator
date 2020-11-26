@@ -130,8 +130,8 @@ QString QStringCalculator::transCalculator(const QStringList &expression,
     ans_r = BigFloat(idx == expression.size() - 2 ? expression[expression.size() - 1]
         : qstrListCalculator(expression.mid(idx + 2, expression.size() - 3 - idx)));
 
-    // qDebug() << ans_l.toQString();
-    // qDebug() << ans_r.toQString();
+    qDebug() << ans_l.toQString();
+    qDebug() << ans_r.toQString();
     if (ans_l == BigFloat(0)) {
         if (ans_r == BigFloat(0)) {
             return ONE;
@@ -250,7 +250,7 @@ QString QStringCalculator::qstrListCalculator(const QStringList &formulaList)
     infixExpression = formulaList;
     if (infixExpression[0] == SUB) infixExpression.insert(0,ZERO);
     formulaToInfixExpression(infixExpression);
-    // qDebug () << infixExpression;
+    qDebug () << infixExpression;
 
     foreach (QString ch, infixExpression) {
         if (ch.contains(INF_SYMBOL) || ch.contains(NAN_SYMBOL)) {
@@ -264,7 +264,7 @@ QString QStringCalculator::qstrListCalculator(const QStringList &formulaList)
 
     QString ans = calAns.top().toQString();
 
-    // qDebug() << "ans is" << ans;
+    qDebug() << "ans is" << ans;
     return ans;
 
 }
@@ -272,7 +272,7 @@ QString QStringCalculator::qstrListCalculator(const QStringList &formulaList)
 QString QStringCalculator::cal(const QString &qstr)
 {
     qDebug() << "im in cal!";
-    // qDebug() << qstr;
+    qDebug() << qstr;
     QString formula = qstr;
     // deg rad
     if (formula == InputSymbols::DEG_SYMBOL || formula == InputSymbols::RAD_SYMBOL) {
@@ -295,7 +295,9 @@ QString QStringCalculator::cal(const QString &qstr)
         formula.chop(1);
     if (!allBracketMatchCorrectly(formula))
         formula = bracketCompletion(formula);
+    qDebug () << "123123" << formula;
     formula = isCorrectFormula(formula).second;
+    qDebug () << "123123" << formula;
     QStringList formulaList = formulaSplit(formula);
     QString ans = qstrListCalculator(formulaList);
 
