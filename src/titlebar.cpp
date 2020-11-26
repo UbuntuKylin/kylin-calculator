@@ -150,11 +150,11 @@ void TitleBar::setWidgetStyle()
     QString btnStyle = "QPushButton{border-radius:4px;}"
                        "QPushButton:hover{background-color:rgb(180,180,180);}"
                        "QPushButton:pressed{background-color:rgb(180,180,180);}";
-//    funcListButton->setStyleSheet(btnStyle);
-//    m_pTopButton->setStyleSheet(btnStyle);
-//    m_pMinimizeButton->setStyleSheet(btnStyle);
-//    m_pCloseButton->setStyleSheet(btnStyle);
-//    m_pCloseButton->setStyleSheet("QPushButton{border-radius:4px;}QPushButton:hover{background-color:red;}");
+	funcListButton->setStyleSheet(btnStyle);
+	m_pTopButton->setStyleSheet(btnStyle);
+	m_pMinimizeButton->setStyleSheet(btnStyle);
+	m_pCloseButton->setStyleSheet(btnStyle);
+	m_pCloseButton->setStyleSheet("QPushButton{border-radius:4px;}QPushButton:hover{background-color:red;}");
 
 }
 

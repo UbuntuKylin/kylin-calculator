@@ -73,7 +73,7 @@ SOURCES += \
     $$PWD/src/toolmodel.cpp                \
     $$PWD/src/basicbutton.cpp              \
     $$PWD/src/daemonipcdbus.cpp            \
-    src/xatom-helper.cpp
+    $$PWD/src/xatom-helper.cpp
 
 
 HEADERS += \
@@ -93,7 +93,7 @@ HEADERS += \
     $$PWD/src/basicbutton.h                \
     $$PWD/src/cal.h                        \
     $$PWD/src/daemonipcdbus.h              \
-    src/xatom-helper.h
+    $$PWD/src/xatom-helper.h
 
 RESOURCES += \
     image.qrc
