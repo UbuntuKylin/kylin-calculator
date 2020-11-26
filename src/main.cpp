@@ -15,7 +15,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "mainwindow.h"
 #include <QApplication>
 #include <QStringList>
 #include <QStandardPaths>
@@ -24,9 +23,22 @@
 #include <QTranslator>
 #include <QLocale>
 
+#include "mainwindow.h"
+#include "xatom-helper.h"
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    // 实现VNC单例
+    QStringList homePath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+    //需要给文件锁加一个DISPLAY标识  QtSingleApplication-Name改为kylin-calculator
+    int fd = open(QString(homePath.at(0) + "/.config/kylin-calculator%1.lock").arg(getenv("DISPLAY")).toUtf8().data(), O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+    if (fd < 0) { exit(1); }
+    if (lockf(fd, F_TLOCK, 0)) {
+        syslog(LOG_ERR, "Can't lock single file, kylin-calculator is already running!");
+        exit(0);
+    }
 
     // 国际化
     QString locale = QLocale::system().name();
@@ -39,21 +51,14 @@ int main(int argc, char *argv[])
     }
 
     MainWindow w;
+
+    // 添加窗管协议
+    MotifWmHints hints;
+    hints.flags = MWM_HINTS_FUNCTIONS|MWM_HINTS_DECORATIONS;
+    hints.functions = MWM_FUNC_ALL;
+    hints.decorations = MWM_DECOR_BORDER;
+    XAtomHelper::getInstance()->setWindowMotifHint(w.winId(), hints);
+
     w.show();
-//    w.setFixedSize(350, 550);   //固定窗体大小 禁止窗体通过鼠标放大缩小
-//    w.setGeometry(QRect(500, 200, 432, 628));
-
-    // 实现VNC单例
-    QStringList homePath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
-    //需要给文件锁加一个DISPLAY标识  QtSingleApplication-Name改为kylin-calculator
-    int fd = open(QString(homePath.at(0) + "/.config/kylin-calculator%1.lock").arg(getenv("DISPLAY")).toUtf8().data(), O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
-    if (fd < 0) { exit(1); }
-    if (lockf(fd, F_TLOCK, 0)) {
-        syslog(LOG_ERR, "Can't lock single file, kylin-calculator is already running!");
-        exit(0);
-    }
-
-
-
     return a.exec();
 }
