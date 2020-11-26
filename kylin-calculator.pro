@@ -3,6 +3,17 @@ QT       += core gui network KWindowSystem dbus
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+# 适配窗口管理器圆角阴影
+QT += KWindowSystem dbus x11extras
+
+# 适配窗口管理器圆角阴影
+LIBS +=-lpthread
+LIBS +=-lX11
+
+# 配置gsettings
+CONFIG += link_pkgconfig
+PKGCONFIG += gsettings-qt
+
 CONFIG += \
     c++11 \
     link_pkgconfig
@@ -12,7 +23,7 @@ PKGCONFIG += \
 
 TARGET = kylin-calculator
 
-VERSION = 1.0.4
+VERSION = 1.0.13
 
 target.path = /usr/bin
 target.source += $$TARGET
@@ -61,7 +72,8 @@ SOURCES += \
     $$PWD/src/scientificmodel.cpp          \
     $$PWD/src/toolmodel.cpp                \
     $$PWD/src/basicbutton.cpp              \
-    $$PWD/src/daemonipcdbus.cpp            
+    $$PWD/src/daemonipcdbus.cpp            \
+    $$PWD/src/xatom-helper.cpp
 
 
 HEADERS += \
@@ -80,7 +92,8 @@ HEADERS += \
     $$PWD/src/toolmodel.h                  \
     $$PWD/src/basicbutton.h                \
     $$PWD/src/cal.h                        \
-    $$PWD/src/daemonipcdbus.h
+    $$PWD/src/daemonipcdbus.h              \
+    $$PWD/src/xatom-helper.h
 
 RESOURCES += \
     image.qrc
