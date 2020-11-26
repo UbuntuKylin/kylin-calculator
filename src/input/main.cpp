@@ -22,7 +22,7 @@ void init()
     printf("/**********start!**************/\n");
     printf("/******************************/\n");
     // qDebug() << (BigFloat(1) + BigFloat(2)).toQString();
-    QStringCalculator::cal("0^(0)");
+    QStringCalculator::cal("(cos(0))!");
     // string a;
     // while(cin >> a)
     //     qDebug() << InputProcess::inputFromButton(QString::fromStdString(a));

@@ -110,12 +110,12 @@ void QStringCalculator::calPostfix(QStringList      &postfixExpressions,
             calAns.pop();
             BigFloat op2 = calAns.top();
             calAns.pop();
-            
+
             if      (qstr == ADD) calAns.push(op2 + op1);
             else if (qstr == SUB) calAns.push(op2 - op1);
             else if (qstr == MUL) calAns.push(op2 * op1);
             else if (qstr == DIV) calAns.push(op2 / op1);
-            
+
         }
     }
 }
@@ -127,9 +127,9 @@ QString QStringCalculator::transCalculator(const QStringList &expression,
     BigFloat ans_r;
 
     ans_l = BigFloat(idx == 1 ? expression[0] : qstrListCalculator(expression.mid(1, idx - 2)));
-    ans_r = BigFloat(idx == expression.size() - 2 ? expression[expression.size() - 1] 
+    ans_r = BigFloat(idx == expression.size() - 2 ? expression[expression.size() - 1]
         : qstrListCalculator(expression.mid(idx + 2, expression.size() - 3 - idx)));
-    
+
     qDebug() << ans_l.toQString();
     qDebug() << ans_r.toQString();
     if (ans_l == BigFloat(0)) {
@@ -171,8 +171,8 @@ void QStringCalculator::formulaToInfixExpression(QStringList &infixExpression)
         QString qstr = infixExpression.at(i);
         if (isNumber(qstr)) {
             if (qstr.right(1) == PERCENT) {
-                infixExpression[i] 
-                    = (   BigFloat(qstr.left(qstr.size() - 1)) 
+                infixExpression[i]
+                    = (   BigFloat(qstr.left(qstr.size() - 1))
                          / BigFloat(100)
                       ).toQString();
             }
@@ -187,7 +187,7 @@ void QStringCalculator::formulaToInfixExpression(QStringList &infixExpression)
                 infixExpression.removeAt(i + 1);
 
             infixExpression.replace(i, temp_qstr);
-            
+
             i--;
         }
 
@@ -210,20 +210,21 @@ void QStringCalculator::formulaToInfixExpression(QStringList &infixExpression)
 
             QString temp_qstr;
             temp_qstr = transCalculator(infixExpression.mid(idx_l, idx_r - idx_l + 1), i - idx_l);
-            
+
             for (int j = idx_l + 1; j <= idx_r; j++)
                 infixExpression.removeAt(idx_l + 1);
-            
+
             infixExpression.replace(idx_l, temp_qstr);
-            
+
             i = idx_l - 1;
         }
 
-        else if (qstr == FACTORIAL_SYMBOL) { 
-            if (infixExpression[i] == BRACKET_R) {
+        else if (qstr == FACTORIAL_SYMBOL) {
+
+            if (infixExpression[i-1] == BRACKET_R) {
                 int idx = findBracketPair(infixExpression, i - 1);
                 infixExpression[idx] = BigFloat::Fact(BigFloat(
-                    qstrListCalculator(infixExpression.mid(idx + 1, i - 1 - idx))
+                    qstrListCalculator(infixExpression.mid(idx + 1, i - 2 - idx))
                 )).toQString();
                 for (int j = idx + 1; j <= i ; j++) {
                     infixExpression.removeAt(idx + 1);
@@ -250,7 +251,7 @@ QString QStringCalculator::qstrListCalculator(const QStringList &formulaList)
     if (infixExpression[0] == SUB) infixExpression.insert(0,ZERO);
     formulaToInfixExpression(infixExpression);
     qDebug () << infixExpression;
-    
+
     foreach (QString ch, infixExpression) {
         if (ch.contains(INF_SYMBOL) || ch.contains(NAN_SYMBOL)) {
             return ch;
@@ -289,7 +290,7 @@ QString QStringCalculator::cal(const QString &qstr)
     // 去掉末尾符号
     while (isArithmeticOperator(formula.right(1)))
         formula.chop(1);
-    
+
     while (formula.right(1) == EQUAL)
         formula.chop(1);
     if (!allBracketMatchCorrectly(formula))

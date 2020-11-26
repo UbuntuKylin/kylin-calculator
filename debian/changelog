@@ -1,3 +1,21 @@
+kylin-calculator (1.0.12kord) v101; urgency=medium
+
+  * 生成ts和qm文件.
+
+ -- caoliang <caoliang@kylinos.cn>  Mon, 23 Nov 2020 09:25:35 +0800
+
+kylin-calculator (1.0.11kord) v101; urgency=medium
+
+  * 适配desktop文件藏语翻译.
+
+ -- caoliang <caoliang@kylinos.cn>  Thu, 19 Nov 2020 14:25:35 +0800
+
+kylin-calculator (1.0.10kord) v101; urgency=medium
+
+  * 解决禅道bug #24967 : 科学模式下，连续输入cos和！，计算器闪退
+
+ -- jiangdingyuan <jiangdingyuan@kylinos.cn>  Sat, 14 Nov 2020 17:25:35 +0800
+
 kylin-calculator (1.0.9kord) v101; urgency=medium
 
   * 解决禅道bug #25024 : 汇率模式下，历史记录过多时发生截断现象.
@@ -61,6 +79,6 @@ kylin-calculator (1.0.2kord) v101; urgency=medium
 kylin-calculator (1.0.1kord) v101; urgency=medium
 
   * Initial release.
-  * Finish standard calculate function. 
+  * Finish standard calculate function.
 
  -- fengyongfan <fengyongfan@kylinos.cn>  Wed, 16 Sep 2020 15:06:06 +0800

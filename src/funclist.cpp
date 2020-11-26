@@ -39,11 +39,13 @@ void FuncList::setWidgetUi()
 {
     // 计算器
     funcModelLabel = new QLabel(this);
-    funcModelLabel->setText(tr("计算器"));
+    funcModelLabel->setText(tr("Calculator"));
+//    funcModelLabel->setText(tr("计算器"));
 
     funcModelWid = new QListWidget(this);
     QListWidgetItem *model[2];
-    QString modelListStr = "标准,科学";
+     QString modelListStr = tr("standard") + "," + tr("scientific");
+//    QString modelListStr = "标准,科学";
     QStringList modelList = modelListStr.split(",");
 
     // 计算器功能列表初始化
@@ -58,12 +60,14 @@ void FuncList::setWidgetUi()
 
     // 换算器
     funcToolLabel = new QLabel(this);
-    funcToolLabel->setText(tr("换算器"));
+    funcToolLabel->setText(tr("Unit converter"));
+//    funcToolLabel->setText(tr("换算器"));
 
     funcToolWid = new QListWidget(this);
     QListWidgetItem *tool[9];
     // QString toolListStr = "汇率,长度,重量,容量,面积,速度,能量,温度,功率";
-    QString toolListStr = "汇率";
+    QString toolListStr = tr("exchange rate");
+//    QString toolListStr = tr("exchange rate");
     QStringList toolList = toolListStr.split(",");
 
     // 换算器功能列表初始化

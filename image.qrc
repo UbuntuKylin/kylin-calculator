@@ -53,5 +53,9 @@
         <file>image/standard/btnSub.png</file>
         <file>image/standard/btnNum00.png</file>
         <file>image/scientific/btnPi.png</file>
+        <file>data/kylin-calculator_zh_CN.qm</file>
+        <file>data/kylin-calculator_zh_CN.ts</file>
+        <file>data/org.kylin-calculator-data.gschema.xml</file>
+        <file>data/qt_zh_CN.qm</file>
     </qresource>
 </RCC>

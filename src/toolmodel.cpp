@@ -356,7 +356,8 @@ void ToolModelOutput::setWidgetUi()
 void ToolModelOutput::setWidgetStyle()
 {
     // 汇率刷新
-    toolLabUpdate->setText("汇率更新");
+    toolLabUpdate->setText(tr("Rate update"));
+//    toolLabUpdate->setText("汇率更新");
     toolLabUpdate->setStyleSheet("font-family:SourceHanSansCN-ExtraLight;font-size:16px;color:#FFFFFF;");
 
     toolIconUpdate->setFixedSize(16, 16);
@@ -373,7 +374,8 @@ void ToolModelOutput::setWidgetStyle()
     QString unitLabStyle  = "font-family:SourceHanSansCN-ExtraLight;font-size:18px;color:#FFFFFF;line-height:22px;";
 
     // 换算前单位标识
-    toolRateNameBef = "人民币";
+    toolRateNameBef = tr("Chinese Yuan");
+//    toolRateNameBef = "人民币";
     toolRateSymbBef = "CNY";
     toolLabUnitBef->setText(toolRateNameBef + "\n" + toolRateSymbBef);
     toolLabUnitBef->setStyleSheet(unitLabStyle);
@@ -385,7 +387,8 @@ void ToolModelOutput::setWidgetStyle()
     toolUnitBefWid->setStyleSheet("background:#18181A;color:#FFFFFF;opacity:0.75;");
 
     // 换算后单位标识
-    toolRateNameAft = "美元";
+    toolRateNameAft = tr("US Dollar");
+//    toolRateNameAft = "美元";
     toolRateSymbAft = "USD";
     toolLabUnitAft->setText(toolRateNameAft + "\n" + toolRateSymbAft);
     toolLabUnitAft->setStyleSheet(unitLabStyle);
@@ -979,12 +982,14 @@ UnitListWidget::UnitListWidget(QWidget *parent)
     unitTitle = new QLabel(this);
     btnCancel = new QPushButton(this);
 
-    unitTitle->setText("货币");
+    unitTitle->setText(tr("currency"));
+//    unitTitle->setText("货币");
     unitTitle->setStyleSheet("width:30px;height:20px;font-size:14px;font-family:Source Han Sans CN;color:#FFFFFF;text-align:center;");
     unitTitle->setAlignment(Qt::AlignCenter);
     unitTitle->setFixedHeight(20);
 
-    btnCancel->setText("取消");
+    btnCancel->setText(tr("cancel"));
+//    btnCancel->setText("取消");
     btnCancel->setStyleSheet("width:30px;height:20px;border:0px;font-size:14px;"
                              "font-family:Source Han Sans CN;color:#EE8A18;");
     btnCancel->resize(QSize(30, 20));
@@ -993,7 +998,8 @@ UnitListWidget::UnitListWidget(QWidget *parent)
     // 搜索框
     searchEdit = new QLineEdit(this);
     searchEdit->setStyleSheet("width:246px;height:32px;background:rgba(30,30,32,0.5);border-radius:4px;");
-    searchEdit->setPlaceholderText("搜索");
+    searchEdit->setPlaceholderText(tr("search"));
+//    searchEdit->setPlaceholderText("搜索");
     
     // 单位列表
     unitList = new QListWidget(this);
@@ -1039,6 +1045,7 @@ UnitListWidget::UnitListWidget(QWidget *parent)
     this->setStyleSheet("background-color:#36363A;color:#FFFFFF;font-size:18px;border:none;border-radius:4px;");
 
     btnCancel->raise();
+    searchEdit->hide();
 }
 
 // 初始化组件
