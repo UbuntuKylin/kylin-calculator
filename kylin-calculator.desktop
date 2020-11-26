@@ -1,6 +1,8 @@
 [Desktop Entry]
 Name=kylin-calculator
 Name[zh_CN]=麒麟计算器
+Name[bo_CN]=བསེ་རུ་རྩིས་ཆས་
+GenericName[bo_CN]=བསེ་རུ་རྩིས་ཆས་
 Exec=/usr/bin/kylin-calculator %u
 Icon=accessories-calculator
 Type=Application

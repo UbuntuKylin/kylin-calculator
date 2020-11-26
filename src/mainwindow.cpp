@@ -89,7 +89,8 @@ void MainWindow::setCommonUi()
     this->setAttribute(Qt::WA_TranslucentBackground, true);
 
     // 设置图标
-    this->setWindowTitle("麒麟计算器");
+    this->setWindowTitle(tr("kylin-calculator"));
+//    this->setWindowTitle("麒麟计算器");
     this->setWindowIcon(QIcon("/usr/share/icons/ukui-icon-theme-default/64x64/apps/calc.png"));
 
     titleBarWid = new QWidget(this);
@@ -99,7 +100,8 @@ void MainWindow::setCommonUi()
     pTitleBar = new TitleBar(this);
     installEventFilter(pTitleBar);
 
-    pTitleBar->setFuncLabel(tr("标准"));
+    pTitleBar->setFuncLabel(tr("standard"));
+//    pTitleBar->setFuncLabel(tr(tr("standard")));
 
     QVBoxLayout *pLayout = new QVBoxLayout();
     pLayout->addWidget(pTitleBar);
@@ -511,13 +513,13 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         }
     }
 
-    if (this->pTitleBar->m_pFuncLabel->text() == "标准") {
+    if (this->pTitleBar->m_pFuncLabel->text() == tr("standard")) {
         standardModel->keyPressEvent(event);
     }
-    else if (this->pTitleBar->m_pFuncLabel->text() == "科学") {
+    else if (this->pTitleBar->m_pFuncLabel->text() == tr("scientific")) {
         scientificModel->keyPressEvent(event);
     }
-    else if (this->pTitleBar->m_pFuncLabel->text() == "汇率") {
+    else if (this->pTitleBar->m_pFuncLabel->text() == tr("exchange rate")) {
         toolModelButton->keyPressEvent(event);
     }
 }
@@ -630,7 +632,7 @@ void MainWindow::btn_merge(const QString &disText)
 
         // 在汇率模式下，根据历史记录修改为对应的记录
         QString label = this->pTitleBar->m_pFuncLabel->text();
-        if (label != "标准" && label != "科学") {
+        if (label != tr("standard") && label != tr("scientific")) {
            historyText = toolModelOutput->unitConvHistory(historyText);
         }
 
@@ -652,7 +654,7 @@ void MainWindow::btn_handler(bool)
     btn_merge(disText);
     
     QString label = this->pTitleBar->m_pFuncLabel->text();
-    if (label != "标准" && label != "科学") {
+    if (label != tr("standard") && label != tr("scientific")) {
        toolModelOutput->unitConversion();
     }
 }
@@ -709,7 +711,7 @@ void MainWindow::funcListItemClicked(QListWidgetItem* item)
     if (label != this->pTitleBar->m_pFuncLabel->text()) {
         this->pTitleBar->setFuncLabel(label);
 
-        if (label == "标准" || label == "科学") {
+        if (label == tr("standard") || label == tr("scientific")) {
 
             mainLayout->removeWidget(outputWid);
             mainLayout->removeWidget(buttonWid);
@@ -725,12 +727,12 @@ void MainWindow::funcListItemClicked(QListWidgetItem* item)
                 funcList->funcToolWid->item(i)->setSelected(false);
             }
 
-            if (label == "标准") {
+            if (label == tr("standard")) {
                 calData += STANDARD;
                 InputProcess::inputFromButton(STANDARD);
                 setStandardUi();
             }
-            else if (label == "科学") {
+            else if (label == tr("scientific")) {
                 calData += SCIENTIFIC;
                 InputProcess::inputFromButton(SCIENTIFIC);
                 setScientificUi();
@@ -745,7 +747,7 @@ void MainWindow::funcListItemClicked(QListWidgetItem* item)
                 funcList->funcModelWid->item(i)->setSelected(false);
             }
 
-            if (label == "汇率") {
+            if (label == tr("exchange rate")) {
                 mainLayout->removeWidget(outputWid);
                 mainLayout->removeWidget(buttonWid);
 
