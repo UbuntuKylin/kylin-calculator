@@ -258,6 +258,7 @@ QString InputTools::getFunctionOrSciNumName(const QString &qstr, const int idx)
 QStringList InputTools::formulaSplit(const QString &qstr)
 {
     qDebug () << "im in formulaSplit!";
+    qDebug() << qstr;
     QStringList ans;
     QString formula = qstr + END;
 
@@ -317,7 +318,7 @@ QStringList InputTools::formulaSplit(const QString &qstr)
             ans.removeAt(idx);
     }
     ans.removeAt(ans.size()-1);
-    // qDebug () << "ansis " <<ans;
+    qDebug () << "ansis " <<ans;
     return ans;
 }
 
