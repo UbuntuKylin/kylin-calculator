@@ -72,8 +72,9 @@ void MainWindow::setWidgetStyle()
 
 
     this->mainWid->setObjectName("mainWid");
-    this->mainWid->setStyleSheet("#mainWid{background-color:#666666;border-radius:6px;}");
+    this->mainWid->setStyleSheet("#mainWid{background-color:#666666;}");
     this->setCentralWidget(mainWid);
+	this->setStyleSheet("border-radius:6px;");
     this->show();
 }
 
@@ -83,7 +84,7 @@ void MainWindow::setCommonUi()
     // 窗口设置
     // 无边框、界面置顶
     //    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-    this->setWindowFlags(Qt::FramelessWindowHint);
+//    this->setWindowFlags(Qt::FramelessWindowHint);
 
     // 窗体透明
     this->setAttribute(Qt::WA_TranslucentBackground, true);
@@ -91,7 +92,7 @@ void MainWindow::setCommonUi()
     // 设置图标
     this->setWindowTitle(tr("kylin-calculator"));
 //    this->setWindowTitle("麒麟计算器");
-    this->setWindowIcon(QIcon("/usr/share/icons/ukui-icon-theme-default/64x64/apps/calc.png"));
+    this->setWindowIcon(QIcon::fromTheme("calc"));
 
     titleBarWid = new QWidget(this);
     titleBarWid->setObjectName("titleBarWid");
@@ -110,7 +111,7 @@ void MainWindow::setCommonUi()
     pLayout->setMargin(0);
     titleBarWid->setLayout(pLayout);
     titleBarWid->setFixedHeight(TITLEH);
-    titleBarWid->setStyleSheet("background:#5F5F61;border-top-left-radius:6px;border-top-right-radius:6px;");
+    titleBarWid->setStyleSheet("#titleBarWid{background:#5F5F61;}");
 
     // 显示和隐藏功能列表
     connect(pTitleBar->funcListButton,SIGNAL(clicked(bool)),this,SLOT(funcListHandle(bool)));
@@ -275,7 +276,7 @@ void MainWindow::setStandardUi()
     outputWid->setFixedHeight(270);
     outputWid->setStyleSheet("#outputWid{background-color:#18181A;margin-top:1px}");
 
-    buttonWid->setStyleSheet("#buttonWid{background-color:#262628;border-radius:3px;}");
+    buttonWid->setStyleSheet("#buttonWid{background-color:#262628;}");
     buttonWid->setFixedHeight(320);
 }
 
@@ -375,7 +376,7 @@ void MainWindow::setScientificUi()
     outputWid->setFixedHeight(270);
     outputWid->setStyleSheet("#outputWid{background-color:#18181A;margin-top:1px;}");
 
-    buttonWid->setStyleSheet("#buttonWid{background-color:#262628;border-radius:3px;}");
+    buttonWid->setStyleSheet("#buttonWid{background-color:#262628;}");
     buttonWid->setFixedHeight(320);
 }
 
@@ -453,7 +454,7 @@ void MainWindow::setToolUi()
     outputWid->setFixedHeight(270);
     outputWid->setStyleSheet("#outputWid{background-color:#666666;border-radius:6px;margin-top:1px}");
 
-    buttonWid->setStyleSheet("#buttonWid{background-color:#262628;border-radius:3px;}");
+    buttonWid->setStyleSheet("#buttonWid{background-color:#262628;}");
     buttonWid->setFixedHeight(320);
 
     toolModelOutput->unitListBef->raise();
@@ -471,7 +472,7 @@ void MainWindow::changeCalculatorUi()
 
     this->mainWid->setLayout(mainLayout);
     this->mainWid->setObjectName("mainWid");
-    this->mainWid->setStyleSheet("#mainWid{background-color:#666666;border-radius:6px;}");
+    this->mainWid->setStyleSheet("#mainWid{background-color:#666666;}");
     this->setCentralWidget(mainWid);
     this->show();
 }
@@ -487,7 +488,7 @@ void MainWindow::changeToolUi()
 
     this->mainWid->setLayout(mainLayout);
     this->mainWid->setObjectName("mainWid");
-    this->mainWid->setStyleSheet("#mainWid{background-color:#666666;border-radius:6px;}");
+    this->mainWid->setStyleSheet("#mainWid{background-color:#666666;}");
     this->setCentralWidget(mainWid);
     this->show();
 }
