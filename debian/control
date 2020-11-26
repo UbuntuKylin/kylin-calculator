@@ -10,15 +10,9 @@ Build-Depends: debhelper,
             qtscript5-dev,
             qttools5-dev-tools,
             qtbase5-dev-tools,
-			qtbase5-private-dev,
 			libkf5windowsystem-dev,
 			pkgconf,
 			libgsl-dev,
-			pkg-kde-tools,
-            libglib2.0-dev,
-            libqt5x11extras5-dev,
-            libgsettings-qt-dev,
-			pkg-config,
 Standards-Version: 4.4.1
 Homepage: https://github.com/ubuntukylin/kylin-calculator
 #Vcs-Browser: https://github.com/ubuntukylin/kylin-calculator

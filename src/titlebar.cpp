@@ -78,45 +78,13 @@ void TitleBar::setWidgetUi()
 
     // 设置图片
     m_pIconLabel->setStyleSheet("width:30px;height:30px;border-image:url(/usr/share/icons/ukui-icon-theme-default/32x32/apps/calc.png)");
-//    funcListButton->setIcon(QIcon(":/image/funclist.png"));
-//    m_pTopButton->setIcon(QIcon(":/image/top.png"));
-//    m_pMinimizeButton->setIcon(QIcon(":/image/min.png"));
-//    m_pCloseButton->setIcon(QIcon(":/image/close.png"));
+    funcListButton->setIcon(QIcon(":/image/funclist.png"));
+    m_pTopButton->setIcon(QIcon(":/image/top.png"));
+    m_pMinimizeButton->setIcon(QIcon(":/image/min.png"));
+    m_pCloseButton->setIcon(QIcon(":/image/close.png"));
     m_pIconLabel->setFixedSize(30, 30);
-//    m_pMinimizeButton->setIconSize(QSize(25, 25));
-//    m_pTopButton->setIconSize(QSize(18, 18));
-
-    funcListButton->setIcon(QIcon::fromTheme("application-menu"));
-    funcListButton->setProperty("useIconHighlightEffect", true);
-    funcListButton->setProperty("iconHighlightEffectMode", 1);
-    funcListButton->setProperty("isWindowButton", 0x1);
-    funcListButton->setProperty("useIconHighlightEffect", 0x2);
-    funcListButton->setFlat(true);
-    funcListButton->update();
-
-    m_pTopButton->setIcon(QIcon::fromTheme("color-select-symbolic"));
-    m_pTopButton->setProperty("useIconHighlightEffect", true);
-    m_pTopButton->setProperty("iconHighlightEffectMode", 1);
-    m_pTopButton->setProperty("isWindowButton", 0x1);
-    m_pTopButton->setProperty("useIconHighlightEffect", 0x2);
-    m_pTopButton->setFlat(true);
-    m_pTopButton->update();
-
-    m_pMinimizeButton->setIcon(QIcon::fromTheme("window-minimize-symbolic"));
-    m_pMinimizeButton->setProperty("useIconHighlightEffect", true);
-    m_pMinimizeButton->setProperty("iconHighlightEffectMode", 1);
-    m_pMinimizeButton->setProperty("isWindowButton", 0x1);
-    m_pMinimizeButton->setProperty("useIconHighlightEffect", 0x2);
-    m_pMinimizeButton->setFlat(true);
-    m_pMinimizeButton->update();
-
-    m_pCloseButton->setIcon(QIcon::fromTheme("window-close-symbolic"));
-    m_pCloseButton->setProperty("useIconHighlightEffect", true);
-    m_pCloseButton->setProperty("iconHighlightEffectMode", 1);
-    m_pCloseButton->setProperty("isWindowButton", 0x2);
-    m_pCloseButton->setProperty("useIconHighlightEffect", 0x8);
-    m_pCloseButton->setFlat(true);
-    m_pCloseButton->update();
+    m_pMinimizeButton->setIconSize(QSize(25, 25));
+    m_pTopButton->setIconSize(QSize(18, 18));
 
     // 设置按钮布局
     QHBoxLayout *pLayout = new QHBoxLayout(this);
@@ -150,11 +118,11 @@ void TitleBar::setWidgetStyle()
     QString btnStyle = "QPushButton{border-radius:4px;}"
                        "QPushButton:hover{background-color:rgb(180,180,180);}"
                        "QPushButton:pressed{background-color:rgb(180,180,180);}";
-//    funcListButton->setStyleSheet(btnStyle);
-//    m_pTopButton->setStyleSheet(btnStyle);
-//    m_pMinimizeButton->setStyleSheet(btnStyle);
-//    m_pCloseButton->setStyleSheet(btnStyle);
-//    m_pCloseButton->setStyleSheet("QPushButton{border-radius:4px;}QPushButton:hover{background-color:red;}");
+    funcListButton->setStyleSheet(btnStyle);
+    m_pTopButton->setStyleSheet(btnStyle);
+    m_pMinimizeButton->setStyleSheet(btnStyle);
+    m_pCloseButton->setStyleSheet(btnStyle);
+    m_pCloseButton->setStyleSheet("QPushButton{border-radius:4px;}QPushButton:hover{background-color:red;}");
 
 }
 
@@ -210,8 +178,6 @@ void TitleBar::onClicked()
         if (pButton == m_pMinimizeButton)
         {
             pWindow->showMinimized();
-            m_pMinimizeButton->update();
-            m_pCloseButton->update();
         }
         else if (pButton == m_pTopButton)
         {
