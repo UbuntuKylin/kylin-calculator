@@ -19,6 +19,7 @@
  * Authors: Yue Lan <lanyue@kylinos.cn>
  *
  */
+#ifndef __V10__
 
 #ifndef XATOMHELPER_H
 #define XATOMHELPER_H
@@ -109,3 +110,5 @@ private:
 };
 
 #endif // XATOMHELPER_H
+
+#endif

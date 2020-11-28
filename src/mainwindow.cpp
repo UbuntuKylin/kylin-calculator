@@ -84,8 +84,9 @@ void MainWindow::setCommonUi()
     // 窗口设置
     // 无边框、界面置顶
     //    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-//    this->setWindowFlags(Qt::FramelessWindowHint);
-
+#ifdef __V10__
+    this->setWindowFlags(Qt::FramelessWindowHint);
+#endif
     // 窗体透明
     this->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -200,7 +201,7 @@ void MainWindow::setOutputUi()
     outputLayout->setSpacing(0);
     outputWid->setLayout(outputLayout);
     outputWid->setFixedHeight(270);
-    outputWid->setStyleSheet("#outputWid{background-color:#18181A;border-radius:6px;margin-top:1px}");
+    outputWid->setStyleSheet("#outputWid{background-color:#18181A;border-radius:4px;margin-top:1px}");
 }
 
 // 标准计算界面布局
@@ -274,9 +275,9 @@ void MainWindow::setStandardUi()
 
     // 设置间距和背景样式
     outputWid->setFixedHeight(270);
-    outputWid->setStyleSheet("#outputWid{background-color:#18181A;margin-top:1px}");
+    outputWid->setStyleSheet("#outputWid{background-color:#18181A;margin-top:1px;border-radius:4px;}");
 
-    buttonWid->setStyleSheet("#buttonWid{background-color:#262628;}");
+    buttonWid->setStyleSheet("#buttonWid{background-color:#262628;border-radius:4px;}");
     buttonWid->setFixedHeight(320);
 }
 
@@ -374,9 +375,9 @@ void MainWindow::setScientificUi()
 
     // 设置间距和背景样式
     outputWid->setFixedHeight(270);
-    outputWid->setStyleSheet("#outputWid{background-color:#18181A;margin-top:1px;}");
+    outputWid->setStyleSheet("#outputWid{background-color:#18181A;margin-top:1px;border-radius:4px;}");
 
-    buttonWid->setStyleSheet("#buttonWid{background-color:#262628;}");
+    buttonWid->setStyleSheet("#buttonWid{background-color:#262628;border-radius:4px;}");
     buttonWid->setFixedHeight(320);
 }
 
@@ -413,15 +414,17 @@ void MainWindow::setToolUi()
         historyText = historyText + disHistory.at(i);
     }
 
-    // 去除末尾换行符
-    historyText.chop(1);
+    if (historyText != "") {
+        // 去除末尾换行符
+        historyText.chop(1);
 
-    historyText = toolModelOutput->unitConvHistory(historyText);
-    historyText.replace("—", "-");
+        historyText = toolModelOutput->unitConvHistory(historyText);
+        historyText.replace("—", "-");
 
-    qDebug() << "historyText" << historyText << toolModelOutput->toolDouRate;
+        qDebug() << "historyText" << historyText << toolModelOutput->toolDouRate;
 
-    this->lab_last->setText(historyText);
+        this->lab_last->setText(historyText);
+    }
 
     QVBoxLayout *toolOutputLayout = new QVBoxLayout(this);
     QVBoxLayout *toolButtonLayout = new QVBoxLayout(this);
@@ -452,9 +455,9 @@ void MainWindow::setToolUi()
 
     // 设置间距和背景样式
     outputWid->setFixedHeight(270);
-    outputWid->setStyleSheet("#outputWid{background-color:#666666;border-radius:6px;margin-top:1px}");
+    outputWid->setStyleSheet("#outputWid{background-color:#666666;border-radius:4px;margin-top:1px;}");
 
-    buttonWid->setStyleSheet("#buttonWid{background-color:#262628;}");
+    buttonWid->setStyleSheet("#buttonWid{background-color:#262628;border-radius:4px;}");
     buttonWid->setFixedHeight(320);
 
     toolModelOutput->unitListBef->raise();
@@ -510,7 +513,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     if (event->key() == Qt::Key_F1) {
         if (!mDaemonIpcDbus->daemonIsNotRunning()){
             //增加标题栏帮助菜单、F1快捷键打开用户手册
-            mDaemonIpcDbus->showGuide("kylin-calculator");
+            mDaemonIpcDbus->showGuide("tools/kylin-calculator");
         }
     }
 

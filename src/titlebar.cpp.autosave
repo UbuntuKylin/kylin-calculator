@@ -78,7 +78,7 @@ void TitleBar::setWidgetUi()
 
     // 设置图片
     m_pIconLabel->setIcon(QIcon::fromTheme("calc"));
-    m_pIconLabel->setIconSize(QSize(30, 30));
+    m_pIconLabel->setIconSize(QSize(24, 24));
 //    funcListButton->setIcon(QIcon(":/image/funclist.png"));
 //    m_pTopButton->setIcon(QIcon(":/image/top.png"));
 //    m_pMinimizeButton->setIcon(QIcon(":/image/min.png"));

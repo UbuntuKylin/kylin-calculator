@@ -19,6 +19,7 @@
  * Authors: Yue Lan <lanyue@kylinos.cn>
  *
  */
+#ifndef __V10__
 
 #include "xatom-helper.h"
 
@@ -213,3 +214,5 @@ void XAtomHelper::unregisterUKUICsdNetWmSupportAtom()
 {
     // fixme:
 }
+
+#endif

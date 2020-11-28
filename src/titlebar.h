@@ -36,7 +36,7 @@ public:
     ~TitleBar();
 
     FuncList *funcList;
-    QLabel *m_pIconLabel;           // 左上角应用图标
+    QPushButton *m_pIconLabel;      // 左上角应用图标
     QLabel *m_pFuncLabel;           // 界面标识
     QPushButton *m_pTopButton;      // 界面置顶按钮
 
