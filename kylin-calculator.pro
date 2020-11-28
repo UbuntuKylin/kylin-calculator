@@ -1,4 +1,3 @@
-
 QT       += core gui network KWindowSystem dbus
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -14,6 +13,14 @@ LIBS +=-lX11
 CONFIG += link_pkgconfig
 PKGCONFIG += gsettings-qt
 
+DISTRIBUTION = $$system(cat /etc/kylin-build | grep Kylin | cut -d\' \' -f2)
+count($$DISTRIBUTION,"V10"){
+	DEFINES += __V10__
+	QT      -= x11extras
+	LIBS    -= -lpthread
+    LIBS    -= -lX11
+}
+
 CONFIG += \
     c++11 \
     link_pkgconfig
@@ -23,21 +30,19 @@ PKGCONFIG += \
 
 TARGET = kylin-calculator
 
-VERSION = 1.0.13
+VERSION = 1.0.15
 
 target.path = /usr/bin
 target.source += $$TARGET
 
-icon.path = /usr/share/icons/ukui-icon-theme-default/64x64/apps
-icon.files = calc.png
+icon.path = /usr/share/pixmaps
+icon.files = ./image/calc.png
 
 desktop.path = /usr/share/applications/
 desktop.files = kylin-calculator.desktop
 
 appdesktop.path = /usr/share/applications/
 appdesktop.files = kylin-calculator.desktop
-
-
 
 
 INSTALLS += \

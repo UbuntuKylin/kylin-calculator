@@ -1,3 +1,29 @@
+kylin-calculator (1.0.16kord) v101; urgency=medium
+
+  * 解决禅道bug #20517 : 按F1不能唤出用户手册，亦无帮助按钮可跳转到用户手册.
+  * 解决标题栏图标显示问题.
+
+
+ -- caoliang <caoliang@kylinos.cn>  Sat, 28 Nov 2020 13:41:01 +0800
+
+kylin-calculator (1.0.15kord) v101; urgency=medium
+
+  * 适配v10主题图标.
+
+ -- jiangdingyuan <jiangdingyuan@kylinos.cn>  Fri, 27 Nov 2020 11:08:01 +0800
+ 
+kylin-calculator (1.0.14kord) v101; urgency=medium
+
+  * 适配窗口管理器圆角阴影.
+
+ -- caoliang <caoliang@kylinos.cn>  Thu, 26 Nov 2020 19:25:35 +0800
+
+kylin-calculator (1.0.13kord) v101; urgency=medium
+
+  * 适配自定义标题栏窗口三联按钮.
+
+ -- caoliang <caoliang@kylinos.cn>  Wed, 25 Nov 2020 20:25:35 +0800
+
 kylin-calculator (1.0.13kord) v101; urgency=medium
 
   * 适配自定义标题栏窗口三联按钮.
