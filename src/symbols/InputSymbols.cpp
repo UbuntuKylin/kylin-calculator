@@ -1,9 +1,29 @@
+/*
+ * Copyright (C) 2020, KylinSoft Co., Ltd.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "InputSymbols.h"
 //  "2nd,Ans,(,),1/x,x²,x³,y^x,x!,√x,³√x,x√y,
-// QString btnList = "C,÷,×,B,—,+,=,%,.";
+// QString btnList = "C,÷,×,B,ｰ,+,=,%,.";
 const QString InputSymbols::T_BRACKET  = "(,)";
 const QString InputSymbols::T_NUMBER   = "0,1,2,3,4,5,6,7,8,9,.,%,00";
-const QString InputSymbols::T_OPERATOR = "+,—,×,÷,=";
+
+// ！！！！！！减号不是ascII码 减号不是ascII码 减号不是ascII码 减号不是ascII码 减号不是ascII码
+const QString InputSymbols::T_OPERATOR = "+,ｰ,×,÷,=";
+// ！！！！！！减号不是ascII码 减号不是ascII码 减号不是ascII码 减号不是ascII码 减号不是ascII码
 const QString InputSymbols::T_FUNCTION = "sin,cos,tan,asin,acos,atan,log,ln";
 const QString InputSymbols::T_TRANS    = "1/x,x²,x³,y^x,√x,³√x,x√y,x!";  //))
 const QString InputSymbols::T_SCI_NUM  = "PI,E,ANS";
@@ -28,7 +48,7 @@ const QString InputSymbols::SCI_NUM_QSTR             = SCI_NUM_LIST            .
 const QString InputSymbols::SPACE               = " ";
 const QString InputSymbols::END                 = "$";
 const QString InputSymbols::ANS_END             = "@";
-const QString InputSymbols::SCI_NUM_END         = "#"; 
+const QString InputSymbols::SCI_NUM_END         = "#";
 const QString InputSymbols::SCIENTIFIC_NOTATION = "e";
 const QString InputSymbols::POWER_SYMBOL        = "^";
 const QString InputSymbols::FACTORIAL_SYMBOL    = "!";
@@ -74,7 +94,9 @@ const QString InputSymbols::DOUBLE_ZERO = NUMBER_LIST[12];
 
 
 const QString InputSymbols::ADD   = OPERATOR_LIST[0];
+// ！！！！！！减号不是ascII码 减号不是ascII码 减号不是ascII码 减号不是ascII码 减号不是ascII码
 const QString InputSymbols::SUB   = OPERATOR_LIST[1];
+// ！！！！！！减号不是ascII码 减号不是ascII码 减号不是ascII码 减号不是ascII码 减号不是ascII码
 const QString InputSymbols::MUL   = OPERATOR_LIST[2];
 const QString InputSymbols::DIV   = OPERATOR_LIST[3];
 const QString InputSymbols::EQUAL = OPERATOR_LIST[4];

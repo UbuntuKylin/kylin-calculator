@@ -42,13 +42,14 @@
 #include <QRegExp>
 
 #include "basicbutton.h"
+#include "InputSymbols.h"
 //#include "cal.h"
 
 class UnitListWidget;
 class UnitListItem;
 
 // 换算器输入输出界面
-class ToolModelOutput : public QWidget
+class ToolModelOutput : public QWidget, public InputSymbols
 {
     Q_OBJECT
 

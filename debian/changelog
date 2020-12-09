@@ -1,8 +1,43 @@
+kylin-calculator (1.0.20kord) v101; urgency=unstable
+
+  * 修改项目版权信息.
+
+ -- caoliang <caoliang@kylinos.cn>  Wed, 09 Dec 2020 11:23:10 +0800
+
+kylin-calculator (1.0.19kord) v101; urgency=medium
+
+  * 更新qmake 改用qt版本判断系统
+
+ -- jiangdingyuan <jiangdingyuan@kylinos.cn>  Sat, 05 Dec 2020 11:23:10 +0800
+
+kylin-calculator (1.0.18kord) v101; urgency=medium
+
+  * 更新qmake 解决v10.1 优麒麟窗管适配问题
+
+ -- jiangdingyuan <jiangdingyuan@kylinos.cn>  Fri, 04 Dec 2020 20:19:04 +0800
+
+kylin-calculator (1.0.17kord) v101; urgency=medium
+
+  * 更新翻译文件
+  * 更新运算逻辑
+  * 解决禅道bug #27184: 【麒麟计算器】【汇率模式】计算负数时闪退
+  * 解决禅道bug #27174: 【麒麟计算器】科学模式下运算三角函数和对数函数失败
+  * 解决禅道bug #26792: 【麒麟计算器】无法输入整数位只有一位，且小数位第一位为0的数字进行计算
+  * 解决禅道bug #26294: 【麒麟计算器】标准模式下，在原有结果为0时输入“00”、然后输入任意运算符再输入任意数字，计算器闪退
+  * 解决禅道bug #26274: 【麒麟计算器】输入数字后输入多个百分号计算时结果显示为0
+  * 解决禅道bug #26261: 【麒麟计算器】当输入错误算式或数字后点击等于时，历史记录中会自动添加一条历史记录中的最后一条
+  * 解决禅道bug #25937: 【麒麟计算器】点击x!两次，麒麟计算器应用退出
+  * 解决禅道bug #24114: 【麒麟计算器】点击pi和e显示异常
+  * 解决禅道bug #24093: 【麒麟计算器】科学模式下，pi和e的值显示异常
+  * 解决禅道bug #24088: 【麒麟计算器】0/0结果显示为nan
+  * 解决禅道bug #24087: 【麒麟计算器】除零结果显示为inf
+
+ -- jiangdingyuan <jiangdingyuan@kylinos.cn>  Wed, 02 Dec 2020 17:05:05 +0800
+
 kylin-calculator (1.0.16kord) v101; urgency=medium
 
   * 解决禅道bug #20517 : 按F1不能唤出用户手册，亦无帮助按钮可跳转到用户手册.
   * 解决标题栏图标显示问题.
-
 
  -- caoliang <caoliang@kylinos.cn>  Sat, 28 Nov 2020 13:41:01 +0800
 
@@ -11,18 +46,12 @@ kylin-calculator (1.0.15kord) v101; urgency=medium
   * 适配v10主题图标.
 
  -- jiangdingyuan <jiangdingyuan@kylinos.cn>  Fri, 27 Nov 2020 11:08:01 +0800
- 
+
 kylin-calculator (1.0.14kord) v101; urgency=medium
 
   * 适配窗口管理器圆角阴影.
 
  -- caoliang <caoliang@kylinos.cn>  Thu, 26 Nov 2020 19:25:35 +0800
-
-kylin-calculator (1.0.13kord) v101; urgency=medium
-
-  * 适配自定义标题栏窗口三联按钮.
-
- -- caoliang <caoliang@kylinos.cn>  Wed, 25 Nov 2020 20:25:35 +0800
 
 kylin-calculator (1.0.13kord) v101; urgency=medium
 

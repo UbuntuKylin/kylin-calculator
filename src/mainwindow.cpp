@@ -28,6 +28,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
+    InputProcess::inputFromButton(STANDARD);
     // 初始化列表项组件
     setWidgetUi();
 
@@ -133,7 +134,7 @@ void MainWindow::setCommonUi()
     funcListWid->setContentsMargins(0, 0, 0, 0);
     funcListWid->setStyleSheet("background:#36363A;color:#FFFFFF;font-size:18px;border:none;border-radius:4px;");
     funcListWid->raise();
-    funcListWid->setFixedHeight(420);
+    funcListWid->setFixedHeight(170);
     funcListWid->setFixedWidth(170);
     funcListWid->setGeometry(QRect(0, 40, 20, 170));
     funcListWid->hide();
@@ -237,7 +238,7 @@ void MainWindow::setStandardUi()
         historyText = historyText + disHistory.at(i);
     }
 
-    historyText.replace("—", "-");
+    historyText.replace(SUB, "-");
 
     // 去除末尾换行符
     historyText.chop(1);
@@ -314,7 +315,7 @@ void MainWindow::setScientificUi()
         historyText = historyText + disHistory.at(i);
     }
 
-    historyText.replace("—", "-");
+    historyText.replace(SUB, "-");
 
     // 去除末尾换行符
     historyText.chop(1);
@@ -338,6 +339,8 @@ void MainWindow::setScientificUi()
         QObject::connect(scientificModel->btnNum[i],SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
     }
 
+    QObject::connect(scientificModel->btnDZero,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+
     QObject::connect(scientificModel->btnClear,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
     QObject::connect(scientificModel->btnDiv,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
     QObject::connect(scientificModel->btnMulti,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
@@ -350,8 +353,8 @@ void MainWindow::setScientificUi()
 
 //    QObject::connect(scientificModel->btnInd,   SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
     QObject::connect(scientificModel->btnUndo,          SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
-//    QObject::connect(scientificModel->btnBracketLeft,   SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-//    QObject::connect(scientificModel->btnBracketRight,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+    QObject::connect(scientificModel->btnBracketLeft,   SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+    QObject::connect(scientificModel->btnBracketRight,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
 
     QObject::connect(scientificModel->btnReci,      SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
     QObject::connect(scientificModel->btnXPower2,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
@@ -368,7 +371,7 @@ void MainWindow::setScientificUi()
     QObject::connect(scientificModel->btnTan,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
     QObject::connect(scientificModel->btnLog,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
 
-//    QObject::connect(scientificModel->btnRad,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
+    QObject::connect(scientificModel->btnRad,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
     QObject::connect(scientificModel->btnPi,    SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
     QObject::connect(scientificModel->btnExp,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
     QObject::connect(scientificModel->btnLn,    SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
@@ -413,17 +416,16 @@ void MainWindow::setToolUi()
     for (int i = hisIndex; i < size; i++) {
         historyText = historyText + disHistory.at(i);
     }
-
     if (historyText != "") {
-        // 去除末尾换行符
-        historyText.chop(1);
+	    // 去除末尾换行符
+	    historyText.chop(1);
 
-        historyText = toolModelOutput->unitConvHistory(historyText);
-        historyText.replace("—", "-");
+	    historyText = toolModelOutput->unitConvHistory(historyText);
+	    historyText.replace(SUB, "-");
 
-        qDebug() << "historyText" << historyText << toolModelOutput->toolDouRate;
+	    qDebug() << "historyText" << historyText << toolModelOutput->toolDouRate;
 
-        this->lab_last->setText(historyText);
+	    this->lab_last->setText(historyText);
     }
 
     QVBoxLayout *toolOutputLayout = new QVBoxLayout(this);
@@ -569,7 +571,7 @@ void MainWindow::unitCalc()
 // 将用于显示的表达式格式化为用于运算的表达式
 QString MainWindow::formatDisToCal(QString text)
 {
-    text.replace("—", "-");
+    text.replace(SUB, "-");
     text.replace("×", "*");
     text.replace("÷", "/");
     text.replace(",", "" );
@@ -580,20 +582,31 @@ QString MainWindow::formatDisToCal(QString text)
 // 更新输出界面
 void MainWindow::updateOutput(QVector<QString> outVector)
 {
+    for (int i = 0; i < outVector.size(); i++) {
+        if (outVector[i] == INF_SYMBOL) {
+            outVector[i] = tr("Error!");
+        }
+        if (outVector[i] == NAN_SYMBOL) {
+            outVector[i] = tr("Error!");
+        }
+        if (outVector[i] == "input Error!") {
+            outVector[i] = tr("Input error!");
+        }
+    }
     // 获取数据
-    this->disData = outVector[0];
-    this->calData = outVector[1];
+    this->disData = outVector[DISPLAY_ON_LABEL_NOW];
+    this->calData = outVector[LABEL_NOW_CAL_QSTR];
 
     // 更新界面显示
-    this->lab_now->setText(outVector[0]);
-    this->lab_prepare->setText(outVector[4]);
+    this->lab_now->setText(outVector[DISPLAY_ON_LABEL_NOW]);
+    this->lab_prepare->setText(outVector[DISPLAY_ON_LABEL_PREPARE]);
 
     return ;
 }
 
 void MainWindow::btn_merge(const QString &disText)
 {
-    qDebug() << "disText is " << disText; 
+    qDebug() << "disText is " << disText;
     // 格式化为用于运算的表达式
     QString calText = disText;
     calText = formatDisToCal(calText);
@@ -610,8 +623,8 @@ void MainWindow::btn_merge(const QString &disText)
     updateOutput(resVector);
 
    // 等于号的运算逻辑 跟新界面显示
-    if (disText == EQUAL) {
-        disHistory.push_back(resVector[3] + '\n');
+    if (resVector[LATEST_HISTORY].size()) {
+        disHistory.push_back(resVector[LATEST_HISTORY] + '\n');
 
         //输出测试到history.txt
         cout << disHistory[disHistory.size() - 1].toStdString() << endl;
@@ -640,7 +653,7 @@ void MainWindow::btn_merge(const QString &disText)
            historyText = toolModelOutput->unitConvHistory(historyText);
         }
 
-        historyText.replace("—", "-");
+        historyText.replace(SUB, "-");
 
         this->lab_last->setText(historyText);
 
@@ -656,7 +669,7 @@ void MainWindow::btn_handler(bool)
     QString disText = btn->text();
     qDebug() << "disTextis:"<<disText;
     btn_merge(disText);
-    
+
     QString label = this->pTitleBar->m_pFuncLabel->text();
     if (label != tr("standard") && label != tr("scientific")) {
        toolModelOutput->unitConversion();
@@ -669,13 +682,13 @@ void MainWindow::sciBtnHandler(bool)
 {
     // 获取当前输入
     BasicButton *btn = dynamic_cast<BasicButton *>(sender());
-    
+
     // if (btn == scientificModel->btnInd) {
-        
+
     // }
-    qDebug() << 123;
+    // qDebug() << 123;
     QString text = btn->text();
-    qDebug() << 456;
+    // qDebug() << 456;
     btn_merge(text);
 
 //     text = scientificModel->sciFormatInput(text);
@@ -692,7 +705,7 @@ void MainWindow::delete_btn_handle(bool)
     // "B" 可能要改
     btn_merge(BACKSPACE);
     // updateOutput(InputProcess::inputFromButton(BACKSPACE));
-    
+
     return ;
 }
 
@@ -739,6 +752,7 @@ void MainWindow::funcListItemClicked(QListWidgetItem* item)
             else if (label == tr("scientific")) {
                 calData += SCIENTIFIC;
                 InputProcess::inputFromButton(SCIENTIFIC);
+                InputProcess::inputFromButton(RAD_SYMBOL);
                 setScientificUi();
             }
 
