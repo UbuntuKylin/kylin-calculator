@@ -6,4 +6,5 @@ GenericName[bo_CN]=བསེ་རུ་རྩིས་ཆས་
 Exec=/usr/bin/kylin-calculator %u
 Icon=accessories-calculator
 Type=Application
+Keywords=calculator;
 Categories=Utility;Calculator;
