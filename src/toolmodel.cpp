@@ -466,10 +466,10 @@ void ToolModelOutput::unitConversion()
     QString strBefore = this->toolLabBef->text().remove(QRegExp(","));
     strBefore.replace("×", "*");
     strBefore.replace("÷", "/");
-    strBefore.replace("—", "-");
+    strBefore.replace(SUB, "-");
 //    QString strAfter  = this->toolLabAft->text();
     qDebug() << QString::number(toolDouRate) + "*" + strBefore;
-    double douResult = calculator(QString::number(toolDouRate) + "*" + strBefore).toDouble();
+    double douResult = calculator(calculator (strBefore) + "*" + QString::number(toolDouRate)  ).toDouble();
 
 //    double douResult  = (strBefore.toDouble() * toolDouRate);
 
@@ -482,6 +482,10 @@ void ToolModelOutput::unitConversion()
 QString ToolModelOutput::unitConvHistory(QString hisText)
 {
     QString resHisText;
+
+    hisText.replace("×", "*");
+    hisText.replace("÷", "/");
+    hisText.replace(SUB, "-");
     QStringList hisTextList = hisText.split("\n");
     qDebug() << hisTextList;
 
@@ -491,12 +495,12 @@ QString ToolModelOutput::unitConvHistory(QString hisText)
     }
 
     int i;
-    i = hisTextList.size() > 4 ? 1 : 0;
+    i =  hisTextList.size() > 4 ?  hisTextList.size() - 4 : 0;
 
     for (i; i < hisTextList.size(); i++) {
         QStringList singerHisList = (hisTextList[i]).split("=");
-        QString dataBef = singerHisList[singerHisList.size() - 1].remove(QRegExp(","));
-        double douResult = calculator(QString::number(toolDouRate) + "*" + dataBef).toDouble();
+        QString dataBef = singerHisList[singerHisList.size()-1].remove(QRegExp(","));
+        double douResult = calculator( calculator (dataBef) + "*" + QString::number(toolDouRate)   ).toDouble();
         resHisText += dataBef + " " + toolRateSymbBef + " = " + QString::number(douResult) + " " + toolRateSymbAft + "\n";
     }
 
@@ -788,7 +792,7 @@ ToolModelButton::ToolModelButton(QWidget *parent)
     btnPoint = new BasicButton(this);
 
     // 设置按钮的显示文本
-    QString btnList = "C,÷,×,B,—,+,=,%,.";
+    QString btnList = "C,÷,×,B,ｰ,+,=,%,.";
     QStringList btnNameList= btnList.split(",");
     int index = 0;
 
@@ -1000,7 +1004,7 @@ UnitListWidget::UnitListWidget(QWidget *parent)
     searchEdit->setStyleSheet("width:246px;height:32px;background:rgba(30,30,32,0.5);border-radius:4px;");
     searchEdit->setPlaceholderText(tr("search"));
 //    searchEdit->setPlaceholderText("搜索");
-    
+
     // 单位列表
     unitList = new QListWidget(this);
     unitList->setStyleSheet("QListWidget::item{border-radius:4px;}"

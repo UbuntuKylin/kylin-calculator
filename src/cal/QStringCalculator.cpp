@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2020, KylinSoft Co., Ltd.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "QStringCalculator.h"
 
 QString QStringCalculator::angelSymbol = DEG_SYMBOL;
@@ -44,20 +61,21 @@ void QStringCalculator::postfixCheck(const QString    &qstr,
         }
     }
     else {	//如果不是括号
+
         //取出栈顶元素，与当前符号进行优先性比较
         QString sym = operatorList.top();
 
         //比较两符号的优先性
-        if (getOperatotPriority(qstr) <= getOperatotPriority(qstr)) {
+        if (getOperatotPriority(qstr) <= getOperatotPriority(sym)) {
             //如果c的优先性比栈顶符号小或等于，弹出栈顶元素
             operatorList.pop();
-            //并将其压入coll3（后缀表达式）中
+            //并将其压入postfixExpressions（后缀表达式）中
             postfixExpressions.push_back(sym);
-            //递归调用check,比较当前符号c与下一个栈顶符号的优先性
+            //递归调用postfixCheck,比较当前符号qstr与下一个栈顶符号的优先性
             postfixCheck(qstr, operatorList, postfixExpressions);
         }
         else {
-            //如果c比栈顶符号优先级大，那将c压入coll2(操作符栈)中
+            //如果qstr比栈顶符号优先级大，那将qstr压入operatorList(操作符栈)中
             operatorList.push(qstr);
         }
     }
@@ -65,10 +83,11 @@ void QStringCalculator::postfixCheck(const QString    &qstr,
     return ;
 }
 
-//从coll中取出元素，分配元素到coll2和coll3中
+// 从infixExpression中取出元素，分配元素到operatorList和postfixExpressions中
 void QStringCalculator::infixToPostfix(QStringList &infixExpression,
                                        QStringList &postfixExpressions)
 {
+    qDebug() << "im in infixToPostfix";
     QStack<QString> operatorList;
     while (!infixExpression.empty()) {
         QString qstr = infixExpression.at(0);
@@ -78,13 +97,13 @@ void QStringCalculator::infixToPostfix(QStringList &infixExpression,
             postfixExpressions.append(qstr);
         }
         else {
-            //调用check函数，针对不同情况作出不同操作
+            //调用postfixCheck函数，针对不同情况作出不同操作
             postfixCheck(qstr, operatorList, postfixExpressions);
         }
 
     }
 
-    //如果输入结束，将coll2的元素全部弹出，加入后缀表达式中
+    //如果输入结束，将operatorList的元素全部弹出，加入后缀表达式中
     while (!operatorList.empty()) {
         QString c = operatorList.top();
         postfixExpressions.push_back(c);
@@ -101,7 +120,7 @@ void QStringCalculator::calPostfix(QStringList      &postfixExpressions,
         postfixExpressions.removeAt(0);
 
         //如果是操作数，压入栈中
-        if (ZERO_TO_NINE.contains( qstr.right(1))) {
+        if (ZERO_TO_NINE.contains( qstr.right(1) )) {
             BigFloat op(qstr);
             calAns.push(op);
         }
@@ -115,7 +134,6 @@ void QStringCalculator::calPostfix(QStringList      &postfixExpressions,
             else if (qstr == SUB) calAns.push(op2 - op1);
             else if (qstr == MUL) calAns.push(op2 * op1);
             else if (qstr == DIV) calAns.push(op2 / op1);
-
         }
     }
 }
@@ -130,8 +148,8 @@ QString QStringCalculator::transCalculator(const QStringList &expression,
     ans_r = BigFloat(idx == expression.size() - 2 ? expression[expression.size() - 1]
         : qstrListCalculator(expression.mid(idx + 2, expression.size() - 3 - idx)));
 
-    qDebug() << ans_l.toQString();
-    qDebug() << ans_r.toQString();
+    // qDebug() << ans_l.toQString();
+    // qDebug() << ans_r.toQString();
     if (ans_l == BigFloat(0)) {
         if (ans_r == BigFloat(0)) {
             return ONE;
@@ -243,6 +261,7 @@ void QStringCalculator::formulaToInfixExpression(QStringList &infixExpression)
 
 QString QStringCalculator::qstrListCalculator(const QStringList &formulaList)
 {
+    qDebug() << "im in qstrListCalculator!";
     QStringList      infixExpression;    //盛放中缀表达式
     QStringList      postfixExpressions; //盛放后缀表达式
     QStack<BigFloat> calAns;	         //计算后缀表达式的辅助容器
@@ -250,21 +269,22 @@ QString QStringCalculator::qstrListCalculator(const QStringList &formulaList)
     infixExpression = formulaList;
     if (infixExpression[0] == SUB) infixExpression.insert(0,ZERO);
     formulaToInfixExpression(infixExpression);
-    qDebug () << infixExpression;
+    // qDebug () << infixExpression;
 
     foreach (QString ch, infixExpression) {
         if (ch.contains(INF_SYMBOL) || ch.contains(NAN_SYMBOL)) {
             return ch;
         }
     }
+    qDebug () << infixExpression;
     infixToPostfix(infixExpression, postfixExpressions);
-
+    qDebug() << postfixExpressions;
     //计算后缀表达式
     calPostfix(postfixExpressions, calAns);
 
     QString ans = calAns.top().toQString();
 
-    qDebug() << "ans is" << ans;
+    // qDebug() << "ans is" << ans;
     return ans;
 
 }
@@ -272,7 +292,7 @@ QString QStringCalculator::qstrListCalculator(const QStringList &formulaList)
 QString QStringCalculator::cal(const QString &qstr)
 {
     qDebug() << "im in cal!";
-    qDebug() << qstr;
+    // qDebug() << qstr;
     QString formula = qstr;
     // deg rad
     if (formula == InputSymbols::DEG_SYMBOL || formula == InputSymbols::RAD_SYMBOL) {
@@ -295,28 +315,30 @@ QString QStringCalculator::cal(const QString &qstr)
         formula.chop(1);
     if (!allBracketMatchCorrectly(formula))
         formula = bracketCompletion(formula);
-    qDebug () << "123123" << formula;
     formula = isCorrectFormula(formula).second;
-    qDebug () << "123123" << formula;
     QStringList formulaList = formulaSplit(formula);
+    qDebug() << formulaList;
     QString ans = qstrListCalculator(formulaList);
 
     //去掉末尾0
-
-    if (ans.contains('.')) {
-        while (ans[ans.size() - 1] == '0') {
+    if (ans.contains(POINT)) {
+        while (ans[ans.size() - 1] == ZERO[0]) {
             ans.chop(1);
         }
 
-        if (ans[ans.size() - 1] == '.') {
+        if (ans[ans.size() - 1] == POINT[0]) {
             ans.chop(1);
         }
     }
-
+    qDebug() << ans;
     //科学计算显示
-    if (ans.contains('.')) {
-        if ((ans.size() - ans.indexOf(".") > PRECISION) || (ans.indexOf(".") > PRECISION)) {
+    while (ans.contains(SUB))
+        ans.replace(ans.indexOf(SUB), 1, '-');
+    if (ans.contains(POINT)) {
+        if ((ans.size() - ans.indexOf(POINT) > PRECISION) || (ans.indexOf(POINT) > PRECISION)) {
+            qDebug() << ans;
             ans = QString::number(ans.toDouble(), 'g', PRECISION);
+            qDebug() << ans;
         }
     }
     else {
@@ -324,6 +346,8 @@ QString QStringCalculator::cal(const QString &qstr)
             ans = QString::number(ans.toDouble(), 'g', PRECISION);
         }
     }
+    while (ans.contains('-'))
+        ans.replace(ans.indexOf('-'), 1, SUB[0]);
 
     qDebug() <<"ansend"<<ans;
     return ans;

@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2020, KylinSoft Co., Ltd.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include <cstdio>
 #include <iostream>
 
@@ -21,8 +38,7 @@ bool InputJudgmentGraph::find(QString needFind)
 {
     if ( dfs(needFind, nodeIdx[ROOT], 0) )
         return true;
-    else
-        return false;
+
     return false;
 }
 
@@ -36,7 +52,7 @@ void InputJudgmentGraph::updateAllSon(QString needUpdate, int flag)
 {
     update(needUpdate, flag);
     int u = nodeIdx[needUpdate];
-    for (int i = 0; i <= node[u].to.size(); i++) {
+    for (int i = 0; i < node[u].to.size(); i++) {
         int v = node[u].to[i];
         update(node[v].name, flag);
     }
@@ -45,14 +61,16 @@ void InputJudgmentGraph::updateAllSon(QString needUpdate, int flag)
 
 void InputJudgmentGraph::print()
 {
+    qDebug() << "im in InputJudgmentGraph::print!";
     for (int i = 0; i < node.size(); i++) {
-        qDebug() << node[i].name;
+        qDebug() << node[i].name << node[i].status;
         for (int j = 0; j < node[i].to.size(); j++) {
             cout << node[node[i].to[j]].name.toStdString() << ' ';
         }
         cout << endl;
         cout << "***********" << endl;
     }
+    qDebug() << "end! InputJudgmentGraph::print!";
     return ;
 }
 
@@ -80,8 +98,8 @@ bool InputJudgmentGraph::dfs(QString needFind, int now, bool flag)
 {
     if (flag)
         return flag;
-    if (!node[now].status)
-        return flag;
+    // if (!node[now].status)
+    //     return flag;
     if ( node[now].name == needFind ) {
         flag = true;
         return flag;
@@ -115,10 +133,10 @@ void InputJudgmentGraph::creatGraph()
     addNode(BRACKET_L); addEdge(ERROR_NAN, BRACKET_L);
     addNode(BRACKET_R); addEdge(ERROR_NAN, BRACKET_R);
 
-    addNode(ZERO);  addEdge(ERROR, ZERO);  addEdge(ERROR_NAN, ZERO);  
+    addNode(ZERO);  addEdge(ERROR, ZERO);  addEdge(ERROR_NAN, ZERO);
     addNode(ONE);   addEdge(ERROR, ONE);   addEdge(ERROR_NAN, ONE);
     addNode(TWO);   addEdge(ERROR, TWO);   addEdge(ERROR_NAN, TWO);
-    addNode(THREE); addEdge(ERROR, THREE); addEdge(ERROR_NAN, THREE); 
+    addNode(THREE); addEdge(ERROR, THREE); addEdge(ERROR_NAN, THREE);
     addNode(FOUR);  addEdge(ERROR, FOUR);  addEdge(ERROR_NAN, FOUR);
     addNode(FIVE);  addEdge(ERROR, FIVE);  addEdge(ERROR_NAN, FIVE);
     addNode(SIX);   addEdge(ERROR, SIX);   addEdge(ERROR_NAN, SIX);
@@ -128,7 +146,7 @@ void InputJudgmentGraph::creatGraph()
     addNode(PERCENT);     addEdge(ERROR, PERCENT);      addEdge(ERROR_NAN, PERCENT);
     addNode(POINT);       addEdge(PERCENT, POINT);
     addNode(DOUBLE_ZERO); addEdge(ERROR, DOUBLE_ZERO); addEdge(ERROR_NAN, DOUBLE_ZERO);
-    
+
     addNode(ADD);   addEdge(ERROR, ADD);   addEdge(ERROR_NAN, ADD);
     addNode(SUB);   addEdge(ERROR, SUB);   addEdge(ERROR_NAN, SUB);
     addNode(MUL);   addEdge(ERROR, MUL);   addEdge(ERROR_NAN, MUL);

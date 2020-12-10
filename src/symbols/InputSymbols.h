@@ -1,8 +1,61 @@
+/*
+ * Copyright (C) 2020, KylinSoft Co., Ltd.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #ifndef __INPUT_SYMBOLS_H__
 #define __INPUT_SYMBOLS_H__
 
 #include <QString>
 #include <QStringList>
+
+enum {
+    CORRECT_QSTR_ADD,
+    CORRECT_QSTR_NOW_UPDATE,
+    FAILED_QSTR_NOW_UPDATE,
+    CORRECT_QSTR_UPDATE,
+    FAILED_QSTR_UPDATE,
+    COULD_BE_CAL,
+    COULD_NOT_BE_CAL,
+
+    CANNOT_ADD_BRACKET_L,
+    CANNOT_ADD_BRACKET_R,
+    CANNOT_ADD_EQUAL,
+    CANNOT_ADD_ARITHMETIC_OPERATOR,
+    CANNOT_CLEAN,
+    CANNOT_ADD_DOUBLE_ZERO,
+    CANNOT_ADD_POINT,
+    CANNOT_ADD_PERCENT,
+    CANNOT_ADD_NUMBER,
+    CANNOT_ADD_ZERO,
+    CANNOT_ADD_FUNCTION,
+    CANNOT_ADD_TRANS,
+    ANS_IS_EMPTY,
+    CANNOT_ADD_SCI_NUM,
+
+    INPUT_ERROR
+};
+
+enum {
+    DISPLAY_ON_LABEL_NOW     = 0,
+    LABEL_NOW_CAL_QSTR       = 1,
+    CAL_ANS                  = 2,
+    LATEST_HISTORY           = 3,
+    DISPLAY_ON_LABEL_PREPARE = 4,
+    LABEL_PREPARE_CAL_QSTR   = 5
+};
 
 class InputSymbols
 {
@@ -49,7 +102,7 @@ public:
     static const QString SCIENTIFIC_NOTATION;
     static const QString POWER_SYMBOL;
     static const QString FACTORIAL_SYMBOL;
-    
+
     static const QString EMPTY;
     static const QString INF_SYMBOL;
     static const QString NAN_SYMBOL;
