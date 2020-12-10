@@ -25,5 +25,8 @@ Package: kylin-calculator
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Calculator tool for UKUI
- Calculator is a tool to perform simple addition, subtraction,
- multiplication and division.Helps users increase productivity.
+ Calculator is a lightweight calculator based on
+ QT5 development, can provide scientific calculation
+ and exchange rate conversion and other calculation
+ modes, with simple to use, friendly interface
+ and other advantages.
