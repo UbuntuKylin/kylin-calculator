@@ -19,14 +19,11 @@
 
 StandardOutput::StandardOutput(QWidget *parent)
 {
-
     // 初始化组件
     this->setWidgetUi();
 
     // 设置组件样式
     this->setWidgetStyle();
-
-
 }
 
 // 初始化组件
@@ -41,56 +38,61 @@ void StandardOutput::setWidgetUi()
     // 预测输出
     this->staLabPre = new QLabel(this);
 
-
     //    staLabNow->setWordWrap(true);
     //    staLabLast->setWordWrap(true);
     //    staLabPre->setWordWrap(true);
 
-        QFont staLabLastFont("SourceHanSansCN-Light", 40, 15);
-        this->staLabLast->setAlignment(Qt::AlignRight | Qt::AlignTop);
-        this->staLabLast->setFont(staLabLastFont);
-        this->staLabLast->setText("");
-        this->staLabLast->show();
+    QFont staLabLastFont("SourceHanSansCN-Light", 40, 15);
+    this->staLabLast->setAlignment(Qt::AlignRight | Qt::AlignTop);
+    this->staLabLast->setFont(staLabLastFont);
+    this->staLabLast->setText("");
+    this->staLabLast->show();
 
-        QFont staLabPreFont("SourceHanSansCN-Light", 40, 15);
-        this->staLabPre->setAlignment(Qt::AlignRight | Qt::AlignTop);
-        this->staLabPre->setFont(staLabPreFont);
-        this->staLabPre->setText("");
-        this->staLabPre->setFixedHeight(35);
-        this->staLabPre->show();
+    QFont staLabPreFont("SourceHanSansCN-Light", 40, 15);
+    this->staLabPre->setAlignment(Qt::AlignRight | Qt::AlignTop);
+    this->staLabPre->setFont(staLabPreFont);
+    this->staLabPre->setText("");
+    this->staLabPre->setFixedHeight(35);
+    this->staLabPre->show();
 
-        QFont staLabNowFont("SourceHanSansCN-Normal", 50, 15);
-        this->staLabNow->setAlignment(Qt::AlignRight);
-        this->staLabNow->setFont(staLabNowFont);
-        this->staLabNow->setText("0");
-        this->staLabNow->setFixedHeight(65);
-        this->staLabNow->show();
+    QFont staLabNowFont("SourceHanSansCN-Normal", 50, 15);
+    this->staLabNow->setAlignment(Qt::AlignRight);
+    this->staLabNow->setFont(staLabNowFont);
+    this->staLabNow->setText("0");
+    this->staLabNow->setFixedHeight(65);
+    this->staLabNow->show();
 
-        this->staLabNow->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        this->staLabPre->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        this->staLabNow->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    this->staLabNow->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    this->staLabPre->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    this->staLabNow->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-        QVBoxLayout *staOutputLayout = new QVBoxLayout();
-        staOutputLayout->addWidget(this->staLabLast);
-        staOutputLayout->addWidget(this->staLabPre);
-        staOutputLayout->addWidget(this->staLabNow);
-        staOutputLayout->setStretchFactor(this->staLabLast, 14);
-        staOutputLayout->setStretchFactor(this->staLabPre, 1);
-        staOutputLayout->setStretchFactor(this->staLabNow, 1);
-        staOutputLayout->setSpacing(0);
+    QVBoxLayout *staOutputLayout = new QVBoxLayout();
+    staOutputLayout->addWidget(this->staLabLast);
+    staOutputLayout->addWidget(this->staLabPre);
+    staOutputLayout->addWidget(this->staLabNow);
+    staOutputLayout->setStretchFactor(this->staLabLast, 14);
+    staOutputLayout->setStretchFactor(this->staLabPre, 1);
+    staOutputLayout->setStretchFactor(this->staLabNow, 1);
+    staOutputLayout->setSpacing(0);
 
-        this->setLayout(staOutputLayout);
-        this->setFixedHeight(270);
-        //    this->setContentsMargins(1, 0, 1, 0);
+    this->setLayout(staOutputLayout);
+    this->setFixedHeight(270);
+    //    this->setContentsMargins(1, 0, 1, 0);
 }
 
 // 设置组件样式
 void StandardOutput::setWidgetStyle()
 {
-    this->staLabLast->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
-    this->staLabPre->setStyleSheet("color:#FB9119;font-size:20px;margin:0 7px 0 7px;");
-    this->staLabNow->setStyleSheet("color:#FFFFFF;font-size:47px;font-weight:15px;line-height:50px;margin:0 0 5px 7px;");
-
+    if (WidgetStyle::themeColor == 0) {
+        this->staLabLast->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
+        this->staLabPre->setStyleSheet("color:#FB9119;font-size:20px;margin:0 7px 0 7px;");
+        this->staLabNow->setStyleSheet("color:#272A2D;font-size:47px;font-weight:15px;line-height:50px;margin:0 0 5px 7px;");
+    }
+    else if (WidgetStyle::themeColor == 1) {
+        this->staLabLast->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
+        this->staLabPre->setStyleSheet("color:#FB9119;font-size:20px;margin:0 7px 0 7px;");
+        this->staLabNow->setStyleSheet("color:#FFFFFF;font-size:47px;font-weight:15px;line-height:50px;margin:0 0 5px 7px;");
+    }
 }
 
 StandardModel::StandardModel(QWidget *parent)
@@ -106,6 +108,7 @@ StandardModel::StandardModel(QWidget *parent)
 // 初始化组件
 void StandardModel::setWidgetUi()
 {
+    qDebug() << "im in StandardModel::setWidgetUi()!";
     // 计算器按钮
     QString str_list = "C,÷,×,B,7,8,9,ｰ,4,5,6,+,1,2,3,,%,0,.,=";
     QStringList btn_name_list= str_list.split(",");
@@ -220,76 +223,108 @@ void StandardModel::setWidgetUi()
 // 设置组件样式
 void StandardModel::setWidgetStyle()
 {
+    qDebug() << "im in StandardModel::setWidgetStyle()!";
+    qDebug() << WidgetStyle::themeColor;
+    QString btnStyle;
+    QString btnOpStyle;
+    QString btnEqualStyle;
+
+    if (WidgetStyle::themeColor == 0) {
+        for (int i = 0; i < 10; i++) {
+            btnNum[i]->setIcon(QIcon(":/image/light/standard/btnNum"+ QString::number(i) +".png"));
+        }
+
+        btnDZero->setIcon(QIcon(":/image/light/standard/btnNum00.png"));
+
+        btnClear->setIcon(QIcon(":/image/light/standard/btnClear.png"));
+        btnDiv->setIcon(QIcon(":/image/light/standard/btnDiv.png"));
+        btnMulti->setIcon(QIcon(":/image/light/standard/btnMulti.png"));
+        btnDelete->setIcon(QIcon(":/image/light/standard/btnDelete.png"));
+        btnSub->setIcon(QIcon(":/image/light/standard/btnSub.png"));
+        btnAdd->setIcon(QIcon(":/image/light/standard/btnAdd.png"));
+        btnEqual->setIcon(QIcon(":/image/light/standard/btnEqual.png"));
+        btnPer->setIcon(QIcon(":/image/light/standard/btnPer.png"));
+        btnPoint->setIcon(QIcon(":/image/light/standard/btnPoint.png"));
+
+
+        btnStyle = "QPushButton{"
+                   "width:106px;height:62px;opacity:1;"
+                   "background-color:#F3F3F3;border-radius:4px;"
+                   "font-size:42px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
+                   "}"
+                   "QPushButton:hover{background-color:#E8E8E8;}";
+
+        btnOpStyle = "QPushButton{"
+                     "width:106px;height:62px;opacity:1;"
+                     "background-color:#F5F5F8;border-radius:4px;"
+                     "font-size:35px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
+                     "}"
+                     "QPushButton:hover{background-color:#E8E8E8;}";
+
+        btnEqualStyle = "QPushButton{"
+                        "width:106px;height:126px;opacity:1;"
+                        "background-color:#E64A19;border-radius:4px;"
+                        "font-size:48px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
+                        "}"
+                        "QPushButton:hover{background-color:#E45E4C;}";
+    }
+    else if (WidgetStyle::themeColor == 1) {
+        for (int i = 0; i < 10; i++) {
+            btnNum[i]->setIcon(QIcon(":/image/standard/btnNum"+ QString::number(i) +".png"));
+        }
+
+        btnDZero->setIcon(QIcon(":/image/standard/btnNum00.png"));
+
+        btnClear->setIcon(QIcon(":/image/standard/btnClear.png"));
+        btnDiv->setIcon(QIcon(":/image/standard/btnDiv.png"));
+        btnMulti->setIcon(QIcon(":/image/standard/btnMulti.png"));
+        btnDelete->setIcon(QIcon(":/image/standard/btnDelete.png"));
+        btnSub->setIcon(QIcon(":/image/standard/btnSub.png"));
+        btnAdd->setIcon(QIcon(":/image/standard/btnAdd.png"));
+        btnEqual->setIcon(QIcon(":/image/standard/btnEqual.png"));
+        btnPer->setIcon(QIcon(":/image/standard/btnPer.png"));
+        btnPoint->setIcon(QIcon(":/image/standard/btnPoint.png"));
+
+        btnStyle = "QPushButton{"
+                   "width:106px;height:62px;opacity:0.95;"
+                   "background-color:#27292C;border-radius:4px;"
+                   "font-size:42px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
+                   "}"
+                   "QPushButton:hover{background-color:#474747;}";
+
+        btnOpStyle = "QPushButton{"
+                     "width:106px;height:62px;opacity:1;"
+                     "background-color:#222E36;border-radius:4px;"
+                     "font-size:35px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;}"
+                     "QPushButton:hover{background-color:#474747;}";
+
+        btnEqualStyle = "QPushButton{"
+                        "width:106px;height:126px;opacity:1;"
+                        "background-color:#E64A19;border-radius:4px;"
+                        "font-size:48px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
+                        "}"
+                        "QPushButton:hover{background-color:#E45E4C;}";
+    }
     //布局按钮
-    QFont btnFont("HelveticaNeueLTPro-UltLt", 30, 10);
-
-    QString btnStyle = "QPushButton{"
-                       "width:106px;height:62px;opacity:0.95;"
-                       "background-color:#272A2D;border-radius:4px;"
-                       "font-size:42px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
-                       "}"
-                       "QPushButton:hover{background-color:rgb(180,180,180);}";
-
-    QString btnOpStyle = "QPushButton{"
-                         "width:106px;height:62px;opacity:1;"
-                         "background-color:#222E36;border-radius:4px;"
-                         "font-size:35px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;}"
-                         "QPushButton:hover{background-color:rgba(82,87,217,1);}";
-
-    QString btnAddStyle = "QPushButton{"
-                          "width:106px;height:62px;opacity:1;"
-                          "background-color:#222E36;border-radius:4px;"
-                          "font-size:50px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
-                          "}"
-                          "QPushButton:hover{background-color:rgba(82,87,217,1);}";
-
-    QString btnEqualStyle = "QPushButton{"
-                            "width:106px;height:126px;opacity:1;"
-                            "background-color:#E64A19;border-radius:4px;"
-                            "font-size:48px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
-                            "}"
-                            "QPushButton:hover{background-color:rgba(82,87,217,1);}";
-    QString btnPerStyle = "QPushButton{"
-                          "width:106px;height:62px;opacity:1;"
-                          "background-color:#272A2D;border-radius:4px;"
-                          "font-size:31px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
-                          "}"
-                          "QPushButton:hover{background-color:rgb(180,180,180);}";
 
     for (int i = 0; i < 10; i++) {
         btnNum[i]->setStyleSheet(btnStyle);
-        btnNum[i]->setFont(btnFont);
     }
 
     btnDZero->setStyleSheet(btnStyle);
-    btnDZero->setFont(btnFont);
-
-    // 设置按钮字体
-    btnClear->setFont(btnFont);
-    btnDiv->setFont(btnFont);
-    btnMulti->setFont(btnFont);
-    btnDelete->setFont(btnFont);
-    btnSub->setFont(btnFont);
-    btnAdd->setFont(btnFont);
-    btnEqual->setFont(btnFont);
-    btnPer->setFont(btnFont);
-    btnPoint->setFont(btnFont);
 
     // 设置按钮样式standardModel
-//    btnClear->setStyleSheet(btnOpStyle);
     btnClear->setStyleSheet(btnStyle);
+    btnPer->setStyleSheet(btnStyle);
+    btnDelete->setStyleSheet(btnStyle);
+    btnPoint->setStyleSheet(btnStyle);
 
     btnDiv->setStyleSheet(btnOpStyle);
     btnMulti->setStyleSheet(btnOpStyle);
-
-//    btnDelete->setStyleSheet(btnOpStyle);
-    btnDelete->setStyleSheet(btnStyle);
-
     btnSub->setStyleSheet(btnOpStyle);
-    btnAdd->setStyleSheet(btnAddStyle);
+    btnAdd->setStyleSheet(btnOpStyle);
+
     btnEqual->setStyleSheet(btnEqualStyle);
-    btnPer->setStyleSheet(btnPerStyle);
-    btnPoint->setStyleSheet(btnPerStyle);
 }
 
 // 格式化输入表达式

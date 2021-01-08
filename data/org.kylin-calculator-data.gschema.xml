@@ -1,9 +1,9 @@
 <schemalist gettext-domain="kylin-calculator">
-	<schema id="org.kylin-calculator-data.settings" path="/org/ukui/kylin-calculator/">
-		<key name="ratelist" type="s">
-			<default>"101010100,"</default>
-            <summary>ratelist</summary>
-            <description>ratelist</description>
-		</key>		
-	</schema>
+    <schema id="org.kylin-calculator-data.settings" path="/org/ukui/kylin-calculator/">
+        <key name="thememode" type="s" >
+            <default>"auto"</default>
+            <summary>thememode</summary>
+            <description>thememode</description>
+        </key>
+    </schema>
 </schemalist>

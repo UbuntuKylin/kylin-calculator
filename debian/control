@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Kylin Team <team+kylin@tracker.debian.org>
 Uploaders: caoliang <caoliang@kylinos.cn>,
            jiangdingyuan <jiangdingyuan@kylinos.cn>
-Build-Depends: debhelper-compat (= 13),
+Build-Depends: debhelper,
                qtbase5-dev,
                qt5-qmake,
                qtchooser,
