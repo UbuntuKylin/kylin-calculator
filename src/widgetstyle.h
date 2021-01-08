@@ -52,11 +52,10 @@ class WidgetStyle : public QWidget
 {
     Q_OBJECT
 
-protected:
-
-    QFont font;             //字体
-
 public:
+    WidgetStyle(QWidget *parent = nullptr) {}
+
+    static int themeColor;      // 主题颜色适配--默认浅色
 
 private:
     QWidget *title = nullptr;   //标题栏

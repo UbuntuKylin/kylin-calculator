@@ -99,13 +99,18 @@ void ScientificOutput::setWidgetUi()
 // 设置组件样式
 void ScientificOutput::setWidgetStyle()
 {
-    this->sciLabLastL->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
-
-    this->sciLabLastR->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
-
-    this->sciLabPre->setStyleSheet("color:#FB9119;font-size:20px;margin:0 7px 0 7px;");
-
-    this->sciLabNow->setStyleSheet("color:white;font-size:48px;font-weight:15px;margin:0 0 0 7px;");
+    if (WidgetStyle::themeColor == 0){
+        this->sciLabLastL->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
+        this->sciLabLastR->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
+        this->sciLabPre->setStyleSheet("color:#FB9119;font-size:20px;margin:0 7px 0 7px;");
+        this->sciLabNow->setStyleSheet("color:#272A2D;font-size:48px;font-weight:15px;margin:0 0 0 7px;");
+    }
+    else if (WidgetStyle::themeColor == 1){
+        this->sciLabLastL->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
+        this->sciLabLastR->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
+        this->sciLabPre->setStyleSheet("color:#FB9119;font-size:20px;margin:0 7px 0 7px;");
+        this->sciLabNow->setStyleSheet("color:#FFFFFF;font-size:48px;font-weight:15px;margin:0 0 0 7px;");
+    }
 }
 
 ScientificModel::ScientificModel(QWidget *parent)
@@ -385,134 +390,184 @@ void ScientificModel::setWidgetUi()
 // 设置组件样式
 void ScientificModel::setWidgetStyle()
 {
-    QString btnStyle = "QPushButton{"
-                       "width:106px;height:62px;opacity:0.95;"
-                       "background-color:#272A2D;border-radius:4px;"
-                       "font-size:42px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
-                       "}"
-                       "QPushButton:hover{background-color:rgb(180,180,180);}";
+    QString btnStyle;
+    QString btnOpStyle;
+    QString btnEqualStyle;
 
-    QString btnOpStyle = "QPushButton{"
-                         "width:106px;height:62px;opacity:1;"
-                         "background-color:#222E36;border-radius:4px;"
-                         "font-size:35px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;}"
-                         "QPushButton:hover{background-color:rgba(82,87,217,1);}";
+    if (WidgetStyle::themeColor == 0) {
+        for (int i = 0; i < 10; i++) {
+            btnNum[i]->setIcon(QIcon(":/image/light/standard/btnNum"+ QString::number(i) +".png"));
+        }
 
-    QString btnAddStyle = "QPushButton{"
-                          "width:106px;height:62px;opacity:1;"
-                          "background-color:#222E36;border-radius:4px;"
-                          "font-size:50px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
-                          "}"
-                          "QPushButton:hover{background-color:rgba(82,87,217,1);}";
+        btnDZero->setIcon(QIcon(":/image/light/standard/btnNum00.png"));
 
-    QString btnEqualStyle = "QPushButton{"
-                            "width:106px;height:126px;opacity:1;"
-                            "background-color:#E64A19;border-radius:4px;"
-                            "font-size:48px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
-                            "}"
-                            "QPushButton:hover{background-color:rgba(82,87,217,1);}";
+        btnClear->setIcon(QIcon(":/image/light/standard/btnClear.png"));
+        btnDiv->setIcon(QIcon(":/image/light/standard/btnDiv.png"));
+        btnMulti->setIcon(QIcon(":/image/light/standard/btnMulti.png"));
+        btnDelete->setIcon(QIcon(":/image/light/standard/btnDelete.png"));
+        btnSub->setIcon(QIcon(":/image/light/standard/btnSub.png"));
+        btnAdd->setIcon(QIcon(":/image/light/standard/btnAdd.png"));
+        btnEqual->setIcon(QIcon(":/image/light/standard/btnEqual.png"));
+        btnPer->setIcon(QIcon(":/image/light/standard/btnPer.png"));
+        btnPoint->setIcon(QIcon(":/image/light/standard/btnPoint.png"));
 
-    QString btnPerStyle = "QPushButton{"
-                          "width:106px;height:62px;opacity:1;"
-                          "background-color:#272A2D;border-radius:4px;"
-                          "font-size:31px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
-                          "}"
-                          "QPushButton:hover{background-color:rgb(180,180,180);}";
+        QString btnIconStr = "btn2nd,btnAns,btnLbra,btnRbra,btnReci,btnXPower2,btnXPower3,btnYPowerX,btnFac,btnXSquare2,btnXSquare3,btnYSquareX,btnSin,btnCos,btnTan,btnLog,btnRad,btnPi,btnE,btnLn";
+        QStringList btnIconList = btnIconStr.split(",");
+        int iconIdx = 0;
 
-    QString btnSciStyle = "QPushButton{"
-                          "width:106px;height:62px;opacity:1;"
-                          "background-color:#272A2D;border-radius:4px;"
-                          "font-size:31px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
-                          "}"
-                          "QPushButton:hover{background-color:rgb(180,180,180);}";
+        btnInd->setIcon(QIcon(":/image/light/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnUndo->setIcon(QIcon(":/image/light/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnBracketLeft->setIcon(QIcon(":/light/image/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnBracketRight->setIcon(QIcon(":/light/image/scientific/" + btnIconList[iconIdx++] + ".png"));
 
-    QFont btnFont("HelveticaNeueLTPro-UltLt", 30, 10);
+        btnReci->setIcon(QIcon(":/image/light/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnXPower2->setIcon(QIcon(":/image/light/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnXPower3->setIcon(QIcon(":/image/light/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnYPowerX->setIcon(QIcon(":/image/light/scientific/" + btnIconList[iconIdx++] + ".png"));
+
+        btnFac->setIcon(QIcon(":/image/light/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnXSquare2->setIcon(QIcon(":/image/light/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnXSquare3->setIcon(QIcon(":/image/light/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnYSquareX->setIcon(QIcon(":/image/light/scientific/" + btnIconList[iconIdx++] + ".png"));
+
+        btnSin->setIcon(QIcon(":/image/light/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnCos->setIcon(QIcon(":/image/light/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnTan->setIcon(QIcon(":/image/light/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnLog->setIcon(QIcon(":/image/light/scientific/" + btnIconList[iconIdx++] + ".png"));
+
+        btnRad->setIcon(QIcon(":/image/light/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnPi->setIcon(QIcon(":/image/light/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnExp->setIcon(QIcon(":/image/light/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnLn->setIcon(QIcon(":/image/light/scientific/" + btnIconList[iconIdx++] + ".png"));
+
+        btnStyle = "QPushButton{"
+                   "width:106px;height:62px;opacity:1;"
+                   "background-color:#F3F3F3;border-radius:4px;"
+                   "font-size:42px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
+                   "}"
+                   "QPushButton:hover{background-color:#E8E8E8;}";
+
+        btnOpStyle = "QPushButton{"
+                     "width:106px;height:62px;opacity:1;"
+                     "background-color:#F5F5F8;border-radius:4px;"
+                     "font-size:35px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
+                     "}"
+                     "QPushButton:hover{background-color:#E8E8E8;}";
+
+        btnEqualStyle = "QPushButton{"
+                        "width:106px;height:126px;opacity:1;"
+                        "background-color:#E64A19;border-radius:4px;"
+                        "font-size:48px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
+                        "}"
+                        "QPushButton:hover{background-color:#E45E4C;}";
+
+        btnBracketLeft->setIcon(QIcon(":/image/light/scientific/btnLbra.png"));
+        btnBracketRight->setIcon(QIcon(":/image/light/scientific/btnRbra.png"));
+        btnBracketLeft->show();
+        btnBracketRight->show();
+    }
+    else if (WidgetStyle::themeColor == 1) {
+        for (int i = 0; i < 10; i++) {
+            btnNum[i]->setIcon(QIcon(":/image/standard/btnNum"+ QString::number(i) +".png"));
+        }
+
+        btnDZero->setIcon(QIcon(":/image/standard/btnNum00.png"));
+
+        QString btnIconStr = "btn2nd,btnAns,btnLbra,btnRbra,btnReci,btnXPower2,btnXPower3,btnYPowerX,btnFac,btnXSquare2,btnXSquare3,btnYSquareX,btnSin,btnCos,btnTan,btnLog,btnRad,btnPi,btnE,btnLn";
+        QStringList btnIconList = btnIconStr.split(",");
+        int iconIdx = 0;
+
+        btnInd->setIcon(QIcon(":/image/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnUndo->setIcon(QIcon(":/image/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnBracketLeft->setIcon(QIcon(":/image/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnBracketRight->setIcon(QIcon(":/image/scientific/" + btnIconList[iconIdx++] + ".png"));
+
+        btnReci->setIcon(QIcon(":/image/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnXPower2->setIcon(QIcon(":/image/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnXPower3->setIcon(QIcon(":/image/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnYPowerX->setIcon(QIcon(":/image/scientific/" + btnIconList[iconIdx++] + ".png"));
+
+        btnFac->setIcon(QIcon(":/image/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnXSquare2->setIcon(QIcon(":/image/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnXSquare3->setIcon(QIcon(":/image/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnYSquareX->setIcon(QIcon(":/image/scientific/" + btnIconList[iconIdx++] + ".png"));
+
+        btnSin->setIcon(QIcon(":/image/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnCos->setIcon(QIcon(":/image/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnTan->setIcon(QIcon(":/image/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnLog->setIcon(QIcon(":/image/scientific/" + btnIconList[iconIdx++] + ".png"));
+
+        btnRad->setIcon(QIcon(":/image/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnPi->setIcon(QIcon(":/image/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnExp->setIcon(QIcon(":/image/scientific/" + btnIconList[iconIdx++] + ".png"));
+        btnLn->setIcon(QIcon(":/image/scientific/" + btnIconList[iconIdx++] + ".png"));
+
+        btnStyle = "QPushButton{"
+                   "width:106px;height:62px;opacity:0.95;"
+                   "background-color:#27292C;border-radius:4px;"
+                   "font-size:42px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
+                   "}"
+                   "QPushButton:hover{background-color:#474747;}";
+
+        btnOpStyle = "QPushButton{"
+                     "width:106px;height:62px;opacity:1;"
+                     "background-color:#222E36;border-radius:4px;"
+                     "font-size:35px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;}"
+                     "QPushButton:hover{background-color:#474747;}";
+
+        btnEqualStyle = "QPushButton{"
+                        "width:106px;height:126px;opacity:1;"
+                        "background-color:#E64A19;border-radius:4px;"
+                        "font-size:48px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
+                        "}"
+                        "QPushButton:hover{background-color:#E45E4C;}";
+    }
+
 
     for (int i = 0; i < 10; i++) {
         btnNum[i]->setStyleSheet(btnStyle);
-        btnNum[i]->setFont(btnFont);
     }
 
     btnDZero->setStyleSheet(btnStyle);
-    btnDZero->setFont(btnFont);
-
-    // 设置按钮字体
-    btnClear->setFont(btnFont);
-    btnDiv->setFont(btnFont);
-    btnMulti->setFont(btnFont);
-    btnDelete->setFont(btnFont);
-    btnSub->setFont(btnFont);
-    btnAdd->setFont(btnFont);
-    btnEqual->setFont(btnFont);
-    btnPer->setFont(btnFont);
-    btnPoint->setFont(btnFont);
-
-    btnInd->setFont(btnFont);
-    btnUndo->setFont(btnFont);
-    btnBracketLeft->setFont(btnFont);
-    btnBracketRight->setFont(btnFont);
-
-    btnReci->setFont(btnFont);
-    btnXPower2->setFont(btnFont);
-    btnXPower3->setFont(btnFont);
-    btnYPowerX->setFont(btnFont);
-
-    btnFac->setFont(btnFont);
-    btnXSquare2->setFont(btnFont);
-    btnXSquare3->setFont(btnFont);
-    btnYSquareX->setFont(btnFont);
-
-    btnSin->setFont(btnFont);
-    btnCos->setFont(btnFont);
-    btnTan->setFont(btnFont);
-    btnLog->setFont(btnFont);
-
-    btnRad->setFont(btnFont);
-    btnPi->setFont(btnFont);
-    btnExp->setFont(btnFont);
-    btnLn->setFont(btnFont);
 
     // 设置按钮样式standardModel
-    //    btnClear->setStyleSheet(btnOpStyle);
     btnClear->setStyleSheet(btnStyle);
 
     btnDiv->setStyleSheet(btnOpStyle);
     btnMulti->setStyleSheet(btnOpStyle);
 
-    //    btnDelete->setStyleSheet(btnOpStyle);
     btnDelete->setStyleSheet(btnStyle);
 
     btnSub->setStyleSheet(btnOpStyle);
-    btnAdd->setStyleSheet(btnAddStyle);
+    btnAdd->setStyleSheet(btnOpStyle);
     btnEqual->setStyleSheet(btnEqualStyle);
-    btnPer->setStyleSheet(btnPerStyle);
-    btnPoint->setStyleSheet(btnPerStyle);
+    btnPer->setStyleSheet(btnStyle);
+    btnPoint->setStyleSheet(btnStyle);
 
-    btnInd->setStyleSheet(btnSciStyle);
-    btnUndo->setStyleSheet(btnSciStyle);
-    btnBracketLeft->setStyleSheet(btnSciStyle);
-    btnBracketRight->setStyleSheet(btnSciStyle);
+    btnInd->setStyleSheet(btnOpStyle);
+    btnUndo->setStyleSheet(btnOpStyle);
+    btnBracketLeft->setStyleSheet(btnOpStyle);
+    btnBracketRight->setStyleSheet(btnOpStyle);
 
-    btnReci->setStyleSheet(btnSciStyle);
-    btnXPower2->setStyleSheet(btnSciStyle);
-    btnXPower3->setStyleSheet(btnSciStyle);
-    btnYPowerX->setStyleSheet(btnSciStyle);
+    btnReci->setStyleSheet(btnOpStyle);
+    btnXPower2->setStyleSheet(btnOpStyle);
+    btnXPower3->setStyleSheet(btnOpStyle);
+    btnYPowerX->setStyleSheet(btnOpStyle);
 
-    btnFac->setStyleSheet(btnSciStyle);
-    btnXSquare2->setStyleSheet(btnSciStyle);
-    btnXSquare3->setStyleSheet(btnSciStyle);
-    btnYSquareX->setStyleSheet(btnSciStyle);
+    btnFac->setStyleSheet(btnOpStyle);
+    btnXSquare2->setStyleSheet(btnOpStyle);
+    btnXSquare3->setStyleSheet(btnOpStyle);
+    btnYSquareX->setStyleSheet(btnOpStyle);
 
-    btnSin->setStyleSheet(btnSciStyle);
-    btnCos->setStyleSheet(btnSciStyle);
-    btnTan->setStyleSheet(btnSciStyle);
-    btnLog->setStyleSheet(btnSciStyle);
+    btnSin->setStyleSheet(btnOpStyle);
+    btnCos->setStyleSheet(btnOpStyle);
+    btnTan->setStyleSheet(btnOpStyle);
+    btnLog->setStyleSheet(btnOpStyle);
 
-    btnRad->setStyleSheet(btnSciStyle);
-    btnPi->setStyleSheet(btnSciStyle);
-    btnExp->setStyleSheet(btnSciStyle);
-    btnLn->setStyleSheet(btnSciStyle);
-
+    btnRad->setStyleSheet(btnOpStyle);
+    btnPi->setStyleSheet(btnOpStyle);
+    btnExp->setStyleSheet(btnOpStyle);
+    btnLn->setStyleSheet(btnOpStyle);
 }
 
 // 格式化输入表达式
@@ -557,18 +612,34 @@ void ScientificModel::changeBtnDisplay()
         btnCos->setText("acos");
         btnTan->setText("atan");
 
-        btnSin->setIcon(QIcon(":/image/scientific/btnAsin.png"));
-        btnCos->setIcon(QIcon(":/image/scientific/btnAcos.png"));
-        btnTan->setIcon(QIcon(":/image/scientific/btnAtan.png"));
+        if (WidgetStyle::themeColor == 0) {
+            btnSin->setIcon(QIcon(":/image/light/scientific/btnAsin.png"));
+            btnCos->setIcon(QIcon(":/image/light/scientific/btnAcos.png"));
+            btnTan->setIcon(QIcon(":/image/light/scientific/btnAtan.png"));
+        }
+        else if (WidgetStyle::themeColor == 1) {
+            btnSin->setIcon(QIcon(":/image/scientific/btnAsin.png"));
+            btnCos->setIcon(QIcon(":/image/scientific/btnAcos.png"));
+            btnTan->setIcon(QIcon(":/image/scientific/btnAtan.png"));
+        }
+
     }
     else {
         btnSin->setText("sin");
         btnCos->setText("cos");
         btnTan->setText("tan");
 
-        btnSin->setIcon(QIcon(":/image/scientific/btnSin.png"));
-        btnCos->setIcon(QIcon(":/image/scientific/btnCos.png"));
-        btnTan->setIcon(QIcon(":/image/scientific/btnTan.png"));
+        if (WidgetStyle::themeColor == 0) {
+            btnSin->setIcon(QIcon(":/image/light/scientific/btnSin.png"));
+            btnCos->setIcon(QIcon(":/image/light/scientific/btnCos.png"));
+            btnTan->setIcon(QIcon(":/image/light/scientific/btnTan.png"));
+        }
+        else if (WidgetStyle::themeColor == 1) {
+            btnSin->setIcon(QIcon(":/image/scientific/btnSin.png"));
+            btnCos->setIcon(QIcon(":/image/scientific/btnCos.png"));
+            btnTan->setIcon(QIcon(":/image/scientific/btnTan.png"));
+        }
+
     }
 }
 

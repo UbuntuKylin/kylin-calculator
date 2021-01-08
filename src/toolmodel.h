@@ -41,6 +41,7 @@
 #include <QEventLoop>
 #include <QRegExp>
 
+#include "widgetstyle.h"
 #include "basicbutton.h"
 #include "InputSymbols.h"
 //#include "cal.h"
@@ -62,7 +63,7 @@ public:
 
     // 汇率更新
     QLabel *toolLabUpdate;
-    QLabel *toolIconUpdate;
+    QPushButton *toolIconUpdate;
     QLabel *toolLabRate;
 
     // 单位换算比率

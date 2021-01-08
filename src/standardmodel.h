@@ -30,6 +30,7 @@
 #include <QDebug>
 
 #include "basicbutton.h"
+#include "widgetstyle.h"
 
 class StandardOutput : public QWidget
 {

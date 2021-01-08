@@ -40,7 +40,7 @@ void ToolModelOutput::setWidgetUi()
 {
     // 汇率刷新
     toolLabUpdate  = new QLabel(this);
-    toolIconUpdate = new QLabel(this);
+    toolIconUpdate = new QPushButton(this);
     toolLabRate    = new QLabel(this);
 
     toolUpdateLayout = new QVBoxLayout(this);
@@ -82,9 +82,9 @@ void ToolModelOutput::setWidgetUi()
     this->toolLabBef = new QLabel(this);
     this->toolLabAft = new QLabel(this);
 
-//    toolLabHis->setWordWrap(true);
-//    toolLabBef->setWordWrap(true);
-//    toolLabAft->setWordWrap(true);
+    // toolLabHis->setWordWrap(true);
+    // toolLabBef->setWordWrap(true);
+    // toolLabAft->setWordWrap(true);
 
     QFont toolLabHisFont("SourceHanSansCN-Light", 40, 15);
     this->toolLabHis->setAlignment(Qt::AlignRight | Qt::AlignTop);
@@ -132,8 +132,8 @@ void ToolModelOutput::setWidgetUi()
     unitListBef->setGeometry(QRect(80, 60, 280, 410));
     unitListAft->setGeometry(QRect(80, 130, 280, 410));
 
-//    QString strUnitList = "人民币,美元,欧元,英镑,日元,韩元,澳大利亚元";
-//    initUnitList(strUnitList);
+    // QString strUnitList = "人民币,美元,欧元,英镑,日元,韩元,澳大利亚元";
+    // initUnitList(strUnitList);
 
     connect(unitListBef->unitList, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(unitListSelect(QListWidgetItem*)));
     connect(unitListAft->unitList, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(unitListSelect(QListWidgetItem*)));
@@ -349,7 +349,7 @@ void ToolModelOutput::setWidgetUi()
 
     timer->start(10);
 
-//    updateRate();
+    // updateRate();
 }
 
 // 设置组件样式
@@ -357,54 +357,79 @@ void ToolModelOutput::setWidgetStyle()
 {
     // 汇率刷新
     toolLabUpdate->setText(tr("Rate update"));
-//    toolLabUpdate->setText("汇率更新");
-    toolLabUpdate->setStyleSheet("font-family:SourceHanSansCN-ExtraLight;font-size:16px;color:#FFFFFF;");
+    // toolLabUpdate->setText("汇率更新");
 
-    toolIconUpdate->setFixedSize(16, 16);
-    toolIconUpdate->setStyleSheet("border-image:url(:/image/update.png);");
+    toolIconUpdate->setIcon(QIcon::fromTheme("transform-rotate", QIcon(":/image/update.png")));
+    toolIconUpdate->setIconSize(QSize(16, 16));
 
     toolLabRate->setText("2020.09.03 09:30\n1 CNY = 0.15 USD");
-    toolLabRate->setStyleSheet("font-family:NotoSansHans-Light;font-size:10px;color:#A6A6A6;line-height:17px;");
 
     toolUpdateWid->setFixedSize(106, 133);
-//    toolUpdateWid->setFixedWidth(107);
-    toolUpdateWid->setStyleSheet("background:#18181A;opacity:0.75;");
 
-
-    QString unitLabStyle  = "font-family:SourceHanSansCN-ExtraLight;font-size:18px;color:#FFFFFF;line-height:22px;";
 
     // 换算前单位标识
     toolRateNameBef = tr("Chinese Yuan");
-//    toolRateNameBef = "人民币";
+    // toolRateNameBef = "人民币";
     toolRateSymbBef = "CNY";
     toolLabUnitBef->setText(toolRateNameBef + "\n" + toolRateSymbBef);
-    toolLabUnitBef->setStyleSheet(unitLabStyle);
 
     toolLabIconBef->setFixedSize(10, 10);
-    toolLabIconBef->setStyleSheet("border-image:url(:/image/downward.png);");
 
     toolUnitBefWid->setFixedSize(106, 66);
-    toolUnitBefWid->setStyleSheet("background:#18181A;color:#FFFFFF;opacity:0.75;");
 
     // 换算后单位标识
     toolRateNameAft = tr("US Dollar");
-//    toolRateNameAft = "美元";
+    // toolRateNameAft = "美元";
     toolRateSymbAft = "USD";
     toolLabUnitAft->setText(toolRateNameAft + "\n" + toolRateSymbAft);
-    toolLabUnitAft->setStyleSheet(unitLabStyle);
 
     toolLabIconAft->setFixedSize(10, 10);
-    toolLabIconAft->setStyleSheet("border-image:url(:/image/downward.png);");
 
-    toolUnitAftWid->setStyleSheet("background:#18181A;color:#FFFFFF;opacity:0.75;");
 
-    // 数据输出界面
-    this->toolLabHis->setStyleSheet("color:#8C8C8C;font-size:20px;background-color:#18181A;");
-    this->toolLabBef->setStyleSheet("color:#FFFFFF;font-size:45px;background-color:#18181A;");
-    this->toolLabAft->setStyleSheet("color:#FFFFFF;font-size:45px;background-color:#18181A;");
 
-    this->setStyleSheet("background-color:#8C8C8C;border-radius:4px;");
+    if (WidgetStyle::themeColor == 0) {
+        toolLabUpdate->setStyleSheet("font-family:SourceHanSansCN-ExtraLight;font-size:16px;color:#272A2D;");
 
+        toolLabRate->setStyleSheet("font-family:NotoSansHans-Light;font-size:10px;color:#272A2D;line-height:17px;");
+        toolUpdateWid->setStyleSheet("background:#F3F3F3;opacity:1;");
+
+        QString unitLabStyle  = "font-family:SourceHanSansCN-ExtraLight;font-size:18px;color:#272A2D;line-height:22px;";
+        toolLabUnitBef->setStyleSheet(unitLabStyle);
+        toolLabIconBef->setStyleSheet("border-image:url(:/image/downward.png);");
+        toolUnitBefWid->setStyleSheet("background:#F3F3F3;color:#272A2D;opacity:1;");
+        toolLabUnitAft->setStyleSheet(unitLabStyle);
+        toolLabIconAft->setStyleSheet("border-image:url(:/image/downward.png);");
+        toolUnitAftWid->setStyleSheet("background:#F3F3F3;color:#272A2D;opacity:1;");
+
+        // 数据输出界面
+        this->toolLabHis->setStyleSheet("color:#8C8C8C;font-size:20px;background-color:#FFFFFF;");
+        this->toolLabBef->setStyleSheet("color:#272A2D;font-size:45px;background-color:#FAFAFA;");
+        this->toolLabAft->setStyleSheet("color:#272A2D;font-size:45px;background-color:#FAFAFA;");
+
+        this->setStyleSheet("background-color:#8C8C8C;border-radius:4px;");
+
+    }
+    else if (WidgetStyle::themeColor == 1) {
+        toolLabUpdate->setStyleSheet("font-family:SourceHanSansCN-ExtraLight;font-size:16px;color:#FFFFFF;");
+        toolLabRate->setStyleSheet("font-family:NotoSansHans-Light;font-size:10px;color:#A6A6A6;line-height:17px;");
+        toolUpdateWid->setStyleSheet("background:#18181A;opacity:0.75;");
+
+        QString unitLabStyle  = "font-family:SourceHanSansCN-ExtraLight;font-size:18px;color:#FFFFFF;line-height:22px;";
+        toolLabUnitBef->setStyleSheet(unitLabStyle);
+        toolLabIconBef->setStyleSheet("border-image:url(:/image/downward.png);");
+        toolUnitBefWid->setStyleSheet("background:#18181A;color:#FFFFFF;opacity:0.75;");
+        toolLabUnitAft->setStyleSheet(unitLabStyle);
+        toolLabIconAft->setStyleSheet("border-image:url(:/image/downward.png);");
+        toolUnitAftWid->setStyleSheet("background:#18181A;color:#FFFFFF;opacity:0.75;");
+
+        // 数据输出界面
+        this->toolLabHis->setStyleSheet("color:#8C8C8C;font-size:20px;background-color:#18181A;");
+        this->toolLabBef->setStyleSheet("color:#FFFFFF;font-size:45px;background-color:#18181A;");
+        this->toolLabAft->setStyleSheet("color:#FFFFFF;font-size:45px;background-color:#18181A;");
+
+        this->setStyleSheet("background-color:#8C8C8C;border-radius:4px;");
+
+    }
 }
 
 // 初始化单位列表
@@ -453,11 +478,15 @@ void ToolModelOutput::initUnitList(QString listStr)
     unitListBef->unitList->setSpacing(2);
     unitListAft->unitList->setSpacing(2);
 
+    unitListBef->unitList->setCurrentRow(0);
+//    unitListAft->unitList->setCurrentRow(1);
+
 //    QString unitListStyle = "QListWidget::item:selected{background-color:#36363A;}"
 //                            "QListWidget::item:hover{background-color:#666666;}";
 
 //    unitListBef->setStyleSheet(unitListStyle);
 //    unitListAft->setStyleSheet(unitListStyle);
+
 }
 
 // 单位换算函数
@@ -579,7 +608,7 @@ void ToolModelOutput::updateRate()
     // 初始化选择列表的汇率选项
     initUnitList(strRateKey);
 
-    qDebug() << strRateList;
+//    qDebug() << strRateList;
 //    qDebug() << strRateKey;
 //    manager.deleteLater();
 //    netReply->deleteLater();
@@ -725,59 +754,26 @@ void ToolModelOutput::updateRateName()
 ToolModelButton::ToolModelButton(QWidget *parent)
     : QWidget(parent)
 {
-    //布局按钮
-    QFont btnFont("HelveticaNeueLTPro-UltLt", 30, 10);
+    // 初始化组件
+    this->setWidgetUi();
 
-    QString btnStyle = "QPushButton{"
-                       "width:106px;height:62px;opacity:0.95;"
-                       "background-color:#272A2D;border-radius:4px;"
-                       "font-size:42px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
-                       "}"
-                       "QPushButton:hover{background-color:rgb(180,180,180);}";
+    // 设置组件样式
+    this->setWidgetStyle();
+}
 
+// 初始化组件
+void ToolModelButton::setWidgetUi()
+{
     for (int i = 0; i < 10; i++) {
         btnNum[i] = new BasicButton(this);
         btnNum[i]->setText(QString::number(i));
-        btnNum[i]->setStyleSheet(btnStyle);
-        btnNum[i]->setFont(btnFont);
         btnNum[i]->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-        btnNum[i]->setIcon(QIcon(":/image/standard/btnNum"+ QString::number(i) +".png"));
         btnNum[i]->setIconSize(QSize(106, 62));
     }
 
     btnDZero = new BasicButton(this);
     btnDZero->setText("00");
-    btnDZero->setStyleSheet(btnStyle);
-    btnDZero->setFont(btnFont);
-    btnDZero->setIcon(QIcon(":/image/standard/btnNum00.png"));
     btnDZero->setIconSize(QSize(106, 62));
-
-    QString btnOpStyle = "QPushButton{"
-                         "width:106px;height:62px;opacity:1;"
-                         "background-color:#222E36;border-radius:4px;"
-                         "font-size:35px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;}"
-                         "QPushButton:hover{background-color:rgba(82,87,217,1);}";
-
-    QString btnAddStyle = "QPushButton{"
-                          "width:106px;height:62px;opacity:1;"
-                          "background-color:#222E36;border-radius:4px;"
-                          "font-size:50px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
-                          "}"
-                          "QPushButton:hover{background-color:rgba(82,87,217,1);}";
-
-    QString btnEqualStyle = "QPushButton{"
-                            "width:106px;height:126px;opacity:1;"
-                            "background-color:#E64A19;border-radius:4px;"
-                            "font-size:48px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
-                            "}"
-                            "QPushButton:hover{background-color:rgba(82,87,217,1);}";
-    QString btnPerStyle = "QPushButton{"
-                          "width:106px;height:62px;opacity:1;"
-                          "background-color:#272A2D;border-radius:4px;"
-                          "font-size:31px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
-                          "}"
-                          "QPushButton:hover{background-color:rgb(180,180,180);}";
 
     btnClear = new BasicButton(this);
     btnPer = new BasicButton(this);
@@ -806,16 +802,6 @@ ToolModelButton::ToolModelButton(QWidget *parent)
     btnPer->setText(btnNameList[index++]);
     btnPoint->setText(btnNameList[index++]);
 
-    btnClear->setIcon(QIcon(":/image/standard/btnClear.png"));
-    btnDiv->setIcon(QIcon(":/image/standard/btnDiv.png"));
-    btnMulti->setIcon(QIcon(":/image/standard/btnMulti.png"));
-    btnDelete->setIcon(QIcon(":/image/standard/btnDelete.png"));
-    btnSub->setIcon(QIcon(":/image/standard/btnSub.png"));
-    btnAdd->setIcon(QIcon(":/image/standard/btnAdd.png"));
-    btnEqual->setIcon(QIcon(":/image/standard/btnEqual.png"));
-    btnPer->setIcon(QIcon(":/image/standard/btnPer.png"));
-    btnPoint->setIcon(QIcon(":/image/standard/btnPoint.png"));
-
     btnClear->setIconSize(QSize(106, 62));
     btnDiv->setIconSize(QSize(106, 62));
     btnMulti->setIconSize(QSize(106, 62));
@@ -825,33 +811,6 @@ ToolModelButton::ToolModelButton(QWidget *parent)
     btnEqual->setIconSize(QSize(106, 62));
     btnPer->setIconSize(QSize(106, 62));
     btnPoint->setIconSize(QSize(106, 62));
-
-    // 设置按钮字体
-    btnClear->setFont(btnFont);
-    btnDiv->setFont(btnFont);
-    btnMulti->setFont(btnFont);
-    btnDelete->setFont(btnFont);
-    btnSub->setFont(btnFont);
-    btnAdd->setFont(btnFont);
-    btnEqual->setFont(btnFont);
-    btnPer->setFont(btnFont);
-    btnPoint->setFont(btnFont);
-
-    // 设置按钮样式standardModel
-    //    btnClear->setStyleSheet(btnOpStyle);
-    btnClear->setStyleSheet(btnStyle);
-
-    btnDiv->setStyleSheet(btnOpStyle);
-    btnMulti->setStyleSheet(btnOpStyle);
-
-    //    btnDelete->setStyleSheet(btnOpStyle);
-    btnDelete->setStyleSheet(btnStyle);
-
-    btnSub->setStyleSheet(btnOpStyle);
-    btnAdd->setStyleSheet(btnAddStyle);
-    btnEqual->setStyleSheet(btnEqualStyle);
-    btnPer->setStyleSheet(btnPerStyle);
-    btnPoint->setStyleSheet(btnPerStyle);
 
     // 设置按钮自适应放缩
     btnClear->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -889,19 +848,114 @@ ToolModelButton::ToolModelButton(QWidget *parent)
 
     this->setFixedHeight(320);
     this->setLayout(btnLayout);
-    this->setStyleSheet("border-radius:4px;");
-}
-
-// 初始化组件
-void ToolModelButton::setWidgetUi()
-{
 
 }
 
 // 设置组件样式
 void ToolModelButton::setWidgetStyle()
 {
+    QString btnStyle;
+    QString btnOpStyle;
+    QString btnEqualStyle;
 
+    if (WidgetStyle::themeColor == 0) {
+        for (int i = 0; i < 10; i++) {
+            btnNum[i]->setIcon(QIcon(":/image/light/standard/btnNum"+ QString::number(i) +".png"));
+        }
+
+        btnDZero->setIcon(QIcon(":/image/light/standard/btnNum00.png"));
+
+        btnClear->setIcon(QIcon(":/image/light/standard/btnClear.png"));
+        btnDiv->setIcon(QIcon(":/image/light/standard/btnDiv.png"));
+        btnMulti->setIcon(QIcon(":/image/light/standard/btnMulti.png"));
+        btnDelete->setIcon(QIcon(":/image/light/standard/btnDelete.png"));
+        btnSub->setIcon(QIcon(":/image/light/standard/btnSub.png"));
+        btnAdd->setIcon(QIcon(":/image/light/standard/btnAdd.png"));
+        btnEqual->setIcon(QIcon(":/image/light/standard/btnEqual.png"));
+        btnPer->setIcon(QIcon(":/image/light/standard/btnPer.png"));
+        btnPoint->setIcon(QIcon(":/image/light/standard/btnPoint.png"));
+
+
+        btnStyle = "QPushButton{"
+                   "width:106px;height:62px;opacity:1;"
+                   "background-color:#F3F3F3;border-radius:4px;"
+                   "font-size:42px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
+                   "}"
+                   "QPushButton:hover{background-color:#E8E8E8;}";
+
+        btnOpStyle = "QPushButton{"
+                     "width:106px;height:62px;opacity:1;"
+                     "background-color:#F5F5F8;border-radius:4px;"
+                     "font-size:35px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
+                     "}"
+                     "QPushButton:hover{background-color:#E8E8E8;}";
+
+        btnEqualStyle = "QPushButton{"
+                        "width:106px;height:126px;opacity:1;"
+                        "background-color:#E64A19;border-radius:4px;"
+                        "font-size:48px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
+                        "}"
+                        "QPushButton:hover{background-color:#E45E4C;}";
+    }
+    else if (WidgetStyle::themeColor == 1) {
+        for (int i = 0; i < 10; i++) {
+            btnNum[i]->setIcon(QIcon(":/image/standard/btnNum"+ QString::number(i) +".png"));
+        }
+
+        btnDZero->setIcon(QIcon(":/image/standard/btnNum00.png"));
+
+        btnClear->setIcon(QIcon(":/image/standard/btnClear.png"));
+        btnDiv->setIcon(QIcon(":/image/standard/btnDiv.png"));
+        btnMulti->setIcon(QIcon(":/image/standard/btnMulti.png"));
+        btnDelete->setIcon(QIcon(":/image/standard/btnDelete.png"));
+        btnSub->setIcon(QIcon(":/image/standard/btnSub.png"));
+        btnAdd->setIcon(QIcon(":/image/standard/btnAdd.png"));
+        btnEqual->setIcon(QIcon(":/image/standard/btnEqual.png"));
+        btnPer->setIcon(QIcon(":/image/standard/btnPer.png"));
+        btnPoint->setIcon(QIcon(":/image/standard/btnPoint.png"));
+
+        btnStyle = "QPushButton{"
+                   "width:106px;height:62px;opacity:0.95;"
+                   "background-color:#27292C;border-radius:4px;"
+                   "font-size:42px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
+                   "}"
+                   "QPushButton:hover{background-color:#474747;}";
+
+        btnOpStyle = "QPushButton{"
+                     "width:106px;height:62px;opacity:1;"
+                     "background-color:#222E36;border-radius:4px;"
+                     "font-size:35px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;}"
+                     "QPushButton:hover{background-color:#474747;}";
+
+        btnEqualStyle = "QPushButton{"
+                        "width:106px;height:126px;opacity:1;"
+                        "background-color:#E64A19;border-radius:4px;"
+                        "font-size:48px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
+                        "}"
+                        "QPushButton:hover{background-color:#E45E4C;}";
+    }
+    //布局按钮
+
+    for (int i = 0; i < 10; i++) {
+        btnNum[i]->setStyleSheet(btnStyle);
+    }
+
+    btnDZero->setStyleSheet(btnStyle);
+
+    // 设置按钮样式standardModel
+    btnClear->setStyleSheet(btnStyle);
+    btnPer->setStyleSheet(btnStyle);
+    btnDelete->setStyleSheet(btnStyle);
+    btnPoint->setStyleSheet(btnStyle);
+
+    btnDiv->setStyleSheet(btnOpStyle);
+    btnMulti->setStyleSheet(btnOpStyle);
+    btnSub->setStyleSheet(btnOpStyle);
+    btnAdd->setStyleSheet(btnOpStyle);
+
+    btnEqual->setStyleSheet(btnEqualStyle);
+
+    this->setStyleSheet("border-radius:4px;");
 }
 
 // 键盘响应事件
@@ -982,53 +1036,38 @@ void ToolModelButton::keyPressEvent(QKeyEvent *event)
 UnitListWidget::UnitListWidget(QWidget *parent)
     : QWidget(parent)
 {
+    // 初始化组件
+    this->setWidgetUi();
+
+    // 设置组件样式
+    this->setWidgetStyle();
+}
+
+// 初始化组件
+void UnitListWidget::setWidgetUi()
+{
     // 标题和取消
     unitTitle = new QLabel(this);
     btnCancel = new QPushButton(this);
 
     unitTitle->setText(tr("currency"));
 //    unitTitle->setText("货币");
-    unitTitle->setStyleSheet("width:30px;height:20px;font-size:14px;font-family:Source Han Sans CN;color:#FFFFFF;text-align:center;");
     unitTitle->setAlignment(Qt::AlignCenter);
     unitTitle->setFixedHeight(20);
 
     btnCancel->setText(tr("cancel"));
 //    btnCancel->setText("取消");
-    btnCancel->setStyleSheet("width:30px;height:20px;border:0px;font-size:14px;"
-                             "font-family:Source Han Sans CN;color:#EE8A18;");
+
     btnCancel->resize(QSize(30, 20));
     btnCancel->move(this->x() + 235, 15);
 
     // 搜索框
     searchEdit = new QLineEdit(this);
-    searchEdit->setStyleSheet("width:246px;height:32px;background:rgba(30,30,32,0.5);border-radius:4px;");
     searchEdit->setPlaceholderText(tr("search"));
 //    searchEdit->setPlaceholderText("搜索");
 
     // 单位列表
     unitList = new QListWidget(this);
-    unitList->setStyleSheet("QListWidget::item{border-radius:4px;}"
-                            "QListWidget::item:selected{background-color:#FF800F;}"
-                            "QListWidget::item:hover{background-color:#666666;}");
-
-    // 设置垂直滚动条基本样式
-    QString styScrollBar = " QScrollBar:vertical\
-    {\
-            width:4px;\
-            background:rgba(0,0,0,0%);\
-            margin:0px,0px,0px,0px;\
-            padding-top:9px;   // 留出9px给上面和下面的箭头\
-            padding-bottom:9px;\
-    }\
-            QScrollBar::handle:vertical\
-    {\
-            width:4px;\
-            background:rgba(0,0,0,25%);\
-            border-radius:4px;   // 滚动条两端变成椭圆\
-            min-height:20;\
-    }";
-
-    unitList->verticalScrollBar()->setStyleSheet("width:4px;background:#47474D;border-radius:2px;border:0;");
 
     // 总体布局
     unitListLayout = new QVBoxLayout(this);
@@ -1046,22 +1085,43 @@ UnitListWidget::UnitListWidget(QWidget *parent)
     this->setContentsMargins(0, 0, 0, 0);
     this->setFixedHeight(410);
     this->setFixedWidth(280);
-    this->setStyleSheet("background-color:#36363A;color:#FFFFFF;font-size:18px;border:none;border-radius:4px;");
 
     btnCancel->raise();
     searchEdit->hide();
 }
 
-// 初始化组件
-void UnitListWidget::setWidgetUi()
-{
-
-}
-
 // 初始化组件样式
 void UnitListWidget::setWidgetStyle()
 {
+    if (WidgetStyle::themeColor == 0) {
+        unitTitle->setStyleSheet("width:30px;height:20px;font-size:14px;font-family:Source Han Sans CN;color:#000000;text-align:center;");
+        btnCancel->setStyleSheet("width:30px;height:20px;border:0px;font-size:14px;"
+                                 "font-family:Source Han Sans CN;color:#3D6BE5;");
 
+        searchEdit->setStyleSheet("width:246px;height:32px;background:rgba(231,231,231,0.5);border-radius:4px;");
+        unitList->setStyleSheet("QListWidget::item{border-radius:4px;}"
+                                "QListWidget::item:selected{background-color:#3D6BE5;color:#FFFFFF;}"
+                                "QListWidget::item:hover{background-color:#E9E9E9;}");
+
+        unitList->verticalScrollBar()->setStyleSheet("width:4px;background:#E9E9E9;border-radius:2px;border:0;");
+        this->setStyleSheet("background-color:#F8F8F8;font-size:18px;border:none;border-radius:4px;");
+
+    }
+    else if (WidgetStyle::themeColor == 1) {
+        unitTitle->setStyleSheet("width:30px;height:20px;font-size:14px;font-family:Source Han Sans CN;color:#FFFFFF;text-align:center;");
+        btnCancel->setStyleSheet("width:30px;height:20px;border:0px;font-size:14px;"
+                                 "font-family:Source Han Sans CN;color:#EE8A18;");
+
+        searchEdit->setStyleSheet("width:246px;height:32px;background:rgba(30,30,32,0.5);border-radius:4px;");
+        unitList->setStyleSheet("QListWidget::item{border-radius:4px;}"
+                               "QListWidget::item:selected{background-color:#FF800F;}"
+                               "QListWidget::item:hover{background-color:#666666;}");
+
+        unitList->verticalScrollBar()->setStyleSheet("width:4px;background:#47474D;border-radius:2px;border:0;");
+        this->setStyleSheet("background-color:#36363A;color:#FFFFFF;font-size:18px;border:none;border-radius:4px;");
+
+
+    }
 }
 
 // 单位列表列表项
@@ -1107,12 +1167,13 @@ void UnitListItem::setWidgetUi()
 void UnitListItem::setWidgetStyle()
 {
     // 单位名称组件样式
-    QString itemNameStyle  = "font-family:SourceHanSansCN-ExtraLight;font-size:16px;color:#FFFFFF;background:transparent;";
+    QString itemNameStyle  = "font-family:SourceHanSansCN-ExtraLight;font-size:16px;background:transparent;";
     unitItemName->setStyleSheet(itemNameStyle);
 
     // 单位符号组件样式
-    QString itemSymbStyle  = "font-family:SourceHanSansCN-ExtraLight;font-size:16px;color:#FFFFFF;width:30px;background:transparent;";
+    QString itemSymbStyle  = "font-family:SourceHanSansCN-ExtraLight;font-size:16px;width:30px;background:transparent;";
     unitItemSymb->setStyleSheet(itemSymbStyle);
+
     unitItemSymb->setFixedWidth(50);
 
     this->setFixedHeight(32);

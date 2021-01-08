@@ -48,6 +48,8 @@ void TitleBar::setFuncLabel(QString label)
 // 初始化组件
 void TitleBar::setWidgetUi()
 {
+    // 窗体透明
+    this->setAttribute(Qt::WA_TranslucentBackground, true);
     this->setFixedHeight(38);
 
     // 按钮初始化
@@ -75,87 +77,106 @@ void TitleBar::setWidgetUi()
     //    m_pMinimizeButton->setToolTip("Minimize");
     //    m_pMaximizeButton->setToolTip("Maximize");
     //    m_pCloseButton->setToolTip("Close");
+    funcListButton->setToolTip(tr("FuncList"));
+    m_pTopButton->setToolTip(tr("StayTop"));
+    m_pMinimizeButton->setToolTip(tr("Minimize"));
+    m_pMinimizeButton->setToolTip(tr("Close"));
 
     // 设置图片
     m_pIconLabel->setIcon(QIcon::fromTheme("calc"));
-    m_pIconLabel->setIconSize(QSize(30, 30));
-//    funcListButton->setIcon(QIcon(":/image/funclist.png"));
-//    m_pTopButton->setIcon(QIcon(":/image/top.png"));
-//    m_pMinimizeButton->setIcon(QIcon(":/image/min.png"));
-//    m_pCloseButton->setIcon(QIcon(":/image/close.png"));
+    m_pIconLabel->setIconSize(QSize(24, 24));
 
-//    m_pMinimizeButton->setIconSize(QSize(25, 25));
-//    m_pTopButton->setIconSize(QSize(18, 18));
-
-    funcListButton->setIcon(QIcon::fromTheme("application-menu"));
-    funcListButton->setProperty("useIconHighlightEffect", true);
-    funcListButton->setProperty("iconHighlightEffectMode", 1);
-    funcListButton->setProperty("isWindowButton", 0x1);
-    funcListButton->setProperty("useIconHighlightEffect", 0x2);
-    funcListButton->setFlat(true);
+    funcListButton->setIcon(QIcon::fromTheme("open-menu-symbolic"));
+    funcListButton->setProperty("isWindowButton", 0x1);     
+    funcListButton->setProperty("useIconHighlightEffect", 0x2);     
+    funcListButton->setFlat(true);;
     funcListButton->update();
 
-    m_pTopButton->setIcon(QIcon::fromTheme("color-select-symbolic"));
-    m_pTopButton->setProperty("useIconHighlightEffect", true);
-    m_pTopButton->setProperty("iconHighlightEffectMode", 1);
-    m_pTopButton->setProperty("isWindowButton", 0x1);
-    m_pTopButton->setProperty("useIconHighlightEffect", 0x2);
-    m_pTopButton->setFlat(true);
+    m_pTopButton->setIcon(QIcon::fromTheme("ukui-unfixed-symbolic", QIcon(":/image/top.png")));
+    m_pTopButton->setProperty("isWindowButton", 0x1);     
+    m_pTopButton->setProperty("useIconHighlightEffect", 0x2);     
+    m_pTopButton->setFlat(true);;
     m_pTopButton->update();
 
     m_pMinimizeButton->setIcon(QIcon::fromTheme("window-minimize-symbolic"));
-    m_pMinimizeButton->setProperty("useIconHighlightEffect", true);
-    m_pMinimizeButton->setProperty("iconHighlightEffectMode", 1);
-    m_pMinimizeButton->setProperty("isWindowButton", 0x1);
-    m_pMinimizeButton->setProperty("useIconHighlightEffect", 0x2);
-    m_pMinimizeButton->setFlat(true);
+    m_pMinimizeButton->setProperty("isWindowButton", 0x1);     
+    m_pMinimizeButton->setProperty("useIconHighlightEffect", 0x2);     
+    m_pMinimizeButton->setFlat(true);;
     m_pMinimizeButton->update();
 
     m_pCloseButton->setIcon(QIcon::fromTheme("window-close-symbolic"));
-    m_pCloseButton->setProperty("useIconHighlightEffect", true);
-    m_pCloseButton->setProperty("iconHighlightEffectMode", 1);
     m_pCloseButton->setProperty("isWindowButton", 0x2);
     m_pCloseButton->setProperty("useIconHighlightEffect", 0x8);
     m_pCloseButton->setFlat(true);
     m_pCloseButton->update();
 
+    this->setProperty("useIconHighlightEffect", true);
+
+    menuModule *menuBar = new menuModule(this);
+
     // 设置按钮布局
     QHBoxLayout *pLayout = new QHBoxLayout(this);
     pLayout->addWidget(m_pIconLabel);
-    pLayout->addWidget(funcListButton);
-    pLayout->addSpacing(5);
+    pLayout->addSpacing(4);
     pLayout->addWidget(m_pFuncLabel);
+    pLayout->addWidget(funcListButton);
+    pLayout->addWidget(menuBar->menuButton);
     pLayout->addWidget(m_pTopButton);
     pLayout->addWidget(m_pMinimizeButton);
     pLayout->addWidget(m_pCloseButton);
     pLayout->setSpacing(0);
-    pLayout->setContentsMargins(5, 0, 5, 0);
+    pLayout->setContentsMargins(4, 4, 4, 0);
 
     this->setLayout(pLayout);
 
     // 设置信号和槽函数
-    connect(m_pTopButton, SIGNAL(clicked(bool)), this, SLOT(onClicked()));
+    connect(m_pTopButton,      SIGNAL(clicked(bool)), this, SLOT(onClicked()));
     connect(m_pMinimizeButton, SIGNAL(clicked(bool)), this, SLOT(onClicked()));
-    connect(m_pCloseButton, SIGNAL(clicked(bool)), this, SLOT(onClicked()));
-    connect(funcListButton, SIGNAL(clicked(bool)), this, SLOT(onClicked()));
+    connect(m_pCloseButton,    SIGNAL(clicked(bool)), this, SLOT(onClicked()));
+    connect(funcListButton,    SIGNAL(clicked(bool)), this, SLOT(onClicked()));
 
-//    m_pTopButton->hide();
-//    funcListButton->hide();
+    // m_pTopButton->hide();
+    // funcListButton->hide();
 }
 
 // 设置组件样式
 void TitleBar::setWidgetStyle()
 {
     // 设置按钮样式
-    m_pFuncLabel->setStyleSheet("color:#A6A6A6;font-size:14px;font-family:SourceHanSansCN-Regular;");
-    QString btnStyle = "QPushButton{border-radius:4px;}"
-                       "QPushButton:hover{background-color:rgb(180,180,180);}"
-                       "QPushButton:pressed{background-color:rgb(180,180,180);}";
-	funcListButton->setStyleSheet(btnStyle);
-	m_pTopButton->setStyleSheet(btnStyle);
-	m_pMinimizeButton->setStyleSheet(btnStyle);
-	m_pCloseButton->setStyleSheet(btnStyle);
-	m_pCloseButton->setStyleSheet("QPushButton{border-radius:4px;}QPushButton:hover{background-color:red;}");
+    // 设置图片
+    m_pIconLabel->setIcon(QIcon::fromTheme("calc"));
+    funcListButton->setIcon(QIcon::fromTheme("open-menu-symbolic"));
+    // m_pTopButton->setIcon(QIcon::fromTheme("ukui-unfixed-symbolic"));
+    m_pMinimizeButton->setIcon(QIcon::fromTheme("window-minimize-symbolic"));
+    m_pCloseButton->setIcon(QIcon::fromTheme("window-close"));
+
+    if (WidgetStyle::themeColor == 0) {
+        m_pFuncLabel->setStyleSheet("color:#000000;font-size:14px;font-family:SourceHanSansCN-Regular;");
+        QString btnStyle = "QPushButton{border:0px;border-radius:4px;background:transparent;}"
+                           "QPushButton:Hover{border:0px;border-radius:4px;background:transparent;background-color:rgba(0,0,0,0.1);}"
+                           "QPushButton:Pressed{border:0px;border-radius:4px;background:transparent;background-color:rgba(0,0,0,0.15);}";
+        // funcListButton->setStyleSheet(btnStyle);
+        // m_pTopButton->setStyleSheet(btnStyle);
+        // m_pMinimizeButton->setStyleSheet(btnStyle);
+        // m_pCloseButton->setStyleSheet(btnStyle);
+        // m_pCloseButton->setStyleSheet("QPushButton{border:0px;border-radius:4px;background:transparent;}"
+        //                               "QPushButton:Hover{border:0px;border-radius:4px;background:transparent;background-color:#F86457;}"
+        //                               "QPushButton:Pressed{border:0px;border-radius:4px;background:transparent;background-color:#E44C50;}");
+    }
+    else if (WidgetStyle::themeColor == 1) {
+        m_pFuncLabel->setStyleSheet("color:#A6A6A6;font-size:14px;font-family:SourceHanSansCN-Regular;");
+        QString btnStyle = "QPushButton{border:0px;border-radius:4px;background:transparent;}"
+                           "QPushButton:Hover{border:0px;border-radius:4px;background:transparent;background-color:rgba(0,0,0,0.1);}"
+                           "QPushButton:Pressed{border:0px;border-radius:4px;background:transparent;background-color:rgba(0,0,0,0.15);}";
+        funcListButton->setStyleSheet(btnStyle);
+        m_pTopButton->setStyleSheet(btnStyle);
+        m_pMinimizeButton->setStyleSheet(btnStyle);
+        m_pCloseButton->setStyleSheet(btnStyle);
+        m_pCloseButton->setStyleSheet("QPushButton{border:0px;border-radius:4px;background:transparent;}"
+                                      "QPushButton:Hover{border:0px;border-radius:4px;background:transparent;background-color:#F86457;}"
+                                      "QPushButton:Pressed{border:0px;border-radius:4px;background:transparent;background-color:#E44C50;}");
+
+    }
 
 }
 
@@ -167,6 +188,7 @@ void TitleBar::setWidgetStyle()
 //    emit m_pMaximizeButton->clicked();
 //}
 
+#ifdef __V10__
 // 拖动鼠标拖动界面
 void TitleBar::mousePressEvent(QMouseEvent *event)
 {
@@ -201,6 +223,7 @@ void TitleBar::mouseReleaseEvent(QMouseEvent *event)
         m_leftButtonPressed = false;
     }
 }
+#endif
 
 void TitleBar::onClicked()
 {

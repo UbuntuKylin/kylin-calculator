@@ -76,6 +76,19 @@ void FuncList::setWidgetUi()
         funcToolWid->insertItem(i, tool[i]);
     }
 
+//    QListWidget *funcOtherWid = new QListWidget(this);
+//    QListWidgetItem *other[4];
+
+//    QString otherListStr = "深色主题,浅色主题,帮助,关于";
+//    QStringList otherList = otherListStr.split(",");
+
+//    // 换算器功能列表初始化
+//    for (int i = 0; i < otherList.size(); i++) {
+//        other[i] = new QListWidgetItem("    "+otherList[i], funcToolWid);
+//        funcOtherWid->insertItem(i + toolList.size(), other[i]);
+//    }
+
+
     // 将计算器列表和换算器列表加入布局
     QVBoxLayout *funcLayout = new QVBoxLayout(this);
 
@@ -83,34 +96,80 @@ void FuncList::setWidgetUi()
     funcLayout->addWidget(funcModelWid);
     funcLayout->addWidget(funcToolLabel);
     funcLayout->addWidget(funcToolWid);
+//    funcLayout->addWidget(funcOtherWid);
+
+
+//    darkTheme = new QPushButton(this);
+//    darkTheme->setText("深色模式");
+
+//    lightTheme = new QPushButton(this);
+//    lightTheme->setText("浅色模式");
+
+//    helpBtn = new QPushButton(this);
+//    helpBtn->setText("帮助");
+
+//    aboutBtn = new QPushButton(this);
+//    aboutBtn->setText("关于");
+
+//    funcLayout->addWidget(darkTheme);
+//    funcLayout->addWidget(lightTheme);
+//    funcLayout->addWidget(helpBtn);
+//    funcLayout->addWidget(aboutBtn);
+
+    funcLayout->setMargin(0);
+    funcLayout->setSpacing(0);
 
     this->setLayout(funcLayout);
     this->setContentsMargins(0, 0, 0, 0);
-    this->setFixedHeight(200);
+    this->setFixedHeight(170);
     this->setFixedWidth(170);
-    this->setGeometry(QRect(0, 30, 200, 170));
+    this->setGeometry(QRect(0, 30, 20, 170));
+
+    funcModelLabel->hide();
+    funcToolLabel->hide();
+//    funcOtherWid->hide();
 }
 
 // 设置组件样式
 void FuncList::setWidgetStyle()
 {
+    if (WidgetStyle::themeColor == 0) {
+        funcModelWid->setStyleSheet("QListWidget::item{border-radius:4px;}"
+                                    "QListWidget::item:selected{background-color:#FF800F;}"
+                                    "QListWidget::item:hover{background-color:#3D6BE5;}");
+
+        funcToolWid->setStyleSheet("QListWidget::item{border-radius:4px;}"
+                                   "QListWidget::item:selected{background-color:#FF800F;}"
+                                   "QListWidget::item:hover{background-color:#3D6BE5;}");
+
+        // 设置列表样式
+        QString funcLabelStyle = "font-family:SourceHanSansCN-Regular;font-size:14px;color:#666666;";
+
+        funcModelLabel->setStyleSheet(funcLabelStyle);
+        funcToolLabel->setStyleSheet(funcLabelStyle);
+        this->setStyleSheet("background-color:#F8F8F8;color:#000000;font-size:18px;border:none;border-radius:4px;");
+    }
+    else if (WidgetStyle::themeColor == 1) {
+        funcModelWid->setStyleSheet("QListWidget::item{border-radius:4px;}"
+                                    "QListWidget::item:selected{background-color:#FF800F;}"
+                                    "QListWidget::item:hover{background-color:#3D6BE5;}");
+
+        funcToolWid->setStyleSheet("QListWidget::item{border-radius:4px;}"
+                                   "QListWidget::item:selected{background-color:#FF800F;}"
+                                   "QListWidget::item:hover{background-color:#3D6BE5;}");
+
+        // 设置列表样式
+        QString funcLabelStyle = "font-family:SourceHanSansCN-Regular;font-size:14px;color:#666666;";
+
+        funcModelLabel->setStyleSheet(funcLabelStyle);
+        funcToolLabel->setStyleSheet(funcLabelStyle);
+        this->setStyleSheet("background-color:#36363A;color:#FFFFFF;font-size:18px;border:none;border-radius:4px;");
+    }
     // 计算器模式样式
-    funcModelWid->setSpacing(2);
+    funcModelWid->setSpacing(1);
     funcModelWid->setFixedHeight(65);
-    funcModelWid->setStyleSheet("QListWidget::item{border-radius:4px;}"
-                                "QListWidget::item:selected{background-color:#FF800F;}"
-                                "QListWidget::item:hover{background-color:#666666;}");
 
     // 换算器模式样式
-    funcToolWid->setSpacing(2);
-    funcToolWid->setStyleSheet("QListWidget::item{border-radius:4px;}"
-                               "QListWidget::item:selected{background-color:#FF800F;}"
-                               "QListWidget::item:hover{background-color:#666666;}");
+    funcToolWid->setSpacing(1);
 
-    // 设置列表样式
-    QString funcLabelStyle = "font-family:SourceHanSansCN-Regular;font-size:14px;color:#666666;";
-
-    funcModelLabel->setStyleSheet(funcLabelStyle);
-    funcToolLabel->setStyleSheet(funcLabelStyle);
-    this->setStyleSheet("background-color:#36363A;color:#FFFFFF;font-size:18px;border:none;border-radius:4px;");
 }

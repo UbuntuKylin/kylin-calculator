@@ -23,6 +23,8 @@
 #include <QListWidgetItem>
 
 #include "funclist.h"
+#include "closebutton.h"
+#include "menumodule.h"
 
 class QLabel;
 class QPushButton;
@@ -54,10 +56,12 @@ public:
 
 protected:
 
+#ifdef __V10__
     // 进行鼠标界面的拖动
     virtual void mousePressEvent(QMouseEvent *event);
     virtual void mouseMoveEvent(QMouseEvent *event);
     virtual void mouseReleaseEvent(QMouseEvent *event);
+#endif
 
 signals:
     void iconButtonSignal();
