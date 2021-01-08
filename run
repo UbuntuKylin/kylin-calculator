@@ -6,4 +6,5 @@ mkdir build
 cd build
 qmake ..
 make -j8
+sudo make install
 ./$1

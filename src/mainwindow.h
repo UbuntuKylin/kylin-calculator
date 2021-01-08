@@ -18,6 +18,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#define KYLINRECORDER "org.kylin-music-data.settings"
+#define FITTHEMEWINDOW "org.ukui.style"
+
 #include <QMainWindow>
 #include <QKeyEvent>
 #include <QGridLayout>
@@ -32,6 +35,7 @@
 #include <QRegExp>
 #include <QTime>
 #include <QVector>
+#include <QGSettings>
 
 #include "titlebar.h"
 #include "widgetstyle.h"
@@ -91,6 +95,15 @@ public:
 
     // 将用于显示的表达式格式化为用于运算的表达式
     QString formatDisToCal(QString text);
+
+    // 主题颜色适配
+    QGSettings *themeData = nullptr;
+
+    // 切换深色主题
+    void changeDarkTheme();
+
+    // 切换浅色主题
+    void changeLightTheme();
 public slots:
     // 键盘响应事件
     void keyPressEvent(QKeyEvent *event);
@@ -117,6 +130,8 @@ public slots:
 
     // 汇率换算事件
     void unitConversion();
+
+    void changeModel(QString);
 
 private:
 

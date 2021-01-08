@@ -23,6 +23,8 @@
 #include <QListWidgetItem>
 
 #include "funclist.h"
+#include "closebutton.h"
+#include "menumodule.h"
 
 class QLabel;
 class QPushButton;
@@ -39,7 +41,7 @@ public:
     QPushButton *m_pIconLabel;      // 左上角应用图标
     QLabel *m_pFuncLabel;           // 界面标识
     QPushButton *m_pTopButton;      // 界面置顶按钮
-
+    menuModule *menuBar;
     // 模式和功能列表按钮
     QPushButton *funcListButton;
 
@@ -54,10 +56,12 @@ public:
 
 protected:
 
+#ifdef __V10__
     // 进行鼠标界面的拖动
     virtual void mousePressEvent(QMouseEvent *event);
     virtual void mouseMoveEvent(QMouseEvent *event);
     virtual void mouseReleaseEvent(QMouseEvent *event);
+#endif
 
 signals:
     void iconButtonSignal();

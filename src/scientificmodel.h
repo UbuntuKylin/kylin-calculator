@@ -31,6 +31,7 @@
 #include <QDebug>
 
 #include "basicbutton.h"
+#include "widgetstyle.h"
 
 class ScientificOutput : public QWidget
 {
