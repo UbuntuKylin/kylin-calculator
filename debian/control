@@ -1,25 +1,32 @@
 Source: kylin-calculator
 Section: utils
 Priority: optional
-Maintainer: caoliang <caoliang@kylinos.cn>
-			jiangdingyuan <jiangdingyuan@kylinos.cn>
-Build-Depends: debhelper,
-			qtbase5-dev,
-            qt5-qmake,
-            qtchooser,
-            qtscript5-dev,
-            qttools5-dev-tools,
-			libkf5windowsystem-dev,
-			pkgconf,
-			libgsl-dev,
-            libqt5x11extras5-dev,
-            libgsettings-qt-dev
-Standards-Version: 4.4.1
+Maintainer: Kylin Team <team+kylin@tracker.debian.org>
+Uploaders: caoliang <caoliang@kylinos.cn>,
+           jiangdingyuan <jiangdingyuan@kylinos.cn>
+Build-Depends: debhelper-compat (= 13),
+               qtbase5-dev,
+               qt5-qmake,
+               qtchooser,
+               qtscript5-dev,
+               qttools5-dev-tools,
+               libkf5windowsystem-dev,
+               pkgconf,
+               libgsl-dev,
+               libqt5x11extras5-dev,
+               libgsettings-qt-dev
+Standards-Version: 4.5.0
+Rules-Requires-Root: no
 Homepage: https://github.com/ubuntukylin/kylin-calculator
-#Vcs-Browser: https://github.com/ubuntukylin/kylin-calculator
-#Vcs-Git: https://github.com/ubuntukylin/kylin-calculator.git
+Vcs-Browser: https://github.com/ubuntukylin/kylin-calculator
+Vcs-Git: https://github.com/ubuntukylin/kylin-calculator.git
 
 Package: kylin-calculator
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: kylin-calculator
+Description: Calculator tool for UKUI
+ Calculator is a lightweight calculator based on
+ QT5 development, can provide scientific calculation
+ and exchange rate conversion and other calculation
+ modes, with simple to use, friendly interface
+ and other advantages.

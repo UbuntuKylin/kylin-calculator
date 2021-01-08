@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2020, KylinSoft Co., Ltd.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #ifndef __INPUT_TOOLS_H__
 #define __INPUT_TOOLS_H__
 
@@ -33,7 +50,7 @@ public:
     static bool isTrans              (const QString &);
     static bool isSciNum             (const QString &);
 
-    /*8 findBracketPair:
+    /** findBracketPair:
      *  找到和qstr[idx]位置匹配的括号
      *  如果找不到,返回-1
      */
@@ -42,6 +59,10 @@ public:
     static bool allBracketMatchCorrectly(const QString &qstr);
     static QString bracketCompletion(const QString &qstr);
 private:
+    /** getFunctionOrSciNumName:
+     *  找到qstr[idx]位置开始的function名或scinum名
+     *  如果找不到,返回-1
+     */
     static QString getFunctionOrSciNumName (const QString &qstr, const int idx);
 public:
     static QStringList formulaSplit (const QString &);
@@ -90,6 +111,17 @@ public:
     static QString clearANS_END(const QString &);
     static QString clearSCI_NUM_END(const QString &);
     static QString clearANS_END_and_SCI_NUM_END(const QString &);
-};
 
+    /** addComma
+     *  实现千分位加入
+     *  1000-->1,000
+     */
+    static QString addComma(const QString &);
+
+    /** couldBeCal函数：
+     *  判断qstr能否被计算
+     */
+    static int    couldBeCal      (const QString &qstr);
+    
+};
 #endif

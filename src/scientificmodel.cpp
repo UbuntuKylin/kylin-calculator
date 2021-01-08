@@ -175,7 +175,9 @@ void ScientificModel::setWidgetUi()
     btnLn  = new BasicButton(this);
 
     // 设置按钮的显示文本
-    QString btnList = "C,÷,×,B,—,+,=,%,.";
+    // ！！！！！！减号不是ascII码 减号不是ascII码 减号不是ascII码 减号不是ascII码 减号不是ascII码
+    QString btnList = "C,÷,×,B,ｰ,+,=,%,.";
+    // ！！！！！！减号不是ascII码 减号不是ascII码 减号不是ascII码 减号不是ascII码 减号不是ascII码
     QStringList btnNameList= btnList.split(",");
     int index = 0;
 

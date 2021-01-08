@@ -107,7 +107,7 @@ StandardModel::StandardModel(QWidget *parent)
 void StandardModel::setWidgetUi()
 {
     // 计算器按钮
-    QString str_list = "C,÷,×,B,7,8,9,—,4,5,6,+,1,2,3,,%,0,.,=";
+    QString str_list = "C,÷,×,B,7,8,9,ｰ,4,5,6,+,1,2,3,,%,0,.,=";
     QStringList btn_name_list= str_list.split(",");
 
     for (int i = 0; i < 10; i++) {
@@ -137,7 +137,7 @@ void StandardModel::setWidgetUi()
     btnPoint = new BasicButton(this);
 
     // 设置按钮的显示文本
-    QString btnList = "C,÷,×,B,—,+,=,%,.";
+    QString btnList = "C,÷,×,B,ｰ,+,=,%,.";
     QStringList btnNameList= btnList.split(",");
     int index = 0;
     btnClear->setText(btnNameList[index++]);

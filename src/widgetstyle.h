@@ -53,12 +53,10 @@ class WidgetStyle : public QWidget
     Q_OBJECT
 
 protected:
-//    void WidgetStyleClose();//点击关闭事件
+
     QFont font;             //字体
-//    void isDiaLog(int w, int h, QString titleText);//会话框
 
 public:
-//    WidgetStyle(QWidget *parent = nullptr);
 
 private:
     QWidget *title = nullptr;   //标题栏

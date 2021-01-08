@@ -86,9 +86,9 @@ void FuncList::setWidgetUi()
 
     this->setLayout(funcLayout);
     this->setContentsMargins(0, 0, 0, 0);
-    this->setFixedHeight(430);
+    this->setFixedHeight(200);
     this->setFixedWidth(170);
-    this->setGeometry(QRect(0, 30, 430, 170));
+    this->setGeometry(QRect(0, 30, 200, 170));
 }
 
 // 设置组件样式

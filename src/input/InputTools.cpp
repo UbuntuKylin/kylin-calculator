@@ -1,36 +1,53 @@
+/*
+ * Copyright (C) 2020, KylinSoft Co., Ltd.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+ 
 #include "InputTools.h"
 
 const QPair<int, QString>     InputTools::QP_QSTR_ERROR      = qMakePair(0, ERROR);
 const QPair<int, QStringList> InputTools::QP_QSTR_LIST_ERROR = qMakePair(0, QStringList(ERROR));
 
 bool InputTools::isSpace(const QChar qc)
-{ 
+{
     if (SPACE == qc)
         return true;
     return false;
 }
 
 bool InputTools::isSpace(const char c)
-{ 
+{
     if (SPACE == QString(c))
         return true;
     return false;
 }
 
 bool InputTools::isBracket(const QChar qc)
-{ 
+{
     if (BRACKET_LIST.contains(qc))
         return true;
     return false;
 }
 
 bool InputTools::isBracket(const char c)
-{ 
+{
     return isBracket(QChar(c));
 }
 
 bool InputTools::isBracket(const QString &qstr)
-{ 
+{
     if (!qstr.size())
         return false;
 
@@ -42,20 +59,20 @@ bool InputTools::isBracket(const QString &qstr)
 }
 
 bool InputTools::isNumber(const QChar qc)
-{ 
+{
     if (NUMBER_LIST.contains(qc))
         return true;
     return false;
 }
 
 bool InputTools::isNumber(const char c)
-{ 
+{
     return isNumber(QChar(c));
 }
 
 bool InputTools::isNumber(const QString &qstr)
-{ 
-    
+{
+
     if (!qstr.size())
         return false;
 
@@ -69,7 +86,7 @@ bool InputTools::isNumber(const QString &qstr)
         return false;
     }
 
-    if ( qstr.size() > 1 && qstr[0] == SUB) 
+    if ( qstr.size() > 1 && qstr[0] == SUB)
         return isNumber(qstr.right(qstr.size() - 1));
 
     foreach (QChar qc, qstr) {
@@ -79,19 +96,19 @@ bool InputTools::isNumber(const QString &qstr)
     return true;
 }
 
-bool InputTools::isOperator(const QChar qc) 
+bool InputTools::isOperator(const QChar qc)
 {
     if (OPERATOR_LIST.contains(qc))
         return true;
     return false;
 }
 
-bool InputTools::isOperator(const char c) 
+bool InputTools::isOperator(const char c)
 {
     return isOperator(QChar(c));
 }
 
-bool InputTools::isOperator(const QString &qstr) 
+bool InputTools::isOperator(const QString &qstr)
 {
     if (!qstr.size())
         return false;
@@ -103,19 +120,19 @@ bool InputTools::isOperator(const QString &qstr)
     return true;
 }
 
-bool InputTools::isArithmeticOperator(const QChar qc) 
+bool InputTools::isArithmeticOperator(const QChar qc)
 {
     if (ARITHMETIC_OPERATOR_LIST.contains(qc))
         return true;
     return false;
 }
 
-bool InputTools::isArithmeticOperator(const char c) 
+bool InputTools::isArithmeticOperator(const char c)
 {
     return isArithmeticOperator(QChar(c));
 }
 
-bool InputTools::isArithmeticOperator(const QString &qstr) 
+bool InputTools::isArithmeticOperator(const QString &qstr)
 {
     if (!qstr.size())
         return false;
@@ -127,21 +144,21 @@ bool InputTools::isArithmeticOperator(const QString &qstr)
     return true;
 }
 
-bool InputTools::isFunction(const QString &qstr) 
+bool InputTools::isFunction(const QString &qstr)
 {
     if (FUNCTION_LIST.contains(qstr))
         return true;
     return false;
 }
 
-bool InputTools::isTrans(const QString &qstr) 
+bool InputTools::isTrans(const QString &qstr)
 {
     if (TRANS_LIST.contains(qstr))
         return true;
     return false;
 }
 
-bool InputTools::isSciNum(const QString &qstr) 
+bool InputTools::isSciNum(const QString &qstr)
 {
     if (SCI_NUM_LIST.contains(qstr))
         return true;
@@ -152,7 +169,7 @@ bool InputTools::isSciNum(const QString &qstr)
  *  找到和qstr[idx]位置匹配的括号
  *  如果找不到,返回-1
  */
-int InputTools::findBracketPair(const QString &qstr, const int idx) 
+int InputTools::findBracketPair(const QString &qstr, const int idx)
 {
     if (qstr.size() <  idx) {
         return -1;
@@ -168,8 +185,8 @@ int InputTools::findBracketPair(const QString &qstr, const int idx)
                 i_cnt++;
             else if (qstr[i] == BRACKET_R)
                 i_cnt--;
-            
-            if(!i_cnt) 
+
+            if(!i_cnt)
                 return i;
         }
     }
@@ -179,8 +196,8 @@ int InputTools::findBracketPair(const QString &qstr, const int idx)
                 i_cnt++;
             else if (qstr[i] == BRACKET_R)
                 i_cnt--;
-            
-            if(!i_cnt) 
+
+            if(!i_cnt)
                 return i;
         }
     }
@@ -236,14 +253,19 @@ QString InputTools::bracketCompletion(const QString &qstr)
 
 QString InputTools::getFunctionOrSciNumName(const QString &qstr, const int idx)
 {
-    if (qstr.size() < idx)
+    qDebug () << "im in getFunctionOrSciNumName!";
+    if (qstr.size() < idx + 3)
         return "";
-    
+
     QString ans = qstr.mid(idx,4);
+    qDebug () << ans;
+    while(ans.contains(BRACKET_L) || ans.contains(BRACKET_R)) {
+        ans.chop(1);
+    }
 
     while(!ans.right(1)[0].isLetter())
         ans.chop(1);
-    
+
     if (FUNCTION_LIST.contains(ans)) {
         return ans;
     }
@@ -251,14 +273,14 @@ QString InputTools::getFunctionOrSciNumName(const QString &qstr, const int idx)
     if (SCI_NUM_LIST.contains(ans)) {
         return ans;
     }
-    
+
     return "";
 }
 
 QStringList InputTools::formulaSplit(const QString &qstr)
 {
     qDebug () << "im in formulaSplit!";
-    qDebug() << qstr;
+    qDebug () << "Before formulaSplit :" <<qstr;
     QStringList ans;
     QString formula = qstr + END;
 
@@ -275,7 +297,7 @@ QStringList InputTools::formulaSplit(const QString &qstr)
             i = 0;
         }
 
-        // + - * / ( ) ^ $ e处理 
+        // + - * / ( ) ^ $ e处理
         else if (isArithmeticOperator(ch) || isBracket(ch)
             || ch == POWER_SYMBOL || ch == END
             || ch == SCIENTIFIC_NOTATION
@@ -313,12 +335,12 @@ QStringList InputTools::formulaSplit(const QString &qstr)
     while (ans.contains(SCIENTIFIC_NOTATION)) {
         int idx = ans.indexOf(SCIENTIFIC_NOTATION);
         ans.replace(idx - 1, ans.mid(idx - 1, 4).join(""));
-        
+
         for (int i = idx; i <= idx + 2; i++)
             ans.removeAt(idx);
     }
     ans.removeAt(ans.size()-1);
-    qDebug () << "ansis " <<ans;
+    qDebug () << "After formulaSplit  :" <<ans;
     return ans;
 }
 
@@ -410,7 +432,7 @@ QPair<int, QString> InputTools::isCorrectDouble(const QString &qstr)
 {
     if (!qstr.size())
         return qMakePair(0,ERROR);
-    
+
     if (qstr.contains(INF_SYMBOL) || qstr.contains(NAN_SYMBOL)) {
         if (qstr.size() == 3)
             return qMakePair(1,qstr);
@@ -429,7 +451,7 @@ QPair<int, QString> InputTools::isCorrectDouble(const QString &qstr)
             // 判断e后的'+','-'
             if (qstr[idx + 1] != ADD && qstr[idx + 1] != SUB)
                 return qMakePair(0,ERROR);
-            
+
             // 判断e后的数字
             qp = isCorrectInt(qstr.right(qstr.size() - idx - 2));
             if (!qp.first) {
@@ -487,9 +509,9 @@ QPair<int, QString> InputTools::isCorrectNumber(const QString &qstr)
 {
     if (!qstr.size())
         return QP_QSTR_ERROR;
-    
+
     QPair<int,QString> qp;
-    
+
     // %处理
     if (qstr.contains(PERCENT)) {
         qp = isCorrectNumber(qstr.left(qstr.size()-1));
@@ -499,7 +521,7 @@ QPair<int, QString> InputTools::isCorrectNumber(const QString &qstr)
         return qp;
     }
 
-    if (   qstr.contains(POINT) || qstr.contains(SCIENTIFIC_NOTATION) 
+    if (   qstr.contains(POINT) || qstr.contains(SCIENTIFIC_NOTATION)
         || qstr.contains(INF_SYMBOL)   || qstr.contains(NAN_SYMBOL)) {
         qp = isCorrectDouble(qstr);
         if (!qp.first)
@@ -526,8 +548,8 @@ bool InputTools::adjacencyJudgment(const QString &x, const QString &y)
         if (isNumber(y) || y == BRACKET_L || isSciNum(y))
             return true;
         return false;
-    }    
-    
+    }
+
     // + - * /
     if (isArithmeticOperator(x)) {
         if (isNumber(y) || y == BRACKET_L || isSciNum(y) || isFunction(y))
@@ -541,10 +563,10 @@ bool InputTools::adjacencyJudgment(const QString &x, const QString &y)
             return true;
         return false;
     }
-        
+
     // num
     if (isNumber(x) || isSciNum(x)) {
-        if (   y == BRACKET_R || y == POWER_SYMBOL 
+        if (   y == BRACKET_R || y == POWER_SYMBOL
             || isArithmeticOperator(y) || y == FACTORIAL_SYMBOL) {
 
             return true;
@@ -563,6 +585,7 @@ bool InputTools::adjacencyJudgment(const QString &x, const QString &y)
 
 QPair<int, QStringList> InputTools::isCorrectFormulaList(const QStringList &formulaList)
 {
+    qDebug () << "im in InputTools::isCorrectFormulaList";
     if (!formulaList.size()) {
         // qDebug() << "in isCorrectFormulaList:";
         // qDebug() << "   " << formulaList;
@@ -573,11 +596,11 @@ QPair<int, QStringList> InputTools::isCorrectFormulaList(const QStringList &form
     }
     // formulaList[0]不能是     "* /"
     // formulaList.right(1)不能是 "+ - * /"
-    if (   ( isArithmeticOperator(formulaList[0]) && formulaList[0] != SUB && formulaList[0] != ADD) 
+    if (   ( isArithmeticOperator(formulaList[0]) && formulaList[0] != SUB && formulaList[0] != ADD)
         || ( isArithmeticOperator(formulaList.back())) ) {
         return QP_QSTR_LIST_ERROR;
     }
-    
+
     QPair<int, QStringList> qp;
     qp = qMakePair(1, formulaList);
 
@@ -592,7 +615,7 @@ QPair<int, QStringList> InputTools::isCorrectFormulaList(const QStringList &form
         qp.second.removeAt(0);
         qp.first = 2;
     }
-    
+
     // size 为 1 只能是数
     if (qp.second.size() == 1) {
         QPair<int, QString> temp_qp = isCorrectNumber(qp.second.at(0));
@@ -623,14 +646,14 @@ QPair<int, QStringList> InputTools::isCorrectFormulaList(const QStringList &form
                     qp.first = temp_qp.first;
 
                 if (temp_qp.second.size() && !temp_qp.second.contains("")) {
-                    qp.second =   qp.second.mid(0, i + 1) 
+                    qp.second =   qp.second.mid(0, i + 1)
                                 + temp_qp.second
                                 + qp.second.mid(idx, qp.second.size() - idx);
                     i += temp_qp.second.size();
                 }
                 else {
                     qp.first  =   2;
-                    qp.second =   qp.second.mid(0, i) 
+                    qp.second =   qp.second.mid(0, i)
                                 + qp.second.mid(idx + 1, qp.second.size() - idx - 1);
                     if (i)
                         i -= 2;
@@ -646,7 +669,7 @@ QPair<int, QStringList> InputTools::isCorrectFormulaList(const QStringList &form
             QPair<int, QString> temp_qp = isCorrectNumber(qstri);
             if (!temp_qp.first)
                 return QP_QSTR_LIST_ERROR;
-            
+
             if (temp_qp.first) {
                 if (qp.first != 2)
                     qp.first = temp_qp.first;
@@ -658,23 +681,26 @@ QPair<int, QStringList> InputTools::isCorrectFormulaList(const QStringList &form
 }
 
 QPair<int, QString> InputTools::isCorrectFormula(const QString &qstr)
-{   
+{
+    qDebug () << "im in InputTools::isCorrectFormula";
     if (!qstr.size())
         return qMakePair(0,ERROR);
 
     QPair<int, QString> qp = qMakePair(1, qstr);
 
-    if (!allBracketMatchCorrectly(qstr)) {
+    qp.second = clearANS_END_and_SCI_NUM_END(qp.second);
+    qDebug() << qp.second;
+    if (!allBracketMatchCorrectly(qp.second)) {
         qp.first = 2;
-        qp.second = (bracketCompletion(qstr));
+        qp.second = (bracketCompletion(qp.second));
     }
 
-    QStringList formulaList = formulaSplit(qstr);
+    QStringList formulaList = formulaSplit(qp.second);
     QPair<int, QStringList> qpList = isCorrectFormulaList(formulaList);
 
     if (!qpList.first)
         return qMakePair(0,ERROR);
-    
+
     if (qp.first == 2)
         qpList.first = qp.first;
         return qMakePair(qpList.first, qpList.second.join(""));
@@ -682,11 +708,12 @@ QPair<int, QString> InputTools::isCorrectFormula(const QString &qstr)
 
 int InputTools::formulaTypeCheck(const QString &formula)
 {
+    // 空返回0
     if (formula.isEmpty())
         return 0;
-    if (   (  isNumber(formula) ) 
+    if (   (  isNumber(formula) )
         || ( formula[0] == SUB && formulaTypeCheck(formula.right(formula.size()-1)) == -1) ) {
-    
+
         return -1;
     }
     if (   ( isNumber(formula.left(formula.size()-1)) && formula.right(1) == ANS_END )
@@ -703,7 +730,7 @@ int InputTools::getNumberLengthFromBack(const QString &qstr)
 {
     if (!NUMBER_LIST.contains(qstr.right(1)))
         return 0;
-    
+
     if (formulaTypeCheck(qstr) == -1) {
         return qstr.size();
     }
@@ -718,11 +745,11 @@ int InputTools::getAnsNumberLengthFromBack(const QString &qstr)
 {
     if (qstr.right(1) != ANS_END)
         return 0;
-    
+
     if (formulaTypeCheck(qstr) == -2) {
         return qstr.size();
     }
-    return getAnsNumberLengthFromBack(qstr.mid(0, qstr.size() - 1)) + 1; 
+    return getAnsNumberLengthFromBack(qstr.mid(0, qstr.size() - 1)) + 1;
 }
 
 QString InputTools::getNumberFromBack(const QString &qstr)
@@ -756,4 +783,66 @@ QString InputTools::clearANS_END_and_SCI_NUM_END(const QString &qstr) {
     res = clearANS_END(res);
     res = clearSCI_NUM_END(res);
     return res;
+}
+
+QString InputTools::addComma(const QString &qstr)
+{
+    QString s = qstr;
+    if (s.isEmpty())
+        return EMPTY;
+
+    int pointFlag = 0;
+    int pointIndex;
+
+    for (int i = 0; i < s.size(); i++) {
+        if ( s[i] == POINT[0]
+          || s[i] == SCIENTIFIC_NOTATION[0]
+          || s[i] == ANS_END[0] ) {
+
+            pointFlag = 1;
+            pointIndex = i;
+            break;
+        }
+    }
+
+    if(pointFlag == 1) {
+        return addComma(s.mid(0,pointIndex)) + s.mid(pointIndex, s.size()-pointIndex);
+    }
+    else {
+        QString ans;
+        for(int i = s.size() - 3; i > 0; i -= 3)
+            s.insert(i, ",");
+        return s;
+    }
+    return EMPTY;
+}
+
+int InputTools::couldBeCal(const QString &qstr)
+{
+    // 1.
+    if (qstr.size() == 0)
+        return COULD_NOT_BE_CAL;
+    QString ch = qstr.right(1);
+    // 2.
+    if ( isArithmeticOperator(ch)
+      || ch == BRACKET_L
+      || ch == POINT
+      || ch == POWER_SYMBOL
+      || FUNCTION_QSTR.contains(ch) ) {
+
+        return COULD_NOT_BE_CAL;
+    }
+    if (ch == EQUAL) {
+        QString tempQstr = qstr;
+        tempQstr.chop(1);
+        if ( isCorrectFormula( tempQstr ).first == 0 ) {
+            return COULD_NOT_BE_CAL;
+        }
+    }
+    // 3.
+    if (ch != EQUAL && isCorrectFormula(qstr).first == 0) {
+        return COULD_NOT_BE_CAL;
+    }
+
+    return COULD_BE_CAL;
 }
