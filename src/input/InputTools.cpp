@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
- 
+
 #include "InputTools.h"
 
 const QPair<int, QString>     InputTools::QP_QSTR_ERROR      = qMakePair(0, ERROR);
@@ -479,7 +479,7 @@ QPair<int, QString> InputTools::isCorrectDouble(const QString &qstr)
         return qp;
     }
     if (qstr.contains(POINT)) {
-        idx = qstr.contains(POINT);
+        idx = qstr.indexOf(POINT);
         if (idx != -1) {
             qp = isCorrectInt(qstr.left(idx));
             if (!qp.first) {

@@ -24,6 +24,10 @@
 #include <QKeyEvent>
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <QMenu>
+#include <QAction>
+
+#include "widgetstyle.h"
 
 class FuncList : public QWidget
 {
@@ -38,6 +42,12 @@ public:
 
     QListWidget *funcModelWid;
     QListWidget *funcToolWid;
+
+    QPushButton *darkTheme;
+    QPushButton *lightTheme;
+
+    QPushButton *helpBtn;
+    QPushButton *aboutBtn;
 
     // 初始化组件
     void setWidgetUi();

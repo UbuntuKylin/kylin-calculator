@@ -57,5 +57,51 @@
         <file>data/kylin-calculator_zh_CN.ts</file>
         <file>data/org.kylin-calculator-data.gschema.xml</file>
         <file>data/qt_zh_CN.qm</file>
+        <file>image/light/scientific/btn2nd.png</file>
+        <file>image/light/scientific/btnAcos.png</file>
+        <file>image/light/scientific/btnAns.png</file>
+        <file>image/light/scientific/btnAsin.png</file>
+        <file>image/light/scientific/btnAtan.png</file>
+        <file>image/light/scientific/btnCos.png</file>
+        <file>image/light/scientific/btnDeg.png</file>
+        <file>image/light/scientific/btnE.png</file>
+        <file>image/light/scientific/btnFac.png</file>
+        <file>image/light/scientific/btnLbra.png</file>
+        <file>image/light/scientific/btnLn.png</file>
+        <file>image/light/scientific/btnLog.png</file>
+        <file>image/light/scientific/btnPi.png</file>
+        <file>image/light/scientific/btnRad.png</file>
+        <file>image/light/scientific/btnRbra.png</file>
+        <file>image/light/scientific/btnReci.png</file>
+        <file>image/light/scientific/btnSin.png</file>
+        <file>image/light/scientific/btnTan.png</file>
+        <file>image/light/scientific/btnXPower2.png</file>
+        <file>image/light/scientific/btnXPower3.png</file>
+        <file>image/light/scientific/btnXSquare2.png</file>
+        <file>image/light/scientific/btnXSquare3.png</file>
+        <file>image/light/scientific/btnYPowerX.png</file>
+        <file>image/light/scientific/btnYSquareX.png</file>
+        <file>image/light/standard/btnAC.png</file>
+        <file>image/light/standard/btnAdd.png</file>
+        <file>image/light/standard/btnClear.png</file>
+        <file>image/light/standard/btnDelete.png</file>
+        <file>image/light/standard/btnDiv.png</file>
+        <file>image/light/standard/btnEqual.png</file>
+        <file>image/light/standard/btnMulti.png</file>
+        <file>image/light/standard/btnNum0.png</file>
+        <file>image/light/standard/btnNum00.png</file>
+        <file>image/light/standard/btnNum1.png</file>
+        <file>image/light/standard/btnNum2.png</file>
+        <file>image/light/standard/btnNum3.png</file>
+        <file>image/light/standard/btnNum4.png</file>
+        <file>image/light/standard/btnNum5.png</file>
+        <file>image/light/standard/btnNum6.png</file>
+        <file>image/light/standard/btnNum7.png</file>
+        <file>image/light/standard/btnNum8.png</file>
+        <file>image/light/standard/btnNum9.png</file>
+        <file>image/light/standard/btnPer.png</file>
+        <file>image/light/standard/btnPoint.png</file>
+        <file>image/light/standard/btnSub.png</file>
+        <file>image/light/scientific/btnClear.png</file>
     </qresource>
 </RCC>

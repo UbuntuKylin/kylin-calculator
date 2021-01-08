@@ -24,16 +24,28 @@
 #include <iostream>
 
 #include "mainwindow.h"
+#include "xatom-helper.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
+#ifndef __V10__
+    // 添加窗管协议
+    MotifWmHints hints;
+    hints.flags = MWM_HINTS_FUNCTIONS | MWM_HINTS_DECORATIONS;
+    hints.functions = MWM_FUNC_ALL;
+    hints.decorations = MWM_DECOR_BORDER;
+    XAtomHelper::getInstance()->setWindowMotifHint(this->winId(), hints);
+#endif
+
     InputProcess::inputFromButton(STANDARD);
     // 初始化列表项组件
     setWidgetUi();
 
     // 设置组件样式
     setWidgetStyle();
+
+//    changeDarkTheme();
 }
 
 MainWindow::~MainWindow()
@@ -44,13 +56,25 @@ MainWindow::~MainWindow()
 // 初始化列表项组件
 void MainWindow::setWidgetUi()
 {
+    if(QGSettings::isSchemaInstalled(FITTHEMEWINDOW))
+    {
+        themeData = new QGSettings(FITTHEMEWINDOW);
+        if(themeData->get("style-name").toString() == "ukui-dark" || themeData->get("style-name").toString() == "ukui-black"){
+            WidgetStyle::themeColor = 1;
+        }
+        else
+        {
+            WidgetStyle::themeColor = 0;
+            
+        }
+    }
     setFocus();
 
     mainWid = new QWidget(this);
 
     // 公有组件，即标题栏和功能列表
     setCommonUi();
-
+    
     // 标准计算界面布局
     setStandardUi();
 
@@ -63,6 +87,34 @@ void MainWindow::setWidgetUi()
     mainLayout->setSpacing(0);
 
     this->mainWid->setLayout(mainLayout);
+
+    if(QGSettings::isSchemaInstalled(FITTHEMEWINDOW))
+    {
+        themeData = new QGSettings(FITTHEMEWINDOW);
+        if(themeData->get("style-name").toString() == "ukui-dark" || themeData->get("style-name").toString() == "ukui-black"){
+            WidgetStyle::themeColor = 1;
+            // changeDarkTheme();
+        }
+        else
+        {
+            WidgetStyle::themeColor = 0;
+            // changeLightTheme();
+        }
+
+        connect(themeData,&QGSettings::changed,this,[=]()
+        {
+            qDebug() << "主题颜色" << themeData->get("style-name").toString();
+            if(themeData->get("style-name").toString() == "ukui-dark" || themeData->get("style-name").toString() == "ukui-black"){
+                WidgetStyle::themeColor = 1;
+                changeDarkTheme();
+            }
+            else
+            {
+                WidgetStyle::themeColor = 0;
+                changeLightTheme();
+            }
+        });
+    }
 }
 
 // 设置组件样式
@@ -71,11 +123,28 @@ void MainWindow::setWidgetStyle()
     QRect availableGeometry = qApp->primaryScreen()->availableGeometry();
     this->move((availableGeometry.width() - this->width())/2, (availableGeometry.height() - this->height())/2);
 
-
     this->mainWid->setObjectName("mainWid");
-    this->mainWid->setStyleSheet("#mainWid{background-color:#666666;}");
+
+    qDebug() << "WidgetStyle::themeColor " << WidgetStyle::themeColor;
+
+    if (WidgetStyle::themeColor == 0) {
+        this->mainWid->setStyleSheet("#mainWid{background-color:#FFFFFF;}");
+        titleBarWid->setStyleSheet("#titleBarWid{background-color:#FFFFFF;}");
+        funcListWid->setStyleSheet("background:#F8F8F8;color:#F8F8F8;font-size:18px;border:none;border-radius:4px;");
+        outputWid->setStyleSheet("#outputWid{background-color:#FFFFFF;border-radius:4px;}");
+        buttonWid->setStyleSheet("#buttonWid{background-color:#FFFFFF;border-radius:4px;}");
+
+    }
+    else if (WidgetStyle::themeColor == 1) {
+        this->mainWid->setStyleSheet("#mainWid{background-color:#131314;}");
+        titleBarWid->setStyleSheet("#titleBarWid{background-color:#131314;}");
+        funcListWid->setStyleSheet("background:#36363A;color:#FFFFFF;font-size:18px;border:none;border-radius:4px;");
+        outputWid->setStyleSheet("#outputWid{background-color:#131314;border-radius:4px;}");
+        buttonWid->setStyleSheet("#buttonWid{background-color:#131314;border-radius:4px;}");
+
+    }
     this->setCentralWidget(mainWid);
-	this->setStyleSheet("border-radius:6px;");
+    this->setStyleSheet("border-radius:6px;");
     this->show();
 }
 
@@ -93,7 +162,7 @@ void MainWindow::setCommonUi()
 
     // 设置图标
     this->setWindowTitle(tr("kylin-calculator"));
-//    this->setWindowTitle("麒麟计算器");
+// //    this->setWindowTitle("麒麟计算器");
     this->setWindowIcon(QIcon::fromTheme("calc"));
 
     titleBarWid = new QWidget(this);
@@ -103,7 +172,7 @@ void MainWindow::setCommonUi()
     pTitleBar = new TitleBar(this);
     installEventFilter(pTitleBar);
 
-    pTitleBar->setFuncLabel(tr("standard"));
+    pTitleBar->setFuncLabel(tr("standard") + "计算器");
 //    pTitleBar->setFuncLabel(tr(tr("standard")));
 
     QVBoxLayout *pLayout = new QVBoxLayout();
@@ -113,7 +182,6 @@ void MainWindow::setCommonUi()
     pLayout->setMargin(0);
     titleBarWid->setLayout(pLayout);
     titleBarWid->setFixedHeight(TITLEH);
-    titleBarWid->setStyleSheet("#titleBarWid{background:#5F5F61;}");
 
     // 显示和隐藏功能列表
     connect(pTitleBar->funcListButton,SIGNAL(clicked(bool)),this,SLOT(funcListHandle(bool)));
@@ -132,12 +200,24 @@ void MainWindow::setCommonUi()
     funcListWid = new QWidget(this);
     funcListWid->setLayout(funcListLayout);
     funcListWid->setContentsMargins(0, 0, 0, 0);
-    funcListWid->setStyleSheet("background:#36363A;color:#FFFFFF;font-size:18px;border:none;border-radius:4px;");
     funcListWid->raise();
     funcListWid->setFixedHeight(170);
     funcListWid->setFixedWidth(170);
-    funcListWid->setGeometry(QRect(0, 40, 20, 170));
+    funcListWid->setGeometry(QRect(187, 40, 20, 170));
     funcListWid->hide();
+
+//    QMenu *titleMenu = new QMenu(this);
+//    QAction *darkThemeAct = new QAction(this);
+//    QAction *lightThemeAct = new QAction(this);
+//    QAction *helpAct = new QAction(this);
+//    QAction *aboutAct = new QAction(this);
+
+//    darkThemeAct->setText("深色模式");
+//    lightThemeAct->setText("浅色模式");
+//    helpAct->setText("帮助");
+//    aboutAct->setText("关于");
+
+//    pTitleBar->funcListButton->setMenu(titleMenu);
 
     funcList->setAttribute(Qt::WA_ShowWithoutActivating, true);
 
@@ -202,7 +282,7 @@ void MainWindow::setOutputUi()
     outputLayout->setSpacing(0);
     outputWid->setLayout(outputLayout);
     outputWid->setFixedHeight(270);
-    outputWid->setStyleSheet("#outputWid{background-color:#18181A;border-radius:4px;margin-top:1px}");
+    outputWid->setStyleSheet("#outputWid{background-color:#18181A;border-radius:4px;}");
 }
 
 // 标准计算界面布局
@@ -276,10 +356,12 @@ void MainWindow::setStandardUi()
 
     // 设置间距和背景样式
     outputWid->setFixedHeight(270);
-    outputWid->setStyleSheet("#outputWid{background-color:#18181A;margin-top:1px;border-radius:4px;}");
+//    outputWid->setStyleSheet("#outputWid{background-color:#131314;border-radius:4px;}");
 
-    buttonWid->setStyleSheet("#buttonWid{background-color:#262628;border-radius:4px;}");
+//    buttonWid->setStyleSheet("#buttonWid{background-color:#262628;border-radius:4px;}");
     buttonWid->setFixedHeight(320);
+
+    funcListWid->setGeometry(QRect(187, 40, 20, 170));
 }
 
 // 科学计算界面布局
@@ -378,10 +460,12 @@ void MainWindow::setScientificUi()
 
     // 设置间距和背景样式
     outputWid->setFixedHeight(270);
-    outputWid->setStyleSheet("#outputWid{background-color:#18181A;margin-top:1px;border-radius:4px;}");
+//    outputWid->setStyleSheet("#outputWid{background-color:#18181A;margin-top:1px;border-radius:4px;}");
 
-    buttonWid->setStyleSheet("#buttonWid{background-color:#262628;border-radius:4px;}");
+//    buttonWid->setStyleSheet("#buttonWid{background-color:#262628;border-radius:4px;}");
     buttonWid->setFixedHeight(320);
+
+    funcListWid->setGeometry(QRect(640, 40, 20, 170));
 }
 
 // 换算器界面布局
@@ -457,13 +541,15 @@ void MainWindow::setToolUi()
 
     // 设置间距和背景样式
     outputWid->setFixedHeight(270);
-    outputWid->setStyleSheet("#outputWid{background-color:#666666;border-radius:4px;margin-top:1px;}");
+//    outputWid->setStyleSheet("#outputWid{background-color:#666666;border-radius:4px;margin-top:1px;}");
 
-    buttonWid->setStyleSheet("#buttonWid{background-color:#262628;border-radius:4px;}");
+//    buttonWid->setStyleSheet("#buttonWid{background-color:#262628;border-radius:4px;}");
     buttonWid->setFixedHeight(320);
 
     toolModelOutput->unitListBef->raise();
     toolModelOutput->unitListAft->raise();
+
+    funcListWid->setGeometry(QRect(187, 40, 20, 170));
 }
 
 // 计算器界面切换布局
@@ -477,7 +563,7 @@ void MainWindow::changeCalculatorUi()
 
     this->mainWid->setLayout(mainLayout);
     this->mainWid->setObjectName("mainWid");
-    this->mainWid->setStyleSheet("#mainWid{background-color:#666666;}");
+//    this->mainWid->setStyleSheet("#mainWid{background-color:#666666;}");
     this->setCentralWidget(mainWid);
     this->show();
 }
@@ -493,7 +579,7 @@ void MainWindow::changeToolUi()
 
     this->mainWid->setLayout(mainLayout);
     this->mainWid->setObjectName("mainWid");
-    this->mainWid->setStyleSheet("#mainWid{background-color:#666666;}");
+//    this->mainWid->setStyleSheet("#mainWid{background-color:#666666;}");
     this->setCentralWidget(mainWid);
     this->show();
 }
@@ -519,13 +605,16 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         }
     }
 
-    if (this->pTitleBar->m_pFuncLabel->text() == tr("standard")) {
+    QString label = this->pTitleBar->m_pFuncLabel->text();
+    label.replace("计算器", "");
+
+    if (label == tr("standard")) {
         standardModel->keyPressEvent(event);
     }
-    else if (this->pTitleBar->m_pFuncLabel->text() == tr("scientific")) {
+    else if (label == tr("scientific")) {
         scientificModel->keyPressEvent(event);
     }
-    else if (this->pTitleBar->m_pFuncLabel->text() == tr("exchange rate")) {
+    else if (label == tr("exchange rate")) {
         toolModelButton->keyPressEvent(event);
     }
 }
@@ -577,6 +666,60 @@ QString MainWindow::formatDisToCal(QString text)
     text.replace(",", "" );
 
     return text;
+}
+
+// 切换深色主题
+void MainWindow::changeDarkTheme()
+{
+    WidgetStyle::themeColor = 1;
+
+    QString label = this->pTitleBar->m_pFuncLabel->text();
+    label.replace("计算器", "");
+
+    this->setWidgetStyle();
+    pTitleBar->setWidgetStyle();
+    funcList->setWidgetStyle();
+
+    if (label.contains(tr("standard"))) {
+        standardModel->setWidgetStyle();
+        standardOutput->setWidgetStyle();
+    }
+    else if (label.contains(tr("scientific"))) {
+        scientificModel->setWidgetStyle();
+        scientificOutput->setWidgetStyle();
+    }
+    else if (label.contains(tr("exchange rate"))) {
+        toolModelButton->setWidgetStyle();
+        toolModelOutput->setWidgetStyle();
+        toolModelOutput->unitListBef->setWidgetStyle();
+        toolModelOutput->unitListAft->setWidgetStyle();
+    }
+}
+
+// 切换浅色主题
+void MainWindow::changeLightTheme()
+{
+    WidgetStyle::themeColor = 0;
+
+    QString label = this->pTitleBar->m_pFuncLabel->text();
+    label.replace("计算器", "");
+
+    this->setWidgetStyle();
+    pTitleBar->setWidgetStyle();
+    funcList->setWidgetStyle();
+
+    if (label.contains(tr("standard"))) {
+        standardModel->setWidgetStyle();
+        standardOutput->setWidgetStyle();
+    }
+    else if (label.contains(tr("scientific"))) {
+        scientificModel->setWidgetStyle();
+        scientificOutput->setWidgetStyle();
+    }
+    else if (label.contains(tr("exchange rate"))) {
+        toolModelButton->setWidgetStyle();
+        toolModelOutput->setWidgetStyle();
+    }
 }
 
 // 更新输出界面
@@ -649,6 +792,7 @@ void MainWindow::btn_merge(const QString &disText)
 
         // 在汇率模式下，根据历史记录修改为对应的记录
         QString label = this->pTitleBar->m_pFuncLabel->text();
+        label.replace("计算器", "");
         if (label != tr("standard") && label != tr("scientific")) {
            historyText = toolModelOutput->unitConvHistory(historyText);
         }
@@ -671,6 +815,7 @@ void MainWindow::btn_handler(bool)
     btn_merge(disText);
 
     QString label = this->pTitleBar->m_pFuncLabel->text();
+    label.replace("计算器", "");
     if (label != tr("standard") && label != tr("scientific")) {
        toolModelOutput->unitConversion();
     }
@@ -726,7 +871,7 @@ void MainWindow::funcListItemClicked(QListWidgetItem* item)
     this->funcListWid->hide();
 
     if (label != this->pTitleBar->m_pFuncLabel->text()) {
-        this->pTitleBar->setFuncLabel(label);
+        this->pTitleBar->setFuncLabel(label + "计算器");
 
         if (label == tr("standard") || label == tr("scientific")) {
 
@@ -786,16 +931,14 @@ void MainWindow::stayTop()
     // 使用KWindowSystem可以更加方便地控制窗口置顶
     if (winFlags == NULL) {
         winFlags = windowFlags();
-//        this->setWindowFlags(Qt::FramelessWindowHint | Qt::X11BypassWindowManagerHint);
         KWindowSystem::setState(this->winId(), KWindowSystem::KeepAbove);
-        pTitleBar->m_pTopButton->setStyleSheet("QPushButton{border-radius:4px;background-color:rgb(180,180,180);}");
+        // pTitleBar->m_pTopButton->setStyleSheet("QPushButton{border-radius:4px;background-color:rgb(180,180,180);}");
+        pTitleBar->m_pTopButton->setIcon(QIcon::fromTheme("ukui-fixed-symbolic"));
     }
     else {
         winFlags = NULL;
-//        this->setWindowFlags(Qt::FramelessWindowHint);
         KWindowSystem::clearState(this->winId(), KWindowSystem::KeepAbove);
-        pTitleBar->m_pTopButton->setStyleSheet("QPushButton{border-radius:4px;}"
-                                               "QPushButton:hover{background-color:#1C1C1E;}");
+        pTitleBar->m_pTopButton->setIcon(QIcon::fromTheme("ukui-unfixed-symbolic"));
     }
 }
 

@@ -28,14 +28,28 @@
 
 int main(int argc, char *argv[])
 {
+    // 适配4K屏
+    #if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
+        QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+        QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+    #endif
+
+    #if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+        QApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+    #endif
+
     QApplication a(argc, argv);
 
     // 实现VNC单例
     QStringList homePath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
     //需要给文件锁加一个DISPLAY标识  QtSingleApplication-Name改为kylin-calculator
     int fd = open(QString(homePath.at(0) + "/.config/kylin-calculator%1.lock").arg(getenv("DISPLAY")).toUtf8().data(), O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
-    if (fd < 0) { exit(1); }
-    if (lockf(fd, F_TLOCK, 0)) {
+    if (fd < 0)
+    {
+        exit(1);
+    }
+    if (lockf(fd, F_TLOCK, 0))
+    {
         syslog(LOG_ERR, "Can't lock single file, kylin-calculator is already running!");
         exit(0);
     }
@@ -43,7 +57,8 @@ int main(int argc, char *argv[])
     // 国际化
     QString locale = QLocale::system().name();
     QTranslator trans_global, trans_menu;
-    if(locale == "zh_CN"){
+    if (locale == "zh_CN")
+    {
         trans_global.load(":/data/kylin-calculator_zh_CN.qm");
         trans_menu.load(":/data/qt_zh_CN.qm");
         a.installTranslator(&trans_global);
@@ -51,11 +66,11 @@ int main(int argc, char *argv[])
     }
 
     MainWindow w;
-    
+
 #ifndef __V10__
     // 添加窗管协议
     MotifWmHints hints;
-    hints.flags = MWM_HINTS_FUNCTIONS|MWM_HINTS_DECORATIONS;
+    hints.flags = MWM_HINTS_FUNCTIONS | MWM_HINTS_DECORATIONS;
     hints.functions = MWM_FUNC_ALL;
     hints.decorations = MWM_DECOR_BORDER;
     XAtomHelper::getInstance()->setWindowMotifHint(w.winId(), hints);
