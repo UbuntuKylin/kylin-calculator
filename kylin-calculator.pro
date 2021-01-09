@@ -31,7 +31,7 @@ PKGCONFIG += \
 
 TARGET = kylin-calculator
 
-VERSION = 1.0.25
+VERSION = 1.0.26
 
 target.path = /usr/bin
 target.source += $$TARGET
