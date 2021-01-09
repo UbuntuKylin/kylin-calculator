@@ -105,6 +105,7 @@ HEADERS += \
     $$PWD/src/basicbutton.h                \
     $$PWD/src/cal.h                        \
     $$PWD/src/menumodule.h                 \
+    $$PWD/src/highlight-effect.h           \
     $$PWD/src/daemonipcdbus.h              \
     $$PWD/src/xatom-helper.h
 

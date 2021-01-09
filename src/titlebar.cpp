@@ -89,7 +89,7 @@ void TitleBar::setWidgetUi()
     funcListButton->setToolTip(tr("FuncList"));
     m_pTopButton->setToolTip(tr("StayTop"));
     m_pMinimizeButton->setToolTip(tr("Minimize"));
-    m_pMinimizeButton->setToolTip(tr("Close"));
+    m_pCloseButton->setToolTip(tr("Close"));
 
     // 设置图片
     m_pIconLabel->setIcon(QIcon::fromTheme("calc"));
@@ -139,16 +139,28 @@ void TitleBar::setWidgetUi()
     // this->setProperty("useIconHighlightEffect", true);
 
     menuBar = new menuModule(this);
-
     
+
+    m_pMenuButton = new QToolButton(this);
+    m_pMenuButton->setIcon(QIcon::fromTheme("open-menu-symbolic"));
+    m_pMenuButton->setFixedSize(30, 30);
+    m_pMenuButton->setIconSize(QSize(16, 16));
+    m_pMenuButton->setProperty("isWindowButton", 0x1);
+    m_pMenuButton->setProperty("useIconHighlightEffect", 0x2);
+    m_pMenuButton->setAutoRaise(true);
+
+    QVBoxLayout *menuLayout = new QVBoxLayout(m_pMenuButton);
+    menuLayout->addWidget(menuBar->menuButton);
+    menuLayout->setMargin(0);
+    menuLayout->setSpacing(0);
 
     // 设置按钮布局
     QHBoxLayout *pLayout = new QHBoxLayout(this);
     pLayout->addWidget(m_pIconLabel);
     pLayout->addWidget(m_pFuncLabel);
      pLayout->addStretch();
-    // pLayout->addWidget(funcListButton);
-    pLayout->addWidget(menuBar->menuButton);
+    // pLayout->addWidget(menuBar->menuButton);
+    pLayout->addWidget(m_pMenuButton);
     pLayout->addWidget(m_pTopButton);
     pLayout->addWidget(m_pMinimizeButton);
     pLayout->addWidget(m_pCloseButton);
@@ -159,13 +171,17 @@ void TitleBar::setWidgetUi()
     this->setLayout(pLayout);
 
     // 设置信号和槽函数
-    connect(m_pTopButton,      SIGNAL(clicked(bool)), this, SLOT(onClicked()));
+    // connect(m_pTopButton,      SIGNAL(clicked(bool)), this, SLOT(onClicked()));
     connect(m_pMinimizeButton, SIGNAL(clicked(bool)), this, SLOT(onClicked()));
     connect(m_pCloseButton,    SIGNAL(clicked(bool)), this, SLOT(onClicked()));
     connect(funcListButton,    SIGNAL(clicked(bool)), this, SLOT(onClicked()));
 
+    connect(m_pMenuButton,    SIGNAL(clicked(bool)), this, SLOT(menuClicked()));
+
     // m_pTopButton->hide();
-    // funcListButton->hide();
+    funcListButton->hide();
+    // m_pMenuButton->hide();
+    // menuBar->menuButton->hide();
 }
 
 // 设置组件样式
@@ -207,8 +223,16 @@ void TitleBar::setWidgetStyle()
         //                               "QPushButton:Hover{border:0px;border-radius:4px;background:transparent;background-color:#F86457;}"
         //                               "QPushButton:Pressed{border:0px;border-radius:4px;background:transparent;background-color:#E44C50;}");
 
+        m_pTopButton->setProperty("setIconHighlightEffectDefaultColor", QColor(Qt::white));
+
     }
 
+}
+
+// 菜单按钮点击事件
+void TitleBar::menuClicked()
+{
+    menuBar->menuButton->click();
 }
 
 // 双击标题栏进行界面的最大化/还原
@@ -268,11 +292,11 @@ void TitleBar::onClicked()
             m_pMinimizeButton->update();
             m_pCloseButton->update();
         }
-        else if (pButton == m_pTopButton)
-        {
+        // else if (pButton == m_pTopButton)
+        // {
 //            pWindow->parentWidget()->parentWidget()->parentWidget()->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
 //            pWindow->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-        }
+        // }
 
         else if (pButton == m_pCloseButton)
         {
