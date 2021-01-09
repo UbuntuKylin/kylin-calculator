@@ -148,13 +148,13 @@ void menuModule::triggerMenu(QAction *act){
         helpAction();
     }
     else if(tr("standard") == str){
-        emit menuModuleChanged(str);
+        emit menuModuleChanged(QString("standard"));
     }
     else if(tr("scientific") == str){
-        emit menuModuleChanged(str);
+        emit menuModuleChanged(QString("scientific"));
     }
     else if(tr("exchange rate") == str){
-        emit menuModuleChanged(str);
+        emit menuModuleChanged(QString("exchange rate"));
     }
 }
 

@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.cc": "cpp",
+        "*.pro": "cmake",
+        "sstream": "cpp"
+    }
+}

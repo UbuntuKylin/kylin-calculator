@@ -1,3 +1,9 @@
+kylin-calculator (1.0.26kord) v101; urgency=medium
+
+  * 修复翻译导致的切换bug
+
+ -- jiangdingyuan <jiangdingyuan@kylinos.cn>  Sat, 09 Jan 2021 09:04:27 +0800
+
 kylin-calculator (1.0.25kord) v101; urgency=medium
 
   * 修复关于信息
