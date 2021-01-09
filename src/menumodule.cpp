@@ -30,8 +30,11 @@ void menuModule::init(){
 
 void menuModule::initAction(){
     iconSize = QSize(30,30);
-    menuButton = new QPushButton;
-    menuButton->setIcon(QIcon::fromTheme("application-menu"));
+    menuButton = new QPushButton(this);
+    // menuButton->setIcon(QIcon::fromTheme("application-menu"));
+    menuButton->setProperty("isWindowButton", 0x1);
+    menuButton->setProperty("useIconHighlightEffect", 0x2);
+    menuButton->setFlat(true);
     menuButton->setFixedSize(iconSize);
     m_menu = new QMenu();
     QList<QAction *> actions ;
@@ -296,6 +299,8 @@ QVBoxLayout* menuModule::initBody(){
 }
 
 void menuModule::setStyle(){
+    menuButton->setObjectName("menuButton");
+    qDebug() << "menuButton->styleSheet" << menuButton->styleSheet();
     menuButton->setStyleSheet("QPushButton::menu-indicator{image:None;}");
 }
 
@@ -329,6 +334,7 @@ void menuModule::setThemeDark(){
         aboutWindow->setStyleSheet("background-color:rgba(31,32,34,1);");
     }
     emit menuModuleSetThemeStyle("dark-theme");
+    // menuButton->setProperty("setIconHighlightEffectDefaultColor", QColor(Qt::white));
 }
 
 void menuModule::setThemeLight(){

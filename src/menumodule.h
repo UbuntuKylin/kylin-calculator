@@ -24,6 +24,7 @@
 #include <QWidget>
 #include <QMenu>
 #include <QPushButton>
+#include <QToolButton>
 #include <QDebug>
 #include <QString>
 #include <QLabel>
@@ -35,6 +36,7 @@
 #include <QMetaEnum>
 
 #include "daemonipcdbus.h"
+#include "highlight-effect.h"
 
 class menuModule : public QWidget
 {
