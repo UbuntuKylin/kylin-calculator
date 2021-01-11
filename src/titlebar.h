@@ -42,6 +42,7 @@ public:
     QLabel *m_pFuncLabel;           // 界面标识
     QPushButton *m_pTopButton;      // 界面置顶按钮
     menuModule *menuBar;
+    QToolButton *m_pMenuButton;
     // 模式和功能列表按钮
     QPushButton *funcListButton;
 
@@ -53,6 +54,8 @@ public:
 
     // 设置组件样式
     void setWidgetStyle();
+
+    
 
 protected:
 
@@ -73,6 +76,9 @@ private slots:
 
     // 窗口置顶操作
     void stayTop();
+
+    // 菜单按钮点击事件
+    void menuClicked();
 
 private:
 
