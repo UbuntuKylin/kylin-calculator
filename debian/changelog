@@ -1,3 +1,12 @@
+kylin-calculator (1.0.27kord) v101; urgency=medium
+
+  * 解决禅道bug #31985 【麒麟计算器】科学计算模式下点击Rad后按钮变白
+  * 解决禅道bug #32052 【麒麟计算器】汇率计算器界面显示异常
+  * 解决禅道bug #32764 【麒麟计算器】深色模式下，汇率更新按钮显示不清晰
+  * 解决禅道bug #32767 【麒麟计算器】货币子窗口不跟随主题颜色变色
+
+ -- caoliang <caoliang@kylinos.cn>  Tue, 12 Jan 2021 10:08:50 +0800
+
 kylin-calculator (1.0.26kord) v101; urgency=medium
 
   * 修复翻译导致的切换bug

@@ -22,6 +22,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <QToolButton>
 #include <QLineEdit>
 #include <QFont>
 #include <QLabel>
@@ -63,7 +64,7 @@ public:
 
     // 汇率更新
     QLabel *toolLabUpdate;
-    QPushButton *toolIconUpdate;
+    QToolButton *toolIconUpdate;
     QLabel *toolLabRate;
 
     // 单位换算比率

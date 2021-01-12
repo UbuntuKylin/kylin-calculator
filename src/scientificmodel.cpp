@@ -605,7 +605,6 @@ QString ScientificModel::sciFormatInput(QString text)
 // 切换角度弧度显示
 void ScientificModel::changeBtnDisplay()
 {
-    qDebug() << "btnSin->text()" << btnSin->text();
     // 切换文字显示和图片显示
     if (btnSin->text() == "sin") {
         btnSin->setText("asin");
@@ -650,15 +649,26 @@ void ScientificModel::changeBtnRadDisplay()
     if (btnRad->text() == "rad") {
         btnRad->setText("deg");
 
-        btnRad->setIcon(QIcon(":/image/scientific/btnDeg.png"));
-
+        if (WidgetStyle::themeColor == 0) {
+            btnRad->setIcon(QIcon(":/image/light/scientific/btnDeg.png"));
+        }
+        else if (WidgetStyle::themeColor == 1) {
+            btnRad->setIcon(QIcon(":/image/scientific/btnDeg.png"));
+        }
+        
         // 调整Deg按钮大小
         btnRad->setIconSize(QSize(95, 55));
     }
     else {
         btnRad->setText("rad");
 
-        btnRad->setIcon(QIcon(":/image/scientific/btnRad.png"));
+        if (WidgetStyle::themeColor == 0) {
+            btnRad->setIcon(QIcon(":/image/light/scientific/btnRad.png"));
+        }
+        else if (WidgetStyle::themeColor == 1) {
+            btnRad->setIcon(QIcon(":/image/scientific/btnRad.png"));
+        }
+        
         btnRad->setIconSize(QSize(106, 62));
     }
 }

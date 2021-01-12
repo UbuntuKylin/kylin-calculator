@@ -189,8 +189,8 @@ void MainWindow::setCommonUi()
     QVBoxLayout *pLayout = new QVBoxLayout();
     pLayout->addWidget(pTitleBar);
     // pLayout->addStretch();
-    // pLayout->setSpacing(0);
-    // pLayout->setMargin(0);
+    pLayout->setSpacing(0);
+    pLayout->setMargin(0);
     titleBarWid->setLayout(pLayout);
     titleBarWid->setFixedHeight(TITLEH);
 
@@ -730,6 +730,8 @@ void MainWindow::changeLightTheme()
     else if (label.contains(tr("exchange rate"))) {
         toolModelButton->setWidgetStyle();
         toolModelOutput->setWidgetStyle();
+        toolModelOutput->unitListBef->setWidgetStyle();
+        toolModelOutput->unitListAft->setWidgetStyle();
     }
 }
 

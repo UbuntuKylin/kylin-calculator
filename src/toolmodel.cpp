@@ -40,7 +40,7 @@ void ToolModelOutput::setWidgetUi()
 {
     // 汇率刷新
     toolLabUpdate  = new QLabel(this);
-    toolIconUpdate = new QPushButton(this);
+    toolIconUpdate = new QToolButton(this);
     toolLabRate    = new QLabel(this);
 
     toolUpdateLayout = new QVBoxLayout(this);
@@ -361,6 +361,9 @@ void ToolModelOutput::setWidgetStyle()
 
     toolIconUpdate->setIcon(QIcon::fromTheme("transform-rotate", QIcon(":/image/update.png")));
     toolIconUpdate->setIconSize(QSize(16, 16));
+    toolIconUpdate->setProperty("isWindowButton", 0x1);    
+    toolIconUpdate->setProperty("useIconHighlightEffect", 0x2);     
+    toolIconUpdate->setAutoRaise(true); 
 
     toolLabRate->setText("2020.09.03 09:30\n1 CNY = 0.15 USD");
 
