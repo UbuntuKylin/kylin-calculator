@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
     #endif
 
     QApplication a(argc, argv);
+    a.setApplicationVersion("1.0.27");
 
     // 实现VNC单例
     QStringList homePath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);

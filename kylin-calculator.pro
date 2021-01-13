@@ -1,9 +1,14 @@
-QT       += core gui network KWindowSystem dbus
+QT += \ 
+    core          \
+    gui           \
+    network       \
+    KWindowSystem \
+# 适配窗口管理器圆角阴影
+    KWindowSystem \
+    dbus          \
+    x11extras
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
-# 适配窗口管理器圆角阴影
-QT += KWindowSystem dbus x11extras
 
 # 适配窗口管理器圆角阴影
 LIBS += -lpthread
@@ -31,30 +36,25 @@ PKGCONFIG += \
 
 TARGET = kylin-calculator
 
-VERSION = 1.0.26
 
-target.path = /usr/bin
+target.path += /usr/bin
 target.source += $$TARGET
 
 # gsettings
-schemes.file = ./data/org.kylin-calculator-data.gschema.xml
+schemes.files += $$PWD/data/org.kylin-calculator-data.gschema.xml
 schemes.path = /usr/share/glib-2.0/schemas/
 
 icon.path = /usr/share/pixmaps
-icon.files = ./image/calc.png
+icon.files += $$PWD/image/calc.png
 
 desktop.path = /usr/share/applications/
-desktop.files = kylin-calculator.desktop
-
-appdesktop.path = /usr/share/applications/
-appdesktop.files = kylin-calculator.desktop
+desktop.files += $$PWD/kylin-calculator.desktop
 
 
 INSTALLS += \
-    target     \
-    icon       \
-    desktop    \
-    appdesktop \
+    target  \
+    icon    \
+    desktop \
     schemes
 
 TRANSLATIONS += $$PWD/data/kylin-calculator_zh_CN.ts
@@ -62,52 +62,63 @@ TRANSLATIONS += $$PWD/data/kylin-calculator_zh_CN.ts
 #TEMPLATE = app
 
 INCLUDEPATH += \
-    $$PWD/src/cal/      \
-    $$PWD/src/BigFloat/ \
-    $$PWD/src/input/    \
-    $$PWD/src/symbols/
+    $$PWD/src/                \
+    $$PWD/src/menumodule/     \
+    $$PWD/common/             \
+    $$PWD/calculate/          \
+    $$PWD/calculate/BigFloat/ \
+    $$PWD/calculate/input/    \
+    $$PWD/calculate/cal/
 
 SOURCES += \
-    $$PWD/src/symbols/InputSymbols.cpp     \
-    $$PWD/src/BigFloat/BigFloat.cpp        \
-    $$PWD/src/cal/QStringCalculator.cpp    \
-    $$PWD/src/input/InputJudgmentGraph.cpp \
-    $$PWD/src/input/InputTools.cpp         \
-    $$PWD/src/input/InputProcess.cpp       \
-    $$PWD/src/main.cpp                     \
-    $$PWD/src/mainwindow.cpp               \
-    $$PWD/src/titlebar.cpp                 \
-    $$PWD/src/widgetstyle.cpp              \
-    $$PWD/src/funclist.cpp                 \
-    $$PWD/src/standardmodel.cpp            \
-    $$PWD/src/scientificmodel.cpp          \
-    $$PWD/src/toolmodel.cpp                \
-    $$PWD/src/basicbutton.cpp              \
-    $$PWD/src/menumodule.cpp               \
-    $$PWD/src/daemonipcdbus.cpp            \
-    $$PWD/src/xatom-helper.cpp
+# common
+    $$PWD/common/InputSymbols.cpp                \
+    $$PWD/common/xatom-helper.cpp                \
+    $$PWD/common/daemonipcdbus.cpp               \
+# calculate
+    $$PWD/calculate/BigFloat/BigFloat.cpp        \
+    $$PWD/calculate/cal/QStringCalculator.cpp    \
+    $$PWD/calculate/input/InputJudgmentGraph.cpp \
+    $$PWD/calculate/input/InputTools.cpp         \
+    $$PWD/calculate/input/InputProcess.cpp       \
+# src
+    $$PWD/src/mainwindow.cpp                     \
+    $$PWD/src/titlebar.cpp                       \
+    $$PWD/src/widgetstyle.cpp                    \
+    $$PWD/src/funclist.cpp                       \
+    $$PWD/src/standardmodel.cpp                  \
+    $$PWD/src/scientificmodel.cpp                \
+    $$PWD/src/toolmodel.cpp                      \
+    $$PWD/src/basicbutton.cpp                    \
+    $$PWD/src/menumodule/menumodule.cpp          \
+# pwd
+    $$PWD/main.cpp
 
 
 HEADERS += \
-    $$PWD/src/symbols/InputSymbols.h       \
-    $$PWD/src/BigFloat/BigFloat.h          \
-    $$PWD/src/cal/QStringCalculator.h      \
-    $$PWD/src/input/InputJudgmentGraph.h   \
-    $$PWD/src/input/InputTools.h           \
-    $$PWD/src/input/InputProcess.h         \
-    $$PWD/src/mainwindow.h                 \
-    $$PWD/src/titlebar.h                   \
-    $$PWD/src/widgetstyle.h                \
-    $$PWD/src/scientificmodel.h            \
-    $$PWD/src/funclist.h                   \
-    $$PWD/src/standardmodel.h              \
-    $$PWD/src/toolmodel.h                  \
-    $$PWD/src/basicbutton.h                \
-    $$PWD/src/cal.h                        \
-    $$PWD/src/menumodule.h                 \
-    $$PWD/src/highlight-effect.h           \
-    $$PWD/src/daemonipcdbus.h              \
-    $$PWD/src/xatom-helper.h
+# common
+    $$PWD/common/InputSymbols.h                \
+    $$PWD/common/xatom-helper.h                \
+    $$PWD/common/highlight-effect.h            \
+    $$PWD/common/daemonipcdbus.h               \
+# calculate
+    $$PWD/calculate/cal.h                      \
+    $$PWD/calculate/BigFloat/BigFloat.h        \
+    $$PWD/calculate/cal/QStringCalculator.h    \
+    $$PWD/calculate/input/InputJudgmentGraph.h \
+    $$PWD/calculate/input/InputTools.h         \
+    $$PWD/calculate/input/InputProcess.h       \
+# src
+    $$PWD/src/mainwindow.h                     \
+    $$PWD/src/titlebar.h                       \
+    $$PWD/src/widgetstyle.h                    \
+    $$PWD/src/scientificmodel.h                \
+    $$PWD/src/funclist.h                       \
+    $$PWD/src/standardmodel.h                  \
+    $$PWD/src/toolmodel.h                      \
+    $$PWD/src/basicbutton.h                    \
+    $$PWD/src/menumodule/menumodule.h
+
 
 RESOURCES += \
     image.qrc

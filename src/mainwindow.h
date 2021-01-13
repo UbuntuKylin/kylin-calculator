@@ -18,8 +18,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#define KYLINRECORDER "org.kylin-music-data.settings"
-#define FITTHEMEWINDOW "org.ukui.style"
+
+#ifndef UKUI_THEME_GSETTING_PATH
+#define UKUI_THEME_GSETTING_PATH "org.ukui.style"
+#endif
 
 #include <QMainWindow>
 #include <QKeyEvent>
@@ -159,7 +161,7 @@ private:
     QVBoxLayout *mainLayout;
 
     QWidget *mainWid;
-    QWidget *titleBarWid;
+    // QWidget *titleBarWid;
     QWidget *outputWid;
     QWidget *buttonWid;
     QWidget *funcListWid;
