@@ -40,7 +40,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     InputProcess::inputFromButton(STANDARD);
     // 初始化列表项组件
+    
     setWidgetUi();
+
+    QRect availableGeometry = qApp->primaryScreen()->availableGeometry();
+    this->move((availableGeometry.width() - this->width())/2, (availableGeometry.height() - this->height())/2);
 
     // 设置组件样式
     setWidgetStyle();
@@ -56,9 +60,9 @@ MainWindow::~MainWindow()
 // 初始化列表项组件
 void MainWindow::setWidgetUi()
 {
-    if(QGSettings::isSchemaInstalled(FITTHEMEWINDOW))
+    if(QGSettings::isSchemaInstalled(UKUI_THEME_GSETTING_PATH))
     {
-        themeData = new QGSettings(FITTHEMEWINDOW);
+        themeData = new QGSettings(UKUI_THEME_GSETTING_PATH);
         if(themeData->get("style-name").toString() == "ukui-dark" || themeData->get("style-name").toString() == "ukui-black"){
             WidgetStyle::themeColor = 1;
         }
@@ -79,18 +83,17 @@ void MainWindow::setWidgetUi()
     setStandardUi();
 
     mainLayout = new QVBoxLayout();
-    mainLayout->addWidget(titleBarWid);
+    mainLayout->addWidget(pTitleBar);
     mainLayout->addWidget(outputWid);
     mainLayout->addWidget(buttonWid);
-
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(0,0,0,0);
     mainLayout->setSpacing(0);
 
     this->mainWid->setLayout(mainLayout);
 
-    if(QGSettings::isSchemaInstalled(FITTHEMEWINDOW))
+    if(QGSettings::isSchemaInstalled(UKUI_THEME_GSETTING_PATH))
     {
-        themeData = new QGSettings(FITTHEMEWINDOW);
+        themeData = new QGSettings(UKUI_THEME_GSETTING_PATH);
         if(themeData->get("style-name").toString() == "ukui-dark" || themeData->get("style-name").toString() == "ukui-black"){
             WidgetStyle::themeColor = 1;
             // changeDarkTheme();
@@ -120,8 +123,6 @@ void MainWindow::setWidgetUi()
 // 设置组件样式
 void MainWindow::setWidgetStyle()
 {
-    QRect availableGeometry = qApp->primaryScreen()->availableGeometry();
-    this->move((availableGeometry.width() - this->width())/2, (availableGeometry.height() - this->height())/2);
 
     this->mainWid->setObjectName("mainWid");
 
@@ -129,7 +130,7 @@ void MainWindow::setWidgetStyle()
 
     if (WidgetStyle::themeColor == 0) {
         this->mainWid->setStyleSheet("#mainWid{background-color:#FFFFFF;}");
-        titleBarWid->setStyleSheet("#titleBarWid{background-color:#FFFFFF;}");
+        // titleBarWid->setStyleSheet("#titleBarWid{background-color:#FFFFFF;}");
         pTitleBar->setStyleSheet("#titleBarWid{background-color:#FFFFFF;}");
         
         // funcListWid->setStyleSheet("background:#F8F8F8;color:#F8F8F8;font-size:18px;border:none;border-radius:4px;");
@@ -139,7 +140,7 @@ void MainWindow::setWidgetStyle()
     }
     else if (WidgetStyle::themeColor == 1) {
         this->mainWid->setStyleSheet("#mainWid{background-color:#131314;}");
-        titleBarWid->setStyleSheet("#titleBarWid{background-color:#131314;}");
+        // titleBarWid->setStyleSheet("#titleBarWid{background-color:#131314;}");
         pTitleBar->setStyleSheet("#titleBarWid{background-color:#131314;}");
         // funcListWid->setStyleSheet("background:#36363A;color:#FFFFFF;font-size:18px;border:none;border-radius:4px;");
         // outputWid->setStyleSheet("#outputWid{background-color:#131314;border-radius:4px;}");
@@ -170,8 +171,8 @@ void MainWindow::setCommonUi()
 // //    this->setWindowTitle("麒麟计算器");
     // this->setWindowIcon(QIcon::fromTheme("calc"));
 
-    titleBarWid = new QWidget(this);
-    titleBarWid->setObjectName("titleBarWid");
+    // titleBarWid = new QWidget(this);
+    // titleBarWid->setObjectName("titleBarWid");
 
     // 标题栏
     pTitleBar = new TitleBar(this);
@@ -186,16 +187,16 @@ void MainWindow::setCommonUi()
     pTitleBar->setFuncLabel(tr("standard") + "计算器");
 //    pTitleBar->setFuncLabel(tr(tr("standard")));
 
-    QVBoxLayout *pLayout = new QVBoxLayout();
-    pLayout->addWidget(pTitleBar);
-    // pLayout->addStretch();
-    pLayout->setSpacing(0);
-    pLayout->setMargin(0);
-    titleBarWid->setLayout(pLayout);
-    titleBarWid->setFixedHeight(TITLEH);
+    // QVBoxLayout *pLayout = new QVBoxLayout();
+    // pLayout->addWidget(pTitleBar);
+    // // pLayout->addStretch();
+    // pLayout->setSpacing(0);
+    // pLayout->setContentsMargins(0,0,0,0);
+    // titleBarWid->setLayout(pLayout);
+    // titleBarWid->setFixedHeight(TITLEH);
 
     // 显示和隐藏功能列表
-    connect(pTitleBar->funcListButton,SIGNAL(clicked(bool)),this,SLOT(funcListHandle(bool)));
+    // connect(pTitleBar->funcListButton,SIGNAL(clicked(bool)),this,SLOT(funcListHandle(bool)));
     connect(pTitleBar->m_pTopButton,SIGNAL(clicked(bool)),this,SLOT(stayTop()));
 
     // 模式切换和功能列表
@@ -569,7 +570,7 @@ void MainWindow::changeCalculatorUi()
     mainLayout->addWidget(outputWid);
     mainLayout->addWidget(buttonWid);
 
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(0,0,0,0);
     mainLayout->setSpacing(0);
 
     this->mainWid->setLayout(mainLayout);
@@ -585,7 +586,7 @@ void MainWindow::changeToolUi()
     mainLayout->addWidget(outputWid);
     mainLayout->addWidget(buttonWid);
 
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(0,0,0,0);
     mainLayout->setSpacing(0);
 
     this->mainWid->setLayout(mainLayout);
