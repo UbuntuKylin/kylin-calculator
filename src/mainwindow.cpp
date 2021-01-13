@@ -40,7 +40,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     InputProcess::inputFromButton(STANDARD);
     // 初始化列表项组件
+    
     setWidgetUi();
+
+    QRect availableGeometry = qApp->primaryScreen()->availableGeometry();
+    this->move((availableGeometry.width() - this->width())/2, (availableGeometry.height() - this->height())/2);
 
     // 设置组件样式
     setWidgetStyle();
@@ -119,8 +123,6 @@ void MainWindow::setWidgetUi()
 // 设置组件样式
 void MainWindow::setWidgetStyle()
 {
-    QRect availableGeometry = qApp->primaryScreen()->availableGeometry();
-    this->move((availableGeometry.width() - this->width())/2, (availableGeometry.height() - this->height())/2);
 
     this->mainWid->setObjectName("mainWid");
 
