@@ -63,12 +63,13 @@ public:
     QString appVersion     = qApp->applicationVersion();
     QString appDesc        = "kylin calculator";
     QString confPath       = "org.kylin-calculator-data.settings";
+    QWidget *aboutWindow = nullptr;
 private:
     QMenu *m_menu = nullptr;
     QMenu *themeMenu = nullptr;
     QSize iconSize;
     QString appPath = "tools/kylin-calculator"; //拉起帮助菜单时使用appName字段
-    QWidget *aboutWindow = nullptr;
+    
     QGSettings *m_pGsettingThemeData = nullptr;
     QGSettings *m_pGsettingThemeStatus = nullptr;
     enum typeThemeStatus : int 

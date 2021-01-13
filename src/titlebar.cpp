@@ -267,6 +267,7 @@ void TitleBar::onClicked()
 
         else if (pButton == m_pCloseButton)
         {
+            this->menuBar->aboutWindow->close();
             pWindow->close();
         }
 //         else if (pButton == funcListButton)

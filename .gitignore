@@ -57,3 +57,6 @@ build-*
 
 #doc
 doc
+
+#vscode
+.vscode

@@ -15,6 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <QTime>
+
 #include "menumodule.h"
 #include "xatom-helper.h"
 
@@ -195,6 +197,18 @@ void menuModule::triggerThemeMenu(QAction *act)
 void menuModule::aboutAction()
 {
 //    关于点击事件处理
+    if (aboutWindow != nullptr) {
+        aboutWindow->hide();
+        
+        QTime dieTime = QTime::currentTime().addMSecs(50);
+        while( QTime::currentTime() < dieTime )
+            QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+
+
+        aboutWindow->show();
+        // aboutWindow->activateWindow();
+        return ;
+    }
     initAbout();
 }
 
