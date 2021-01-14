@@ -541,6 +541,8 @@ void MainWindow::setToolUi()
         QObject::connect(toolModelButton->btnNum[i],SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
     }
 
+    QObject::connect(toolModelButton->btnDZero,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+
     QObject::connect(toolModelButton->btnClear,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
     QObject::connect(toolModelButton->btnDiv,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
     QObject::connect(toolModelButton->btnMulti,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
