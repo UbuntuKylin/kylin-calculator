@@ -191,7 +191,7 @@ void TitleBar::setWidgetStyle()
         //                               "QPushButton:Hover{border:0px;border-radius:4px;background:transparent;background-color:#F86457;}"
         //                               "QPushButton:Pressed{border:0px;border-radius:4px;background:transparent;background-color:#E44C50;}");
 
-        m_pTopButton->setProperty("setIconHighlightEffectDefaultColor", QColor(Qt::white));
+        // m_pTopButton->setProperty("setIconHighlightEffectDefaultColor", QColor(Qt::white));
 
     }
 }
