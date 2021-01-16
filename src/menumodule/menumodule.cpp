@@ -226,6 +226,7 @@ void menuModule::helpAction()
 void menuModule::initAbout()
 {
     aboutWindow = new QWidget();
+    // aboutWindow->setWindowFlags(Qt::FramelessWindowHint);
     MotifWmHints hints;
     hints.flags = MWM_HINTS_FUNCTIONS|MWM_HINTS_DECORATIONS;
     hints.functions = MWM_FUNC_ALL;
@@ -236,7 +237,8 @@ void menuModule::initAbout()
     QVBoxLayout *mainlyt = new QVBoxLayout();
     QHBoxLayout *titleLyt = initTitleBar();
     QVBoxLayout *bodylyt = initBody();
-    mainlyt->setMargin(0);
+    mainlyt->setContentsMargins(0,0,0,0);
+    mainlyt->setSpacing(0);
     mainlyt->addLayout(titleLyt);
     mainlyt->addLayout(bodylyt);
     mainlyt->addStretch();
@@ -252,8 +254,8 @@ void menuModule::initAbout()
 QHBoxLayout* menuModule::initTitleBar()
 {
     QLabel* titleIcon = new QLabel();
-    titleIcon->setFixedSize(QSize(24,24));
     titleIcon->setPixmap(QIcon::fromTheme("calc").pixmap(titleIcon->size()));
+    titleIcon->setFixedSize(QSize(24,24));
     titleIcon->setScaledContents(true);
 
     QPushButton *titleBtnClose = new QPushButton;
@@ -270,13 +272,13 @@ QHBoxLayout* menuModule::initTitleBar()
     
     QHBoxLayout *hlyt = new QHBoxLayout;
     hlyt->setSpacing(0);
-    hlyt->setMargin(4);
+    hlyt->setContentsMargins(4,4,4,4);
     hlyt->addSpacing(4);
-    hlyt->addWidget(titleIcon,0,Qt::AlignBottom); //居下显示
+    hlyt->addWidget(titleIcon); //居下显示
     hlyt->addSpacing(8);
-    hlyt->addWidget(titleText,0,Qt::AlignBottom);
+    hlyt->addWidget(titleText);
     hlyt->addStretch();
-    hlyt->addWidget(titleBtnClose,0,Qt::AlignBottom);
+    hlyt->addWidget(titleBtnClose);
 
     return hlyt;
 }

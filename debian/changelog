@@ -1,3 +1,10 @@
+kylin-calculator (1.0.29kord) v101; urgency=medium
+
+  * 注释调试代码
+  * 关于菜单细节调整
+
+ -- jiangdingyuan <jiangdingyuan@kylinos.cn>  Sat, 16 Jan 2021 09:29:00 +0800
+
 kylin-calculator (1.0.28kord) v101; urgency=medium
 
   * 解决禅道bug #33043 : 【麒麟计算器】汇率模式点击"00"没有反应.
