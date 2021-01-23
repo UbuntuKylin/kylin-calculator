@@ -1029,8 +1029,25 @@ void MainWindow::unitConversion()
     this->lab_prepare->setText(addComma(lab_prepare->text()));
 }
 
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    mMoveing = true;
+    mMovePosition = event->globalPos() - pos();
+}
 
+void MainWindow::mouseMoveEvent(QMouseEvent *event)
+{
+    if (mMoveing && (event->buttons() && Qt::LeftButton)
+        && (event->globalPos()-mMovePosition).manhattanLength() > QApplication::startDragDistance())
+    {
+        setCursor( Qt::ClosedHandCursor );
+        move(event->globalPos()-mMovePosition);
+        mMovePosition = event->globalPos() - pos();
+    }
+}
 
-
-
-
+void MainWindow::mouseReleaseEvent(QMouseEvent *event)
+{
+    mMoveing = false;
+    setCursor( Qt::ArrowCursor );
+}

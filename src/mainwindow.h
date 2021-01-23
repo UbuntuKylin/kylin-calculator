@@ -38,6 +38,7 @@
 #include <QTime>
 #include <QVector>
 #include <QGSettings>
+#include <QPoint>
 
 #include "titlebar.h"
 #include "widgetstyle.h"
@@ -106,10 +107,14 @@ public:
 
     // 切换浅色主题
     void changeLightTheme();
+    QPoint mMovePosition;
+    bool mMoveing;
 public slots:
     // 键盘响应事件
     void keyPressEvent(QKeyEvent *event);
-
+    void mousePressEvent(QMouseEvent* event);
+    void mouseMoveEvent(QMouseEvent* event);
+    void mouseReleaseEvent(QMouseEvent* event);
 
     void btn_merge(const QString &);
     // 处理按钮点击事件
