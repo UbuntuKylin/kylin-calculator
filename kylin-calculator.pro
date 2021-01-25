@@ -36,7 +36,9 @@ PKGCONFIG += \
 
 TARGET = kylin-calculator
 
-message($$system(./translations/generate_translations_pm.sh))
+# 生成qm文件
+message($$system(./translations/generate_translations_qm.sh))
+
 # translations 
 TRANSLATIONS += $$PWD/translations/kylin-calculator_zh_CN.ts
 QM_FILES_INSTALL_PATH = /usr/share/kylin-calculator/translations/
