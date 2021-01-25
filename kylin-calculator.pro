@@ -36,6 +36,14 @@ PKGCONFIG += \
 
 TARGET = kylin-calculator
 
+message($$system(./translations/generate_translations_pm.sh))
+# translations 
+TRANSLATIONS += $$PWD/translations/kylin-calculator_zh_CN.ts
+QM_FILES_INSTALL_PATH = /usr/share/kylin-calculator/translations/
+CONFIG += lrelease
+
+BEFORE_LINK_CMD_LINE = echo Hello world!
+QMAKE_PRE_LINK += $$quote($$BEFORE_LINK_CMD_LINE)
 
 target.path += /usr/bin
 target.source += $$TARGET
@@ -50,16 +58,20 @@ icon.files += $$PWD/image/calc.png
 desktop.path = /usr/share/applications/
 desktop.files += $$PWD/kylin-calculator.desktop
 
+translationsFiles.path = /usr/share/kylin-calculator/translations/
+translationsFiles.files += $$PWD/translations/*.qm
 
 INSTALLS += \
     target  \
     icon    \
     desktop \
-    schemes
-
-TRANSLATIONS += $$PWD/data/kylin-calculator_zh_CN.ts
+    schemes \
+    translationsFiles
 
 #TEMPLATE = app
+
+RESOURCES += \
+    image.qrc
 
 INCLUDEPATH += \
     $$PWD/src/                \
@@ -118,7 +130,3 @@ HEADERS += \
     $$PWD/src/toolmodel.h                      \
     $$PWD/src/basicbutton.h                    \
     $$PWD/src/menumodule/menumodule.h
-
-
-RESOURCES += \
-    image.qrc
