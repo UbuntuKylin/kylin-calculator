@@ -1,3 +1,11 @@
+kylin-calculator (1.0.30kord1~rc1) v101; urgency=medium
+
+  * 解决禅道bug #27685 : 【麒麟计算器】汇率模式下货币切换导致历史记录显示异常
+  * 解决禅道bug #27661 : 【麒麟计算器】汇率模式未记住货币种类
+  * 解决禅道bug #32782 : 【麒麟计算器】模式切换后，历史记录显示异常
+
+ -- caoliang <caoliang@kylinos.cn>  Tue, 26 Jan 2021 15:44:34 +0800
+
 kylin-calculator (1.0.30kord) v101; urgency=medium
 
   * 解决禅道bug #32760【麒麟计算器】鼠标按住计算器窗口靠近边沿位置无法拖动窗口
