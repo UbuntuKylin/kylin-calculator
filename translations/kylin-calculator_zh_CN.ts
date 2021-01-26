@@ -37,35 +37,35 @@
         <translation>麒麟计算器</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1020"/>
-        <location filename="../src/mainwindow.cpp" line="1036"/>
+        <location filename="../src/mainwindow.cpp" line="1007"/>
+        <location filename="../src/mainwindow.cpp" line="1023"/>
         <source>standard</source>
         <translation>标准</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1018"/>
+        <location filename="../src/mainwindow.cpp" line="1005"/>
         <source>calculator</source>
         <translation>计算器</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1020"/>
-        <location filename="../src/mainwindow.cpp" line="1041"/>
+        <location filename="../src/mainwindow.cpp" line="1007"/>
+        <location filename="../src/mainwindow.cpp" line="1028"/>
         <source>scientific</source>
         <translation>科学</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1057"/>
+        <location filename="../src/mainwindow.cpp" line="1044"/>
         <source>exchange rate</source>
         <translation>汇率</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="785"/>
-        <location filename="../src/mainwindow.cpp" line="788"/>
+        <location filename="../src/mainwindow.cpp" line="772"/>
+        <location filename="../src/mainwindow.cpp" line="775"/>
         <source>Error!</source>
         <translation>错误!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="791"/>
+        <location filename="../src/mainwindow.cpp" line="778"/>
         <source>Input error!</source>
         <translation>输入错误!</translation>
     </message>
@@ -74,7 +74,7 @@
     <name>TitleBar</name>
     <message>
         <source>FuncList</source>
-        <translation>功能列表</translation>
+        <translation type="vanished">功能列表</translation>
     </message>
     <message>
         <location filename="../src/titlebar.cpp" line="57"/>
@@ -213,7 +213,7 @@
     </message>
     <message>
         <source>Support: support@kylinos.cn</source>
-        <translation>服务与支持团队</translation>
+        <translation type="vanished">服务与支持团队</translation>
     </message>
     <message>
         <location filename="../src/menumodule/menumodule.h" line="62"/>

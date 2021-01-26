@@ -178,7 +178,7 @@ void MainWindow::setCommonUi()
 
     // 设置图标
     this->setWindowTitle(tr("kylin-calculator"));
-// //    this->setWindowTitle("麒麟计算器");
+    //    this->setWindowTitle("麒麟计算器");
     this->setWindowIcon(QIcon::fromTheme("calc"));
 
     // titleBarWid = new QWidget(this);
