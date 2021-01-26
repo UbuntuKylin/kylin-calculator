@@ -179,7 +179,7 @@ void MainWindow::setCommonUi()
     // 设置图标
     this->setWindowTitle(tr("kylin-calculator"));
 // //    this->setWindowTitle("麒麟计算器");
-    // this->setWindowIcon(QIcon::fromTheme("calc"));
+    this->setWindowIcon(QIcon::fromTheme("accessories-calculator"));
 
     // titleBarWid = new QWidget(this);
     // titleBarWid->setObjectName("titleBarWid");
@@ -194,8 +194,7 @@ void MainWindow::setCommonUi()
     connect(pTitleBar->menuBar,  SIGNAL(menuModuleChanged(QString)),
             this,                SLOT(changeModel(QString)));
 
-    pTitleBar->setFuncLabel(tr("standard") + tr("calculator"));
-//    pTitleBar->setFuncLabel(tr(tr("standard")));
+    pTitleBar->setFuncLabel(pTitleBar->STANDARD_LABEL);
 
     // QVBoxLayout *pLayout = new QVBoxLayout();
     // pLayout->addWidget(pTitleBar);
@@ -227,19 +226,6 @@ void MainWindow::setCommonUi()
     funcListWid->setFixedWidth(170);
     funcListWid->setGeometry(QRect(187, 40, 20, 170));
     funcListWid->hide();
-
-//    QMenu *titleMenu = new QMenu(this);
-//    QAction *darkThemeAct = new QAction(this);
-//    QAction *lightThemeAct = new QAction(this);
-//    QAction *helpAct = new QAction(this);
-//    QAction *aboutAct = new QAction(this);
-
-//    darkThemeAct->setText("深色模式");
-//    lightThemeAct->setText("浅色模式");
-//    helpAct->setText("帮助");
-//    aboutAct->setText("关于");
-
-//    pTitleBar->funcListButton->setMenu(titleMenu);
 
     // funcList->setAttribute(Qt::WA_ShowWithoutActivating, true);
 
@@ -309,6 +295,9 @@ void MainWindow::setStandardUi()
 {
     // 固定窗口大小
     this->setFixedSize(432, 628);
+
+    // 设置当前模式
+    this->currentModel = STANDARD;
 
     // 初始化标准界面布局
     if (standardOutput == nullptr) {
@@ -391,6 +380,9 @@ void MainWindow::setScientificUi()
 {
     // 固定窗口大小
     this->setFixedSize(864, 628);
+
+    // 设置当前模式
+    this->currentModel = SCIENTIFIC;
 
     // outputWid = new QWidget(this);
     // outputWid->setObjectName("outputWid");
@@ -506,6 +498,9 @@ void MainWindow::setToolUi()
 {
     // 固定窗口大小
     this->setFixedSize(432, 628);
+
+    // 设置当前模式
+    this->currentModel = EXCHANGE_RATE;
 
     outputWid = new QWidget(this);
     buttonWid = new QWidget(this);
@@ -647,16 +642,17 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         }
     }
 
-    QString label = this->pTitleBar->m_pFuncLabel->text();
-    label.replace(tr("calculator"), "");
+    // QString label = this->pTitleBar->m_pFuncLabel->text();
+    // label.replace(tr("calculator"), "");
+    QString label = this->currentModel;
 
-    if (label == tr("standard")) {
+    if (label == "standard") {
         standardModel->keyPressEvent(event);
     }
-    else if (label == tr("scientific")) {
+    else if (label == "scientific") {
         scientificModel->keyPressEvent(event);
     }
-    else if (label == tr("exchange rate")) {
+    else if (label == "exchange rate") {
         toolModelButton->keyPressEvent(event);
     }
 }
@@ -715,22 +711,23 @@ void MainWindow::changeDarkTheme()
 {
     WidgetStyle::themeColor = 1;
 
-    QString label = this->pTitleBar->m_pFuncLabel->text();
-    label.replace(tr("calculator"), "");
+    // QString label = this->pTitleBar->m_pFuncLabel->text();
+    // label.replace(tr("calculator"), "");
+    QString label = this->currentModel;
 
     this->setWidgetStyle();
     pTitleBar->setWidgetStyle();
     funcList->setWidgetStyle();
 
-    if (label.contains(tr("standard"))) {
+    if (label.contains("standard")) {
         standardModel->setWidgetStyle();
         standardOutput->setWidgetStyle();
     }
-    else if (label.contains(tr("scientific"))) {
+    else if (label.contains("scientific")) {
         scientificModel->setWidgetStyle();
         scientificOutput->setWidgetStyle();
     }
-    else if (label.contains(tr("exchange rate"))) {
+    else if (label.contains("exchange rate")) {
         toolModelButton->setWidgetStyle();
         toolModelOutput->setWidgetStyle();
         toolModelOutput->unitListBef->setWidgetStyle();
@@ -743,22 +740,23 @@ void MainWindow::changeLightTheme()
 {
     WidgetStyle::themeColor = 0;
 
-    QString label = this->pTitleBar->m_pFuncLabel->text();
-    label.replace(tr("calculator"), "");
+    // QString label = this->pTitleBar->m_pFuncLabel->text();
+    // label.replace(tr("calculator"), "");
+    QString label = this->currentModel;
 
     this->setWidgetStyle();
     pTitleBar->setWidgetStyle();
     funcList->setWidgetStyle();
 
-    if (label.contains(tr("standard"))) {
+    if (label.contains("standard")) {
         standardModel->setWidgetStyle();
         standardOutput->setWidgetStyle();
     }
-    else if (label.contains(tr("scientific"))) {
+    else if (label.contains("scientific")) {
         scientificModel->setWidgetStyle();
         scientificOutput->setWidgetStyle();
     }
-    else if (label.contains(tr("exchange rate"))) {
+    else if (label.contains("exchange rate")) {
         toolModelButton->setWidgetStyle();
         toolModelOutput->setWidgetStyle();
         toolModelOutput->unitListBef->setWidgetStyle();
@@ -837,9 +835,10 @@ void MainWindow::btn_merge(const QString &disText)
         qDebug() << "historyText" << historyText;
 
         // 在汇率模式下，根据历史记录修改为对应的记录
-        QString label = this->pTitleBar->m_pFuncLabel->text();
-        label.replace(tr("calculator"), "");
-        if (label != tr("standard") && label != tr("scientific")) {
+        // QString label = this->pTitleBar->m_pFuncLabel->text();
+        // label.replace(tr("calculator"), "");
+        QString label = this->currentModel;
+        if (label != "standard" && label != "scientific") {
             qDebug() << "disHistory[] " << disHistory[disHistory.size() - 1];
             historyText = toolModelOutput->unitConvHistory(disHistory[disHistory.size() - 1]);
         }
@@ -861,9 +860,10 @@ void MainWindow::btn_handler(bool)
     qDebug() << "disTextis:"<<disText;
     btn_merge(disText);
 
-    QString label = this->pTitleBar->m_pFuncLabel->text();
-    label.replace(tr("calculator"), "");
-    if (label != tr("standard") && label != tr("scientific")) {
+    // QString label = this->pTitleBar->m_pFuncLabel->text();
+    // label.replace(tr("calculator"), "");
+    QString label = this->currentModel;
+    if (label != "standard" && label != "scientific") {
        toolModelOutput->unitConversion();
     }
 }
@@ -918,56 +918,8 @@ void MainWindow::changeModel(QString label)
     this->funcListWid->hide();
     // this->pTitleBar->setFuncLabel(tr(label) + "计算器");
 
-    if (label == "standard" || label == "scientific") {
-        // mainLayout->removeWidget(outputWid);
-        // mainLayout->removeWidget(buttonWid);
-
-        // this->outputWid->close();
-        // this->buttonWid->close();
-
-        QLayoutItem *outputChild = mainOutputLayout->takeAt(0);
-        QLayoutItem *buttonChild = mainButtonLayout->takeAt(0);
-
-        mainOutputLayout->removeItem(outputChild);
-        mainButtonLayout->removeItem(buttonChild);
-
-        outputChild->widget()->hide();
-        buttonChild->widget()->hide();
-        qDebug() << "hide widget";
-
-        this->lab_now->clear();
-        this->dis_data.clear();
-
-        // 换算器选项失去焦点
-        // for (int i = 0; i < funcList->funcToolWid->count(); i++) {
-        //     funcList->funcToolWid->item(i)->setSelected(false);
-        // }
-
-        if (label == "standard") {
-            this->pTitleBar->setFuncLabel(tr("standard") + tr("calculator"));
-            calData += STANDARD;
-            InputProcess::inputFromButton(STANDARD);
-            setStandardUi();
-        }
-        else if (label == "scientific") {
-            this->pTitleBar->setFuncLabel(tr("scientific") + tr("calculator"));
-            calData += SCIENTIFIC;
-            InputProcess::inputFromButton(SCIENTIFIC);
-            InputProcess::inputFromButton(RAD_SYMBOL);
-            setScientificUi();
-        }
-
-        // changeCalculatorUi();
-    }
-    else {
-
-        // 计算器选项失去焦点
-        for (int i = 0; i < funcList->funcModelWid->count(); i++) {
-            funcList->funcModelWid->item(i)->setSelected(false);
-        }
-
-        if (label == "exchange rate") {
-            this->pTitleBar->setFuncLabel(tr("exchange rate") + tr("calculator"));
+    if (label != this->currentModel) {
+        if (label == STANDARD || label == SCIENTIFIC) {
             // mainLayout->removeWidget(outputWid);
             // mainLayout->removeWidget(buttonWid);
 
@@ -983,11 +935,62 @@ void MainWindow::changeModel(QString label)
             outputChild->widget()->hide();
             buttonChild->widget()->hide();
 
-            setToolUi();
-        }
+            this->lab_now->clear();
+            this->dis_data.clear();
 
-        // changeToolUi();
+            // 换算器选项失去焦点
+            // for (int i = 0; i < funcList->funcToolWid->count(); i++) {
+            //     funcList->funcToolWid->item(i)->setSelected(false);
+            // }
+
+            if (label == STANDARD) {
+                this->pTitleBar->setFuncLabel(pTitleBar->STANDARD_LABEL);
+                calData += STANDARD;
+                InputProcess::inputFromButton(STANDARD);
+                setStandardUi();
+            }
+            else if (label == SCIENTIFIC) {
+                this->pTitleBar->setFuncLabel(pTitleBar->SCIENTIFIC_LABEL);
+                calData += SCIENTIFIC;
+                InputProcess::inputFromButton(SCIENTIFIC);
+                InputProcess::inputFromButton(RAD_SYMBOL);
+                setScientificUi();
+            }
+
+            // changeCalculatorUi();
+        }
+        else {
+
+            // 计算器选项失去焦点
+            for (int i = 0; i < funcList->funcModelWid->count(); i++) {
+                funcList->funcModelWid->item(i)->setSelected(false);
+            }
+
+            if (label == EXCHANGE_RATE) {
+                this->pTitleBar->setFuncLabel(pTitleBar->EXCHANGE_RATE_LABEL);
+                // mainLayout->removeWidget(outputWid);
+                // mainLayout->removeWidget(buttonWid);
+
+                // this->outputWid->close();
+                // this->buttonWid->close();
+
+                QLayoutItem *outputChild = mainOutputLayout->takeAt(0);
+                QLayoutItem *buttonChild = mainButtonLayout->takeAt(0);
+
+                mainOutputLayout->removeItem(outputChild);
+                mainButtonLayout->removeItem(buttonChild);
+
+                outputChild->widget()->hide();
+                buttonChild->widget()->hide();
+
+                setToolUi();
+            }
+
+            // changeToolUi();
+        }
     }
+
+    
 
 }
 
@@ -998,7 +1001,7 @@ void MainWindow::funcListItemClicked(QListWidgetItem* item)
     QString label = item->text().trimmed();
     this->funcListWid->hide();
 
-    if (label != this->pTitleBar->m_pFuncLabel->text()) {
+    if (label != this->currentModel) {
         this->pTitleBar->setFuncLabel(label + tr("calculator"));
 
         if (label == tr("standard") || label == tr("scientific")) {

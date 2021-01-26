@@ -53,9 +53,14 @@ void TitleBar::setWidgetUi()
     // this->setAttribute(Qt::WA_TranslucentBackground, true);
     this->setFixedHeight(38);
 
+    // 初始化模式或功能名称
+    STANDARD_LABEL = tr("Standard");
+    SCIENTIFIC_LABEL = tr("Scientific");
+    EXCHANGE_RATE_LABEL = tr("Exchange Rate");
+
     // 按钮初始化
     // funcListButton = new QPushButton(this);
-    m_pIconLabel = new QPushButton(this);
+    m_pIconBtn   = new QPushButton(this);
     m_pFuncLabel = new QLabel(this);
     m_pTopButton = new QPushButton(this);
     m_pMinimizeButton = new QPushButton(this);
@@ -81,8 +86,8 @@ void TitleBar::setWidgetUi()
     m_pCloseButton->setToolTip(tr("Close"));
 
     // 设置图片
-    m_pIconLabel->setIconSize(QSize(24, 24));
-    m_pIconLabel->setIcon(QIcon::fromTheme("accessories-calculator"));
+    m_pIconBtn->setIconSize(QSize(24, 24));
+    m_pIconBtn->setIcon(QIcon::fromTheme("accessories-calculator"));
 
     // funcListButton->setIcon(QIcon::fromTheme("open-menu-symbolic"));
     // funcListButton->setIconSize(QSize(16, 16));
@@ -129,14 +134,13 @@ void TitleBar::setWidgetUi()
     pLayout->setSpacing(0);
     // 这里是有问题的 应该是pLayout->addSpacing(4);但是还不知道是哪里的问题
     pLayout->addSpacing(2);
-    pLayout->addWidget(m_pIconLabel);
+    pLayout->addWidget(m_pIconBtn);
     pLayout->addSpacing(8);
     pLayout->addWidget(m_pFuncLabel);
     pLayout->addStretch();
-    // pLayout->addWidget(m_pMenuButton);
-    pLayout->addWidget(menuBar->menuButton);
-    pLayout->addSpacing(4);
     pLayout->addWidget(m_pTopButton);
+    pLayout->addSpacing(4);
+    pLayout->addWidget(menuBar->menuButton);
     pLayout->addSpacing(4);
     pLayout->addWidget(m_pMinimizeButton);
     pLayout->addSpacing(4);
@@ -164,7 +168,7 @@ void TitleBar::setWidgetStyle()
 {
     // 设置按钮样式
     // 设置图片
-    // m_pIconLabel->setIcon(QIcon::fromTheme("calc"));
+    // m_pIconBtn->setIcon(QIcon::fromTheme("calc"));
     // funcListButton->setIcon(QIcon::fromTheme("open-menu-symbolic"));
     // m_pTopButton->setIcon(QIcon::fromTheme("ukui-unfixed-symbolic"));
     // m_pMinimizeButton->setIcon(QIcon::fromTheme("window-minimize-symbolic"));
@@ -175,14 +179,14 @@ void TitleBar::setWidgetStyle()
         QString btnStyle = "QPushButton{border:0px;border-radius:4px;background:transparent;}"
                            "QPushButton:Hover{border:0px;border-radius:4px;background:transparent;background-color:rgba(0,0,0,0.1);}"
                            "QPushButton:Pressed{border:0px;border-radius:4px;background:transparent;background-color:rgba(0,0,0,0.15);}";
-        m_pIconLabel->setStyleSheet(btnStyle);
+        m_pIconBtn->setStyleSheet(btnStyle);
     }
     else if (WidgetStyle::themeColor == 1) {
         m_pFuncLabel->setStyleSheet("color:#A6A6A6;font-size:14px;");
         QString btnStyle = "QPushButton{border:0px;border-radius:4px;background:transparent;}"
                            "QPushButton:Hover{border:0px;border-radius:4px;background:transparent;background-color:rgba(0,0,0,0.1);}"
                            "QPushButton:Pressed{border:0px;border-radius:4px;background:transparent;background-color:rgba(0,0,0,0.15);}";
-        m_pIconLabel->setStyleSheet(btnStyle);
+        m_pIconBtn->setStyleSheet(btnStyle);
         // funcListButton->setStyleSheet(btnStyle);
         // m_pTopButton->setStyleSheet(btnStyle);
         // m_pMinimizeButton->setStyleSheet(btnStyle);

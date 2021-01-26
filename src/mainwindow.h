@@ -188,6 +188,10 @@ private:
 
 //    QListWidget *funcListWid;
 
+    // 保存当前计算器模式
+    QString currentModel;
+    const QString EXCHANGE_RATE = "exchange rate";
+
     QString dis_data;
     QString result;
     QString num_now;
