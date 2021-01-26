@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
+        <file>translations/kylin-calculator_zh_CN.ts</file>
+        <file>data/org.kylin-calculator-data.gschema.xml</file>
         <file>image/delete.png</file>
         <file>image/close.png</file>
         <file>image/max.png</file>
@@ -53,10 +55,6 @@
         <file>image/standard/btnSub.png</file>
         <file>image/standard/btnNum00.png</file>
         <file>image/scientific/btnPi.png</file>
-        <file>data/kylin-calculator_zh_CN.qm</file>
-        <file>data/kylin-calculator_zh_CN.ts</file>
-        <file>data/org.kylin-calculator-data.gschema.xml</file>
-        <file>data/qt_zh_CN.qm</file>
         <file>image/light/scientific/btn2nd.png</file>
         <file>image/light/scientific/btnAcos.png</file>
         <file>image/light/scientific/btnAns.png</file>
