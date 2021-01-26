@@ -63,3 +63,11 @@ doc
 
 #vscode
 .vscode
+
+#debian
+debian/files
+debian/.debhelper
+debian/kylin-calculator
+debian/*.debhelper.log
+debian/*.substvars
+kylin-calculator

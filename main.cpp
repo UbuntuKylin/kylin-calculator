@@ -17,7 +17,11 @@
 
 #include <QApplication>
 #include <QStringList>
+#include <QTranslator>
+#include <QLocale>
 #include <QStandardPaths>
+#include <QLibraryInfo>
+#include <QDir>
 #include <fcntl.h>
 #include <syslog.h>
 #include <QTranslator>
@@ -56,15 +60,40 @@ int main(int argc, char *argv[])
     }
 
     // 国际化
+    QString qtTranslationsPath;
+    qtTranslationsPath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);// /usr/share/qt5/translations
+    QString kylinCalculatorTranslationsPath;
+    if (QDir("/usr/share/kylin-calculator/translations").exists()) {
+        kylinCalculatorTranslationsPath = "/usr/share/kylin-calculator/translations";
+    }
+    else {
+        kylinCalculatorTranslationsPath = qApp->applicationDirPath() + "/.qm";
+    }
+
     QString locale = QLocale::system().name();
     QTranslator trans_global, trans_menu;
-    if (locale == "zh_CN")
-    {
-        trans_global.load(":/data/kylin-calculator_zh_CN.qm");
-        trans_menu.load(":/data/qt_zh_CN.qm");
-        a.installTranslator(&trans_global);
-        a.installTranslator(&trans_menu);
+    if (locale == "zh_CN") {
+        if(!trans_global.load(QLocale(), "kylin-calculator", "_", kylinCalculatorTranslationsPath))
+            qDebug() << "Load translations file" <<QLocale() << "failed!";
+        else
+            a.installTranslator(&trans_global);
+
+        if(!trans_menu.load(QLocale(), "qt", "_", qtTranslationsPath))
+            qDebug() << "Load translations file" <<QLocale() << "failed!";
+        else
+            a.installTranslator(&trans_menu);
     }
+    // QString translatorFileName = QLatin1String("qt_");
+    // translatorFileName += QLocale::system().name();
+    // QTranslator *translator = new QTranslator();
+    // if (translator->load(translatorFileName, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+    // {
+    //     a.installTranslator(translator);
+    // }
+    // else
+    // {
+    //     qDebug() << "加载中文失败";
+    // }
 
     MainWindow w;
 
