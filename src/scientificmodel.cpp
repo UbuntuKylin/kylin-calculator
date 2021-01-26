@@ -82,7 +82,7 @@ void ScientificOutput::setWidgetUi()
 
     sciOutputLayout = new QHBoxLayout(this);
 
-    sciOutputLayout->addWidget(sciLabLastL);
+    // sciOutputLayout->addWidget(sciLabLastL);
     sciOutputLayout->addWidget(outputRWid);
 
     this->setLayout(sciOutputLayout);
@@ -93,7 +93,7 @@ void ScientificOutput::setWidgetUi()
     this->sciLabPre->show();
     this->sciLabNow->show();
 
-    sciLabLastL->hide();
+    this->sciLabLastL->hide();
 }
 
 // 设置组件样式

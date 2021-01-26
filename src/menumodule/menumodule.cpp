@@ -322,7 +322,7 @@ QVBoxLayout* menuModule::initBody()
 void menuModule::setStyle()
 {
     menuButton->setObjectName("menuButton");
-    qDebug() << "menuButton->styleSheet" << menuButton->styleSheet();
+    // qDebug() << "menuButton->styleSheet" << menuButton->styleSheet();
     menuButton->setStyleSheet("QPushButton::menu-indicator{image:None;}");
 }
 
