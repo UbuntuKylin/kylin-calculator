@@ -33,8 +33,15 @@ void menuModule::init()
 
 void menuModule::initAction()
 {
+    // aboutWindow = new QWidget();
+    titleText = new QLabel();
+    bodyAppName = new QLabel();
+    bodyAppVersion = new QLabel();
+    bodySupport = new QLabel();
+
     iconSize = QSize(30,30);
     menuButton = new QToolButton(this);
+    menuButton->setToolTip(tr("Menu"));
     menuButton->setProperty("isWindowButton", 0x1);
     menuButton->setProperty("useIconHighlightEffect", 0x2);
     menuButton->setPopupMode(QToolButton::InstantPopup);
@@ -103,10 +110,6 @@ void menuModule::initAction()
 
 void menuModule::setThemeFromLocalThemeSetting(QList<QAction* > themeActions)
 {
-    // debug
-    themeActions[0]->setChecked(true);
-    return ;
-
     m_pGsettingThemeStatus = new QGSettings(confPath.toLocal8Bit());
     QString appConf = m_pGsettingThemeStatus->get("thememode").toString();
     if("lightonly" == appConf){
@@ -136,10 +139,10 @@ void menuModule::themeUpdate(){
 
 void menuModule::setStyleByThemeGsetting(){
     QString nowThemeStyle = m_pGsettingThemeData->get("styleName").toString();
-    if("ukui-dark" == nowThemeStyle || "ukui-black" == nowThemeStyle)
-    {
+    if("ukui-dark" == nowThemeStyle || "ukui-black" == nowThemeStyle) {
         setThemeDark();
-    }else{
+    }
+    else {
         setThemeLight();
     }
 }
@@ -197,18 +200,18 @@ void menuModule::triggerThemeMenu(QAction *act)
 void menuModule::aboutAction()
 {
 //    关于点击事件处理
-    if (aboutWindow != nullptr) {
-        aboutWindow->hide();
+    // if (aboutWindow != nullptr) {
+    //     aboutWindow->hide();
         
-        QTime dieTime = QTime::currentTime().addMSecs(50);
-        while( QTime::currentTime() < dieTime )
-            QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+    //     QTime dieTime = QTime::currentTime().addMSecs(50);
+    //     while( QTime::currentTime() < dieTime )
+    //         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 
 
-        aboutWindow->show();
-        // aboutWindow->activateWindow();
-        return ;
-    }
+    //     aboutWindow->show();
+    //     // aboutWindow->activateWindow();
+    //     return ;
+    // }
     initAbout();
 }
 
@@ -222,12 +225,18 @@ void menuModule::helpAction()
         ipcDbus->showGuide(appName);
     }
 }
-
+#include <QDialog>
 void menuModule::initAbout()
 {
     aboutWindow = new QWidget();
+    aboutWindow->setWindowFlag(Qt::Tool);
+    aboutWindow->setWindowIcon(QIcon::fromTheme("calc"));
+    aboutWindow->setWindowModality(Qt::WindowModal);
+    aboutWindow->setWindowModality(Qt::ApplicationModal);
+    // aboutWindow->setModal(true);
     // aboutWindow->setWindowFlags(Qt::FramelessWindowHint);
     MotifWmHints hints;
+    // aboutWindow->setWindowFlags(Qt::WindowStaysOnTopHint);
     hints.flags = MWM_HINTS_FUNCTIONS|MWM_HINTS_DECORATIONS;
     hints.functions = MWM_FUNC_ALL;
     hints.decorations = MWM_DECOR_BORDER;
@@ -266,7 +275,6 @@ QHBoxLayout* menuModule::initTitleBar()
     titleBtnClose->setFlat(true);
     connect(titleBtnClose,&QPushButton::clicked,[=](){aboutWindow->close();});
     
-    QLabel* titleText = new QLabel();
     titleText->setText(tr(appShowingName.toLocal8Bit()));
     titleText->setStyleSheet("font-size:14px;");
     
@@ -291,17 +299,20 @@ QVBoxLayout* menuModule::initBody()
     bodyIcon->setPixmap(QIcon::fromTheme("accessories-calculator").pixmap(bodyIcon->size()));
     // bodyIcon->setStyleSheet("font-size:14px;");
     // bodyIcon->setScaledContents(true);
-    QLabel* bodyAppName = new QLabel();
+
     bodyAppName->setFixedHeight(28);
     bodyAppName->setText(tr(appShowingName.toLocal8Bit()));
     bodyAppName->setStyleSheet("font-size:18px;");
-    QLabel* bodyAppVersion = new QLabel();
+
     bodyAppVersion->setFixedHeight(24);
     bodyAppVersion->setText(tr("Version: ") + appVersion);
     bodyAppVersion->setAlignment(Qt::AlignLeft);
     bodyAppVersion->setStyleSheet("font-size:14px;");
-    QLabel* bodySupport = new QLabel();
-    bodySupport->setText(tr("Support: ") + "support@kylinos.cn");
+
+    connect(bodySupport,&QLabel::linkActivated,this,[=](const QString url){
+        QDesktopServices::openUrl(QUrl(url));
+    });
+    bodySupport->setContextMenuPolicy(Qt::NoContextMenu);
     bodySupport->setFixedHeight(24);
     bodySupport->setStyleSheet("font-size:14px;");
     QVBoxLayout *vlyt = new QVBoxLayout;
@@ -321,9 +332,9 @@ QVBoxLayout* menuModule::initBody()
 
 void menuModule::setStyle()
 {
-    menuButton->setObjectName("menuButton");
-    // qDebug() << "menuButton->styleSheet" << menuButton->styleSheet();
-    menuButton->setStyleSheet("QPushButton::menu-indicator{image:None;}");
+    // menuButton->setObjectName("menuButton");
+    // // qDebug() << "menuButton->styleSheet" << menuButton->styleSheet();
+    // menuButton->setStyleSheet("QPushButton::menu-indicator{image:None;}");
 }
 
 void menuModule::initGsetting(){
@@ -332,6 +343,14 @@ void menuModule::initGsetting(){
         connect(m_pGsettingThemeData,&QGSettings::changed,this,&menuModule::dealSystemGsettingChange);
     }
 
+}
+
+void menuModule::keyPressEvent(QKeyEvent *event){
+    if(event->key() == Qt::Key_F1){
+        emit pullupHelp();
+    }else{
+        QWidget::keyPressEvent(event);
+    }
 }
 
 void menuModule::dealSystemGsettingChange(const QString key)
@@ -362,6 +381,10 @@ void menuModule::setThemeDark()
         // aboutWindow->setStyleSheet("background-color:rgba(13,13,14,1);");
     }
     emit menuModuleSetThemeStyle("dark-theme");
+    bodySupport->setText(tr("Service & Support: ") +
+                         "<a href=\"mailto://support@kylinos.cn\""
+                         "style=\"color:rgba(225,225,225,1)\">"
+                         "support@kylinos.cn</a>");
     // menuButton->setProperty("setIconHighlightEffectDefaultColor", QColor(Qt::white));
 }
 
@@ -376,5 +399,8 @@ void menuModule::setThemeLight()
         // aboutWindow->setStyleSheet("background-color:rgba(255,255,255,1);");
     }
     emit menuModuleSetThemeStyle("light-theme");
-
+    bodySupport->setText(tr("Service & Support: ") +
+                         "<a href=\"mailto://support@kylinos.cn\""
+                         "style=\"color:rgba(0,0,0,1)\">"
+                         "support@kylinos.cn</a>");
 }

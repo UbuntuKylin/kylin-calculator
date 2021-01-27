@@ -1,12 +1,18 @@
-kylin-calculator (1.0.30kord1~rc1) v101; urgency=medium
+kylin-calculator (1.0.31kord) v101; urgency=medium
 
+  [ Cao Liang ]
   * 解决禅道bug #27685 : 【麒麟计算器】汇率模式下货币切换导致历史记录显示异常.
   * 解决禅道bug #27661 : 【麒麟计算器】汇率模式未记住货币种类.
   * 解决禅道bug #32782 : 【麒麟计算器】模式切换后，历史记录显示异常.
   * 解决禅道bug #33471 : 【麒麟计算器】切换科学模式，未默认显示到屏幕中央位置.
   * 解决禅道bug #35353 : 【麒麟计算器】统一开始菜单图标和任务栏图标.
 
- -- caoliang <caoliang@kylinos.cn>  Tue, 26 Jan 2021 15:44:34 +0800
+  [ Jiang Dingyuan ]
+  * 关于窗口优化：添加模态，设置图标，添加超链接,添加悬浮提示
+  * MainWindow添加单例
+  * 删除翻译生成的qm文件 添加生成qm文件脚本
+
+ -- jiangdingyuan <jiangdingyuan@kylinos.cn>  Wed, 27 Jan 2021 18:47:16 +0800
 
 kylin-calculator (1.0.30kord) v101; urgency=medium
 

@@ -26,6 +26,16 @@
 #include "mainwindow.h"
 #include "xatom-helper.h"
 
+MainWindow *MainWindow::getInstance()
+{   
+
+    static MainWindow *instance = nullptr;
+    if (nullptr == instance) {
+        instance = new MainWindow();
+    }
+    return instance;
+}
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {

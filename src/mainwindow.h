@@ -56,6 +56,7 @@ class MainWindow : public QMainWindow, public InputSymbols
     Q_OBJECT
 
 public:
+    static MainWindow *getInstance();
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
