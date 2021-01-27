@@ -90,7 +90,7 @@ int InputProcess::qstrAdd(const QString &text)
     // EQUAL
     if (text == EQUAL) {
         if ( ch == EQUAL
-          || formulaOrNum <= 0
+          || formulaOrNum == -2
           || isCorrectFormula(qstrNow).first == 0) {
 
             return CANNOT_ADD_EQUAL;
@@ -361,11 +361,11 @@ int InputProcess::qstrUpdate(const QString &text)
         return FAILED_QSTR_UPDATE;
     }
 
-    if (calAns == qstrNow) {
-        labelPrepare.clear();
-        qstrPrepare.clear();
-        return FAILED_QSTR_UPDATE;
-    }
+    // if (calAns == qstrNow) {
+    //     labelPrepare.clear();
+    //     qstrPrepare.clear();
+    //     return FAILED_QSTR_UPDATE;
+    // }
 
     if (text == EQUAL) {
         calHistory.append(clearANS_END_and_SCI_NUM_END
@@ -446,6 +446,8 @@ void InputProcess::graphNodeUpdate(const QString &text)
 
 QVector<QString> InputProcess::output(const QString &text)
 {
+    qDebug () << "im in output";
+    qDebug () << text;
     if ( ( i_qstrAddFlag       != -1 && i_qstrAddFlag       != CORRECT_QSTR_ADD        )
       || ( i_qstrNowUpdateFlag != -1 && i_qstrNowUpdateFlag != CORRECT_QSTR_NOW_UPDATE ) ) {
 

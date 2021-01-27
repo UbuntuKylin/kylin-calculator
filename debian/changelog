@@ -11,6 +11,7 @@ kylin-calculator (1.0.31kord) v101; urgency=medium
   * 关于窗口优化：添加模态，设置图标，添加超链接,添加悬浮提示
   * MainWindow添加单例
   * 删除翻译生成的qm文件 添加生成qm文件脚本
+  * 实现需求 #4419：点击“=”后显示结果为数字不变，多次连续点击“=”只读取一次点击，其他视为无效点击。
 
  -- jiangdingyuan <jiangdingyuan@kylinos.cn>  Wed, 27 Jan 2021 18:47:16 +0800
 
