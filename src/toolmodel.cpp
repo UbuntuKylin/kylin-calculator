@@ -518,25 +518,41 @@ QString ToolModelOutput::unitConvHistory(QString hisText)
     hisText.replace("×", "*");
     hisText.replace("÷", "/");
     hisText.replace(SUB, "-");
-    QStringList hisTextList = hisText.split("\n");
-    qDebug() << hisTextList;
+    // qDebug() << hisText;
 
     // 默认使用人民币/美元汇率
     if (toolDouRate == 0) {
         toolDouRate = 0.15;
     }
 
-    int i;
-    i =  hisTextList.size() > 4 ?  hisTextList.size() - 4 : 0;
+    // int i;
+    // i =  hisTextList.size() > 4 ?  hisTextList.size() - 4 : 0;
 
-    for (i; i < hisTextList.size(); i++) {
-        QStringList singerHisList = (hisTextList[i]).split("=");
-        QString dataBef = singerHisList[singerHisList.size()-1].remove(QRegExp(","));
-        double douResult = calculator( calculator (dataBef) + "*" + QString::number(toolDouRate)   ).toDouble();
-        resHisText += dataBef + " " + toolRateSymbBef + " = " + QString::number(douResult) + " " + toolRateSymbAft + "\n";
-    }
+    // for (i; i < hisTextList.size(); i++) {
+    //     QStringList singerHisList = (hisTextList[i]).split("=");
+    //     QString dataBef = singerHisList[singerHisList.size()-1].remove(QRegExp(","));
+    //     double douResult = calculator( calculator (dataBef) + "*" + QString::number(toolDouRate)   ).toDouble();
+    //     resHisText += dataBef + " " + toolRateSymbBef + " = " + QString::number(douResult) + " " + toolRateSymbAft + "\n";
+    // }
 
     // 去掉最后的\n
+    // resHisText.chop(1);
+
+    QStringList singerHisList = (hisText).split("=");
+    QString dataBef = singerHisList[singerHisList.size()-1].remove(QRegExp(",")).remove("\n");
+    double douResult = calculator( calculator (dataBef) + "*" + QString::number(toolDouRate)   ).toDouble();
+    QString newHisText = dataBef + " " + toolRateSymbBef + " = " + QString::number(douResult) + " " + toolRateSymbAft + "\n";
+
+    toolDisHistory.append(newHisText);
+
+    // 获取历史记录
+    int size = toolDisHistory.size();
+    int hisIndex = (size - 4 >= 0) ? (size - 4) : 0;
+    for (int i = hisIndex; i < size; i++) {
+        resHisText = resHisText + toolDisHistory.at(i);
+    }
+
+    // 去除末尾换行符
     resHisText.chop(1);
 
     return resHisText;

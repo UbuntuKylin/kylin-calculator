@@ -26,6 +26,16 @@
 #include "mainwindow.h"
 #include "xatom-helper.h"
 
+MainWindow *MainWindow::getInstance()
+{   
+
+    static MainWindow *instance = nullptr;
+    if (nullptr == instance) {
+        instance = new MainWindow();
+    }
+    return instance;
+}
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
@@ -39,17 +49,12 @@ MainWindow::MainWindow(QWidget *parent)
 #endif
 
     InputProcess::inputFromButton(STANDARD);
-    // 初始化列表项组件
-    
-    setWidgetUi();
 
-    QRect availableGeometry = qApp->primaryScreen()->availableGeometry();
-    this->move((availableGeometry.width() - this->width())/2, (availableGeometry.height() - this->height())/2);
+    // 初始化列表项组件
+    setWidgetUi();
 
     // 设置组件样式
     setWidgetStyle();
-
-//    changeDarkTheme();
 }
 
 MainWindow::~MainWindow()
@@ -60,6 +65,9 @@ MainWindow::~MainWindow()
 // 初始化列表项组件
 void MainWindow::setWidgetUi()
 {
+    QRect availableGeometry = qApp->primaryScreen()->availableGeometry();
+    this->move((availableGeometry.width() - this->width())/2, (availableGeometry.height() - this->height())/2);
+
     if(QGSettings::isSchemaInstalled(UKUI_THEME_GSETTING_PATH))
     {
         themeData = new QGSettings(UKUI_THEME_GSETTING_PATH);
@@ -76,13 +84,25 @@ void MainWindow::setWidgetUi()
 
     mainWid = new QWidget(this);
 
+    outputWid = new QWidget(this);
+    outputWid->setObjectName("outputWid");
+
+    buttonWid = new QWidget(this);
+    buttonWid->setObjectName("buttonWid");
+
+    mainOutputLayout = new QVBoxLayout(outputWid);
+    mainOutputLayout->setMargin(0);
+
+    mainButtonLayout = new QVBoxLayout(buttonWid);
+    mainButtonLayout->setMargin(0);
+
     // 公有组件，即标题栏和功能列表
     setCommonUi();
     
     // 标准计算界面布局
     setStandardUi();
 
-    mainLayout = new QVBoxLayout();
+    mainLayout = new QVBoxLayout(mainWid);
     mainLayout->addWidget(pTitleBar);
     mainLayout->addWidget(outputWid);
     mainLayout->addWidget(buttonWid);
@@ -149,7 +169,7 @@ void MainWindow::setWidgetStyle()
     }
     this->setCentralWidget(mainWid);
     qDebug() << "/***********************************************************/";
-    qDebug() << this->styleSheet();
+    // qDebug() << this->styleSheet();
     // this->setStyleSheet("border-radius:6px;");
     // this->show();
 }
@@ -168,8 +188,8 @@ void MainWindow::setCommonUi()
 
     // 设置图标
     this->setWindowTitle(tr("kylin-calculator"));
-// //    this->setWindowTitle("麒麟计算器");
-    // this->setWindowIcon(QIcon::fromTheme("calc"));
+    //    this->setWindowTitle("麒麟计算器");
+    this->setWindowIcon(QIcon::fromTheme("calc"));
 
     // titleBarWid = new QWidget(this);
     // titleBarWid->setObjectName("titleBarWid");
@@ -184,8 +204,7 @@ void MainWindow::setCommonUi()
     connect(pTitleBar->menuBar,  SIGNAL(menuModuleChanged(QString)),
             this,                SLOT(changeModel(QString)));
 
-    pTitleBar->setFuncLabel(tr("standard") + "计算器");
-//    pTitleBar->setFuncLabel(tr(tr("standard")));
+    pTitleBar->setFuncLabel(pTitleBar->STANDARD_LABEL);
 
     // QVBoxLayout *pLayout = new QVBoxLayout();
     // pLayout->addWidget(pTitleBar);
@@ -218,19 +237,6 @@ void MainWindow::setCommonUi()
     funcListWid->setGeometry(QRect(187, 40, 20, 170));
     funcListWid->hide();
 
-//    QMenu *titleMenu = new QMenu(this);
-//    QAction *darkThemeAct = new QAction(this);
-//    QAction *lightThemeAct = new QAction(this);
-//    QAction *helpAct = new QAction(this);
-//    QAction *aboutAct = new QAction(this);
-
-//    darkThemeAct->setText("深色模式");
-//    lightThemeAct->setText("浅色模式");
-//    helpAct->setText("帮助");
-//    aboutAct->setText("关于");
-
-//    pTitleBar->funcListButton->setMenu(titleMenu);
-
     // funcList->setAttribute(Qt::WA_ShowWithoutActivating, true);
 
     // 功能列表项响应点击
@@ -241,9 +247,6 @@ void MainWindow::setCommonUi()
 // 计算器输出窗口组件
 void MainWindow::setOutputUi()
 {
-    outputWid = new QWidget(this);
-    outputWid->setObjectName("outputWid");
-
     // 当前表达式
     this->lab_now = new QLabel(this);
 
@@ -303,17 +306,34 @@ void MainWindow::setStandardUi()
     // 固定窗口大小
     this->setFixedSize(432, 628);
 
-    outputWid = new QWidget(this);
-    outputWid->setObjectName("outputWid");
-
-    buttonWid = new QWidget(this);
-    buttonWid->setObjectName("buttonWid");
+    // 设置当前模式
+    this->currentModel = STANDARD;
 
     // 初始化标准界面布局
-    standardOutput = new StandardOutput(this);
-    standardModel  = new StandardModel(this);
-    installEventFilter(standardModel);
+    if (standardOutput == nullptr) {
+        standardOutput = new StandardOutput(this);
+        standardModel  = new StandardModel(this);
 
+        // 绑定处理函数
+        for (int i = 0; i < 10; i++) {
+            QObject::connect(standardModel->btnNum[i],SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        }
+
+        QObject::connect(standardModel->btnDZero,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+
+        QObject::connect(standardModel->btnClear,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(standardModel->btnDiv,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(standardModel->btnMulti,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(standardModel->btnSub,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(standardModel->btnAdd,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(standardModel->btnEqual,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(standardModel->btnPer,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(standardModel->btnPoint,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(standardModel->btnDelete, SIGNAL(clicked(bool)),this,SLOT(delete_btn_handle(bool)));
+    }
+
+    installEventFilter(standardModel);
+    
     // 绑定输出组件
     this->lab_last = standardOutput->staLabLast;
     this->lab_prepare = standardOutput->staLabPre;
@@ -336,35 +356,24 @@ void MainWindow::setStandardUi()
     historyText.chop(1);
     this->lab_last->setText(historyText);
 
-    QVBoxLayout *staOutputLayout = new QVBoxLayout(this);
-    QVBoxLayout *standardLayout = new QVBoxLayout(this);
+    // QVBoxLayout *staOutputLayout = new QVBoxLayout(this);
+    // QVBoxLayout *standardLayout = new QVBoxLayout(this);
 
-    staOutputLayout->addWidget(standardOutput);
-    staOutputLayout->setMargin(0);
+    // staOutputLayout->addWidget(standardOutput);
+    // staOutputLayout->setMargin(0);
 
-    standardLayout->addWidget(standardModel);
-    standardLayout->setMargin(0);
+    // standardLayout->addWidget(standardModel);
+    // standardLayout->setMargin(0);
 
     // 添加界面布局
-    outputWid->setLayout(staOutputLayout);
-    buttonWid->setLayout(standardLayout);
+    // outputWid->setLayout(staOutputLayout);
+    // buttonWid->setLayout(standardLayout);
 
-    // 绑定处理函数
-    for (int i = 0; i < 10; i++) {
-        QObject::connect(standardModel->btnNum[i],SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    }
+    mainOutputLayout->addWidget(standardOutput);
+    mainButtonLayout->addWidget(standardModel);
 
-    QObject::connect(standardModel->btnDZero,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-
-    QObject::connect(standardModel->btnClear,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(standardModel->btnDiv,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(standardModel->btnMulti,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(standardModel->btnSub,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(standardModel->btnAdd,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(standardModel->btnEqual,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(standardModel->btnPer,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(standardModel->btnPoint,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(standardModel->btnDelete, SIGNAL(clicked(bool)),this,SLOT(delete_btn_handle(bool)));
+    standardOutput->show();
+    standardModel->show();
 
     // 设置间距和背景样式
     outputWid->setFixedHeight(270);
@@ -382,15 +391,64 @@ void MainWindow::setScientificUi()
     // 固定窗口大小
     this->setFixedSize(864, 628);
 
-    outputWid = new QWidget(this);
-    outputWid->setObjectName("outputWid");
+    // 设置当前模式
+    this->currentModel = SCIENTIFIC;
 
-    buttonWid = new QWidget(this);
-    buttonWid->setObjectName("buttonWid");
+    // outputWid = new QWidget(this);
+    // outputWid->setObjectName("outputWid");
+
+    // buttonWid = new QWidget(this);
+    // buttonWid->setObjectName("buttonWid");
 
     // 初始化界面布局
-    scientificOutput = new ScientificOutput(this);
-    scientificModel  = new ScientificModel(this);
+    if (scientificOutput == nullptr) {
+        scientificOutput = new ScientificOutput(this);
+        scientificModel  = new ScientificModel(this);
+
+        // 绑定处理函数
+        for (int i = 0; i < 10; i++) {
+            QObject::connect(scientificModel->btnNum[i],SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        }
+
+        QObject::connect(scientificModel->btnDZero,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+
+        QObject::connect(scientificModel->btnClear,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(scientificModel->btnDiv,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(scientificModel->btnMulti,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(scientificModel->btnSub,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(scientificModel->btnAdd,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(scientificModel->btnEqual,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(scientificModel->btnPer,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(scientificModel->btnPoint,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(scientificModel->btnDelete, SIGNAL(clicked(bool)),this,SLOT(delete_btn_handle(bool)));
+
+        // QObject::connect(scientificModel->btnInd,   SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(scientificModel->btnUndo,          SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
+        QObject::connect(scientificModel->btnBracketLeft,   SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(scientificModel->btnBracketRight,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+
+        QObject::connect(scientificModel->btnReci,      SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
+        QObject::connect(scientificModel->btnXPower2,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
+        QObject::connect(scientificModel->btnXPower3,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
+        QObject::connect(scientificModel->btnYPowerX,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
+
+        QObject::connect(scientificModel->btnFac,       SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
+        QObject::connect(scientificModel->btnXSquare2,  SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
+        QObject::connect(scientificModel->btnXSquare3,  SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
+        QObject::connect(scientificModel->btnYSquareX,  SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
+
+        QObject::connect(scientificModel->btnSin,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
+        QObject::connect(scientificModel->btnCos,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
+        QObject::connect(scientificModel->btnTan,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
+        QObject::connect(scientificModel->btnLog,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
+
+        QObject::connect(scientificModel->btnRad,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
+        QObject::connect(scientificModel->btnPi,    SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
+        QObject::connect(scientificModel->btnExp,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
+        QObject::connect(scientificModel->btnLn,    SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
+
+    }
+    
     installEventFilter(scientificModel);
 
     // 绑定输出组件
@@ -415,61 +473,26 @@ void MainWindow::setScientificUi()
     historyText.chop(1);
     this->lab_last->setText(historyText);
 
-    QVBoxLayout *sciOutputLayout = new QVBoxLayout(this);
-    QVBoxLayout *scientificLayout = new QVBoxLayout(this);
+    // QVBoxLayout *sciOutputLayout = new QVBoxLayout(this);
+    // QVBoxLayout *scientificLayout = new QVBoxLayout(this);
 
-    sciOutputLayout->addWidget(scientificOutput);
-    sciOutputLayout->setMargin(0);
+    // sciOutputLayout->addWidget(scientificOutput);
+    // sciOutputLayout->setMargin(0);
 
-    scientificLayout->addWidget(scientificModel);
-    scientificLayout->setMargin(0);
+    // scientificLayout->addWidget(scientificModel);
+    // scientificLayout->setMargin(0);
 
-    // 添加界面布局
-    outputWid->setLayout(sciOutputLayout);
-    buttonWid->setLayout(scientificLayout);
+    // // 添加界面布局
+    // outputWid->setLayout(sciOutputLayout);
+    // buttonWid->setLayout(scientificLayout);
 
-    // 绑定处理函数
-    for (int i = 0; i < 10; i++) {
-        QObject::connect(scientificModel->btnNum[i],SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    }
+    mainOutputLayout->addWidget(scientificOutput);
+    mainButtonLayout->addWidget(scientificModel);
 
-    QObject::connect(scientificModel->btnDZero,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+    scientificOutput->show();
+    scientificModel->show();
 
-    QObject::connect(scientificModel->btnClear,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(scientificModel->btnDiv,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(scientificModel->btnMulti,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(scientificModel->btnSub,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(scientificModel->btnAdd,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(scientificModel->btnEqual,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(scientificModel->btnPer,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(scientificModel->btnPoint,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(scientificModel->btnDelete, SIGNAL(clicked(bool)),this,SLOT(delete_btn_handle(bool)));
-
-//    QObject::connect(scientificModel->btnInd,   SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(scientificModel->btnUndo,          SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
-    QObject::connect(scientificModel->btnBracketLeft,   SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(scientificModel->btnBracketRight,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-
-    QObject::connect(scientificModel->btnReci,      SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
-    QObject::connect(scientificModel->btnXPower2,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
-    QObject::connect(scientificModel->btnXPower3,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
-    QObject::connect(scientificModel->btnYPowerX,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
-
-    QObject::connect(scientificModel->btnFac,       SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
-    QObject::connect(scientificModel->btnXSquare2,  SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
-    QObject::connect(scientificModel->btnXSquare3,  SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
-    QObject::connect(scientificModel->btnYSquareX,  SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
-
-    QObject::connect(scientificModel->btnSin,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
-    QObject::connect(scientificModel->btnCos,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
-    QObject::connect(scientificModel->btnTan,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
-    QObject::connect(scientificModel->btnLog,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
-
-    QObject::connect(scientificModel->btnRad,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
-    QObject::connect(scientificModel->btnPi,    SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
-    QObject::connect(scientificModel->btnExp,   SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
-    QObject::connect(scientificModel->btnLn,    SIGNAL(clicked(bool)),this,SLOT(sciBtnHandler(bool)));
-
+    
     // 设置间距和背景样式
     outputWid->setFixedHeight(270);
 //    outputWid->setStyleSheet("#outputWid{background-color:#18181A;margin-top:1px;border-radius:4px;}");
@@ -486,6 +509,9 @@ void MainWindow::setToolUi()
     // 固定窗口大小
     this->setFixedSize(432, 628);
 
+    // 设置当前模式
+    this->currentModel = EXCHANGE_RATE;
+
     outputWid = new QWidget(this);
     buttonWid = new QWidget(this);
 
@@ -493,8 +519,29 @@ void MainWindow::setToolUi()
     buttonWid->setObjectName("buttonWid");;
 
     // 初始化数据输出界面
-    toolModelOutput = new ToolModelOutput(this);
-    toolModelButton = new ToolModelButton(this);
+    if (toolModelOutput == nullptr) {
+        toolModelOutput = new ToolModelOutput(this);
+        toolModelButton = new ToolModelButton(this);
+
+        // 绑定处理函数
+        for (int i = 0; i < 10; i++) {
+            QObject::connect(toolModelButton->btnNum[i],SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        }
+
+        QObject::connect(toolModelButton->btnDZero,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+
+        QObject::connect(toolModelButton->btnClear,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(toolModelButton->btnDiv,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(toolModelButton->btnMulti,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(toolModelButton->btnSub,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(toolModelButton->btnAdd,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(toolModelButton->btnEqual,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(toolModelButton->btnPer,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(toolModelButton->btnPoint,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        QObject::connect(toolModelButton->btnDelete, SIGNAL(clicked(bool)),this,SLOT(delete_btn_handle(bool)));
+
+    }
+    
     installEventFilter(toolModelButton);
 
     // 绑定输出组件
@@ -505,53 +552,42 @@ void MainWindow::setToolUi()
     this->lab_now->setText("0");
     this->lab_prepare->setText("");
 
-    // 获取历史记录
-    int size = disHistory.size();
-    QString historyText = "";
-    int hisIndex = (size - 5 >= 0) ? (size - 5) : 0;
-    for (int i = hisIndex; i < size; i++) {
-        historyText = historyText + disHistory.at(i);
-    }
-    if (historyText != "") {
-	    // 去除末尾换行符
-	    historyText.chop(1);
+    // // 获取历史记录
+    // int size = disHistory.size();
+    // QString historyText = "";
+    // int hisIndex = (size - 5 >= 0) ? (size - 5) : 0;
+    // for (int i = hisIndex; i < size; i++) {
+    //     historyText = historyText + disHistory.at(i);
+    // }
+    // if (historyText != "") {
+	//     // 去除末尾换行符
+	//     historyText.chop(1);
 
-	    historyText = toolModelOutput->unitConvHistory(historyText);
-	    historyText.replace(SUB, "-");
+	//     historyText = toolModelOutput->unitConvHistory(historyText);
+	//     historyText.replace(SUB, "-");
 
-	    qDebug() << "historyText" << historyText << toolModelOutput->toolDouRate;
+	//     qDebug() << "historyText" << historyText << toolModelOutput->toolDouRate;
 
-	    this->lab_last->setText(historyText);
-    }
+	//     this->lab_last->setText(historyText);
+    // }
 
-    QVBoxLayout *toolOutputLayout = new QVBoxLayout(this);
-    QVBoxLayout *toolButtonLayout = new QVBoxLayout(this);
+    // QVBoxLayout *toolOutputLayout = new QVBoxLayout(this);
+    // QVBoxLayout *toolButtonLayout = new QVBoxLayout(this);
 
-    toolOutputLayout->addWidget(toolModelOutput);
-    toolOutputLayout->setMargin(0);
+    // toolOutputLayout->addWidget(toolModelOutput);
+    // toolOutputLayout->setMargin(0);
 
-    toolButtonLayout->addWidget(toolModelButton);
-    toolButtonLayout->setMargin(0);
+    // toolButtonLayout->addWidget(toolModelButton);
+    // toolButtonLayout->setMargin(0);
 
-    outputWid->setLayout(toolOutputLayout);
-    buttonWid->setLayout(toolButtonLayout);
+    // outputWid->setLayout(toolOutputLayout);
+    // buttonWid->setLayout(toolButtonLayout);
 
-    // 绑定处理函数
-    for (int i = 0; i < 10; i++) {
-        QObject::connect(toolModelButton->btnNum[i],SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    }
+    mainOutputLayout->addWidget(toolModelOutput);
+    mainButtonLayout->addWidget(toolModelButton);
 
-    QObject::connect(toolModelButton->btnDZero,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-
-    QObject::connect(toolModelButton->btnClear,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(toolModelButton->btnDiv,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(toolModelButton->btnMulti,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(toolModelButton->btnSub,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(toolModelButton->btnAdd,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(toolModelButton->btnEqual,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(toolModelButton->btnPer,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(toolModelButton->btnPoint,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
-    QObject::connect(toolModelButton->btnDelete, SIGNAL(clicked(bool)),this,SLOT(delete_btn_handle(bool)));
+    toolModelOutput->show();
+    toolModelButton->show();
 
     // 设置间距和背景样式
     outputWid->setFixedHeight(270);
@@ -559,9 +595,6 @@ void MainWindow::setToolUi()
 
 //    buttonWid->setStyleSheet("#buttonWid{background-color:#262628;border-radius:4px;}");
     buttonWid->setFixedHeight(320);
-
-    toolModelOutput->unitListBef->raise();
-    toolModelOutput->unitListAft->raise();
 
     funcListWid->setGeometry(QRect(187, 40, 20, 170));
 }
@@ -619,16 +652,17 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         }
     }
 
-    QString label = this->pTitleBar->m_pFuncLabel->text();
-    label.replace("计算器", "");
+    // QString label = this->pTitleBar->m_pFuncLabel->text();
+    // label.replace(tr("calculator"), "");
+    QString label = this->currentModel;
 
-    if (label == tr("standard")) {
+    if (label == "standard") {
         standardModel->keyPressEvent(event);
     }
-    else if (label == tr("scientific")) {
+    else if (label == "scientific") {
         scientificModel->keyPressEvent(event);
     }
-    else if (label == tr("exchange rate")) {
+    else if (label == "exchange rate") {
         toolModelButton->keyPressEvent(event);
     }
 }
@@ -687,22 +721,23 @@ void MainWindow::changeDarkTheme()
 {
     WidgetStyle::themeColor = 1;
 
-    QString label = this->pTitleBar->m_pFuncLabel->text();
-    label.replace("计算器", "");
+    // QString label = this->pTitleBar->m_pFuncLabel->text();
+    // label.replace(tr("calculator"), "");
+    QString label = this->currentModel;
 
     this->setWidgetStyle();
     pTitleBar->setWidgetStyle();
     funcList->setWidgetStyle();
 
-    if (label.contains(tr("standard"))) {
+    if (label.contains("standard")) {
         standardModel->setWidgetStyle();
         standardOutput->setWidgetStyle();
     }
-    else if (label.contains(tr("scientific"))) {
+    else if (label.contains("scientific")) {
         scientificModel->setWidgetStyle();
         scientificOutput->setWidgetStyle();
     }
-    else if (label.contains(tr("exchange rate"))) {
+    else if (label.contains("exchange rate")) {
         toolModelButton->setWidgetStyle();
         toolModelOutput->setWidgetStyle();
         toolModelOutput->unitListBef->setWidgetStyle();
@@ -715,22 +750,23 @@ void MainWindow::changeLightTheme()
 {
     WidgetStyle::themeColor = 0;
 
-    QString label = this->pTitleBar->m_pFuncLabel->text();
-    label.replace("计算器", "");
+    // QString label = this->pTitleBar->m_pFuncLabel->text();
+    // label.replace(tr("calculator"), "");
+    QString label = this->currentModel;
 
     this->setWidgetStyle();
     pTitleBar->setWidgetStyle();
     funcList->setWidgetStyle();
 
-    if (label.contains(tr("standard"))) {
+    if (label.contains("standard")) {
         standardModel->setWidgetStyle();
         standardOutput->setWidgetStyle();
     }
-    else if (label.contains(tr("scientific"))) {
+    else if (label.contains("scientific")) {
         scientificModel->setWidgetStyle();
         scientificOutput->setWidgetStyle();
     }
-    else if (label.contains(tr("exchange rate"))) {
+    else if (label.contains("exchange rate")) {
         toolModelButton->setWidgetStyle();
         toolModelOutput->setWidgetStyle();
         toolModelOutput->unitListBef->setWidgetStyle();
@@ -752,6 +788,7 @@ void MainWindow::updateOutput(QVector<QString> outVector)
             outVector[i] = tr("Input error!");
         }
     }
+
     // 获取数据
     this->disData = outVector[DISPLAY_ON_LABEL_NOW];
     this->calData = outVector[LABEL_NOW_CAL_QSTR];
@@ -776,12 +813,11 @@ void MainWindow::btn_merge(const QString &disText)
     // 获取显示字符串 运算字符串
     QVector<QString> resVector = InputProcess::inputFromButton(disText);
     // qDebug() << disText;
-    qDebug() << "resVectorresVector: " << resVector;
 
     // 将显示结果和运算结果进行显示
     updateOutput(resVector);
 
-   // 等于号的运算逻辑 跟新界面显示
+    // 等于号的运算逻辑 更新界面显示
     if (resVector[LATEST_HISTORY].size()) {
         disHistory.push_back(resVector[LATEST_HISTORY] + '\n');
 
@@ -806,11 +842,15 @@ void MainWindow::btn_merge(const QString &disText)
         // 去除末尾换行符
         historyText.chop(1);
 
+        qDebug() << "historyText" << historyText;
+
         // 在汇率模式下，根据历史记录修改为对应的记录
-        QString label = this->pTitleBar->m_pFuncLabel->text();
-        label.replace("计算器", "");
-        if (label != tr("standard") && label != tr("scientific")) {
-           historyText = toolModelOutput->unitConvHistory(historyText);
+        // QString label = this->pTitleBar->m_pFuncLabel->text();
+        // label.replace(tr("calculator"), "");
+        QString label = this->currentModel;
+        if (label != "standard" && label != "scientific") {
+            qDebug() << "disHistory[] " << disHistory[disHistory.size() - 1];
+            historyText = toolModelOutput->unitConvHistory(disHistory[disHistory.size() - 1]);
         }
 
         historyText.replace(SUB, "-");
@@ -830,9 +870,10 @@ void MainWindow::btn_handler(bool)
     qDebug() << "disTextis:"<<disText;
     btn_merge(disText);
 
-    QString label = this->pTitleBar->m_pFuncLabel->text();
-    label.replace("计算器", "");
-    if (label != tr("standard") && label != tr("scientific")) {
+    // QString label = this->pTitleBar->m_pFuncLabel->text();
+    // label.replace(tr("calculator"), "");
+    QString label = this->currentModel;
+    if (label != "standard" && label != "scientific") {
        toolModelOutput->unitConversion();
     }
 }
@@ -887,58 +928,79 @@ void MainWindow::changeModel(QString label)
     this->funcListWid->hide();
     // this->pTitleBar->setFuncLabel(tr(label) + "计算器");
 
-    if (label == "standard" || label == "scientific") {
-        qDebug() << "11111";
-        mainLayout->removeWidget(outputWid);
-        mainLayout->removeWidget(buttonWid);
+    if (label != this->currentModel) {
+        if (label == STANDARD || label == SCIENTIFIC) {
+            // mainLayout->removeWidget(outputWid);
+            // mainLayout->removeWidget(buttonWid);
 
-        this->outputWid->close();
-        this->buttonWid->close();
+            // this->outputWid->close();
+            // this->buttonWid->close();
 
-        this->lab_now->clear();
-        this->dis_data.clear();
+            QLayoutItem *outputChild = mainOutputLayout->takeAt(0);
+            QLayoutItem *buttonChild = mainButtonLayout->takeAt(0);
 
-        // 换算器选项失去焦点
-        // for (int i = 0; i < funcList->funcToolWid->count(); i++) {
-        //     funcList->funcToolWid->item(i)->setSelected(false);
-        // }
+            mainOutputLayout->removeItem(outputChild);
+            mainButtonLayout->removeItem(buttonChild);
 
-        if (label == "standard") {
-            this->pTitleBar->setFuncLabel(tr("standard") + "计算器");
-            calData += STANDARD;
-            InputProcess::inputFromButton(STANDARD);
-            setStandardUi();
+            outputChild->widget()->hide();
+            buttonChild->widget()->hide();
+
+            this->lab_now->clear();
+            this->dis_data.clear();
+
+            // 换算器选项失去焦点
+            // for (int i = 0; i < funcList->funcToolWid->count(); i++) {
+            //     funcList->funcToolWid->item(i)->setSelected(false);
+            // }
+
+            if (label == STANDARD) {
+                this->pTitleBar->setFuncLabel(pTitleBar->STANDARD_LABEL);
+                calData += STANDARD;
+                InputProcess::inputFromButton(STANDARD);
+                setStandardUi();
+            }
+            else if (label == SCIENTIFIC) {
+                this->pTitleBar->setFuncLabel(pTitleBar->SCIENTIFIC_LABEL);
+                calData += SCIENTIFIC;
+                InputProcess::inputFromButton(SCIENTIFIC);
+                InputProcess::inputFromButton(RAD_SYMBOL);
+                setScientificUi();
+            }
+
+            // changeCalculatorUi();
         }
-        else if (label == "scientific") {
-            this->pTitleBar->setFuncLabel(tr("scientific") + "计算器");
-            calData += SCIENTIFIC;
-            InputProcess::inputFromButton(SCIENTIFIC);
-            InputProcess::inputFromButton(RAD_SYMBOL);
-            setScientificUi();
-        }
+        else {
 
-        changeCalculatorUi();
+            // 计算器选项失去焦点
+            for (int i = 0; i < funcList->funcModelWid->count(); i++) {
+                funcList->funcModelWid->item(i)->setSelected(false);
+            }
+
+            if (label == EXCHANGE_RATE) {
+                this->pTitleBar->setFuncLabel(pTitleBar->EXCHANGE_RATE_LABEL);
+                // mainLayout->removeWidget(outputWid);
+                // mainLayout->removeWidget(buttonWid);
+
+                // this->outputWid->close();
+                // this->buttonWid->close();
+
+                QLayoutItem *outputChild = mainOutputLayout->takeAt(0);
+                QLayoutItem *buttonChild = mainButtonLayout->takeAt(0);
+
+                mainOutputLayout->removeItem(outputChild);
+                mainButtonLayout->removeItem(buttonChild);
+
+                outputChild->widget()->hide();
+                buttonChild->widget()->hide();
+
+                setToolUi();
+            }
+
+            // changeToolUi();
+        }
     }
-    else {
 
-        // 计算器选项失去焦点
-        for (int i = 0; i < funcList->funcModelWid->count(); i++) {
-            funcList->funcModelWid->item(i)->setSelected(false);
-        }
-
-        if (label == "exchange rate") {
-            this->pTitleBar->setFuncLabel(tr("exchange rate") + "计算器");
-            mainLayout->removeWidget(outputWid);
-            mainLayout->removeWidget(buttonWid);
-
-            this->outputWid->close();
-            this->buttonWid->close();
-
-            setToolUi();
-        }
-
-        changeToolUi();
-    }
+    
 
 }
 
@@ -949,8 +1011,8 @@ void MainWindow::funcListItemClicked(QListWidgetItem* item)
     QString label = item->text().trimmed();
     this->funcListWid->hide();
 
-    if (label != this->pTitleBar->m_pFuncLabel->text()) {
-        this->pTitleBar->setFuncLabel(label + "计算器");
+    if (label != this->currentModel) {
+        this->pTitleBar->setFuncLabel(label + tr("calculator"));
 
         if (label == tr("standard") || label == tr("scientific")) {
 
@@ -980,7 +1042,7 @@ void MainWindow::funcListItemClicked(QListWidgetItem* item)
                 setScientificUi();
             }
 
-            changeCalculatorUi();
+            // changeCalculatorUi();
         }
         else {
 
@@ -999,7 +1061,7 @@ void MainWindow::funcListItemClicked(QListWidgetItem* item)
                 setToolUi();
             }
 
-            changeToolUi();
+            // changeToolUi();
         }
 
     }

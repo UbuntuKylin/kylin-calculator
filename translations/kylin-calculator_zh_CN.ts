@@ -32,52 +32,40 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="169"/>
+        <location filename="../src/mainwindow.cpp" line="190"/>
         <source>kylin-calculator</source>
         <translation>麒麟计算器</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="186"/>
-        <location filename="../src/mainwindow.cpp" line="622"/>
-        <location filename="../src/mainwindow.cpp" line="694"/>
-        <location filename="../src/mainwindow.cpp" line="722"/>
-        <location filename="../src/mainwindow.cpp" line="807"/>
-        <location filename="../src/mainwindow.cpp" line="830"/>
-        <location filename="../src/mainwindow.cpp" line="902"/>
-        <location filename="../src/mainwindow.cpp" line="950"/>
-        <location filename="../src/mainwindow.cpp" line="966"/>
+        <location filename="../src/mainwindow.cpp" line="1017"/>
+        <location filename="../src/mainwindow.cpp" line="1033"/>
         <source>standard</source>
         <translation>标准</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="625"/>
-        <location filename="../src/mainwindow.cpp" line="698"/>
-        <location filename="../src/mainwindow.cpp" line="726"/>
-        <location filename="../src/mainwindow.cpp" line="807"/>
-        <location filename="../src/mainwindow.cpp" line="830"/>
-        <location filename="../src/mainwindow.cpp" line="908"/>
-        <location filename="../src/mainwindow.cpp" line="950"/>
-        <location filename="../src/mainwindow.cpp" line="971"/>
+        <location filename="../src/mainwindow.cpp" line="1015"/>
+        <source>calculator</source>
+        <translation>计算器</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1017"/>
+        <location filename="../src/mainwindow.cpp" line="1038"/>
         <source>scientific</source>
         <translation>科学</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="628"/>
-        <location filename="../src/mainwindow.cpp" line="702"/>
-        <location filename="../src/mainwindow.cpp" line="730"/>
-        <location filename="../src/mainwindow.cpp" line="925"/>
-        <location filename="../src/mainwindow.cpp" line="987"/>
+        <location filename="../src/mainwindow.cpp" line="1054"/>
         <source>exchange rate</source>
         <translation>汇率</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="741"/>
-        <location filename="../src/mainwindow.cpp" line="744"/>
+        <location filename="../src/mainwindow.cpp" line="782"/>
+        <location filename="../src/mainwindow.cpp" line="785"/>
         <source>Error!</source>
         <translation>错误!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="747"/>
+        <location filename="../src/mainwindow.cpp" line="788"/>
         <source>Input error!</source>
         <translation>输入错误!</translation>
     </message>
@@ -85,22 +73,36 @@
 <context>
     <name>TitleBar</name>
     <message>
-        <location filename="../src/titlebar.cpp" line="89"/>
         <source>FuncList</source>
-        <translation>功能列表</translation>
+        <translation type="vanished">功能列表</translation>
     </message>
     <message>
-        <location filename="../src/titlebar.cpp" line="90"/>
+        <location filename="../src/titlebar.cpp" line="57"/>
+        <source>Standard</source>
+        <translation>麒麟计算器—标准</translation>
+    </message>
+    <message>
+        <location filename="../src/titlebar.cpp" line="58"/>
+        <source>Scientific</source>
+        <translation>麒麟计算器—科学</translation>
+    </message>
+    <message>
+        <location filename="../src/titlebar.cpp" line="59"/>
+        <source>Exchange Rate</source>
+        <translation>麒麟计算器—汇率</translation>
+    </message>
+    <message>
+        <location filename="../src/titlebar.cpp" line="84"/>
         <source>StayTop</source>
         <translation>置顶</translation>
     </message>
     <message>
-        <location filename="../src/titlebar.cpp" line="91"/>
+        <location filename="../src/titlebar.cpp" line="85"/>
         <source>Minimize</source>
         <translation>最小化</translation>
     </message>
     <message>
-        <location filename="../src/titlebar.cpp" line="92"/>
+        <location filename="../src/titlebar.cpp" line="86"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -113,12 +115,12 @@
         <translation>汇率更新</translation>
     </message>
     <message>
-        <location filename="../src/toolmodel.cpp" line="371"/>
+        <location filename="../src/toolmodel.cpp" line="374"/>
         <source>Chinese Yuan</source>
         <translation>人民币</translation>
     </message>
     <message>
-        <location filename="../src/toolmodel.cpp" line="381"/>
+        <location filename="../src/toolmodel.cpp" line="384"/>
         <source>US Dollar</source>
         <translation>美元</translation>
     </message>
@@ -126,17 +128,17 @@
 <context>
     <name>UnitListWidget</name>
     <message>
-        <location filename="../src/toolmodel.cpp" line="1053"/>
+        <location filename="../src/toolmodel.cpp" line="1072"/>
         <source>currency</source>
         <translation>货币</translation>
     </message>
     <message>
-        <location filename="../src/toolmodel.cpp" line="1058"/>
+        <location filename="../src/toolmodel.cpp" line="1077"/>
         <source>cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/toolmodel.cpp" line="1066"/>
+        <location filename="../src/toolmodel.cpp" line="1085"/>
         <source>search</source>
         <translation>搜索</translation>
     </message>
@@ -144,82 +146,85 @@
 <context>
     <name>menuModule</name>
     <message>
-        <location filename="../src/menumodule.cpp" line="23"/>
-        <location filename="../src/menumodule.cpp" line="133"/>
+        <location filename="../src/menumodule/menumodule.cpp" line="44"/>
+        <source>Menu</source>
+        <translation>菜单</translation>
+    </message>
+    <message>
+        <location filename="../src/menumodule/menumodule.cpp" line="56"/>
+        <location filename="../src/menumodule/menumodule.cpp" line="162"/>
         <source>standard</source>
-        <translatorcomment>标准</translatorcomment>
-        <translation type="unfinished">标准</translation>
+        <translation>标准</translation>
     </message>
     <message>
-        <location filename="../src/menumodule.cpp" line="25"/>
-        <location filename="../src/menumodule.cpp" line="136"/>
+        <location filename="../src/menumodule/menumodule.cpp" line="58"/>
+        <location filename="../src/menumodule/menumodule.cpp" line="165"/>
         <source>scientific</source>
-        <translatorcomment>科学</translatorcomment>
-        <translation type="unfinished">科学</translation>
+        <translation>科学</translation>
     </message>
     <message>
-        <location filename="../src/menumodule.cpp" line="27"/>
-        <location filename="../src/menumodule.cpp" line="139"/>
+        <location filename="../src/menumodule/menumodule.cpp" line="60"/>
+        <location filename="../src/menumodule/menumodule.cpp" line="168"/>
         <source>exchange rate</source>
-        <translatorcomment>汇率</translatorcomment>
-        <translation type="unfinished">汇率</translation>
+        <translation>汇率</translation>
     </message>
     <message>
-        <location filename="../src/menumodule.cpp" line="33"/>
+        <location filename="../src/menumodule/menumodule.cpp" line="66"/>
         <source>Theme</source>
         <translation>主题</translation>
     </message>
     <message>
-        <location filename="../src/menumodule.cpp" line="35"/>
-        <location filename="../src/menumodule.cpp" line="130"/>
+        <location filename="../src/menumodule/menumodule.cpp" line="68"/>
+        <location filename="../src/menumodule/menumodule.cpp" line="159"/>
         <source>Help</source>
         <translation>帮助</translation>
     </message>
     <message>
-        <location filename="../src/menumodule.cpp" line="37"/>
-        <location filename="../src/menumodule.cpp" line="127"/>
+        <location filename="../src/menumodule/menumodule.cpp" line="70"/>
+        <location filename="../src/menumodule/menumodule.cpp" line="156"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../src/menumodule.cpp" line="39"/>
-        <location filename="../src/menumodule.cpp" line="124"/>
+        <location filename="../src/menumodule/menumodule.cpp" line="72"/>
+        <location filename="../src/menumodule/menumodule.cpp" line="153"/>
         <source>Quit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../src/menumodule.cpp" line="53"/>
+        <location filename="../src/menumodule/menumodule.cpp" line="87"/>
         <source>Auto</source>
-        <translation type="unfinished">自动</translation>
+        <translation>自动</translation>
     </message>
     <message>
-        <location filename="../src/menumodule.cpp" line="57"/>
+        <location filename="../src/menumodule/menumodule.cpp" line="91"/>
         <source>Light</source>
-        <translation type="unfinished">浅色</translation>
+        <translation>浅色</translation>
     </message>
     <message>
-        <location filename="../src/menumodule.cpp" line="61"/>
+        <location filename="../src/menumodule/menumodule.cpp" line="95"/>
         <source>Dark</source>
-        <translation type="unfinished">深色</translation>
+        <translation>深色</translation>
     </message>
     <message>
-        <location filename="../src/menumodule.cpp" line="259"/>
+        <location filename="../src/menumodule/menumodule.cpp" line="308"/>
         <source>Version: </source>
-        <translation>版本号： </translation>
+        <translation>版本号: </translation>
     </message>
     <message>
-        <location filename="../src/menumodule.cpp" line="263"/>
-        <source>Support: </source>
-        <translation type="unfinished">支持: </translation>
+        <location filename="../src/menumodule/menumodule.cpp" line="384"/>
+        <location filename="../src/menumodule/menumodule.cpp" line="402"/>
+        <source>Service &amp; Support: </source>
+        <translation>支持：</translation>
     </message>
     <message>
         <source>Support: support@kylinos.cn</source>
-        <translation type="vanished">服务与支持团队</translation>
+        <translation>支持：support@kylinos.cn</translation>
     </message>
     <message>
-        <location filename="../src/menumodule.h" line="40"/>
+        <location filename="../src/menumodule/menumodule.h" line="66"/>
         <source>kylin calculator</source>
-        <translation type="unfinished">麒麟计算器</translation>
+        <translation>麒麟计算器</translation>
     </message>
 </context>
 </TS>

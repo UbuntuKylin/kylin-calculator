@@ -44,15 +44,18 @@ public:
     // 设置组件样式
     void setWidgetStyle();
 
-
-
     // FuncList *funcList;
-    QPushButton *m_pIconLabel;      // 左上角应用图标
+    QPushButton *m_pIconBtn;      // 左上角应用图标
     QLabel *m_pFuncLabel;           // 界面标识
     QPushButton *m_pTopButton;      // 界面置顶按钮
     menuModule *menuBar;
     QPushButton *m_pMinimizeButton; // 最小化按钮
     QPushButton *m_pCloseButton;    // 关闭按钮
+
+    // 模式或功能名称
+    QString STANDARD_LABEL;
+    QString SCIENTIFIC_LABEL;
+    QString EXCHANGE_RATE_LABEL;
 
     // QToolButton *m_pMenuButton;
     // 模式和功能列表按钮

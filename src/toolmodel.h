@@ -97,6 +97,9 @@ public:
     QPushButton *toolUnitBefWid;
     QPushButton *toolUnitAftWid;
 
+    // 记录计算历史记录,输入'='时触发
+    QVector<QString> toolDisHistory;
+
     // 换算历史
     QLabel *toolLabHis;
     // 换算前

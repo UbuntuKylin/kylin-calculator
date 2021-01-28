@@ -27,13 +27,16 @@
 #include <QWidget>
 #include <QMenu>
 #include <QPushButton>
+#include <QKeyEvent>
 #include <QToolButton>
 #include <QDebug>
 #include <QString>
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QDesktopServices>
 #include <QRect>
+#include <QUrl>
 #include <QScreen>
 #include <QGSettings>
 #include <QMetaEnum>
@@ -51,6 +54,7 @@ public:
 signals:
     void menuModuleClose();
     void menuModuleChanged(QString);
+    void pullupHelp();
 
     void menuModuleSetThemeStyle(QString);
 public:
@@ -82,6 +86,7 @@ private:
 public slots:
     void dealSystemGsettingChange(const QString);
 private:
+    void keyPressEvent(QKeyEvent *event);
     void init();
     QHBoxLayout* initTitleBar(); //关于窗口标题栏初始化
     QVBoxLayout* initBody();    // 关于窗口body初始化
@@ -99,6 +104,10 @@ private:
     void setThemeLight();
     void setThemeDark();
 //    void updateTheme(); //点击菜单中的主题设置后更新一次主题
+    QLabel* titleText = nullptr;
+    QLabel* bodyAppName = nullptr;
+    QLabel* bodyAppVersion = nullptr;
+    QLabel* bodySupport = nullptr;
 
     void refreshThemeBySystemConf();    //通过系统配置更改主题
 };

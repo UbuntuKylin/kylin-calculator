@@ -56,6 +56,7 @@ class MainWindow : public QMainWindow, public InputSymbols
     Q_OBJECT
 
 public:
+    static MainWindow *getInstance();
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
@@ -167,23 +168,30 @@ private:
 
     QWidget *mainWid;
     // QWidget *titleBarWid;
-    QWidget *outputWid;
-    QWidget *buttonWid;
+    QWidget *outputWid = nullptr;
+    QWidget *buttonWid = nullptr;
     QWidget *funcListWid;
+
+    QVBoxLayout *mainOutputLayout;
+    QVBoxLayout *mainButtonLayout;
 
     TitleBar *pTitleBar;
     FuncList *funcList;
 
-    StandardOutput *standardOutput;
-    StandardModel  *standardModel;
+    StandardOutput *standardOutput = nullptr;
+    StandardModel  *standardModel = nullptr;
 
-    ScientificOutput *scientificOutput;
-    ScientificModel  *scientificModel;
+    ScientificOutput *scientificOutput = nullptr;
+    ScientificModel  *scientificModel = nullptr;
 
-    ToolModelOutput *toolModelOutput;
-    ToolModelButton *toolModelButton;
+    ToolModelOutput *toolModelOutput = nullptr;
+    ToolModelButton *toolModelButton = nullptr;
 
 //    QListWidget *funcListWid;
+
+    // 保存当前计算器模式
+    QString currentModel;
+    const QString EXCHANGE_RATE = "exchange rate";
 
     QString dis_data;
     QString result;

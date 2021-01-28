@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
     #endif
 
     QApplication a(argc, argv);
-    a.setApplicationVersion("1.0.30");
+    a.setApplicationVersion("1.0.31");
 
     // 实现VNC单例
     QStringList homePath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
     //     qDebug() << "加载中文失败";
     // }
 
-    MainWindow w;
+    MainWindow::getInstance();
 
 #ifndef __V10__
     // 添加窗管协议
@@ -103,9 +103,9 @@ int main(int argc, char *argv[])
     hints.flags = MWM_HINTS_FUNCTIONS | MWM_HINTS_DECORATIONS;
     hints.functions = MWM_FUNC_ALL;
     hints.decorations = MWM_DECOR_BORDER;
-    XAtomHelper::getInstance()->setWindowMotifHint(w.winId(), hints);
+    XAtomHelper::getInstance()->setWindowMotifHint(MainWindow::getInstance()->winId(), hints);
 #endif
 
-    w.show();
+    MainWindow::getInstance()->show();
     return a.exec();
 }
