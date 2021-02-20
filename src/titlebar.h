@@ -19,11 +19,9 @@
 #define TITLE_BAR
 
 #include <QWidget>
-#include <QListWidget>
-#include <QListWidgetItem>
 
-#include "funclist.h"
-#include "closebutton.h"
+// #include "funclist.h"
+// #include "closebutton.h"
 #include "menumodule.h"
 
 class QLabel;
@@ -37,15 +35,6 @@ public:
     explicit TitleBar(QWidget *parent = 0);
     ~TitleBar();
 
-    FuncList *funcList;
-    QPushButton *m_pIconLabel;      // 左上角应用图标
-    QLabel *m_pFuncLabel;           // 界面标识
-    QPushButton *m_pTopButton;      // 界面置顶按钮
-    menuModule *menuBar;
-    QToolButton *m_pMenuButton;
-    // 模式和功能列表按钮
-    QPushButton *funcListButton;
-
     // 设置模式或功能名称
     void setFuncLabel(QString label);
 
@@ -55,7 +44,23 @@ public:
     // 设置组件样式
     void setWidgetStyle();
 
-    
+    // FuncList *funcList;
+    QPushButton *m_pIconBtn;      // 左上角应用图标
+    QLabel *m_pFuncLabel;           // 界面标识
+    QPushButton *m_pTopButton;      // 界面置顶按钮
+    menuModule *menuBar;
+    QPushButton *m_pMinimizeButton; // 最小化按钮
+    QPushButton *m_pCloseButton;    // 关闭按钮
+
+    // 模式或功能名称
+    QString STANDARD_LABEL;
+    QString SCIENTIFIC_LABEL;
+    QString EXCHANGE_RATE_LABEL;
+
+    // QToolButton *m_pMenuButton;
+    // 模式和功能列表按钮
+    // QPushButton *funcListButton;
+
 
 protected:
 
@@ -66,8 +71,8 @@ protected:
     virtual void mouseReleaseEvent(QMouseEvent *event);
 #endif
 
-signals:
-    void iconButtonSignal();
+// signals:
+    // void iconButtonSignal();
 
 private slots:
 
@@ -75,10 +80,10 @@ private slots:
     void onClicked();
 
     // 窗口置顶操作
-    void stayTop();
+    // void stayTop();
 
     // 菜单按钮点击事件
-    void menuClicked();
+    // void menuClicked();
 
 private:
 
@@ -87,12 +92,11 @@ private:
 
 private:
 
-    QPushButton *m_pMinimizeButton; // 最小化按钮
-    QPushButton *m_pCloseButton;    // 关闭按钮
+    
 
-    QPoint m_start;                 // 起始点
-    QPoint m_end;                   // 结束点
-    bool m_leftButtonPressed;       // 鼠标左键按下标记
+    // QPoint m_start;                 // 起始点
+    // QPoint m_end;                   // 结束点
+    // bool m_leftButtonPressed;       // 鼠标左键按下标记
 };
 
 #endif // TITLE_BAR

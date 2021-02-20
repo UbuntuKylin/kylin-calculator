@@ -51,9 +51,8 @@ compile_commands.json
 # QtCreator local machine specific files for imported projects
 *creator.user*
 
-# vscode
-*.vscode*
-.vscode/settings.json
+# VSCode
+.vscode
 
 # build
 build
@@ -61,3 +60,14 @@ build-*
 
 #doc
 doc
+
+#vscode
+.vscode
+
+#debian
+debian/files
+debian/.debhelper
+debian/kylin-calculator
+debian/*.debhelper.log
+debian/*.substvars
+kylin-calculator

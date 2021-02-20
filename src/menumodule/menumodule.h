@@ -17,20 +17,26 @@
 
 #ifndef MENUMODULE_H
 #define MENUMODULE_H
-#define DEBUG_MENUMODULE 0  //DEBUG模式开关，代码上线之前务必关掉
-#define FITTHEMEWINDOW "org.ukui.style"
 
+#ifndef UKUI_THEME_GSETTING_PATH
+#define UKUI_THEME_GSETTING_PATH "org.ukui.style"
+#endif
+
+#include <QApplication>
 #include <QObject>
 #include <QWidget>
 #include <QMenu>
 #include <QPushButton>
+#include <QKeyEvent>
 #include <QToolButton>
 #include <QDebug>
 #include <QString>
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QDesktopServices>
 #include <QRect>
+#include <QUrl>
 #include <QScreen>
 #include <QGSettings>
 #include <QMetaEnum>
@@ -48,36 +54,39 @@ public:
 signals:
     void menuModuleClose();
     void menuModuleChanged(QString);
+    void pullupHelp();
 
     void menuModuleSetThemeStyle(QString);
 public:
-    QPushButton *menuButton = nullptr;
+    QToolButton *menuButton = nullptr;
 
 public:
 //    程序在实例化的时候需要传递的信息字段,打开debug开关后这些字段会被自动填充
-    QString appName = "tools/kylin-calculator"; //格式kylin-usb-creator
+    QString appName        = "tools/kylin-calculator"; //格式kylin-usb-creator
     QString appShowingName = tr("kylin calculator"); //格式kylin usb creator ,用来在前端展示
-    QString appVersion = "1.0.27";
-    QString appDesc = "kylin calculator";
-    QString iconPath = "/usr/share/icons/ukui-icon-theme-default/128x128/apps/accessories-calculator.png";
-    QString confPath = "org.kylin-calculator-data.settings";
-
+    QString appVersion     = qApp->applicationVersion();
+    QString appDesc        = "kylin calculator";
+    QString confPath       = "org.kylin-calculator-data.settings";
+    QWidget *aboutWindow = nullptr;
 private:
     QMenu *m_menu = nullptr;
     QMenu *themeMenu = nullptr;
     QSize iconSize;
     QString appPath = "tools/kylin-calculator"; //拉起帮助菜单时使用appName字段
-    QWidget *aboutWindow = nullptr;
+    
     QGSettings *m_pGsettingThemeData = nullptr;
     QGSettings *m_pGsettingThemeStatus = nullptr;
-    enum typeThemeStatus {
-        themeAuto = 0,
+    enum typeThemeStatus : int 
+    {
+        themeAuto      = 0,
         themeBlackOnly = 1,
         themeLightOnly = 2
     } themeStatus;
+
 public slots:
     void dealSystemGsettingChange(const QString);
 private:
+    void keyPressEvent(QKeyEvent *event);
     void init();
     QHBoxLayout* initTitleBar(); //关于窗口标题栏初始化
     QVBoxLayout* initBody();    // 关于窗口body初始化
@@ -95,6 +104,10 @@ private:
     void setThemeLight();
     void setThemeDark();
 //    void updateTheme(); //点击菜单中的主题设置后更新一次主题
+    QLabel* titleText = nullptr;
+    QLabel* bodyAppName = nullptr;
+    QLabel* bodyAppVersion = nullptr;
+    QLabel* bodySupport = nullptr;
 
     void refreshThemeBySystemConf();    //通过系统配置更改主题
 };

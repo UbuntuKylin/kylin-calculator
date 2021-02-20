@@ -17,7 +17,11 @@
 
 #include <QApplication>
 #include <QStringList>
+#include <QTranslator>
+#include <QLocale>
 #include <QStandardPaths>
+#include <QLibraryInfo>
+#include <QDir>
 #include <fcntl.h>
 #include <syslog.h>
 #include <QTranslator>
@@ -39,6 +43,7 @@ int main(int argc, char *argv[])
     #endif
 
     QApplication a(argc, argv);
+    a.setApplicationVersion("1.0.31");
 
     // 实现VNC单例
     QStringList homePath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
@@ -55,17 +60,42 @@ int main(int argc, char *argv[])
     }
 
     // 国际化
-    QString locale = QLocale::system().name();
-    QTranslator trans_global, trans_menu;
-    if (locale == "zh_CN")
-    {
-        trans_global.load(":/data/kylin-calculator_zh_CN.qm");
-        trans_menu.load(":/data/qt_zh_CN.qm");
-        a.installTranslator(&trans_global);
-        a.installTranslator(&trans_menu);
+    QString qtTranslationsPath;
+    qtTranslationsPath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);// /usr/share/qt5/translations
+    QString kylinCalculatorTranslationsPath;
+    if (QDir("/usr/share/kylin-calculator/translations").exists()) {
+        kylinCalculatorTranslationsPath = "/usr/share/kylin-calculator/translations";
+    }
+    else {
+        kylinCalculatorTranslationsPath = qApp->applicationDirPath() + "/.qm";
     }
 
-    MainWindow w;
+    QString locale = QLocale::system().name();
+    QTranslator trans_global, trans_menu;
+    if (locale == "zh_CN") {
+        if(!trans_global.load(QLocale(), "kylin-calculator", "_", kylinCalculatorTranslationsPath))
+            qDebug() << "Load translations file" <<QLocale() << "failed!";
+        else
+            a.installTranslator(&trans_global);
+
+        if(!trans_menu.load(QLocale(), "qt", "_", qtTranslationsPath))
+            qDebug() << "Load translations file" <<QLocale() << "failed!";
+        else
+            a.installTranslator(&trans_menu);
+    }
+    // QString translatorFileName = QLatin1String("qt_");
+    // translatorFileName += QLocale::system().name();
+    // QTranslator *translator = new QTranslator();
+    // if (translator->load(translatorFileName, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+    // {
+    //     a.installTranslator(translator);
+    // }
+    // else
+    // {
+    //     qDebug() << "加载中文失败";
+    // }
+
+    MainWindow::getInstance();
 
 #ifndef __V10__
     // 添加窗管协议
@@ -73,9 +103,9 @@ int main(int argc, char *argv[])
     hints.flags = MWM_HINTS_FUNCTIONS | MWM_HINTS_DECORATIONS;
     hints.functions = MWM_FUNC_ALL;
     hints.decorations = MWM_DECOR_BORDER;
-    XAtomHelper::getInstance()->setWindowMotifHint(w.winId(), hints);
+    XAtomHelper::getInstance()->setWindowMotifHint(MainWindow::getInstance()->winId(), hints);
 #endif
 
-    w.show();
+    MainWindow::getInstance()->show();
     return a.exec();
 }

@@ -18,8 +18,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#define KYLINRECORDER "org.kylin-music-data.settings"
-#define FITTHEMEWINDOW "org.ukui.style"
+
+#ifndef UKUI_THEME_GSETTING_PATH
+#define UKUI_THEME_GSETTING_PATH "org.ukui.style"
+#endif
 
 #include <QMainWindow>
 #include <QKeyEvent>
@@ -36,6 +38,7 @@
 #include <QTime>
 #include <QVector>
 #include <QGSettings>
+#include <QPoint>
 
 #include "titlebar.h"
 #include "widgetstyle.h"
@@ -53,6 +56,7 @@ class MainWindow : public QMainWindow, public InputSymbols
     Q_OBJECT
 
 public:
+    static MainWindow *getInstance();
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
@@ -104,10 +108,14 @@ public:
 
     // 切换浅色主题
     void changeLightTheme();
+    QPoint mMovePosition;
+    bool mMoveing;
 public slots:
     // 键盘响应事件
     void keyPressEvent(QKeyEvent *event);
-
+    void mousePressEvent(QMouseEvent* event);
+    void mouseMoveEvent(QMouseEvent* event);
+    void mouseReleaseEvent(QMouseEvent* event);
 
     void btn_merge(const QString &);
     // 处理按钮点击事件
@@ -159,24 +167,31 @@ private:
     QVBoxLayout *mainLayout;
 
     QWidget *mainWid;
-    QWidget *titleBarWid;
-    QWidget *outputWid;
-    QWidget *buttonWid;
+    // QWidget *titleBarWid;
+    QWidget *outputWid = nullptr;
+    QWidget *buttonWid = nullptr;
     QWidget *funcListWid;
+
+    QVBoxLayout *mainOutputLayout;
+    QVBoxLayout *mainButtonLayout;
 
     TitleBar *pTitleBar;
     FuncList *funcList;
 
-    StandardOutput *standardOutput;
-    StandardModel  *standardModel;
+    StandardOutput *standardOutput = nullptr;
+    StandardModel  *standardModel = nullptr;
 
-    ScientificOutput *scientificOutput;
-    ScientificModel  *scientificModel;
+    ScientificOutput *scientificOutput = nullptr;
+    ScientificModel  *scientificModel = nullptr;
 
-    ToolModelOutput *toolModelOutput;
-    ToolModelButton *toolModelButton;
+    ToolModelOutput *toolModelOutput = nullptr;
+    ToolModelButton *toolModelButton = nullptr;
 
 //    QListWidget *funcListWid;
+
+    // 保存当前计算器模式
+    QString currentModel;
+    const QString EXCHANGE_RATE = "exchange rate";
 
     QString dis_data;
     QString result;
