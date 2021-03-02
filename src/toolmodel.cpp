@@ -74,6 +74,38 @@ void ToolModelOutput::setWidgetUi()
     toolUnitAftWid->setLayout(toolUnitAftLayout);
     toolUnitAftWid->setFixedSize(106, 66);
 
+    // 汇率刷新
+    toolLabUpdate->setText(tr("Rate update"));
+    // toolLabUpdate->setText("汇率更新");
+
+    toolIconUpdate->setIcon(QIcon::fromTheme("transform-rotate", QIcon(":/image/update.png")));
+    toolIconUpdate->setIconSize(QSize(16, 16));
+    toolIconUpdate->setProperty("isWindowButton", 0x1);    
+    toolIconUpdate->setProperty("useIconHighlightEffect", 0x2);     
+    toolIconUpdate->setAutoRaise(true); 
+
+    toolLabRate->setText("2020.09.03 09:30\n1 CNY = 0.15 USD");
+
+    toolUpdateWid->setFixedSize(106, 133);
+
+    // 换算前单位标识
+    toolRateNameBef = tr("Chinese Yuan");
+    // toolRateNameBef = "人民币";
+    toolRateSymbBef = "CNY";
+    toolLabUnitBef->setText(toolRateNameBef + "\n" + toolRateSymbBef);
+
+    toolLabIconBef->setFixedSize(10, 10);
+
+    toolUnitBefWid->setFixedSize(106, 66);
+
+    // 换算后单位标识
+    toolRateNameAft = tr("US Dollar");
+    // toolRateNameAft = "美元";
+    toolRateSymbAft = "USD";
+    toolLabUnitAft->setText(toolRateNameAft + "\n" + toolRateSymbAft);
+
+    toolLabIconAft->setFixedSize(10, 10);
+
     connect(toolUnitBefWid, SIGNAL(clicked()), this, SLOT(unitListBefShow()));
     connect(toolUnitAftWid, SIGNAL(clicked()), this, SLOT(unitListAftShow()));
 
@@ -355,41 +387,6 @@ void ToolModelOutput::setWidgetUi()
 // 设置组件样式
 void ToolModelOutput::setWidgetStyle()
 {
-    // 汇率刷新
-    toolLabUpdate->setText(tr("Rate update"));
-    // toolLabUpdate->setText("汇率更新");
-
-    toolIconUpdate->setIcon(QIcon::fromTheme("transform-rotate", QIcon(":/image/update.png")));
-    toolIconUpdate->setIconSize(QSize(16, 16));
-    toolIconUpdate->setProperty("isWindowButton", 0x1);    
-    toolIconUpdate->setProperty("useIconHighlightEffect", 0x2);     
-    toolIconUpdate->setAutoRaise(true); 
-
-    toolLabRate->setText("2020.09.03 09:30\n1 CNY = 0.15 USD");
-
-    toolUpdateWid->setFixedSize(106, 133);
-
-
-    // 换算前单位标识
-    toolRateNameBef = tr("Chinese Yuan");
-    // toolRateNameBef = "人民币";
-    toolRateSymbBef = "CNY";
-    toolLabUnitBef->setText(toolRateNameBef + "\n" + toolRateSymbBef);
-
-    toolLabIconBef->setFixedSize(10, 10);
-
-    toolUnitBefWid->setFixedSize(106, 66);
-
-    // 换算后单位标识
-    toolRateNameAft = tr("US Dollar");
-    // toolRateNameAft = "美元";
-    toolRateSymbAft = "USD";
-    toolLabUnitAft->setText(toolRateNameAft + "\n" + toolRateSymbAft);
-
-    toolLabIconAft->setFixedSize(10, 10);
-
-
-
     if (WidgetStyle::themeColor == 0) {
         toolLabUpdate->setStyleSheet("font-family:SourceHanSansCN-ExtraLight;font-size:16px;color:#272A2D;");
 
