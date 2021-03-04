@@ -84,9 +84,14 @@ void ToolModelOutput::setWidgetUi()
     toolIconUpdate->setProperty("useIconHighlightEffect", 0x2);     
     toolIconUpdate->setAutoRaise(true); 
 
+    // 默认汇率
+    toolDouRate = 0.15;
+
     toolLabRate->setText("2020.09.03 09:30\n1 CNY = 0.15 USD");
 
     toolUpdateWid->setFixedSize(106, 133);
+
+    connect(toolIconUpdate, &QToolButton::clicked, this, &ToolModelOutput::updateRate);
 
     // 换算前单位标识
     toolRateNameBef = tr("Chinese Yuan");
@@ -380,6 +385,7 @@ void ToolModelOutput::setWidgetUi()
     connect(timer, &QTimer::timeout, this, &ToolModelOutput::updateRate);
 
     timer->start(10);
+    firstLoad = true;
 
     // updateRate();
 }
@@ -558,71 +564,75 @@ QString ToolModelOutput::unitConvHistory(QString hisText)
 // 汇率更新函数
 void ToolModelOutput::updateRate()
 {
-    timer->stop();
+    if (firstLoad) {
+        timer->stop();
+        firstLoad = false;
+    
+        // 访问汇算换算api
+        // QString strUrl = "https://api.exchangerate-api.com/v4/latest/CNY";
+        // QNetworkAccessManager manager;
+        // QNetworkRequest netRequest;
+        // QNetworkReply *netReply;
+        // QEventLoop loop;
 
-    // 访问汇算换算api
-//    QString strUrl = "https://api.exchangerate-api.com/v4/latest/CNY";
-//    QNetworkAccessManager manager;
-//    QNetworkRequest netRequest;
-//    QNetworkReply *netReply;
-//    QEventLoop loop;
+        // netRequest.setHeader(QNetworkRequest::ContentTypeHeader,"application/x-www-form-urlencoded");
+        // netRequest.setUrl(QUrl(strUrl));
+        // netReply = manager.get(netRequest);
 
-//    netRequest.setHeader(QNetworkRequest::ContentTypeHeader,"application/x-www-form-urlencoded");
-//    netRequest.setUrl(QUrl(strUrl));
-//    netReply = manager.get(netRequest);
+        // connect(netReply, SIGNAL(finished()), &loop, SLOT(quit()));
+        // loop.exec();
 
-//    connect(netReply, SIGNAL(finished()), &loop, SLOT(quit()));
-//    loop.exec();
+        // if (netReply->error() != QNetworkReply::NoError) {
+        //     return ;
+        // }
 
-//    if (netReply->error() != QNetworkReply::NoError) {
-//        return ;
-//    }
+        // QString strRateAll = netReply->readAll();
 
-//    QString strRateAll = netReply->readAll();
+        // if (strRateAll == "") {
+        //     return ;
+        // }
 
-//    if (strRateAll == "") {
-//        return ;
-//    }
+        // // 去掉两端的空格
+        // strRateAll = strRateAll.simplified();
 
-//    // 去掉两端的空格
-//    strRateAll = strRateAll.simplified();
+        QString strRateAll = "{\"base\":\"CNY\",\"date\":\"2020-10-15\",\"time_last_updated\":1602720243,\"rates\":{\"CNY\":1,\"AED\":0.544676,\"ARS\":11.476237,\"AUD\":0.207097,\"BGN\":0.247315,\"BRL\":0.827556,\"BSD\":0.148334,\"CAD\":0.195039,\"CHF\":0.135726,\"CLP\":118.484436,\"COP\":563.428571,\"CZK\":3.456454,\"DKK\":0.940724,\"DOP\":8.630197,\"EGP\":2.321366,\"EUR\":0.126422,\"FJD\":0.315268,\"GBP\":0.114427,\"GTQ\":1.152767,\"HKD\":1.150917,\"HRK\":0.958357,\"HUF\":45.826534,\"IDR\":2221.384053,\"ILS\":0.502548,\"INR\":10.885823,\"ISK\":20.616798,\"JPY\":15.644062,\"KRW\":170.131068,\"KZT\":63.612903,\"MVR\":2.287933,\"MXN\":3.170424,\"MYR\":0.615439,\"NOK\":1.369261,\"NZD\":0.22308,\"PAB\":0.148334,\"PEN\":0.533837,\"PHP\":7.225576,\"PKR\":24.09776,\"PLN\":0.568725,\"PYG\":1075.636364,\"RON\":0.616233,\"RUB\":11.478878,\"SAR\":0.556857,\"SEK\":1.309479,\"SGD\":0.201673,\"THB\":4.632377,\"TRY\":1.177668,\"TWD\":4.264893,\"UAH\":4.205166,\"USD\":0.148567,\"UYU\":6.303676,\"ZAR\":2.450397}}";
 
-    QString strRateAll = "{\"base\":\"CNY\",\"date\":\"2020-10-15\",\"time_last_updated\":1602720243,\"rates\":{\"CNY\":1,\"AED\":0.544676,\"ARS\":11.476237,\"AUD\":0.207097,\"BGN\":0.247315,\"BRL\":0.827556,\"BSD\":0.148334,\"CAD\":0.195039,\"CHF\":0.135726,\"CLP\":118.484436,\"COP\":563.428571,\"CZK\":3.456454,\"DKK\":0.940724,\"DOP\":8.630197,\"EGP\":2.321366,\"EUR\":0.126422,\"FJD\":0.315268,\"GBP\":0.114427,\"GTQ\":1.152767,\"HKD\":1.150917,\"HRK\":0.958357,\"HUF\":45.826534,\"IDR\":2221.384053,\"ILS\":0.502548,\"INR\":10.885823,\"ISK\":20.616798,\"JPY\":15.644062,\"KRW\":170.131068,\"KZT\":63.612903,\"MVR\":2.287933,\"MXN\":3.170424,\"MYR\":0.615439,\"NOK\":1.369261,\"NZD\":0.22308,\"PAB\":0.148334,\"PEN\":0.533837,\"PHP\":7.225576,\"PKR\":24.09776,\"PLN\":0.568725,\"PYG\":1075.636364,\"RON\":0.616233,\"RUB\":11.478878,\"SAR\":0.556857,\"SEK\":1.309479,\"SGD\":0.201673,\"THB\":4.632377,\"TRY\":1.177668,\"TWD\":4.264893,\"UAH\":4.205166,\"USD\":0.148567,\"UYU\":6.303676,\"ZAR\":2.450397}}";
+        // 格式化处理汇率信息字符串键值对
+        strRateList = strRateAll.split(QRegExp("[{} :,\"\n]"));
+        strRateList.removeAll("");
 
-    // 格式化处理汇率信息字符串键值对
-    strRateList = strRateAll.split(QRegExp("[{} :,\"\n]"));
-    strRateList.removeAll("");
+        // 获取汇率时间
+        QString strData = strRateList.at(3);
 
-    // 获取汇率时间
-    QString strData = strRateList.at(3);
-
-    for (int i = 0; i < 7; i++) {
-        strRateList.removeAt(0);
-    }
-
-//    strRateList = ("CNY", "1", "AED", "0.544676", "ARS", "11.476237", "AUD", "0.207097", "BGN", "0.247315", "BRL", "0.827556",
-//                   "BSD", "0.148334", "CAD", "0.195039", "CHF", "0.135726", "CLP", "118.484436", "COP", "563.428571",
-//                   "CZK", "3.456454", "DKK", "0.940724", "DOP", "8.630197", "EGP", "2.321366", "EUR", "0.126422",
-//                   "FJD", "0.315268", "GBP", "0.114427", "GTQ", "1.152767", "HKD", "1.150917", "HRK", "0.958357",
-//                   "HUF", "45.826534", "IDR", "2221.384053", "ILS", "0.502548", "INR", "10.885823", "ISK", "20.616798",
-//                   "JPY", "15.644062", "KRW", "170.131068", "KZT", "63.612903", "MVR", "2.287933", "MXN", "3.170424",
-//                   "MYR", "0.615439", "NOK", "1.369261", "NZD", "0.22308", "PAB", "0.148334", "PEN", "0.533837",
-//                   "PHP", "7.225576", "PKR", "24.09776", "PLN", "0.568725", "PYG", "1075.636364", "RON", "0.616233",
-//                   "RUB", "11.478878", "SAR", "0.556857", "SEK", "1.309479", "SGD", "0.201673", "THB", "4.632377",
-//                   "TRY", "1.177668", "TWD", "4.264893", "UAH", "4.205166", "USD", "0.148567", "UYU", "6.303676",
-//                   "ZAR", "2.450397");
-
-    // 获取汇率单位标识
-    QString strRateKey = strRateList.at(0);
-    for (int i = 2; i < strRateList.size(); i++) {
-        if (i % 2 == 0) {
-            strRateKey.append(",");
-            strRateKey.append(strRateList.at(i));
+        for (int i = 0; i < 7; i++) {
+            strRateList.removeAt(0);
         }
-    }
 
-    // 初始化选择列表的汇率选项
-    initUnitList(strRateKey);
+        // strRateList = ("CNY", "1", "AED", "0.544676", "ARS", "11.476237", "AUD", "0.207097", "BGN", "0.247315", "BRL", "0.827556",
+        //                 "BSD", "0.148334", "CAD", "0.195039", "CHF", "0.135726", "CLP", "118.484436", "COP", "563.428571",
+        //                 "CZK", "3.456454", "DKK", "0.940724", "DOP", "8.630197", "EGP", "2.321366", "EUR", "0.126422",
+        //                 "FJD", "0.315268", "GBP", "0.114427", "GTQ", "1.152767", "HKD", "1.150917", "HRK", "0.958357",
+        //                 "HUF", "45.826534", "IDR", "2221.384053", "ILS", "0.502548", "INR", "10.885823", "ISK", "20.616798",
+        //                 "JPY", "15.644062", "KRW", "170.131068", "KZT", "63.612903", "MVR", "2.287933", "MXN", "3.170424",
+        //                 "MYR", "0.615439", "NOK", "1.369261", "NZD", "0.22308", "PAB", "0.148334", "PEN", "0.533837",
+        //                 "PHP", "7.225576", "PKR", "24.09776", "PLN", "0.568725", "PYG", "1075.636364", "RON", "0.616233",
+        //                 "RUB", "11.478878", "SAR", "0.556857", "SEK", "1.309479", "SGD", "0.201673", "THB", "4.632377",
+        //                 "TRY", "1.177668", "TWD", "4.264893", "UAH", "4.205166", "USD", "0.148567", "UYU", "6.303676",
+        //                 "ZAR", "2.450397");
+
+        // 获取汇率单位标识
+        QString strRateKey = strRateList.at(0);
+        for (int i = 2; i < strRateList.size(); i++) {
+            if (i % 2 == 0) {
+                strRateKey.append(",");
+                strRateKey.append(strRateList.at(i));
+            }
+        }
+
+        // 初始化选择列表的汇率选项
+        initUnitList(strRateKey);
+
+    }
 
 //    qDebug() << strRateList;
 //    qDebug() << strRateKey;
@@ -641,11 +651,15 @@ void ToolModelOutput::updateRate()
 
 //    QString rateNameBef = unitListBef->unitList->currentItem()->text();
 //    QString rateNameAft = unitListAft->unitList->currentItem()->text();
-    QString rateNameBef = "CNY";
-    QString rateNameAft = "USD";
+    // QString rateNameBef = "CNY";
+    // QString rateNameAft = "USD";
+
+    QString rateNameBef = toolRateSymbBef;
+    QString rateNameAft = toolRateSymbAft;
+
     int idxName = strRateList.indexOf(rateNameAft);
 
-    toolDouRate = (strRateList[idxName + 1]).toDouble();
+    // toolDouRate = (strRateList[idxName + 1]).toDouble();
 //    toolDouRate =  QString::number(toolDouRate,'f',2).toDouble();
 
     QString labelRate = strTime + "\n1 "+ rateNameBef + " = " +

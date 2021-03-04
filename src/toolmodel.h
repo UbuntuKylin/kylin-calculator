@@ -68,7 +68,7 @@ public:
     QLabel *toolLabRate;
 
     // 单位换算比率
-    double  toolDouRate = 0;
+    double toolDouRate;
     // 获取汇率信息字符串键值对
     QStringList strRateList;
     // 货币及其符号对应
@@ -114,6 +114,7 @@ public:
 
     // 时间控制
     QTimer *timer;
+    bool firstLoad;
 
     // 初始化组件
     void setWidgetUi();
