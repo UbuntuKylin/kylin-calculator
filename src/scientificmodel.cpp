@@ -473,6 +473,16 @@ void ScientificModel::setWidgetStyle()
 
         btnDZero->setIcon(QIcon(":/image/standard/btnNum00.png"));
 
+        btnClear->setIcon(QIcon(":/image/standard/btnClear.png"));
+        btnDiv->setIcon(QIcon(":/image/standard/btnDiv.png"));
+        btnMulti->setIcon(QIcon(":/image/standard/btnMulti.png"));
+        btnDelete->setIcon(QIcon(":/image/standard/btnDelete.png"));
+        btnSub->setIcon(QIcon(":/image/standard/btnSub.png"));
+        btnAdd->setIcon(QIcon(":/image/standard/btnAdd.png"));
+        btnEqual->setIcon(QIcon(":/image/standard/btnEqual.png"));
+        btnPer->setIcon(QIcon(":/image/standard/btnPer.png"));
+        btnPoint->setIcon(QIcon(":/image/standard/btnPoint.png"));
+
         QString btnIconStr = "btn2nd,btnAns,btnLbra,btnRbra,btnReci,btnXPower2,btnXPower3,btnYPowerX,btnFac,btnXSquare2,btnXSquare3,btnYSquareX,btnSin,btnCos,btnTan,btnLog,btnRad,btnPi,btnE,btnLn";
         QStringList btnIconList = btnIconStr.split(",");
         int iconIdx = 0;

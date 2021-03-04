@@ -1,4 +1,4 @@
-kylin-calculator (1.0.31kord~rc1) v101; urgency=medium
+kylin-calculator (1.0.31kord1) v101; urgency=medium
 
   * 解决禅道bug #40468 : 【麒麟计算器】使用汇率模式，切换夜间模式，再切换其他计算模式【科学】【标准】，键盘显示异常.
   * 解决禅道bug #40475 : 【麒麟计算器】汇率计算器，点击刷新按钮，没有任何回馈或者动效效果.
