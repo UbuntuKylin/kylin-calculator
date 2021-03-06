@@ -369,6 +369,9 @@ void MainWindow::setStandardUi()
     // outputWid->setLayout(staOutputLayout);
     // buttonWid->setLayout(standardLayout);
 
+    standardModel->setWidgetStyle();
+    standardOutput->setWidgetStyle();
+
     mainOutputLayout->addWidget(standardOutput);
     mainButtonLayout->addWidget(standardModel);
 
@@ -486,6 +489,9 @@ void MainWindow::setScientificUi()
     // outputWid->setLayout(sciOutputLayout);
     // buttonWid->setLayout(scientificLayout);
 
+    scientificModel->setWidgetStyle();
+    scientificOutput->setWidgetStyle();
+
     mainOutputLayout->addWidget(scientificOutput);
     mainButtonLayout->addWidget(scientificModel);
 
@@ -582,6 +588,11 @@ void MainWindow::setToolUi()
 
     // outputWid->setLayout(toolOutputLayout);
     // buttonWid->setLayout(toolButtonLayout);
+
+    toolModelButton->setWidgetStyle();
+    toolModelOutput->setWidgetStyle();
+    toolModelOutput->unitListBef->setWidgetStyle();
+    toolModelOutput->unitListAft->setWidgetStyle();
 
     mainOutputLayout->addWidget(toolModelOutput);
     mainButtonLayout->addWidget(toolModelButton);

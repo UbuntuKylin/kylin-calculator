@@ -215,7 +215,7 @@
         <location filename="../src/menumodule/menumodule.cpp" line="384"/>
         <location filename="../src/menumodule/menumodule.cpp" line="402"/>
         <source>Service &amp; Support: </source>
-        <translation>支持：</translation>
+        <translation>服务与支持团队：</translation>
     </message>
     <message>
         <source>Support: support@kylinos.cn</source>
