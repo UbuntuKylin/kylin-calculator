@@ -153,19 +153,19 @@
     <message>
         <location filename="../src/menumodule/menumodule.cpp" line="56"/>
         <location filename="../src/menumodule/menumodule.cpp" line="162"/>
-        <source>standard</source>
+        <source>Standard</source>
         <translation>标准</translation>
     </message>
     <message>
         <location filename="../src/menumodule/menumodule.cpp" line="58"/>
         <location filename="../src/menumodule/menumodule.cpp" line="165"/>
-        <source>scientific</source>
+        <source>Scientific</source>
         <translation>科学</translation>
     </message>
     <message>
         <location filename="../src/menumodule/menumodule.cpp" line="60"/>
         <location filename="../src/menumodule/menumodule.cpp" line="168"/>
-        <source>exchange rate</source>
+        <source>Exchange Rate</source>
         <translation>汇率</translation>
     </message>
     <message>

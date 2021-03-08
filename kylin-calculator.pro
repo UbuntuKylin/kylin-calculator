@@ -54,8 +54,8 @@ target.source += $$TARGET
 schemes.files += $$PWD/data/org.kylin-calculator-data.gschema.xml
 schemes.path = /usr/share/glib-2.0/schemas/
 
-icon.path = /usr/share/pixmaps
-icon.files += $$PWD/image/calc.png
+# icon.path = /usr/share/pixmaps
+# icon.files += $$PWD/image/calc.png
 
 desktop.path = /usr/share/applications/
 desktop.files += $$PWD/kylin-calculator.desktop

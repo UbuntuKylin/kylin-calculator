@@ -53,11 +53,11 @@ void menuModule::initAction()
     m_menu = new QMenu();
     QList<QAction *> actions ;
     QAction *actionStandard = new QAction(m_menu);
-    actionStandard->setText(tr("standard"));
+    actionStandard->setText(tr("Standard"));
     QAction *actionScientific = new QAction(m_menu);
-    actionScientific->setText(tr("scientific"));
+    actionScientific->setText(tr("Scientific"));
     QAction *actionExchangeRate = new QAction(m_menu);
-    actionExchangeRate->setText(tr("exchange rate"));
+    actionExchangeRate->setText(tr("Exchange Rate"));
 
     QAction *separator = new QAction(m_menu);
     separator->setSeparator(true);
@@ -159,13 +159,13 @@ void menuModule::triggerMenu(QAction *act)
     else if(tr("Help") == str){
         helpAction();
     }
-    else if(tr("standard") == str){
+    else if(tr("Standard") == str){
         emit menuModuleChanged(QString("standard"));
     }
-    else if(tr("scientific") == str){
+    else if(tr("Scientific") == str){
         emit menuModuleChanged(QString("scientific"));
     }
-    else if(tr("exchange rate") == str){
+    else if(tr("Exchange Rate") == str){
         emit menuModuleChanged(QString("exchange rate"));
     }
 }
@@ -230,7 +230,7 @@ void menuModule::initAbout()
 {
     aboutWindow = new QWidget();
     aboutWindow->setWindowFlag(Qt::Tool);
-    aboutWindow->setWindowIcon(QIcon::fromTheme("calc"));
+    aboutWindow->setWindowIcon(QIcon::fromTheme("kylin-calculator"));
     aboutWindow->setWindowModality(Qt::WindowModal);
     aboutWindow->setWindowModality(Qt::ApplicationModal);
     // aboutWindow->setModal(true);
@@ -263,7 +263,7 @@ void menuModule::initAbout()
 QHBoxLayout* menuModule::initTitleBar()
 {
     QLabel* titleIcon = new QLabel();
-    titleIcon->setPixmap(QIcon::fromTheme("calc").pixmap(titleIcon->size()));
+    titleIcon->setPixmap(QIcon::fromTheme("kylin-calculator").pixmap(titleIcon->size()));
     titleIcon->setFixedSize(QSize(24,24));
     titleIcon->setScaledContents(true);
 
@@ -296,7 +296,7 @@ QVBoxLayout* menuModule::initBody()
 
     QLabel* bodyIcon = new QLabel();
     bodyIcon->setFixedSize(96,96);
-    bodyIcon->setPixmap(QIcon::fromTheme("accessories-calculator").pixmap(bodyIcon->size()));
+    bodyIcon->setPixmap(QIcon::fromTheme("kylin-calculator").pixmap(bodyIcon->size()));
     // bodyIcon->setStyleSheet("font-size:14px;");
     // bodyIcon->setScaledContents(true);
 

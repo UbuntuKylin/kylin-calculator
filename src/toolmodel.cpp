@@ -41,12 +41,23 @@ void ToolModelOutput::setWidgetUi()
     // 汇率刷新
     toolLabUpdate  = new QLabel(this);
     toolIconUpdate = new QToolButton(this);
+    toolLabTime    = new QLabel(this);
     toolLabRate    = new QLabel(this);
 
     toolUpdateLayout = new QVBoxLayout(this);
+    timeRateLayout   = new QVBoxLayout(this);
+
+    timeRateLayout->addWidget(toolLabTime, 0, Qt::AlignCenter);
+    timeRateLayout->addWidget(toolLabRate, 0, Qt::AlignCenter);
+    timeRateLayout->setSpacing(0);
+    timeRateLayout->setMargin(0);
+
+    toolUpdateLayout->addSpacing(15);
     toolUpdateLayout->addWidget(toolLabUpdate,  0, Qt::AlignCenter);
     toolUpdateLayout->addWidget(toolIconUpdate, 0, Qt::AlignCenter);
-    toolUpdateLayout->addWidget(toolLabRate,    0, Qt::AlignCenter);
+    toolUpdateLayout->addLayout(timeRateLayout, 0);
+    toolUpdateLayout->addSpacing(15);
+    toolUpdateLayout->setMargin(0);
 
     toolUpdateWid = new QWidget(this);
     toolUpdateWid->setLayout(toolUpdateLayout);
@@ -87,7 +98,8 @@ void ToolModelOutput::setWidgetUi()
     // 默认汇率
     toolDouRate = 0.15;
 
-    toolLabRate->setText("2020.09.03 09:30\n1 CNY = 0.15 USD");
+    toolLabTime->setText("2020.09.03 09:30");
+    toolLabRate->setText("1 CNY = 0.15 USD");
 
     toolUpdateWid->setFixedSize(106, 133);
 
@@ -239,8 +251,9 @@ void ToolModelOutput::setWidgetUi()
     };
 
     // 没有ARS
-    currencyInfo = {
+    currencyInfoUS = {
         {"AED", "UAE Dirham"},
+        {"ARS", "Argentinian peso"},
         {"AUD", "Australian Dollar"},
         {"BGN", "Bulgarian Lev"},
         {"BHD", "Bahraini Dinar"},
@@ -256,10 +269,14 @@ void ToolModelOutput::setWidgetUi()
         {"COP", "Colombian Peso"},
         {"CZK", "Czech Koruna"},
         {"DKK", "Danish Krone"},
+        {"DOP", "Dominican peso"},
         {"DZD", "Algerian Dinar"},
         {"EEK", "Estonian Kroon"},
+        {"EGP", "Egyptian pound"},
         {"EUR", "Euro"},
+        {"FJD", "Fijian dollar"},
         {"GBP", "Pound Sterling"},
+        {"GTQ", "Guatemalan Quetzal"},
         {"HKD", "Hong Kong Dollar"},
         {"HRK", "Croatian Kuna"},
         {"HUF", "Hungarian Forint"},
@@ -277,16 +294,19 @@ void ToolModelOutput::setWidgetUi()
         {"LVL", "Latvian Lats"},
         {"LYD", "Libyan Dinar"},
         {"MUR", "Mauritian Rupee"},
+        {"MVR", "Maldivian Rupee"},
         {"MXN", "Mexican Peso"},
         {"MYR", "Malaysian Ringgit"},
         {"NOK", "Norwegian Krone"},
         {"NPR", "Nepalese Rupee"},
         {"NZD", "New Zealand Dollar"},
         {"OMR", "Omani Rial"},
+        {"PAB", "Panamanian balbos"},
         {"PEN", "Peruvian Nuevo Sol"},
         {"PHP", "Philippine Peso"},
         {"PKR", "Pakistani Rupee"},
         {"PLN", "Polish Zloty"},
+        {"PYG", "Paraguayan Guaran"},
         {"QAR", "Qatari Riyal"},
         {"RON", "New Romanian Leu"},
         {"RUB", "Russian Rouble"},
@@ -297,6 +317,8 @@ void ToolModelOutput::setWidgetUi()
         {"TND", "Tunisian Dinar"},
         {"TRY", "New Turkish Lira"},
         {"TTD", "T&T Dollar (TTD)"},
+        {"TWD", "Taiwan Dollar"},
+        {"UAH", "Ukrainian Hryvnia"},
         {"USD", "US Dollar"},
         {"UYU", "Uruguayan Peso"},
         {"VEF", "Venezuelan Bolívar"},
@@ -305,7 +327,7 @@ void ToolModelOutput::setWidgetUi()
     };
 
     // 新增ARS、BSD、DOP、EGP、FJD、GTQ、MVR、PAB、PYG、TWD、UAH
-    currencyInfo1 = {
+    currencyInfoCN = {
         {"AED", "阿联酋迪拉姆"},
         {"ARS", "阿根廷比索"},
         {"AUD", "澳大利亚元"},
@@ -394,9 +416,10 @@ void ToolModelOutput::setWidgetUi()
 void ToolModelOutput::setWidgetStyle()
 {
     if (WidgetStyle::themeColor == 0) {
-        toolLabUpdate->setStyleSheet("font-family:SourceHanSansCN-ExtraLight;font-size:16px;color:#272A2D;");
+        toolLabUpdate->setStyleSheet("font-size:16px;color:#272A2D;");
 
-        toolLabRate->setStyleSheet("font-family:NotoSansHans-Light;font-size:10px;color:#272A2D;line-height:17px;");
+        toolLabTime->setStyleSheet("font-size:10px;color:#272A2D;");
+        toolLabRate->setStyleSheet("font-size:10px;color:#272A2D;");
         toolUpdateWid->setStyleSheet("background:#F3F3F3;opacity:1;");
 
         QString unitLabStyle  = "font-family:SourceHanSansCN-ExtraLight;font-size:18px;color:#272A2D;line-height:22px;";
@@ -417,6 +440,8 @@ void ToolModelOutput::setWidgetStyle()
     }
     else if (WidgetStyle::themeColor == 1) {
         toolLabUpdate->setStyleSheet("font-family:SourceHanSansCN-ExtraLight;font-size:16px;color:#FFFFFF;");
+
+        toolLabTime->setStyleSheet("font-family:NotoSansHans-Light;font-size:10px;color:#A6A6A6;line-height:17px;");
         toolLabRate->setStyleSheet("font-family:NotoSansHans-Light;font-size:10px;color:#A6A6A6;line-height:17px;");
         toolUpdateWid->setStyleSheet("background:#18181A;opacity:0.75;");
 
@@ -462,11 +487,20 @@ void ToolModelOutput::initUnitList(QString listStr)
         QMap<QString, QString>::iterator it;
         QString itemName;
 
-        it = currencyInfo1.find(unitStrList[i]);
-        if (it != currencyInfo1.end()) {
-            itemName = it.value();
+        QString locale = QLocale::system().name();
+        if (locale == "zh_CN") {
+            it = currencyInfoCN.find(unitStrList[i]);
+            if (it != currencyInfoCN.end()) {
+                itemName = it.value();
+            }
         }
-
+        else if (locale == "en_US") {
+            it = currencyInfoUS.find(unitStrList[i]);
+            if (it != currencyInfoUS.end()) {
+                itemName = it.value();
+            }
+        }
+        
         // 设置列表项的单位名称和单位符号
         listItemBef->unitItemName->setText(itemName);
         listItemAft->unitItemName->setText(itemName);
@@ -485,7 +519,7 @@ void ToolModelOutput::initUnitList(QString listStr)
     unitListAft->unitList->setSpacing(2);
 
     unitListBef->unitList->setCurrentRow(0);
-//    unitListAft->unitList->setCurrentRow(1);
+    unitListAft->unitList->setCurrentRow(49);
 
 //    QString unitListStyle = "QListWidget::item:selected{background-color:#36363A;}"
 //                            "QListWidget::item:hover{background-color:#666666;}";
@@ -662,9 +696,12 @@ void ToolModelOutput::updateRate()
     // toolDouRate = (strRateList[idxName + 1]).toDouble();
 //    toolDouRate =  QString::number(toolDouRate,'f',2).toDouble();
 
-    QString labelRate = strTime + "\n1 "+ rateNameBef + " = " +
+    QString labelRate = "1 "+ rateNameBef + " = " +
                         QString::number(toolDouRate,'f',2) + " " + rateNameAft;
+    toolLabTime->setText(strTime);
     toolLabRate->setText(labelRate);
+
+    updateRateName();
 }
 
 // 控制换算前的单位列表
@@ -757,24 +794,53 @@ void ToolModelOutput::updateRateName()
     // 获取汇率名称
     QMap<QString, QString>::iterator it;
 
-    it = currencyInfo1.find(toolRateSymbBef);
-    if (it != currencyInfo1.end()) {
-        toolRateNameBef = it.value();
-    }
+    QString locale = QLocale::system().name();
+    if (locale == "zh_CN") {
+        it = currencyInfoCN.find(toolRateSymbBef);
+        if (it != currencyInfoCN.end()) {
+            toolRateNameBef = it.value();
+        }
 
-    it = currencyInfo1.find(toolRateSymbAft);
-    if (it != currencyInfo1.end()) {
-        toolRateNameAft = it.value();
+        it = currencyInfoCN.find(toolRateSymbAft);
+        if (it != currencyInfoCN.end()) {
+            toolRateNameAft = it.value();
+        }
+    }
+    else if (locale == "en_US") {
+        it = currencyInfoUS.find(toolRateSymbBef);
+        if (it != currencyInfoUS.end()) {
+            toolRateNameBef = it.value();
+        }
+
+        it = currencyInfoUS.find(toolRateSymbAft);
+        if (it != currencyInfoUS.end()) {
+            toolRateNameAft = it.value();
+        }
     }
 
     // 更新汇率比率显示
     QString labelRate = toolLabRate->text();
-    labelRate = labelRate.section("\n", 0, 0) + "\n1 " + toolRateSymbBef + " = " + QString::number(toolDouRate, 'f', 2) + " " + toolRateSymbAft;
+    labelRate = "1 " + toolRateSymbBef + " = " + QString::number(toolDouRate, 'f', 2) + " " + toolRateSymbAft;
     toolLabRate->setText(labelRate);
 
     // 更新汇率名称和符号显示
     toolLabUnitBef->setText(toolRateNameBef + "\n" + toolRateSymbBef);
     toolLabUnitAft->setText(toolRateNameAft + "\n" + toolRateSymbAft);
+
+    QFontMetrics fontmts = toolLabUnitBef->fontMetrics();
+    int dif = fontmts.width(toolRateNameBef) - toolLabUnitBef->width();
+    if (dif > 0) {
+        QString str = fontmts.elidedText(toolRateNameBef,Qt::ElideRight,toolLabUnitBef->width());
+        toolLabUnitBef->setText(str + "\n" + toolRateSymbBef);
+        toolLabUnitBef->setToolTip(toolRateNameBef);
+    }
+
+    dif = fontmts.width(toolRateNameAft) - toolLabUnitAft->width();
+    if (dif > 0) {
+        QString str = fontmts.elidedText(toolRateNameAft,Qt::ElideRight,toolLabUnitAft->width());
+        toolLabUnitAft->setText(str + "\n" + toolRateSymbAft);
+        toolLabUnitAft->setToolTip(toolRateNameAft);
+    }
 
     // 更新汇率换算结果
     unitConversion();
@@ -1088,8 +1154,8 @@ void UnitListWidget::setWidgetUi()
     btnCancel->setText(tr("cancel"));
 //    btnCancel->setText("取消");
 
-    btnCancel->resize(QSize(30, 20));
-    btnCancel->move(this->x() + 235, 15);
+    btnCancel->resize(QSize(55, 20));
+    btnCancel->move(this->x() + 260 - btnCancel->width(), 15);
 
     // 搜索框
     searchEdit = new QLineEdit(this);

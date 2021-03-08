@@ -87,7 +87,7 @@ void TitleBar::setWidgetUi()
 
     // 设置图片
     m_pIconBtn->setIconSize(QSize(24, 24));
-    m_pIconBtn->setIcon(QIcon::fromTheme("accessories-calculator"));
+    m_pIconBtn->setIcon(QIcon::fromTheme("kylin-calculator"));
 
     // funcListButton->setIcon(QIcon::fromTheme("open-menu-symbolic"));
     // funcListButton->setIconSize(QSize(16, 16));

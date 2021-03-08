@@ -41,6 +41,8 @@
 #include <QSslError>
 #include <QEventLoop>
 #include <QRegExp>
+#include <QEvent>
+#include <QLocale>
 
 #include "widgetstyle.h"
 #include "basicbutton.h"
@@ -65,6 +67,7 @@ public:
     // 汇率更新
     QLabel *toolLabUpdate;
     QToolButton *toolIconUpdate;
+    QLabel *toolLabTime;
     QLabel *toolLabRate;
 
     // 单位换算比率
@@ -74,10 +77,11 @@ public:
     // 货币及其符号对应
     QMap<QString, QString> rateMap;
     // 符号及其货币的对应关系
-    QMap<QString, QString> currencyInfo;
-    QMap<QString, QString> currencyInfo1;
+    QMap<QString, QString> currencyInfoUS;
+    QMap<QString, QString> currencyInfoCN;
 
     QVBoxLayout *toolUpdateLayout;
+    QVBoxLayout *timeRateLayout;
     QWidget *toolUpdateWid;
 
     // 单位标识
