@@ -1,3 +1,11 @@
+kylin-calculator (1.0.31kord2) v101; urgency=medium
+
+  * 解决禅道bug #40251 : 【麒麟计算器】英文模式下，汇率计算模式存在字体显示不全.
+  * 界面背景色以及按钮悬浮效果适配主题框架.
+  * 使用系统图标库中的应用图标.
+
+ -- caoliang <caoliang@kylinos.cn>  Tue, 09 Mar 2021 13:40:40 +0800
+
 kylin-calculator (1.0.31kord1) v101; urgency=medium
 
   * 解决禅道bug #40468 : 【麒麟计算器】使用汇率模式，切换夜间模式，再切换其他计算模式【科学】【标准】，键盘显示异常.
