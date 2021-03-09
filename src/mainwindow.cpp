@@ -859,7 +859,7 @@ void MainWindow::btn_merge(const QString &disText)
         // 去除末尾换行符
         historyText.chop(1);
 
-        qDebug() << "historyText" << historyText;
+        // qDebug() << "historyText" << historyText;
 
         // 在汇率模式下，根据历史记录修改为对应的记录
         // QString label = this->pTitleBar->m_pFuncLabel->text();

@@ -725,9 +725,10 @@ void ToolModelOutput::updateRate()
 void ToolModelOutput::unitListBefShow()
 {
     if (unitListBef->isHidden()) {
-        unitListAft->hide();
+        // unitListAft->hide();
         unitListBef->show();
         unitListBef->raise();
+        unitListBef->setFocus();
     }
     else {
         unitListBef->hide();
@@ -738,9 +739,10 @@ void ToolModelOutput::unitListBefShow()
 void ToolModelOutput::unitListAftShow()
 {
     if (unitListAft->isHidden()) {
-        unitListBef->hide();
+        // unitListBef->hide();
         unitListAft->show();
         unitListAft->raise();
+        unitListAft->setFocus();
     }
     else {
         unitListAft->hide();
@@ -1235,6 +1237,15 @@ void UnitListWidget::setWidgetStyle()
 
 
     }
+}
+
+// 失去焦点窗口隐藏
+void UnitListWidget::focusOutEvent(QFocusEvent *e)
+{
+    if (this->btnCancel->hasFocus() || this->unitList->hasFocus()) {
+        return ;
+    }
+    this->hide();
 }
 
 // 单位列表列表项

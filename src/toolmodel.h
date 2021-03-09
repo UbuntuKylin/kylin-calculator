@@ -43,6 +43,7 @@
 #include <QRegExp>
 #include <QEvent>
 #include <QLocale>
+#include <QApplication>
 
 #include "widgetstyle.h"
 #include "basicbutton.h"
@@ -251,6 +252,9 @@ public:
     // 初始化组件样式
     void setWidgetStyle();
 
+protected:
+    // 失去焦点窗口隐藏
+    virtual void focusOutEvent(QFocusEvent *e);
 };
 
 #endif // TOOLMODEL_H
