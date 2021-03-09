@@ -148,10 +148,16 @@ void MainWindow::setWidgetStyle()
 
     qDebug() << "WidgetStyle::themeColor " << WidgetStyle::themeColor;
 
+    this->mainWid->setAutoFillBackground(true);
+    this->mainWid->setBackgroundRole(QPalette::Base);
+
+    this->pTitleBar->setAutoFillBackground(true);
+    this->pTitleBar->setBackgroundRole(QPalette::Base);
+
     if (WidgetStyle::themeColor == 0) {
-        this->mainWid->setStyleSheet("#mainWid{background-color:#FFFFFF;}");
+        // this->mainWid->setStyleSheet("#mainWid{background-color:#FFFFFF;}");
         // titleBarWid->setStyleSheet("#titleBarWid{background-color:#FFFFFF;}");
-        pTitleBar->setStyleSheet("#titleBarWid{background-color:#FFFFFF;}");
+        // pTitleBar->setStyleSheet("#titleBarWid{background-color:#FFFFFF;}");
         
         // funcListWid->setStyleSheet("background:#F8F8F8;color:#F8F8F8;font-size:18px;border:none;border-radius:4px;");
         // outputWid->setStyleSheet("#outputWid{background-color:#FFFFFF;border-radius:4px;}");
@@ -159,9 +165,9 @@ void MainWindow::setWidgetStyle()
 
     }
     else if (WidgetStyle::themeColor == 1) {
-        this->mainWid->setStyleSheet("#mainWid{background-color:#131314;}");
+        // this->mainWid->setStyleSheet("#mainWid{background-color:#131314;}");
         // titleBarWid->setStyleSheet("#titleBarWid{background-color:#131314;}");
-        pTitleBar->setStyleSheet("#titleBarWid{background-color:#131314;}");
+        // pTitleBar->setStyleSheet("#titleBarWid{background-color:#131314;}");
         // funcListWid->setStyleSheet("background:#36363A;color:#FFFFFF;font-size:18px;border:none;border-radius:4px;");
         // outputWid->setStyleSheet("#outputWid{background-color:#131314;border-radius:4px;}");
         // buttonWid->setStyleSheet("#buttonWid{background-color:#131314;border-radius:4px;}");
@@ -1086,11 +1092,16 @@ void MainWindow::stayTop()
         KWindowSystem::setState(this->winId(), KWindowSystem::KeepAbove);
         // pTitleBar->m_pTopButton->setStyleSheet("QPushButton{border-radius:4px;background-color:rgb(180,180,180);}");
         pTitleBar->m_pTopButton->setIcon(QIcon::fromTheme("ukui-fixed-symbolic"));
+
+        pTitleBar->m_pTopButton->setAutoFillBackground(true);
+        pTitleBar->m_pTopButton->setBackgroundRole(QPalette::Window);
     }
     else {
         winFlags = NULL;
         KWindowSystem::clearState(this->winId(), KWindowSystem::KeepAbove);
         pTitleBar->m_pTopButton->setIcon(QIcon::fromTheme("ukui-unfixed-symbolic"));
+
+        pTitleBar->m_pTopButton->setBackgroundRole(QPalette::Base);
     }
 }
 

@@ -69,6 +69,8 @@ void ToolModelOutput::setWidgetUi()
     toolUnitBefLayout = new QHBoxLayout(this);
     toolUnitBefLayout->addWidget(toolLabUnitBef);
     toolUnitBefLayout->addWidget(toolLabIconBef);
+    toolUnitBefLayout->setMargin(0);
+    toolUnitBefLayout->setContentsMargins(10, 0, 0, 0);
 
     toolUnitBefWid = new QPushButton(this);
     toolUnitBefWid->setLayout(toolUnitBefLayout);
@@ -80,6 +82,8 @@ void ToolModelOutput::setWidgetUi()
     toolUnitAftLayout = new QHBoxLayout(this);
     toolUnitAftLayout->addWidget(toolLabUnitAft);
     toolUnitAftLayout->addWidget(toolLabIconAft);
+    toolUnitAftLayout->setMargin(0);
+    toolUnitAftLayout->setContentsMargins(10, 0, 0, 0);
 
     toolUnitAftWid = new QPushButton(this);
     toolUnitAftWid->setLayout(toolUnitAftLayout);
@@ -410,6 +414,15 @@ void ToolModelOutput::setWidgetUi()
     firstLoad = true;
 
     // updateRate();
+
+    this->setAutoFillBackground(true);
+    this->setBackgroundRole(QPalette::Base);    
+
+    toolUnitBefWid->setProperty("isWindowButton", 0x1);
+    toolUnitBefWid->setProperty("useIconHighlightEffect", 0x2);
+
+    toolUnitAftWid->setProperty("isWindowButton", 0x1);
+    toolUnitAftWid->setProperty("useIconHighlightEffect", 0x2);
 }
 
 // 设置组件样式
@@ -425,17 +438,19 @@ void ToolModelOutput::setWidgetStyle()
         QString unitLabStyle  = "font-family:SourceHanSansCN-ExtraLight;font-size:18px;color:#272A2D;line-height:22px;";
         toolLabUnitBef->setStyleSheet(unitLabStyle);
         toolLabIconBef->setStyleSheet("border-image:url(:/image/downward.png);");
-        toolUnitBefWid->setStyleSheet("background:#F3F3F3;color:#272A2D;opacity:1;");
+        toolUnitBefWid->setStyleSheet("QPushButton{background:#F3F3F3;color:#272A2D;opacity:1;}"
+                                      "QPushButton:hover{background-color:#F3F3F3;}");
         toolLabUnitAft->setStyleSheet(unitLabStyle);
         toolLabIconAft->setStyleSheet("border-image:url(:/image/downward.png);");
-        toolUnitAftWid->setStyleSheet("background:#F3F3F3;color:#272A2D;opacity:1;");
+        toolUnitAftWid->setStyleSheet("QPushButton{background:#F3F3F3;color:#272A2D;opacity:1;}"
+                                      "QPushButton:hover{background-color:#F3F3F3;}");
 
         // 数据输出界面
-        this->toolLabHis->setStyleSheet("color:#8C8C8C;font-size:20px;background-color:#FFFFFF;");
-        this->toolLabBef->setStyleSheet("color:#272A2D;font-size:45px;background-color:#FAFAFA;");
-        this->toolLabAft->setStyleSheet("color:#272A2D;font-size:45px;background-color:#FAFAFA;");
+        this->toolLabHis->setStyleSheet("color:#8C8C8C;font-size:20px;");
+        this->toolLabBef->setStyleSheet("color:#272A2D;font-size:45px;");
+        this->toolLabAft->setStyleSheet("color:#272A2D;font-size:45px;");
 
-        this->setStyleSheet("background-color:#8C8C8C;border-radius:4px;");
+        // this->setStyleSheet("background-color:#8C8C8C;border-radius:4px;");
 
     }
     else if (WidgetStyle::themeColor == 1) {
@@ -448,17 +463,19 @@ void ToolModelOutput::setWidgetStyle()
         QString unitLabStyle  = "font-family:SourceHanSansCN-ExtraLight;font-size:18px;color:#FFFFFF;line-height:22px;";
         toolLabUnitBef->setStyleSheet(unitLabStyle);
         toolLabIconBef->setStyleSheet("border-image:url(:/image/downward.png);");
-        toolUnitBefWid->setStyleSheet("background:#18181A;color:#FFFFFF;opacity:0.75;");
+        toolUnitBefWid->setStyleSheet("QPushButton{background:#18181A;color:#FFFFFF;opacity:0.75;}"
+                                      "QPushButton:hover{background-color:#18181A;}");
         toolLabUnitAft->setStyleSheet(unitLabStyle);
         toolLabIconAft->setStyleSheet("border-image:url(:/image/downward.png);");
-        toolUnitAftWid->setStyleSheet("background:#18181A;color:#FFFFFF;opacity:0.75;");
+        toolUnitAftWid->setStyleSheet("QPushButton{background:#18181A;color:#FFFFFF;opacity:0.75;}"
+                                      "QPushButton:hover{background-color:#18181A;}");
 
         // 数据输出界面
-        this->toolLabHis->setStyleSheet("color:#8C8C8C;font-size:20px;background-color:#18181A;");
-        this->toolLabBef->setStyleSheet("color:#FFFFFF;font-size:45px;background-color:#18181A;");
-        this->toolLabAft->setStyleSheet("color:#FFFFFF;font-size:45px;background-color:#18181A;");
+        this->toolLabHis->setStyleSheet("color:#8C8C8C;font-size:20px;");
+        this->toolLabBef->setStyleSheet("color:#FFFFFF;font-size:45px;");
+        this->toolLabAft->setStyleSheet("color:#FFFFFF;font-size:45px;");
 
-        this->setStyleSheet("background-color:#8C8C8C;border-radius:4px;");
+        // this->setStyleSheet("background-color:#8C8C8C;border-radius:4px;");
 
     }
 }
