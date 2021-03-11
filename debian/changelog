@@ -1,3 +1,11 @@
+kylin-calculator (1.0.31kord3) v101; urgency=medium
+
+  * 解决禅道bug #38016 : 【计算器】输入小数时，小数位无法输入‘00’，点击就报错.
+  * 修复货币选择框显示逻辑.
+  * 更新汇率筛选逻辑.
+
+ -- caoliang <caoliang@kylinos.cn>  Thu, 11 Mar 2021 19:49:03 +0800
+
 kylin-calculator (1.0.31kord2) v101; urgency=medium
 
   * 解决禅道bug #40251 : 【麒麟计算器】英文模式下，汇率计算模式存在字体显示不全.

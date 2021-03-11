@@ -252,9 +252,9 @@ void menuModule::initAbout()
     mainlyt->addLayout(bodylyt);
     mainlyt->addStretch();
     aboutWindow->setLayout(mainlyt);
-    //TODO:在屏幕中央显示
-    QRect availableGeometry = qApp->primaryScreen()->availableGeometry();
-    aboutWindow->move((availableGeometry.width()-aboutWindow->width())/2,(availableGeometry.height()- aboutWindow->height())/2);
+    // 关于弹窗应用内居中
+    QRect availableGeometry = this->parentWidget()->parentWidget()->parentWidget()->parentWidget()->geometry();
+    aboutWindow->move(availableGeometry.center() - aboutWindow->rect().center());
     // aboutWindow->setStyleSheet("background-color:rgba(255,255,255,1);");
     dealSystemGsettingChange("styleName");
     aboutWindow->show();

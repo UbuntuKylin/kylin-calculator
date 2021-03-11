@@ -72,7 +72,7 @@ public:
     BasicButton *btnAdd;
     BasicButton *btnEqual;
 
-    BasicButton *btnDZero;
+    // BasicButton *btnDZero;
     BasicButton *btnPoint;
 
     // 初始化组件

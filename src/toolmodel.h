@@ -186,7 +186,7 @@ public:
     BasicButton *btnAdd;
     BasicButton *btnEqual;
 
-    BasicButton *btnDZero;
+    // BasicButton *btnDZero;
     BasicButton *btnPoint;
 
     // 初始化组件
@@ -228,7 +228,7 @@ class UnitListWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit UnitListWidget(QWidget *parent = 0);
+    explicit UnitListWidget(QWidget *parent = 0, QWidget *pWidget = 0);
 
     // 标题和取消
     QLabel *unitTitle;
@@ -255,6 +255,9 @@ public:
 protected:
     // 失去焦点窗口隐藏
     virtual void focusOutEvent(QFocusEvent *e);
+
+private:
+    QWidget *pWidget;
 };
 
 #endif // TOOLMODEL_H

@@ -78,7 +78,7 @@ public:
     BasicButton *btnAdd;
     BasicButton *btnEqual;
 
-    BasicButton *btnDZero;
+    // BasicButton *btnDZero;
     BasicButton *btnPoint;
 
     BasicButton *btnInd;

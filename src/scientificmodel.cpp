@@ -137,10 +137,10 @@ void ScientificModel::setWidgetUi()
         btnNum[i]->setIconSize(QSize(106, 62));
     }
 
-    btnDZero = new BasicButton(this);
-    btnDZero->setText("00");
-    btnDZero->setIcon(QIcon(":/image/standard/btnNum00.png"));
-    btnDZero->setIconSize(QSize(106, 62));
+    // btnDZero = new BasicButton(this);
+    // btnDZero->setText("00");
+    // btnDZero->setIcon(QIcon(":/image/standard/btnNum00.png"));
+    // btnDZero->setIconSize(QSize(106, 62));
 
     btnClear  = new BasicButton(this);
     btnPer    = new BasicButton(this);
@@ -356,8 +356,8 @@ void ScientificModel::setWidgetUi()
     btnLayout->addWidget(btnEqual, 4, 3, 1, 1);
 
     // 数字按钮布局
-    btnLayout->addWidget(btnDZero, 4, 0, 1, 1);
-    btnLayout->addWidget(btnNum[0], 4, 1, 1, 1);
+    // btnLayout->addWidget(btnDZero, 4, 0, 1, 1);
+    btnLayout->addWidget(btnNum[0], 4, 0, 1, 2);
     for (int i = 1; i < 10; i++) {
         btnLayout->addWidget(btnNum[i], 3 - (i - 1)/3, (i - 1) % 3, 1, 1);
     }
@@ -399,7 +399,7 @@ void ScientificModel::setWidgetStyle()
             btnNum[i]->setIcon(QIcon(":/image/light/standard/btnNum"+ QString::number(i) +".png"));
         }
 
-        btnDZero->setIcon(QIcon(":/image/light/standard/btnNum00.png"));
+        // btnDZero->setIcon(QIcon(":/image/light/standard/btnNum00.png"));
 
         btnClear->setIcon(QIcon(":/image/light/standard/btnClear.png"));
         btnDiv->setIcon(QIcon(":/image/light/standard/btnDiv.png"));
@@ -471,7 +471,7 @@ void ScientificModel::setWidgetStyle()
             btnNum[i]->setIcon(QIcon(":/image/standard/btnNum"+ QString::number(i) +".png"));
         }
 
-        btnDZero->setIcon(QIcon(":/image/standard/btnNum00.png"));
+        // btnDZero->setIcon(QIcon(":/image/standard/btnNum00.png"));
 
         btnClear->setIcon(QIcon(":/image/standard/btnClear.png"));
         btnDiv->setIcon(QIcon(":/image/standard/btnDiv.png"));
@@ -538,7 +538,7 @@ void ScientificModel::setWidgetStyle()
         btnNum[i]->setStyleSheet(btnStyle);
     }
 
-    btnDZero->setStyleSheet(btnStyle);
+    // btnDZero->setStyleSheet(btnStyle);
 
     // 设置按钮样式standardModel
     btnClear->setStyleSheet(btnStyle);

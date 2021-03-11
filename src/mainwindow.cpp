@@ -325,7 +325,7 @@ void MainWindow::setStandardUi()
             QObject::connect(standardModel->btnNum[i],SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
         }
 
-        QObject::connect(standardModel->btnDZero,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        // QObject::connect(standardModel->btnDZero,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
 
         QObject::connect(standardModel->btnClear,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
         QObject::connect(standardModel->btnDiv,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
@@ -419,7 +419,7 @@ void MainWindow::setScientificUi()
             QObject::connect(scientificModel->btnNum[i],SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
         }
 
-        QObject::connect(scientificModel->btnDZero,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        // QObject::connect(scientificModel->btnDZero,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
 
         QObject::connect(scientificModel->btnClear,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
         QObject::connect(scientificModel->btnDiv,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
@@ -540,7 +540,7 @@ void MainWindow::setToolUi()
             QObject::connect(toolModelButton->btnNum[i],SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
         }
 
-        QObject::connect(toolModelButton->btnDZero,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
+        // QObject::connect(toolModelButton->btnDZero,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
 
         QObject::connect(toolModelButton->btnClear,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
         QObject::connect(toolModelButton->btnDiv,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));

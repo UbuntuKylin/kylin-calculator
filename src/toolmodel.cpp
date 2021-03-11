@@ -180,8 +180,8 @@ void ToolModelOutput::setWidgetUi()
     this->setFixedHeight(270);
 
     // 数据单位列表
-    this->unitListBef  = new UnitListWidget(this->parentWidget());
-    this->unitListAft  = new UnitListWidget(this->parentWidget());
+    this->unitListBef  = new UnitListWidget(this->parentWidget(), this->toolUnitBefWid);
+    this->unitListAft  = new UnitListWidget(this->parentWidget(), this->toolUnitAftWid);
     unitListBef->setGeometry(QRect(80, 60, 280, 410));
     unitListAft->setGeometry(QRect(80, 130, 280, 410));
 
@@ -497,18 +497,19 @@ void ToolModelOutput::initUnitList(QString listStr)
 
     for (int i = 0; i < unitStrList.size(); i++) {
 
-        UnitListItem *listItemBef = new UnitListItem(unitListBef->unitList);
-        UnitListItem *listItemAft = new UnitListItem(unitListAft->unitList);
-
         // 获取汇率名称
         QMap<QString, QString>::iterator it;
         QString itemName;
 
+        // 筛选需要显示的货币
         QString locale = QLocale::system().name();
         if (locale == "zh_CN") {
             it = currencyInfoCN.find(unitStrList[i]);
             if (it != currencyInfoCN.end()) {
                 itemName = it.value();
+            }
+            else {
+                continue ;
             }
         }
         else if (locale == "en_US") {
@@ -516,7 +517,13 @@ void ToolModelOutput::initUnitList(QString listStr)
             if (it != currencyInfoUS.end()) {
                 itemName = it.value();
             }
+            else {
+                continue ;
+            }
         }
+
+        UnitListItem *listItemBef = new UnitListItem(unitListBef->unitList);
+        UnitListItem *listItemAft = new UnitListItem(unitListAft->unitList);
         
         // 设置列表项的单位名称和单位符号
         listItemBef->unitItemName->setText(itemName);
@@ -535,8 +542,9 @@ void ToolModelOutput::initUnitList(QString listStr)
     unitListBef->unitList->setSpacing(2);
     unitListAft->unitList->setSpacing(2);
 
+    // 默认汇率选择人民币和美元
     unitListBef->unitList->setCurrentRow(0);
-    unitListAft->unitList->setCurrentRow(49);
+    unitListAft->unitList->setCurrentRow(63);
 
 //    QString unitListStyle = "QListWidget::item:selected{background-color:#36363A;}"
 //                            "QListWidget::item:hover{background-color:#666666;}";
@@ -645,8 +653,10 @@ void ToolModelOutput::updateRate()
 
         // // 去掉两端的空格
         // strRateAll = strRateAll.simplified();
+        // qDebug() << strRateAll;
 
-        QString strRateAll = "{\"base\":\"CNY\",\"date\":\"2020-10-15\",\"time_last_updated\":1602720243,\"rates\":{\"CNY\":1,\"AED\":0.544676,\"ARS\":11.476237,\"AUD\":0.207097,\"BGN\":0.247315,\"BRL\":0.827556,\"BSD\":0.148334,\"CAD\":0.195039,\"CHF\":0.135726,\"CLP\":118.484436,\"COP\":563.428571,\"CZK\":3.456454,\"DKK\":0.940724,\"DOP\":8.630197,\"EGP\":2.321366,\"EUR\":0.126422,\"FJD\":0.315268,\"GBP\":0.114427,\"GTQ\":1.152767,\"HKD\":1.150917,\"HRK\":0.958357,\"HUF\":45.826534,\"IDR\":2221.384053,\"ILS\":0.502548,\"INR\":10.885823,\"ISK\":20.616798,\"JPY\":15.644062,\"KRW\":170.131068,\"KZT\":63.612903,\"MVR\":2.287933,\"MXN\":3.170424,\"MYR\":0.615439,\"NOK\":1.369261,\"NZD\":0.22308,\"PAB\":0.148334,\"PEN\":0.533837,\"PHP\":7.225576,\"PKR\":24.09776,\"PLN\":0.568725,\"PYG\":1075.636364,\"RON\":0.616233,\"RUB\":11.478878,\"SAR\":0.556857,\"SEK\":1.309479,\"SGD\":0.201673,\"THB\":4.632377,\"TRY\":1.177668,\"TWD\":4.264893,\"UAH\":4.205166,\"USD\":0.148567,\"UYU\":6.303676,\"ZAR\":2.450397}}";
+        // QString strRateAll = "{\"base\":\"CNY\",\"date\":\"2020-10-15\",\"time_last_updated\":1602720243,\"rates\":{\"CNY\":1,\"AED\":0.544676,\"ARS\":11.476237,\"AUD\":0.207097,\"BGN\":0.247315,\"BRL\":0.827556,\"BSD\":0.148334,\"CAD\":0.195039,\"CHF\":0.135726,\"CLP\":118.484436,\"COP\":563.428571,\"CZK\":3.456454,\"DKK\":0.940724,\"DOP\":8.630197,\"EGP\":2.321366,\"EUR\":0.126422,\"FJD\":0.315268,\"GBP\":0.114427,\"GTQ\":1.152767,\"HKD\":1.150917,\"HRK\":0.958357,\"HUF\":45.826534,\"IDR\":2221.384053,\"ILS\":0.502548,\"INR\":10.885823,\"ISK\":20.616798,\"JPY\":15.644062,\"KRW\":170.131068,\"KZT\":63.612903,\"MVR\":2.287933,\"MXN\":3.170424,\"MYR\":0.615439,\"NOK\":1.369261,\"NZD\":0.22308,\"PAB\":0.148334,\"PEN\":0.533837,\"PHP\":7.225576,\"PKR\":24.09776,\"PLN\":0.568725,\"PYG\":1075.636364,\"RON\":0.616233,\"RUB\":11.478878,\"SAR\":0.556857,\"SEK\":1.309479,\"SGD\":0.201673,\"THB\":4.632377,\"TRY\":1.177668,\"TWD\":4.264893,\"UAH\":4.205166,\"USD\":0.148567,\"UYU\":6.303676,\"ZAR\":2.450397}}";
+        QString strRateAll = "{\"base\":\"CNY\",\"date\":\"2021-03-11\",\"time_last_updated\":1615420801,\"rates\":{\"CNY\":1,\"AED\":0.564287,\"AFN\":11.925466,\"ALL\":15.941879,\"AMD\":80.78,\"ANG\":0.275037,\"AOA\":94.433,\"ARS\":13.919785,\"AUD\":0.199032,\"AWG\":0.275037,\"AZN\":0.261136,\"BAM\":0.252484,\"BBD\":0.307304,\"BDT\":13.035473,\"BGN\":0.252519,\"BHD\":0.057773,\"BIF\":298.750223,\"BMD\":0.153652,\"BND\":0.206603,\"BOB\":1.057767,\"BRL\":0.887713,\"BSD\":0.153652,\"BTN\":11.19463,\"BWP\":1.704798,\"BYN\":0.399818,\"BZD\":0.307304,\"CAD\":0.194177,\"CDF\":304.982306,\"CHF\":0.142806,\"CLP\":112.885499,\"COP\":555.469934,\"CRC\":94.017401,\"CUC\":0.153652,\"CUP\":3.841299,\"CVE\":14.234432,\"CZK\":3.393246,\"DJF\":27.307187,\"DKK\":0.963082,\"DOP\":8.861046,\"DZD\":20.526527,\"EGP\":2.416873,\"ERN\":2.30478,\"ETB\":6.1776,\"EUR\":0.129093,\"FJD\":0.313327,\"FKP\":0.110577,\"FOK\":0.963082,\"GBP\":0.110578,\"GEL\":0.509782,\"GGP\":0.110577,\"GHS\":0.882019,\"GIP\":0.110577,\"GMD\":7.995482,\"GNF\":1561.123152,\"GTQ\":1.18371,\"GYD\":32.529019,\"HKD\":1.1922,\"HNL\":3.702097,\"HRK\":0.972651,\"HTG\":11.682777,\"HUF\":47.54087,\"IDR\":2215.406996,\"ILS\":0.51302,\"IMP\":0.110577,\"INR\":11.194706,\"IQD\":224.6263,\"IRR\":6439.93241,\"ISK\":19.628822,\"JMD\":23.223465,\"JOD\":0.108939,\"JPY\":16.685028,\"KES\":16.846384,\"KGS\":13.029032,\"KHR\":624.11991,\"KID\":0.199031,\"KMF\":63.50956,\"KRW\":175.208429,\"KWD\":0.046039,\"KYD\":0.128043,\"KZT\":64.477847,\"LAK\":1439.550141,\"LBP\":231.630393,\"LKR\":30.131831,\"LRD\":26.726988,\"LSL\":2.338488,\"LYD\":0.694688,\"MAD\":1.386167,\"MDL\":2.706152,\"MGA\":579.07157,\"MKD\":7.980492,\"MMK\":216.743685,\"MNT\":439.246974,\"MOP\":1.227965,\"MRU\":5.534758,\"MUR\":6.125689,\"MVR\":2.365572,\"MWK\":120.496095,\"MXN\":3.240556,\"MYR\":0.633023,\"MZN\":11.359949,\"NAD\":2.338488,\"NGN\":60.844418,\"NIO\":5.365002,\"NOK\":1.300663,\"NPR\":17.911408,\"NZD\":0.214198,\"OMR\":0.059079,\"PAB\":0.153652,\"PEN\":0.567949,\"PGK\":0.539275,\"PHP\":7.455241,\"PKR\":24.104537,\"PLN\":0.591266,\"PYG\":1022.940324,\"QAR\":0.559293,\"RON\":0.630959,\"RSD\":15.192878,\"RUB\":11.351487,\"RWF\":152.594981,\"SAR\":0.576195,\"SBD\":1.208201,\"SCR\":3.255675,\"SDG\":58.58076,\"SEK\":1.307156,\"SGD\":0.206605,\"SHP\":0.110577,\"SLL\":1569.404972,\"SOS\":89.066036,\"SRD\":2.179247,\"SSP\":27.33617,\"STN\":3.162777,\"SYP\":78.666827,\"SZL\":2.338488,\"THB\":4.726832,\"TJS\":1.734593,\"TMT\":0.537566,\"TND\":0.4221,\"TOP\":0.348113,\"TRY\":1.16272,\"TTD\":1.043478,\"TVD\":0.199031,\"TWD\":4.350241,\"TZS\":356.183752,\"UAH\":4.25506,\"UGX\":562.660721,\"USD\":0.153652,\"UYU\":6.826117,\"UZS\":1615.6,\"VES\":288158.05,\"VND\":3557.170823,\"VUV\":16.617988,\"WST\":0.387134,\"XAF\":84.679413,\"XCD\":0.41486,\"XDR\":0.107598,\"XOF\":84.679413,\"XPF\":15.404918,\"YER\":38.486595,\"ZAR\":2.338623,\"ZMW\":3.372328}}";
 
         // 格式化处理汇率信息字符串键值对
         strRateList = strRateAll.split(QRegExp("[{} :,\"\n]"));
@@ -729,9 +739,12 @@ void ToolModelOutput::unitListBefShow()
         unitListBef->show();
         unitListBef->raise();
         unitListBef->setFocus();
+
+        toolUnitBefWid->setBackgroundRole(QPalette::Window);
     }
     else {
         unitListBef->hide();
+        toolUnitBefWid->setBackgroundRole(QPalette::Base);
     }
 }
 
@@ -886,9 +899,9 @@ void ToolModelButton::setWidgetUi()
         btnNum[i]->setIconSize(QSize(106, 62));
     }
 
-    btnDZero = new BasicButton(this);
-    btnDZero->setText("00");
-    btnDZero->setIconSize(QSize(106, 62));
+    // btnDZero = new BasicButton(this);
+    // btnDZero->setText("00");
+    // btnDZero->setIconSize(QSize(106, 62));
 
     btnClear = new BasicButton(this);
     btnPer = new BasicButton(this);
@@ -951,8 +964,8 @@ void ToolModelButton::setWidgetUi()
     btnLayout->addWidget(btnEqual, 4, 3, 1, 1);
 
     // 数字按钮布局
-    btnLayout->addWidget(btnDZero, 4, 0, 1, 1);
-    btnLayout->addWidget(btnNum[0], 4, 1, 1, 1);
+    // btnLayout->addWidget(btnDZero, 4, 0, 1, 1);
+    btnLayout->addWidget(btnNum[0], 4, 0, 1, 2);
     for (int i = 1; i < 10; i++) {
         btnLayout->addWidget(btnNum[i], 3 - (i - 1)/3, (i - 1) % 3, 1, 1);
     }
@@ -978,7 +991,7 @@ void ToolModelButton::setWidgetStyle()
             btnNum[i]->setIcon(QIcon(":/image/light/standard/btnNum"+ QString::number(i) +".png"));
         }
 
-        btnDZero->setIcon(QIcon(":/image/light/standard/btnNum00.png"));
+        // btnDZero->setIcon(QIcon(":/image/light/standard/btnNum00.png"));
 
         btnClear->setIcon(QIcon(":/image/light/standard/btnClear.png"));
         btnDiv->setIcon(QIcon(":/image/light/standard/btnDiv.png"));
@@ -1017,7 +1030,7 @@ void ToolModelButton::setWidgetStyle()
             btnNum[i]->setIcon(QIcon(":/image/standard/btnNum"+ QString::number(i) +".png"));
         }
 
-        btnDZero->setIcon(QIcon(":/image/standard/btnNum00.png"));
+        // btnDZero->setIcon(QIcon(":/image/standard/btnNum00.png"));
 
         btnClear->setIcon(QIcon(":/image/standard/btnClear.png"));
         btnDiv->setIcon(QIcon(":/image/standard/btnDiv.png"));
@@ -1055,7 +1068,7 @@ void ToolModelButton::setWidgetStyle()
         btnNum[i]->setStyleSheet(btnStyle);
     }
 
-    btnDZero->setStyleSheet(btnStyle);
+    // btnDZero->setStyleSheet(btnStyle);
 
     // 设置按钮样式standardModel
     btnClear->setStyleSheet(btnStyle);
@@ -1148,9 +1161,10 @@ void ToolModelButton::keyPressEvent(QKeyEvent *event)
 
 
 // 换算器单位列表界面
-UnitListWidget::UnitListWidget(QWidget *parent)
+UnitListWidget::UnitListWidget(QWidget *parent, QWidget *pWidget)
     : QWidget(parent)
 {
+    this->pWidget = pWidget;
     // 初始化组件
     this->setWidgetUi();
 
@@ -1242,7 +1256,7 @@ void UnitListWidget::setWidgetStyle()
 // 失去焦点窗口隐藏
 void UnitListWidget::focusOutEvent(QFocusEvent *e)
 {
-    if (this->btnCancel->hasFocus() || this->unitList->hasFocus()) {
+    if (this->btnCancel->hasFocus() || this->unitList->hasFocus() || this->pWidget->hasFocus()) {
         return ;
     }
     this->hide();
