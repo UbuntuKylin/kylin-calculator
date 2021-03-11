@@ -741,6 +741,18 @@ void ScientificModel::keyPressEvent(QKeyEvent *event)
     case Qt::Key_Backspace:
         btnDelete->click();
         break;
+    case Qt::Key_ParenLeft:
+        btnBracketLeft->click();
+        break;
+    case Qt::Key_ParenRight:
+        btnBracketRight->click();
+        break;
+    case Qt::Key_AsciiCircum:
+        btnYPowerX->click();
+        break;
+    case Qt::Key_Exclam:
+        btnFac->click();
+        break;
     case Qt::Key_Enter:
         btnEqual->click();
         break;
