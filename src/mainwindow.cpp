@@ -925,6 +925,11 @@ void MainWindow::delete_btn_handle(bool)
     btn_merge(BACKSPACE);
     // updateOutput(InputProcess::inputFromButton(BACKSPACE));
 
+    QString label = this->currentModel;
+    if (label != "standard" && label != "scientific") {
+       toolModelOutput->unitConversion();
+    }
+
     return ;
 }
 
