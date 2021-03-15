@@ -414,6 +414,8 @@ void MainWindow::setScientificUi()
         scientificOutput = new ScientificOutput(this);
         scientificModel  = new ScientificModel(this);
 
+        InputProcess::inputFromButton(RAD_SYMBOL);
+
         // 绑定处理函数
         for (int i = 0; i < 10; i++) {
             QObject::connect(scientificModel->btnNum[i],SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
@@ -496,6 +498,8 @@ void MainWindow::setScientificUi()
     // buttonWid->setLayout(scientificLayout);
 
     scientificModel->setWidgetStyle();
+    scientificModel->updateBtnSinDisplay();
+    scientificModel->updateBtnRadDisplay();
     scientificOutput->setWidgetStyle();
 
     mainOutputLayout->addWidget(scientificOutput);
@@ -524,11 +528,11 @@ void MainWindow::setToolUi()
     // 设置当前模式
     this->currentModel = EXCHANGE_RATE;
 
-    outputWid = new QWidget(this);
-    buttonWid = new QWidget(this);
+    // outputWid = new QWidget(this);
+    // buttonWid = new QWidget(this);
 
-    outputWid->setObjectName("outputWid");
-    buttonWid->setObjectName("buttonWid");;
+    // outputWid->setObjectName("outputWid");
+    // buttonWid->setObjectName("buttonWid");
 
     // 初始化数据输出界面
     if (toolModelOutput == nullptr) {
@@ -948,81 +952,44 @@ void MainWindow::changeModel(QString label)
 {
     qDebug() << label;
     this->funcListWid->hide();
-    // this->pTitleBar->setFuncLabel(tr(label) + "计算器");
 
     if (label != this->currentModel) {
-        if (label == STANDARD || label == SCIENTIFIC) {
-            // mainLayout->removeWidget(outputWid);
-            // mainLayout->removeWidget(buttonWid);
 
-            // this->outputWid->close();
-            // this->buttonWid->close();
+        QLayoutItem *outputChild = mainOutputLayout->takeAt(0);
+        QLayoutItem *buttonChild = mainButtonLayout->takeAt(0);
 
-            QLayoutItem *outputChild = mainOutputLayout->takeAt(0);
-            QLayoutItem *buttonChild = mainButtonLayout->takeAt(0);
+        mainOutputLayout->removeItem(outputChild);
+        mainButtonLayout->removeItem(buttonChild);
 
-            mainOutputLayout->removeItem(outputChild);
-            mainButtonLayout->removeItem(buttonChild);
+        outputChild->widget()->hide();
+        buttonChild->widget()->hide();
 
-            outputChild->widget()->hide();
-            buttonChild->widget()->hide();
+        this->lab_now->clear();
+        this->dis_data.clear();
 
-            this->lab_now->clear();
-            this->dis_data.clear();
+        if (label == STANDARD) {
+            this->pTitleBar->setFuncLabel(pTitleBar->STANDARD_LABEL);
+            calData += STANDARD;
+            InputProcess::inputFromButton(STANDARD);
 
-            // 换算器选项失去焦点
-            // for (int i = 0; i < funcList->funcToolWid->count(); i++) {
-            //     funcList->funcToolWid->item(i)->setSelected(false);
-            // }
-
-            if (label == STANDARD) {
-                this->pTitleBar->setFuncLabel(pTitleBar->STANDARD_LABEL);
-                calData += STANDARD;
-                InputProcess::inputFromButton(STANDARD);
-                setStandardUi();
-            }
-            else if (label == SCIENTIFIC) {
-                this->pTitleBar->setFuncLabel(pTitleBar->SCIENTIFIC_LABEL);
-                calData += SCIENTIFIC;
-                InputProcess::inputFromButton(SCIENTIFIC);
-                InputProcess::inputFromButton(RAD_SYMBOL);
-                setScientificUi();
-            }
-
-            // changeCalculatorUi();
+            setStandardUi();
         }
-        else {
-
-            // 计算器选项失去焦点
-            for (int i = 0; i < funcList->funcModelWid->count(); i++) {
-                funcList->funcModelWid->item(i)->setSelected(false);
-            }
-
-            if (label == EXCHANGE_RATE) {
-                this->pTitleBar->setFuncLabel(pTitleBar->EXCHANGE_RATE_LABEL);
-                // mainLayout->removeWidget(outputWid);
-                // mainLayout->removeWidget(buttonWid);
-
-                // this->outputWid->close();
-                // this->buttonWid->close();
-
-                QLayoutItem *outputChild = mainOutputLayout->takeAt(0);
-                QLayoutItem *buttonChild = mainButtonLayout->takeAt(0);
-
-                mainOutputLayout->removeItem(outputChild);
-                mainButtonLayout->removeItem(buttonChild);
-
-                outputChild->widget()->hide();
-                buttonChild->widget()->hide();
-
-                setToolUi();
-            }
-
-            // changeToolUi();
+        else if (label == SCIENTIFIC) {
+            this->pTitleBar->setFuncLabel(pTitleBar->SCIENTIFIC_LABEL);
+            calData += SCIENTIFIC;
+            InputProcess::inputFromButton(SCIENTIFIC);
+            
+            setScientificUi();
         }
+        else if (label == EXCHANGE_RATE) {
+            this->pTitleBar->setFuncLabel(pTitleBar->EXCHANGE_RATE_LABEL);
+            calData += STANDARD;
+            InputProcess::inputFromButton(STANDARD);
+
+            setToolUi();
+        }
+        
     }
-
-    
 
 }
 

@@ -383,7 +383,7 @@ void ScientificModel::setWidgetUi()
     this->setFixedHeight(320);
     this->setLayout(btnAllLayout);
 
-    connect(btnInd, &BasicButton::clicked, this, &ScientificModel::changeBtnDisplay);
+    connect(btnInd, &BasicButton::clicked, this, &ScientificModel::changeBtnSinDisplay);
     connect(btnRad, &BasicButton::clicked, this, &ScientificModel::changeBtnRadDisplay);
 }
 
@@ -613,30 +613,29 @@ QString ScientificModel::sciFormatInput(QString text)
 }
 
 // 切换角度弧度显示
-void ScientificModel::changeBtnDisplay()
+void ScientificModel::changeBtnSinDisplay()
 {
-    // 切换文字显示和图片显示
+    // 切换文字显示
     if (btnSin->text() == "sin") {
         btnSin->setText("asin");
         btnCos->setText("acos");
         btnTan->setText("atan");
-
-        if (WidgetStyle::themeColor == 0) {
-            btnSin->setIcon(QIcon(":/image/light/scientific/btnAsin.png"));
-            btnCos->setIcon(QIcon(":/image/light/scientific/btnAcos.png"));
-            btnTan->setIcon(QIcon(":/image/light/scientific/btnAtan.png"));
-        }
-        else if (WidgetStyle::themeColor == 1) {
-            btnSin->setIcon(QIcon(":/image/scientific/btnAsin.png"));
-            btnCos->setIcon(QIcon(":/image/scientific/btnAcos.png"));
-            btnTan->setIcon(QIcon(":/image/scientific/btnAtan.png"));
-        }
-
     }
     else {
         btnSin->setText("sin");
         btnCos->setText("cos");
         btnTan->setText("tan");
+    }
+
+    // 更新三角函数图片
+    updateBtnSinDisplay();
+}
+
+// 更新三角函数图片
+void ScientificModel::updateBtnSinDisplay()
+{
+    // 切换图片显示
+    if (btnSin->text() == "sin") {
 
         if (WidgetStyle::themeColor == 0) {
             btnSin->setIcon(QIcon(":/image/light/scientific/btnSin.png"));
@@ -648,7 +647,19 @@ void ScientificModel::changeBtnDisplay()
             btnCos->setIcon(QIcon(":/image/scientific/btnCos.png"));
             btnTan->setIcon(QIcon(":/image/scientific/btnTan.png"));
         }
+    }
+    else {
 
+        if (WidgetStyle::themeColor == 0) {
+            btnSin->setIcon(QIcon(":/image/light/scientific/btnAsin.png"));
+            btnCos->setIcon(QIcon(":/image/light/scientific/btnAcos.png"));
+            btnTan->setIcon(QIcon(":/image/light/scientific/btnAtan.png"));
+        }
+        else if (WidgetStyle::themeColor == 1) {
+            btnSin->setIcon(QIcon(":/image/scientific/btnAsin.png"));
+            btnCos->setIcon(QIcon(":/image/scientific/btnAcos.png"));
+            btnTan->setIcon(QIcon(":/image/scientific/btnAtan.png"));
+        }
     }
 }
 
@@ -658,19 +669,20 @@ void ScientificModel::changeBtnRadDisplay()
     // 切换文字显示和图片显示
     if (btnRad->text() == "rad") {
         btnRad->setText("deg");
-
-        if (WidgetStyle::themeColor == 0) {
-            btnRad->setIcon(QIcon(":/image/light/scientific/btnDeg.png"));
-        }
-        else if (WidgetStyle::themeColor == 1) {
-            btnRad->setIcon(QIcon(":/image/scientific/btnDeg.png"));
-        }
-        
-        // 调整Deg按钮大小
-        btnRad->setIconSize(QSize(95, 55));
     }
     else {
         btnRad->setText("rad");
+    }
+
+    // 更新角度弧度图片
+    updateBtnRadDisplay();
+}
+
+// 更新角度弧度图片
+void ScientificModel::updateBtnRadDisplay()
+{
+    // 切换图片显示
+    if (btnRad->text() == "rad") {
 
         if (WidgetStyle::themeColor == 0) {
             btnRad->setIcon(QIcon(":/image/light/scientific/btnRad.png"));
@@ -679,7 +691,19 @@ void ScientificModel::changeBtnRadDisplay()
             btnRad->setIcon(QIcon(":/image/scientific/btnRad.png"));
         }
         
-        btnRad->setIconSize(QSize(106, 62));
+        btnRad->setIconSize(QSize(106, 62)); 
+    }
+    else {
+        
+        if (WidgetStyle::themeColor == 0) {
+            btnRad->setIcon(QIcon(":/image/light/scientific/btnDeg.png"));
+        }
+        else if (WidgetStyle::themeColor == 1) {
+            btnRad->setIcon(QIcon(":/image/scientific/btnDeg.png"));
+        }
+
+        // 调整Deg按钮大小
+        btnRad->setIconSize(QSize(95, 55));
     }
 }
 

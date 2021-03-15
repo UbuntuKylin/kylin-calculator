@@ -557,6 +557,8 @@ BigFloat BigFloat::Abs(const BigFloat &value)
 
 BigFloat BigFloat::Fact(const BigFloat &value)
 {
+    // cancel default gsl error handler
+    gsl_set_error_handler_off();
     return BigFloat(gsl_sf_gamma((value + ONE).toDouble()));
 }
 

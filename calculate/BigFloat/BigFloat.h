@@ -29,6 +29,8 @@
 #include <gsl/gsl_math.h>
 #include <gsl/gsl_sf_trig.h>
 #include <gsl/gsl_sf_gamma.h>
+#include <gsl/gsl_errno.h>
+#include <gsl/gsl_fft_complex.h>
 
 #include "InputSymbols.h"
 

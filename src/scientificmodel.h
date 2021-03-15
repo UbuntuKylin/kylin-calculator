@@ -135,11 +135,17 @@ public:
     // 设置组件样式
     void setWidgetStyle();
     
-    // 切换反三角函数和角度弧度显示
-    void changeBtnDisplay();
+    // 切换三角函数和反三角函数显示
+    void changeBtnSinDisplay();
+
+    // 更新三角函数图片
+    void updateBtnSinDisplay();
 
     // 切换角度弧度显示
     void changeBtnRadDisplay();
+
+    // 更新角度弧度图片
+    void updateBtnRadDisplay();
 
 //    QPushButton *XPower2Button;
 //    QPushButton *PowerButton;
