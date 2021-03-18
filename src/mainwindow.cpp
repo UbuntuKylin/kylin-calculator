@@ -677,13 +677,13 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     // label.replace(tr("calculator"), "");
     QString label = this->currentModel;
 
-    if (label == "standard") {
+    if (label == STANDARD) {
         standardModel->keyPressEvent(event);
     }
-    else if (label == "scientific") {
+    else if (label == SCIENTIFIC) {
         scientificModel->keyPressEvent(event);
     }
-    else if (label == "exchange rate") {
+    else if (label == EXCHANGE_RATE) {
         toolModelButton->keyPressEvent(event);
     }
 }
@@ -750,15 +750,15 @@ void MainWindow::changeDarkTheme()
     pTitleBar->setWidgetStyle();
     funcList->setWidgetStyle();
 
-    if (label.contains("standard")) {
+    if (label.contains(STANDARD)) {
         standardModel->setWidgetStyle();
         standardOutput->setWidgetStyle();
     }
-    else if (label.contains("scientific")) {
+    else if (label.contains(SCIENTIFIC)) {
         scientificModel->setWidgetStyle();
         scientificOutput->setWidgetStyle();
     }
-    else if (label.contains("exchange rate")) {
+    else if (label.contains(EXCHANGE_RATE)) {
         toolModelButton->setWidgetStyle();
         toolModelOutput->setWidgetStyle();
         toolModelOutput->unitListBef->setWidgetStyle();
@@ -779,15 +779,15 @@ void MainWindow::changeLightTheme()
     pTitleBar->setWidgetStyle();
     funcList->setWidgetStyle();
 
-    if (label.contains("standard")) {
+    if (label.contains(STANDARD)) {
         standardModel->setWidgetStyle();
         standardOutput->setWidgetStyle();
     }
-    else if (label.contains("scientific")) {
+    else if (label.contains(SCIENTIFIC)) {
         scientificModel->setWidgetStyle();
         scientificOutput->setWidgetStyle();
     }
-    else if (label.contains("exchange rate")) {
+    else if (label.contains(EXCHANGE_RATE)) {
         toolModelButton->setWidgetStyle();
         toolModelOutput->setWidgetStyle();
         toolModelOutput->unitListBef->setWidgetStyle();
@@ -869,7 +869,7 @@ void MainWindow::btn_merge(const QString &disText)
         // QString label = this->pTitleBar->m_pFuncLabel->text();
         // label.replace(tr("calculator"), "");
         QString label = this->currentModel;
-        if (label != "standard" && label != "scientific") {
+        if (label != STANDARD && label != SCIENTIFIC) {
             qDebug() << "disHistory[] " << disHistory[disHistory.size() - 1];
             historyText = toolModelOutput->unitConvHistory(disHistory[disHistory.size() - 1]);
         }
@@ -894,7 +894,7 @@ void MainWindow::btn_handler(bool)
     // QString label = this->pTitleBar->m_pFuncLabel->text();
     // label.replace(tr("calculator"), "");
     QString label = this->currentModel;
-    if (label != "standard" && label != "scientific") {
+    if (label != STANDARD && label != SCIENTIFIC) {
        toolModelOutput->unitConversion();
     }
 }
@@ -930,7 +930,7 @@ void MainWindow::delete_btn_handle(bool)
     // updateOutput(InputProcess::inputFromButton(BACKSPACE));
 
     QString label = this->currentModel;
-    if (label != "standard" && label != "scientific") {
+    if (label != STANDARD && label != SCIENTIFIC) {
        toolModelOutput->unitConversion();
     }
 

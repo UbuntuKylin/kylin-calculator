@@ -253,7 +253,7 @@ void menuModule::initAbout()
     mainlyt->addStretch();
     aboutWindow->setLayout(mainlyt);
     // 关于弹窗应用内居中
-    QRect availableGeometry = this->parentWidget()->parentWidget()->parentWidget()->parentWidget()->geometry();
+    QRect availableGeometry = this->parentWidget()->parentWidget()->parentWidget()->geometry();
     aboutWindow->move(availableGeometry.center() - aboutWindow->rect().center());
     // aboutWindow->setStyleSheet("background-color:rgba(255,255,255,1);");
     dealSystemGsettingChange("styleName");

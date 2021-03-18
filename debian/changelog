@@ -1,3 +1,10 @@
+kylin-calculator (1.0.31kord5) v101; urgency=medium
+
+  * 解决禅道bug #43104 : 【麒麟计算器】点击关于按钮，软件闪退.
+  * 添加打印日志文件.
+
+ -- caoliang <caoliang@kylinos.cn>  Wed, 17 Mar 2021 14:35:17 +0800
+
 kylin-calculator (1.0.31kord4) v101; urgency=medium
 
   * 解决禅道bug #40286 : 【麒麟计算器】计算汇率时删除部分输入的数值，汇率计算错误.
