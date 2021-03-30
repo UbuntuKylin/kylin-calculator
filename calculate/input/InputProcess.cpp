@@ -299,7 +299,7 @@ int InputProcess::qstrNowUpdate(const QString &text)
             qstrNow.chop(1);
 
             // 有末尾标识符的直接去掉整个数字
-            if (qstrBack == ANS_END || qstrBack == SCI_NUM_END) {
+            if (QString(qstrNow.at(qstrNow.size()-1)) == ANS_END || QString(qstrNow.at(qstrNow.size()-1)) == SCI_NUM_END) {
                 qstrNow.chop(getAnsNumberLengthFromBack(qstrNow));
             }
             else {
