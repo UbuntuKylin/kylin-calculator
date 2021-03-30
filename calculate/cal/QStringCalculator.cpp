@@ -321,7 +321,7 @@ QString QStringCalculator::cal(const QString &qstr)
     QString ans = qstrListCalculator(formulaList);
 
     //去掉末尾0
-    if (ans.contains(POINT)) {
+    if (ans.contains(POINT) && !ans.contains(SCIENTIFIC_NOTATION)) {
         while (ans[ans.size() - 1] == ZERO[0]) {
             ans.chop(1);
         }
