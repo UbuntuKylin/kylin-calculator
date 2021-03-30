@@ -1,3 +1,10 @@
+kylin-calculator (1.0.31kord6) v101; urgency=medium
+
+  * 解决禅道bug # 45498 【麒麟计算器】当计算结果出现科学计数法时，连续点击退格键计算器闪退 
+  * 解决禅道bug # 45469 【麒麟计算器】当计算结果出现科学计数法的时候，e的指数为10的倍数时计算结果错误 
+
+ -- jiangdingyuan <jiangdingyuan@kylinos.cn>  Tue, 30 Mar 2021 09:47:08 +0800
+
 kylin-calculator (1.0.31kord5) v101; urgency=medium
 
   * 解决禅道bug #43104 : 【麒麟计算器】点击关于按钮，软件闪退.
