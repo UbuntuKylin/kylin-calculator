@@ -281,12 +281,12 @@ void MainWindow::setOutputUi()
     this->lab_prepare->setStyleSheet("color:#FB9119;font-size:20px;margin:0 7px 0 7px;");
     this->lab_prepare->show();
 
-    QFont lab_now_font("SourceHanSansCN-Normal", 50, 15);
+    QFont lab_now_font("SourceHanSansCN-Normal", 48, 15);
     this->lab_now->setAlignment(Qt::AlignRight);
     this->lab_now->setFont(lab_now_font);
     this->lab_now->setText("0");
     this->lab_now->setFixedHeight(65);
-    this->lab_now->setStyleSheet("color:#FFFFFF;font-size:48px;font-weight:15px;line-height:50px;margin:0 0 5px 7px;");
+    this->lab_now->setStyleSheet("color:#FFFFFF;font-size:48px;font-weight:15px;margin:0 0 5px 7px;");
     this->lab_now->show();
 
     this->lab_now->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -752,15 +752,15 @@ void MainWindow::changeDarkTheme()
 
     if (label.contains(STANDARD)) {
         standardModel->setWidgetStyle();
-        standardOutput->setWidgetStyle();
+        standardOutput->setWidgetStyle(false);
     }
     else if (label.contains(SCIENTIFIC)) {
         scientificModel->setWidgetStyle();
-        scientificOutput->setWidgetStyle();
+        scientificOutput->setWidgetStyle(false);
     }
     else if (label.contains(EXCHANGE_RATE)) {
         toolModelButton->setWidgetStyle();
-        toolModelOutput->setWidgetStyle();
+        toolModelOutput->setWidgetStyle(false);
         toolModelOutput->unitListBef->setWidgetStyle();
         toolModelOutput->unitListAft->setWidgetStyle();
     }
@@ -781,15 +781,15 @@ void MainWindow::changeLightTheme()
 
     if (label.contains(STANDARD)) {
         standardModel->setWidgetStyle();
-        standardOutput->setWidgetStyle();
+        standardOutput->setWidgetStyle(false);
     }
     else if (label.contains(SCIENTIFIC)) {
         scientificModel->setWidgetStyle();
-        scientificOutput->setWidgetStyle();
+        scientificOutput->setWidgetStyle(false);
     }
     else if (label.contains(EXCHANGE_RATE)) {
         toolModelButton->setWidgetStyle();
-        toolModelOutput->setWidgetStyle();
+        toolModelOutput->setWidgetStyle(false);
         toolModelOutput->unitListBef->setWidgetStyle();
         toolModelOutput->unitListAft->setWidgetStyle();
     }
@@ -818,11 +818,103 @@ void MainWindow::updateOutput(QVector<QString> outVector)
     this->lab_now->setText(outVector[DISPLAY_ON_LABEL_NOW]);
     this->lab_prepare->setText(outVector[DISPLAY_ON_LABEL_PREPARE]);
 
+    // 数字过长字号缩小
+    QFont labFont = lab_now->font();
+    QFontMetrics fontMts(labFont);
+    int dif = fontMts.width(lab_now->text()) - lab_now->width();
+    if (lab_now->fontInfo().pixelSize() > 16) {
+
+        qDebug() << "fontsize: " << lab_now->fontInfo().pixelSize();
+        qDebug() << "fontMts.width: " << fontMts.width(lab_now->text());
+        qDebug() << "lab_now->width: " << lab_now->width();
+        qDebug() << "dif: " << dif;
+        
+        QString fontSizeStr = QString::number(lab_now->fontInfo().pixelSize() - 8);
+
+        while (this->currentModel == STANDARD && dif > -10) {
+            lab_now->setStyleSheet("font-size:" + fontSizeStr + "px;font-weight:15px;margin:0 0 5px 7px;");
+            labFont.setPixelSize(labFont.pixelSize() - 8);
+            QFontMetrics fontMts(labFont);
+            dif = fontMts.width(lab_now->text()) - lab_now->width();
+            fontSizeStr = QString::number(labFont.pixelSize() - 8);
+        }
+        while (this->currentModel == SCIENTIFIC && dif > -12) {
+            lab_now->setStyleSheet("font-size:" + fontSizeStr + "px;font-weight:15px;margin:0 0 0 7px;");
+            labFont.setPixelSize(labFont.pixelSize() - 8);
+            QFontMetrics fontMts(labFont);
+            dif = fontMts.width(lab_now->text()) - lab_now->width();
+            fontSizeStr = QString::number(labFont.pixelSize() - 8);
+        }
+        while (this->currentModel == EXCHANGE_RATE && dif > -20) {
+            lab_now->setStyleSheet("font-size:" + fontSizeStr + "px;font-weight:15px;");
+            labFont.setPixelSize(labFont.pixelSize() - 8);
+            QFontMetrics fontMts(labFont);
+            dif = fontMts.width(lab_now->text()) - lab_now->width();
+            fontSizeStr = QString::number(labFont.pixelSize() - 8);
+        }
+        
+    }
+
     return ;
 }
 
 void MainWindow::btn_merge(const QString &disText)
 {
+    QFontMetrics fontMts = lab_now->fontMetrics();
+    int dif = fontMts.width(lab_now->text()) - lab_now->width();
+
+    this->inputLongSym = false;
+
+    // 数字过长禁止输入
+    if (disText != BACKSPACE && disText != CLEAN && disText != EQUAL) {
+        
+        if (lab_now->fontInfo().pixelSize() <= 16) {
+            if ((this->currentModel == STANDARD      && dif > -15) ||
+                (this->currentModel == SCIENTIFIC    && dif > -12) ||
+                (this->currentModel == EXCHANGE_RATE && dif > -35)) {
+                
+                this->lab_prepare->setText(tr("input too long"));
+                this->inputLongSym = true;
+                return ;
+            }
+        }
+    }
+    // 删除时字号放大
+    else if (disText == BACKSPACE && lab_now->fontInfo().pixelSize() < 48) {
+
+        QFont labFont = lab_now->font();
+        labFont.setPixelSize(lab_now->fontInfo().pixelSize() + 8);
+        QFontMetrics fm(labFont);
+        int dif = fm.width(lab_now->text()) - (lab_now->width() -10);
+
+        if (dif < 50) {
+            QString fontSizeStr = QString::number(lab_now->fontInfo().pixelSize() + 8);
+            QFontMetrics fontMts1 = lab_now->fontMetrics();
+
+            if (this->currentModel == STANDARD) {
+                lab_now->setStyleSheet("font-size:" + fontSizeStr + "px;font-weight:15px;margin:0 0 5px 7px;");
+            }
+            else if (this->currentModel == SCIENTIFIC) {
+                lab_now->setStyleSheet("font-size:" + fontSizeStr + "px;font-weight:15px;margin:0 0 0 7px;");
+            }
+            else if (this->currentModel == EXCHANGE_RATE) {
+                lab_now->setStyleSheet("font-size:" + fontSizeStr + "px;font-weight:15px;");
+            }
+        }
+    }
+    else if (disText == CLEAN || disText == EQUAL) {
+
+        if (this->currentModel == STANDARD) {
+            lab_now->setStyleSheet("font-size:48px;font-weight:15px;margin:0 0 5px 7px;");
+        }
+        else if (this->currentModel == SCIENTIFIC) {
+            lab_now->setStyleSheet("font-size:48px;font-weight:15px;margin:0 0 0 7px;");
+        }
+        else if (this->currentModel == EXCHANGE_RATE) {
+            lab_now->setStyleSheet("font-size:48px;font-weight:15px;");
+        }
+    }
+    
     qDebug() << "disText is " << disText;
     // 格式化为用于运算的表达式
     QString calText = disText;
@@ -894,7 +986,7 @@ void MainWindow::btn_handler(bool)
     // QString label = this->pTitleBar->m_pFuncLabel->text();
     // label.replace(tr("calculator"), "");
     QString label = this->currentModel;
-    if (label != STANDARD && label != SCIENTIFIC) {
+    if (label != STANDARD && label != SCIENTIFIC && inputLongSym == false) {
        toolModelOutput->unitConversion();
     }
 }

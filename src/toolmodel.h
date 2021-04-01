@@ -125,7 +125,7 @@ public:
     void setWidgetUi();
 
     // 设置组件样式
-    void setWidgetStyle();
+    void setWidgetStyle(bool resetFontSize = true);
 
     // 初始化单位列表
     void initUnitList(QString listStr);

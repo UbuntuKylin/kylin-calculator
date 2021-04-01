@@ -202,6 +202,8 @@ private:
     // 用于运算的表达式
     QString calData;
 
+    // 标识输入到最长
+    bool inputLongSym;
 
     // 记录计算历史记录,输入'='时触发
     QVector<QString> disHistory;

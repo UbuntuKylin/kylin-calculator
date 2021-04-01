@@ -55,8 +55,8 @@ void StandardOutput::setWidgetUi()
     this->staLabPre->setFixedHeight(35);
     this->staLabPre->show();
 
-    QFont staLabNowFont("SourceHanSansCN-Normal", 50, 15);
-    this->staLabNow->setAlignment(Qt::AlignRight);
+    QFont staLabNowFont("SourceHanSansCN-Normal", 48, 15);
+    this->staLabNow->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     this->staLabNow->setFont(staLabNowFont);
     this->staLabNow->setText("0");
     this->staLabNow->setFixedHeight(65);
@@ -81,17 +81,32 @@ void StandardOutput::setWidgetUi()
 }
 
 // 设置组件样式
-void StandardOutput::setWidgetStyle()
+void StandardOutput::setWidgetStyle(bool resetFontSize)
 {
     if (WidgetStyle::themeColor == 0) {
         this->staLabLast->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
         this->staLabPre->setStyleSheet("color:#FB9119;font-size:20px;margin:0 7px 0 7px;");
-        this->staLabNow->setStyleSheet("color:#272A2D;font-size:47px;font-weight:15px;line-height:50px;margin:0 0 5px 7px;");
+
+
+        if (resetFontSize) {
+            this->staLabNow->setStyleSheet("color:#272A2D;font-size:48px;font-weight:15px;margin:0 0 5px 7px;");
+        }
+        else {
+            QString fontSizeStr = QString::number(staLabNow->font().pixelSize());
+            this->staLabNow->setStyleSheet("color:#272A2D;font-size:" + fontSizeStr + "px;font-weight:15px;margin:0 0 5px 7px;");
+        }
     }
     else if (WidgetStyle::themeColor == 1) {
         this->staLabLast->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
         this->staLabPre->setStyleSheet("color:#FB9119;font-size:20px;margin:0 7px 0 7px;");
-        this->staLabNow->setStyleSheet("color:#FFFFFF;font-size:47px;font-weight:15px;line-height:50px;margin:0 0 5px 7px;");
+
+        if (resetFontSize) {
+            this->staLabNow->setStyleSheet("color:#FFFFFF;font-size:48px;font-weight:15px;margin:0 0 5px 7px;");
+        }
+        else {
+            QString fontSizeStr = QString::number(staLabNow->font().pixelSize());
+            this->staLabNow->setStyleSheet("color:#FFFFFF;font-size:" + fontSizeStr + "px;font-weight:15px;margin:0 0 5px 7px;");
+        }
     }
 }
 

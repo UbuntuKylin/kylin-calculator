@@ -147,15 +147,15 @@ void ToolModelOutput::setWidgetUi()
     this->toolLabHis->setContentsMargins(0, 0, 20, 0);
     this->toolLabHis->show();
 
-    QFont toolLabBefFont("SourceHanSansCN-Normal;", 50, 15);
-    this->toolLabBef->setAlignment(Qt::AlignRight | Qt::AlignBottom);
+    QFont toolLabBefFont("SourceHanSansCN-Normal;", 48, 15);
+    this->toolLabBef->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     this->toolLabBef->setFont(toolLabBefFont);
     this->toolLabBef->setText("0");
     this->toolLabBef->setFixedHeight(66);
     this->toolLabBef->setContentsMargins(0, 0, 20, 0);
     this->toolLabBef->show();
 
-    QFont toolLabAftFont("SourceHanSansCN-Normal", 50, 15);
+    QFont toolLabAftFont("SourceHanSansCN-Normal", 48, 15);
     this->toolLabAft->setAlignment(Qt::AlignRight | Qt::AlignBottom);
     this->toolLabAft->setFont(toolLabAftFont);
     this->toolLabAft->setText("0");
@@ -426,7 +426,7 @@ void ToolModelOutput::setWidgetUi()
 }
 
 // 设置组件样式
-void ToolModelOutput::setWidgetStyle()
+void ToolModelOutput::setWidgetStyle(bool resetFontSize)
 {
     if (WidgetStyle::themeColor == 0) {
         toolLabUpdate->setStyleSheet("font-size:16px;color:#272A2D;");
@@ -446,9 +446,16 @@ void ToolModelOutput::setWidgetStyle()
                                       "QPushButton:hover{background-color:#F3F3F3;}");
 
         // 数据输出界面
-        this->toolLabHis->setStyleSheet("color:#8C8C8C;font-size:20px;");
-        this->toolLabBef->setStyleSheet("color:#272A2D;font-size:45px;");
-        this->toolLabAft->setStyleSheet("color:#272A2D;font-size:45px;");
+        this->toolLabHis->setStyleSheet("color:#8C8C8C;font-size:20px;font-weight:15px;line-height:50px;");
+        this->toolLabAft->setStyleSheet("color:#272A2D;font-size:48px;font-weight:15px;line-height:50px;");
+
+        if (resetFontSize) {
+            this->toolLabBef->setStyleSheet("color:#272A2D;font-size:48px;font-weight:15px;");
+        }
+        else {
+            QString fontSizeStr = QString::number(toolLabBef->font().pixelSize());
+            this->toolLabBef->setStyleSheet("color:#272A2D;font-size:"+ fontSizeStr +"px;font-weight:15px;");
+        }
 
         // this->setStyleSheet("background-color:#8C8C8C;border-radius:4px;");
 
@@ -471,9 +478,16 @@ void ToolModelOutput::setWidgetStyle()
                                       "QPushButton:hover{background-color:#18181A;}");
 
         // 数据输出界面
-        this->toolLabHis->setStyleSheet("color:#8C8C8C;font-size:20px;");
-        this->toolLabBef->setStyleSheet("color:#FFFFFF;font-size:45px;");
-        this->toolLabAft->setStyleSheet("color:#FFFFFF;font-size:45px;");
+        this->toolLabHis->setStyleSheet("color:#8C8C8C;font-size:20px;font-weight:15px;line-height:50px;");
+        this->toolLabAft->setStyleSheet("color:#FFFFFF;font-size:48px;font-weight:15px;line-height:50px;");
+
+        if (resetFontSize) {
+            this->toolLabBef->setStyleSheet("color:#FFFFFF;font-size:48px;font-weight:15px;");
+        }
+        else {
+            QString fontSizeStr = QString::number(toolLabBef->font().pixelSize());
+            this->toolLabBef->setStyleSheet("color:#FFFFFF;font-size:"+ fontSizeStr +"px;font-weight:15px;");
+        }
 
         // this->setStyleSheet("background-color:#8C8C8C;border-radius:4px;");
 
