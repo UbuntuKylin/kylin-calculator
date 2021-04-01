@@ -87,6 +87,9 @@ public:
     // 换算器界面切换布局
     void changeToolUi();
 
+    // 重置输入界面字号
+    void resetFontSize(QString calModel, QString fontSizeStr);
+
     // 显示输出
     void lab_output(QString s,QLabel *l);
     void updateOutput(QVector<QString> outVector);
@@ -213,6 +216,8 @@ private:
 
     // 重绘窗口
     void paintEvent(QPaintEvent *event);
+
+    
 };
 
 #endif // MAINWINDOW_H

@@ -795,6 +795,20 @@ void MainWindow::changeLightTheme()
     }
 }
 
+// 重置输入界面字号
+void MainWindow::resetFontSize(QString calModel, QString fontSizeStr)
+{
+    if (calModel == STANDARD) {
+        lab_now->setStyleSheet("font-size:" + fontSizeStr + "px;font-weight:15px;margin:0 0 5px 7px;");
+    }
+    else if (calModel == SCIENTIFIC) {
+        lab_now->setStyleSheet("font-size:" + fontSizeStr + "px;font-weight:15px;margin:0 0 0 7px;");
+    }
+    else if (calModel == EXCHANGE_RATE) {
+        lab_now->setStyleSheet("font-size:" + fontSizeStr + "px;font-weight:15px;");
+    }
+}
+
 // 更新输出界面
 void MainWindow::updateOutput(QVector<QString> outVector)
 {
@@ -818,41 +832,27 @@ void MainWindow::updateOutput(QVector<QString> outVector)
     this->lab_now->setText(outVector[DISPLAY_ON_LABEL_NOW]);
     this->lab_prepare->setText(outVector[DISPLAY_ON_LABEL_PREPARE]);
 
+    // 输出为"0"时设置为最大字号
+    if (lab_now->text().size() == 1) {
+        this->resetFontSize(this->currentModel, "48");
+    }
     // 数字过长字号缩小
-    QFont labFont = lab_now->font();
-    QFontMetrics fontMts(labFont);
-    int dif = fontMts.width(lab_now->text()) - lab_now->width();
-    if (lab_now->fontInfo().pixelSize() > 16) {
-
-        qDebug() << "fontsize: " << lab_now->fontInfo().pixelSize();
-        qDebug() << "fontMts.width: " << fontMts.width(lab_now->text());
-        qDebug() << "lab_now->width: " << lab_now->width();
-        qDebug() << "dif: " << dif;
+    else if (lab_now->fontInfo().pixelSize() > 16) {
+        QFont labFont = lab_now->font();
+        QFontMetrics fontMts(labFont);
+        int dif = fontMts.width(lab_now->text()) - lab_now->width();
         
         QString fontSizeStr = QString::number(lab_now->fontInfo().pixelSize() - 8);
 
-        while (this->currentModel == STANDARD && dif > -10) {
-            lab_now->setStyleSheet("font-size:" + fontSizeStr + "px;font-weight:15px;margin:0 0 5px 7px;");
+        while ((this->currentModel == STANDARD      && dif > -10) ||
+               (this->currentModel == SCIENTIFIC    && dif > -12) ||
+               (this->currentModel == EXCHANGE_RATE && dif > -20)) {
+            this->resetFontSize(this->currentModel, fontSizeStr);
             labFont.setPixelSize(labFont.pixelSize() - 8);
             QFontMetrics fontMts(labFont);
             dif = fontMts.width(lab_now->text()) - lab_now->width();
             fontSizeStr = QString::number(labFont.pixelSize() - 8);
         }
-        while (this->currentModel == SCIENTIFIC && dif > -12) {
-            lab_now->setStyleSheet("font-size:" + fontSizeStr + "px;font-weight:15px;margin:0 0 0 7px;");
-            labFont.setPixelSize(labFont.pixelSize() - 8);
-            QFontMetrics fontMts(labFont);
-            dif = fontMts.width(lab_now->text()) - lab_now->width();
-            fontSizeStr = QString::number(labFont.pixelSize() - 8);
-        }
-        while (this->currentModel == EXCHANGE_RATE && dif > -20) {
-            lab_now->setStyleSheet("font-size:" + fontSizeStr + "px;font-weight:15px;");
-            labFont.setPixelSize(labFont.pixelSize() - 8);
-            QFontMetrics fontMts(labFont);
-            dif = fontMts.width(lab_now->text()) - lab_now->width();
-            fontSizeStr = QString::number(labFont.pixelSize() - 8);
-        }
-        
     }
 
     return ;
@@ -891,28 +891,12 @@ void MainWindow::btn_merge(const QString &disText)
             QString fontSizeStr = QString::number(lab_now->fontInfo().pixelSize() + 8);
             QFontMetrics fontMts1 = lab_now->fontMetrics();
 
-            if (this->currentModel == STANDARD) {
-                lab_now->setStyleSheet("font-size:" + fontSizeStr + "px;font-weight:15px;margin:0 0 5px 7px;");
-            }
-            else if (this->currentModel == SCIENTIFIC) {
-                lab_now->setStyleSheet("font-size:" + fontSizeStr + "px;font-weight:15px;margin:0 0 0 7px;");
-            }
-            else if (this->currentModel == EXCHANGE_RATE) {
-                lab_now->setStyleSheet("font-size:" + fontSizeStr + "px;font-weight:15px;");
-            }
+            this->resetFontSize(this->currentModel, fontSizeStr);
         }
     }
+    // 清除时设置为最大字号
     else if (disText == CLEAN || disText == EQUAL) {
-
-        if (this->currentModel == STANDARD) {
-            lab_now->setStyleSheet("font-size:48px;font-weight:15px;margin:0 0 5px 7px;");
-        }
-        else if (this->currentModel == SCIENTIFIC) {
-            lab_now->setStyleSheet("font-size:48px;font-weight:15px;margin:0 0 0 7px;");
-        }
-        else if (this->currentModel == EXCHANGE_RATE) {
-            lab_now->setStyleSheet("font-size:48px;font-weight:15px;");
-        }
+        this->resetFontSize(this->currentModel, "48");
     }
     
     qDebug() << "disText is " << disText;
