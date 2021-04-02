@@ -889,7 +889,6 @@ void MainWindow::btn_merge(const QString &disText)
 
         if (dif < 50) {
             QString fontSizeStr = QString::number(lab_now->fontInfo().pixelSize() + 8);
-            QFontMetrics fontMts1 = lab_now->fontMetrics();
 
             this->resetFontSize(this->currentModel, fontSizeStr);
         }
