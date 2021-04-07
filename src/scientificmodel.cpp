@@ -55,8 +55,8 @@ void ScientificOutput::setWidgetUi()
     this->sciLabPre->setText("0");
     this->sciLabPre->setFixedHeight(35);
 
-    QFont sciLabNowFont("SourceHanSansCN-Normal", 50, 15);
-    this->sciLabNow->setAlignment(Qt::AlignRight);
+    QFont sciLabNowFont("SourceHanSansCN-Normal", 48, 15);
+    this->sciLabNow->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     this->sciLabNow->setFont(sciLabNowFont);
     this->sciLabNow->setText("0");
     this->sciLabNow->setFixedHeight(65);
@@ -97,19 +97,33 @@ void ScientificOutput::setWidgetUi()
 }
 
 // 设置组件样式
-void ScientificOutput::setWidgetStyle()
+void ScientificOutput::setWidgetStyle(bool resetFontSize)
 {
     if (WidgetStyle::themeColor == 0){
         this->sciLabLastL->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
         this->sciLabLastR->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
         this->sciLabPre->setStyleSheet("color:#FB9119;font-size:20px;margin:0 7px 0 7px;");
-        this->sciLabNow->setStyleSheet("color:#272A2D;font-size:48px;font-weight:15px;margin:0 0 0 7px;");
+        
+        if (resetFontSize) {
+            this->sciLabNow->setStyleSheet("color:#272A2D;font-size:48px;font-weight:15px;margin:0 0 0 7px;");
+        }
+        else {
+            QString fontSizeStr = QString::number(sciLabNow->font().pixelSize());
+            this->sciLabNow->setStyleSheet("color:#272A2D;font-size:" + fontSizeStr + "px;font-weight:15px;margin:0 0 0 7px;");
+        }
     }
     else if (WidgetStyle::themeColor == 1){
         this->sciLabLastL->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
         this->sciLabLastR->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
         this->sciLabPre->setStyleSheet("color:#FB9119;font-size:20px;margin:0 7px 0 7px;");
-        this->sciLabNow->setStyleSheet("color:#FFFFFF;font-size:48px;font-weight:15px;margin:0 0 0 7px;");
+
+        if (resetFontSize) {
+            this->sciLabNow->setStyleSheet("color:#FFFFFF;font-size:48px;font-weight:15px;margin:0 0 0 7px;");
+        }
+        else {
+            QString fontSizeStr = QString::number(sciLabNow->font().pixelSize());
+            this->sciLabNow->setStyleSheet("color:#FFFFFF;font-size:" + fontSizeStr + "px;font-weight:15px;margin:0 0 0 7px;");
+        }
     }
 }
 

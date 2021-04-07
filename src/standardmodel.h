@@ -49,7 +49,7 @@ public:
     void setWidgetUi();
 
     // 设置组件样式
-    void setWidgetStyle();
+    void setWidgetStyle(bool resetFontSize = true);
 };
 
 

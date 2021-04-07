@@ -32,40 +32,45 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="190"/>
+        <location filename="../src/mainwindow.cpp" line="196"/>
         <source>kylin-calculator</source>
         <translation>麒麟计算器</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1017"/>
-        <location filename="../src/mainwindow.cpp" line="1033"/>
+        <location filename="../src/mainwindow.cpp" line="1084"/>
+        <location filename="../src/mainwindow.cpp" line="1100"/>
         <source>standard</source>
         <translation>标准</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1015"/>
+        <location filename="../src/mainwindow.cpp" line="1082"/>
         <source>calculator</source>
         <translation>计算器</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1017"/>
-        <location filename="../src/mainwindow.cpp" line="1038"/>
+        <location filename="../src/mainwindow.cpp" line="860"/>
+        <source>input too long</source>
+        <translation>输入过长</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1084"/>
+        <location filename="../src/mainwindow.cpp" line="1105"/>
         <source>scientific</source>
         <translation>科学</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1054"/>
+        <location filename="../src/mainwindow.cpp" line="1121"/>
         <source>exchange rate</source>
         <translation>汇率</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="782"/>
-        <location filename="../src/mainwindow.cpp" line="785"/>
+        <location filename="../src/mainwindow.cpp" line="803"/>
+        <location filename="../src/mainwindow.cpp" line="806"/>
         <source>Error!</source>
         <translation>错误!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="788"/>
+        <location filename="../src/mainwindow.cpp" line="809"/>
         <source>Input error!</source>
         <translation>输入错误!</translation>
     </message>
@@ -110,17 +115,17 @@
 <context>
     <name>ToolModelOutput</name>
     <message>
-        <location filename="../src/toolmodel.cpp" line="359"/>
+        <location filename="../src/toolmodel.cpp" line="93"/>
         <source>Rate update</source>
         <translation>汇率更新</translation>
     </message>
     <message>
-        <location filename="../src/toolmodel.cpp" line="374"/>
+        <location filename="../src/toolmodel.cpp" line="113"/>
         <source>Chinese Yuan</source>
         <translation>人民币</translation>
     </message>
     <message>
-        <location filename="../src/toolmodel.cpp" line="384"/>
+        <location filename="../src/toolmodel.cpp" line="123"/>
         <source>US Dollar</source>
         <translation>美元</translation>
     </message>
@@ -128,17 +133,17 @@
 <context>
     <name>UnitListWidget</name>
     <message>
-        <location filename="../src/toolmodel.cpp" line="1072"/>
+        <location filename="../src/toolmodel.cpp" line="1196"/>
         <source>currency</source>
         <translation>货币</translation>
     </message>
     <message>
-        <location filename="../src/toolmodel.cpp" line="1077"/>
+        <location filename="../src/toolmodel.cpp" line="1201"/>
         <source>cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/toolmodel.cpp" line="1085"/>
+        <location filename="../src/toolmodel.cpp" line="1209"/>
         <source>search</source>
         <translation>搜索</translation>
     </message>
@@ -219,7 +224,7 @@
     </message>
     <message>
         <source>Support: support@kylinos.cn</source>
-        <translation>支持：support@kylinos.cn</translation>
+        <translation type="vanished">支持：support@kylinos.cn</translation>
     </message>
     <message>
         <location filename="../src/menumodule/menumodule.h" line="66"/>
