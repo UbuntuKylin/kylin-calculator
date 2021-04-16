@@ -44,8 +44,8 @@ TRANSLATIONS += $$PWD/translations/kylin-calculator_zh_CN.ts
 QM_FILES_INSTALL_PATH = /usr/share/kylin-calculator/translations/
 CONFIG += lrelease
 
-BEFORE_LINK_CMD_LINE = echo Hello world!
-QMAKE_PRE_LINK += $$quote($$BEFORE_LINK_CMD_LINE)
+#BEFORE_LINK_CMD_LINE = echo Hello world!
+#QMAKE_PRE_LINK += $$quote($$BEFORE_LINK_CMD_LINE)
 
 target.path += /usr/bin
 target.source += $$TARGET

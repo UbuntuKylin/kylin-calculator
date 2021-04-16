@@ -2,5 +2,6 @@ tar-ignore =  build
 tar-ignore =  build-*
 tar-ignore = .vscode
 tar-ignore = .git
+tar-ignore = .qm
 tar-ignore =  run
 tar-ignore =  README.md
