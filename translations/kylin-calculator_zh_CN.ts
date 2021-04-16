@@ -33,8 +33,8 @@
     <name>MainWindow</name>
     <message>
         <location filename="../src/mainwindow.cpp" line="196"/>
-        <source>kylin-calculator</source>
-        <translation>麒麟计算器</translation>
+        <source>Calculator</source>
+        <translation>计算器</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1084"/>
@@ -84,17 +84,17 @@
     <message>
         <location filename="../src/titlebar.cpp" line="57"/>
         <source>Standard</source>
-        <translation>麒麟计算器—标准</translation>
+        <translation>计算器—标准</translation>
     </message>
     <message>
         <location filename="../src/titlebar.cpp" line="58"/>
         <source>Scientific</source>
-        <translation>麒麟计算器—科学</translation>
+        <translation>计算器—科学</translation>
     </message>
     <message>
         <location filename="../src/titlebar.cpp" line="59"/>
         <source>Exchange Rate</source>
-        <translation>麒麟计算器—汇率</translation>
+        <translation>计算器—汇率</translation>
     </message>
     <message>
         <location filename="../src/titlebar.cpp" line="84"/>
@@ -228,8 +228,8 @@
     </message>
     <message>
         <location filename="../src/menumodule/menumodule.h" line="66"/>
-        <source>kylin calculator</source>
-        <translation>麒麟计算器</translation>
+        <source>Calculator</source>
+        <translation>计算器</translation>
     </message>
 </context>
 </TS>
