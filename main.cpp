@@ -33,6 +33,8 @@
 #include <QDateTime>
 #include <sys/inotify.h>
 
+#include <ukui-log4qt.h>
+
 #include "mainwindow.h"
 #include "xatom-helper.h"
 
@@ -96,8 +98,9 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 
 int main(int argc, char *argv[])
 {
+    initUkuiLog4qt("kylin-calculator");
     printf("Program start ...\n");
-    qInstallMessageHandler(myMessageOutput);
+    // qInstallMessageHandler(myMessageOutput);
 
     // 适配4K屏
     #if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
@@ -130,12 +133,16 @@ int main(int argc, char *argv[])
     QString qtTranslationsPath;
     qtTranslationsPath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);// /usr/share/qt5/translations
     QString kylinCalculatorTranslationsPath;
+#ifdef QT_NO_DEBUG
     if (QDir("/usr/share/kylin-calculator/translations").exists()) {
         kylinCalculatorTranslationsPath = "/usr/share/kylin-calculator/translations";
     }
     else {
         kylinCalculatorTranslationsPath = qApp->applicationDirPath() + "/.qm";
     }
+#else
+    kylinCalculatorTranslationsPath = "translations";
+#endif
 
     QString locale = QLocale::system().name();
     QTranslator trans_global, trans_menu;

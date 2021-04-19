@@ -34,6 +34,8 @@ CONFIG += \
 PKGCONFIG += \
     gsl
 
+LIBS += -L/usr/lib/libukui-log4qt.so.1.0.0 -lukui-log4qt
+
 TARGET = kylin-calculator
 
 # 生成qm文件
@@ -51,7 +53,9 @@ target.path += /usr/bin
 target.source += $$TARGET
 
 # gsettings
-schemes.files += $$PWD/data/org.kylin-calculator-data.gschema.xml
+schemes.files += \
+    $$PWD/data/org.kylin-calculator-data.gschema.xml \
+    $$PWD/data/org.ukui.log4qt.kylin-calculator.gschema.xml
 schemes.path = /usr/share/glib-2.0/schemas/
 
 # icon.path = /usr/share/pixmaps
@@ -65,7 +69,7 @@ translationsFiles.files += $$PWD/translations/*.qm
 
 INSTALLS += \
     target  \
-    icon    \
+#    icon    \
     desktop \
     schemes \
     translationsFiles
@@ -132,3 +136,4 @@ HEADERS += \
     $$PWD/src/toolmodel.h                      \
     $$PWD/src/basicbutton.h                    \
     $$PWD/src/menumodule/menumodule.h
+

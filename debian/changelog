@@ -1,3 +1,10 @@
+kylin-calculator (1.0.31kord9) v101; urgency=medium
+
+  * 添加新版日志
+  * 修复一个debug模式发现的段错误
+
+ -- jiangdingyuan <jiangdingyuan@kylinos.cn>  Mon, 19 Apr 2021 16:36:14 +0800
+
 kylin-calculator (1.0.31kord8) v101; urgency=medium
 
   * 根据新版设计稿修改应用名称
