@@ -343,6 +343,7 @@ int InputProcess::qstrNowUpdate(const QString &text)
                 qstrNow.remove(0, 1);
                 return qstrBack == ZERO ? CORRECT_QSTR_NOW_UPDATE : FAILED_QSTR_NOW_UPDATE;
             }
+            return CORRECT_QSTR_NOW_UPDATE;
         }
         QString qstrBack3 = QString(qstrNow[qstrNow.size()-3]);
         if ( qstrBack2 == ZERO && (isArithmeticOperator(qstrBack3) || qstrBack3 == BRACKET_L) ) {
