@@ -224,6 +224,20 @@ void MainWindow::setCommonUi()
     // connect(pTitleBar->funcListButton,SIGNAL(clicked(bool)),this,SLOT(funcListHandle(bool)));
     connect(pTitleBar->m_pTopButton,SIGNAL(clicked(bool)),this,SLOT(stayTop()));
 
+    // 右键菜单
+    labelMenu   = new QMenu(this);
+    copyAction  = new QAction(this);
+    pasteAction = new QAction(this);
+
+    labelMenu->addAction(copyAction);
+    labelMenu->addAction(pasteAction);
+
+    copyAction->setText(tr("Copy"));
+    pasteAction->setText(tr("Paste"));
+
+    connect(copyAction,  &QAction::triggered, this, &MainWindow::copyCalResult);
+    connect(pasteAction, &QAction::triggered, this, &MainWindow::pasteToLabNow);
+
     // 模式切换和功能列表
     funcList = new FuncList(this);
     installEventFilter(funcList);
@@ -304,6 +318,9 @@ void MainWindow::setOutputUi()
     outputWid->setLayout(outputLayout);
     outputWid->setFixedHeight(270);
     outputWid->setStyleSheet("#outputWid{background-color:#18181A;border-radius:4px;}");
+
+    this->lab_now->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this->lab_now, &MainWindow::customContextMenuRequested, this, &MainWindow::myCustomContextMenuRequested);
 }
 
 // 标准计算界面布局
@@ -336,6 +353,9 @@ void MainWindow::setStandardUi()
         QObject::connect(standardModel->btnPer,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
         QObject::connect(standardModel->btnPoint,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
         QObject::connect(standardModel->btnDelete, SIGNAL(clicked(bool)),this,SLOT(delete_btn_handle(bool)));
+
+        standardOutput->staLabNow->setContextMenuPolicy(Qt::CustomContextMenu);
+        connect(standardOutput->staLabNow, &MainWindow::customContextMenuRequested, this, &MainWindow::myCustomContextMenuRequested);
     }
 
     installEventFilter(standardModel);
@@ -832,6 +852,13 @@ void MainWindow::updateOutput(QVector<QString> outVector)
     this->lab_now->setText(outVector[DISPLAY_ON_LABEL_NOW]);
     this->lab_prepare->setText(outVector[DISPLAY_ON_LABEL_PREPARE]);
 
+    qDebug() << "DISPLAY_ON_LABEL_NOW"      << outVector[DISPLAY_ON_LABEL_NOW]      << "\n" <<
+                "LABEL_NOW_CAL_QSTR"        << outVector[LABEL_NOW_CAL_QSTR]        << "\n" <<
+                "CAL_ANS"                   << outVector[CAL_ANS]                   << "\n" <<
+                "LATEST_HISTORY"            << outVector[LATEST_HISTORY]            << "\n" <<
+                "DISPLAY_ON_LABEL_PREPARE"  << outVector[DISPLAY_ON_LABEL_PREPARE]  << "\n" <<
+                "LABEL_PREPARE_CAL_QSTR"    << outVector[LABEL_PREPARE_CAL_QSTR]    << "\n";
+
     // 输出为"0"时设置为最大字号
     if (lab_now->text().size() == 1) {
         this->resetFontSize(this->currentModel, "48");
@@ -844,6 +871,7 @@ void MainWindow::updateOutput(QVector<QString> outVector)
         
         QString fontSizeStr = QString::number(lab_now->fontInfo().pixelSize() - 8);
 
+        // 不同模式下需要判断的距离阈值不一样
         while ((this->currentModel == STANDARD      && dif > -10) ||
                (this->currentModel == SCIENTIFIC    && dif > -12) ||
                (this->currentModel == EXCHANGE_RATE && dif > -20)) {
@@ -869,6 +897,7 @@ void MainWindow::btn_merge(const QString &disText)
     if (disText != BACKSPACE && disText != CLEAN && disText != EQUAL) {
         
         if (lab_now->fontInfo().pixelSize() <= 16) {
+            // 不同模式下需要判断的距离阈值不一样
             if ((this->currentModel == STANDARD      && dif > -15) ||
                 (this->currentModel == SCIENTIFIC    && dif > -12) ||
                 (this->currentModel == EXCHANGE_RATE && dif > -35)) {
@@ -887,6 +916,7 @@ void MainWindow::btn_merge(const QString &disText)
         QFontMetrics fm(labFont);
         int dif = fm.width(lab_now->text()) - (lab_now->width() -10);
 
+        // 放大字号时的距离阈值
         if (dif < 50) {
             QString fontSizeStr = QString::number(lab_now->fontInfo().pixelSize() + 8);
 
@@ -1068,7 +1098,74 @@ void MainWindow::changeModel(QString label)
 
 }
 
+// 判断字符串是否为纯数字
+bool MainWindow::isDigitStr(QString str)
+{
+    // QString转换为char*
+    QByteArray byteArray = str.toLatin1();
+    const char *s = byteArray.data();
 
+    // // 判断首字符
+    // if (*s && (*s == 'ｰ' || *s == '-')) {
+    //     s++;
+    // }
+
+    // 判断是否为纯数字
+    while (*s && *s >= '0' && *s <= '9') {
+        qDebug() << *s;
+        s++;
+    }
+    
+    // 不是纯数字
+    if (*s) {
+        return false;
+    }
+    // 是纯数字
+    else {
+        return true;
+    }
+}
+
+// 响应右键菜单
+void MainWindow::myCustomContextMenuRequested(const QPoint& pos)
+{
+    QString labNowStr = this->lab_now->text().remove(",");
+    if (this->isDigitStr(labNowStr) == false) {
+        copyAction->setEnabled(false);
+    }
+    else {
+        copyAction->setEnabled(true);
+    }
+
+    // QClipboard *clipboard = QApplication::clipboard();
+    QString clipText = clipboard->text();
+    if (this->isDigitStr(clipText) == false) {
+        pasteAction->setEnabled(false);
+    }
+    else {
+        pasteAction->setEnabled(true);
+    }
+
+    labelMenu->exec(QCursor::pos());
+}
+
+// 复制计算结果到剪切板
+void MainWindow::copyCalResult()
+{
+    clipboard->setText(this->lab_now->text().remove(","));
+    qDebug() << "clipboard->setText" << this->lab_now->text().remove(",");
+}
+
+// 将剪切板内容粘贴到运算式中
+void MainWindow::pasteToLabNow()
+{
+    // QClipboard *clipboard = QApplication::clipboard();
+    QString clipText = clipboard->text();
+
+    for (int i = 0; i < clipText.size(); i++) {
+        this->btn_merge(QString(clipText[i]));
+    }
+}
 
 void MainWindow::funcListItemClicked(QListWidgetItem* item)
 {
