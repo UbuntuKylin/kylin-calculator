@@ -815,6 +815,14 @@ void MainWindow::changeLightTheme()
     }
 }
 
+// 最小化状态下拉起主界面
+void MainWindow::pullUpWindow()
+{
+    this->showNormal();
+    this->raise();
+    this->activateWindow();
+}
+
 // 重置输入界面字号
 void MainWindow::resetFontSize(QString calModel, QString fontSizeStr)
 {

@@ -1,3 +1,10 @@
+kylin-calculator (1.0.31kord9) v101; urgency=medium
+
+  * 解决禅道bug#49255 : 打开窗体未置顶显示.
+  * 创建DBus服务，最小化后再次启动应用时拉起主界面.
+
+ -- caoliang <caoliang@kylinos.cn>  Mon, 19 Apr 2021 17:06:06 +0800
+
 kylin-calculator (1.0.31kord8) v101; urgency=medium
 
   * 根据新版设计稿修改应用名称

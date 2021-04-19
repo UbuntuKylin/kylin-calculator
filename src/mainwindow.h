@@ -119,6 +119,9 @@ public:
     // 判断字符串是否为纯数字
     bool isDigitStr(QString str);
 
+    // 最小化状态下拉起主界面
+    void pullUpWindow();
+
 public slots:
     // 键盘响应事件
     void keyPressEvent(QKeyEvent *event);
