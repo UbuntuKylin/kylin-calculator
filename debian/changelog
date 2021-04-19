@@ -1,3 +1,12 @@
+kylin-calculator (1.0.31kord8) v101; urgency=medium
+
+  * 根据新版设计稿修改应用名称
+    - 麒麟计算器       --> 计算器
+    - kylin-calculator --> Calculator
+    - kylin calculator --> Calculator
+
+ -- jiangdingyuan <jiangdingyuan@kylinos.cn>  Fri, 16 Apr 2021 10:57:24 +0800
+
 kylin-calculator (1.0.31kord7) v101; urgency=medium
 
   * 解决禅道bug #34897 : 【麒麟计算器】汇率模式输入过多位数转换时，计算器窗口太小，导致内容显示不全.

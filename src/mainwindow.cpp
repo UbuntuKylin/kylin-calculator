@@ -193,7 +193,7 @@ void MainWindow::setCommonUi()
     // this->setAttribute(Qt::WA_TranslucentBackground, true);
 
     // 设置图标
-    this->setWindowTitle(tr("kylin-calculator"));
+    this->setWindowTitle(tr("Calculator"));
     //    this->setWindowTitle("麒麟计算器");
     this->setWindowIcon(QIcon::fromTheme("kylin-calculator"));
 
