@@ -319,8 +319,8 @@ void MainWindow::setOutputUi()
     outputWid->setFixedHeight(270);
     outputWid->setStyleSheet("#outputWid{background-color:#18181A;border-radius:4px;}");
 
-    this->lab_now->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this->lab_now, &MainWindow::customContextMenuRequested, this, &MainWindow::myCustomContextMenuRequested);
+    // this->lab_now->setContextMenuPolicy(Qt::CustomContextMenu);
+    // connect(this->lab_now, &MainWindow::customContextMenuRequested, this, &MainWindow::myCustomContextMenuRequested);
 }
 
 // 标准计算界面布局
@@ -354,8 +354,8 @@ void MainWindow::setStandardUi()
         QObject::connect(standardModel->btnPoint,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
         QObject::connect(standardModel->btnDelete, SIGNAL(clicked(bool)),this,SLOT(delete_btn_handle(bool)));
 
-        standardOutput->staLabNow->setContextMenuPolicy(Qt::CustomContextMenu);
-        connect(standardOutput->staLabNow, &MainWindow::customContextMenuRequested, this, &MainWindow::myCustomContextMenuRequested);
+        // standardOutput->staLabNow->setContextMenuPolicy(Qt::CustomContextMenu);
+        // connect(standardOutput->staLabNow, &MainWindow::customContextMenuRequested, this, &MainWindow::myCustomContextMenuRequested);
     }
 
     installEventFilter(standardModel);
