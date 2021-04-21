@@ -177,15 +177,15 @@ void TitleBar::setWidgetStyle()
     if (WidgetStyle::themeColor == 0) {
         m_pFuncLabel->setStyleSheet("color:#000000;font-size:14px;");
         QString btnStyle = "QPushButton{border:0px;border-radius:4px;background:transparent;}"
-                           "QPushButton:Hover{border:0px;border-radius:4px;background:transparent;background-color:rgba(0,0,0,0.1);}"
-                           "QPushButton:Pressed{border:0px;border-radius:4px;background:transparent;background-color:rgba(0,0,0,0.15);}";
+                           "QPushButton:Hover{border:0px;border-radius:4px;background:transparent;}"
+                           "QPushButton:Pressed{border:0px;border-radius:4px;background:transparent;}";
         m_pIconBtn->setStyleSheet(btnStyle);
     }
     else if (WidgetStyle::themeColor == 1) {
         m_pFuncLabel->setStyleSheet("color:#A6A6A6;font-size:14px;");
         QString btnStyle = "QPushButton{border:0px;border-radius:4px;background:transparent;}"
-                           "QPushButton:Hover{border:0px;border-radius:4px;background:transparent;background-color:rgba(0,0,0,0.1);}"
-                           "QPushButton:Pressed{border:0px;border-radius:4px;background:transparent;background-color:rgba(0,0,0,0.15);}";
+                           "QPushButton:Hover{border:0px;border-radius:4px;background:transparent;}"
+                           "QPushButton:Pressed{border:0px;border-radius:4px;background:transparent;}";
         m_pIconBtn->setStyleSheet(btnStyle);
         // funcListButton->setStyleSheet(btnStyle);
         // m_pTopButton->setStyleSheet(btnStyle);

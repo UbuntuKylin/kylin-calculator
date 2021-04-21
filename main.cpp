@@ -122,7 +122,9 @@ int main(int argc, char *argv[])
                              KYLIN_CALCULATOR_INTERFACE,
                              QDBusConnection::sessionBus());
     if (interface.isValid()) {
-        // 调用拉起主界面的method
+        // 调用两次拉起主界面的method
+        qDebug() << "showMainWindow";
+        interface.call("showMainWindow");
         interface.call("showMainWindow");
     }
 

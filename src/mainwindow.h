@@ -41,6 +41,7 @@
 #include <QPoint>
 #include <QMenu>
 #include <QClipboard>
+// #include <QX11Info>
 
 #include "titlebar.h"
 #include "widgetstyle.h"

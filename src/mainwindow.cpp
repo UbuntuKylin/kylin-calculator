@@ -818,9 +818,36 @@ void MainWindow::changeLightTheme()
 // 最小化状态下拉起主界面
 void MainWindow::pullUpWindow()
 {
+    // 使用wmctrl命令切换聊天窗口
+    // QString wmcmd = "wmctrl -a " + this->windowTitle();
+    // system(wmcmd.toUtf8().data());
+
+    // this->raise();
+    // this->activateWindow();
+
+    // XEvent xEvent;
+    // memset(&xEvent, 0, sizeof(XEvent));
+    // Display *display = QX11Info::display();   
+    // xEvent.type = ButtonPress;
+    // xEvent.xbutton.button = Button1;
+    // xEvent.xbutton.window = this->effectiveWinId();
+    // xEvent.xbutton.x = 100;
+    // xEvent.xbutton.y = 10;
+    // xEvent.xbutton.x_root = 100;
+    // xEvent.xbutton.y_root = 10;
+    // xEvent.xbutton.display = display;
+
+    // XSendEvent(display,this->effectiveWinId(),False,ButtonPressMask,&xEvent);
+
+    // xEvent.type = ButtonRelease;
+    // XSendEvent(display,this->effectiveWinId(),False,ButtonReleaseMask,&xEvent);
+
+    // XFlush(display);
+    
     this->showNormal();
     this->raise();
     this->activateWindow();
+    this->show();
 }
 
 // 重置输入界面字号

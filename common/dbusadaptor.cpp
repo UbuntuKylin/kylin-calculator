@@ -34,7 +34,7 @@ DbusAdaptor::~DbusAdaptor()
 // 显示应用主界面
 void DbusAdaptor::showMainWindow()
 {
-    qDebug() << "showMainWindow";
+    // qDebug() << "showMainWindow";
     MainWindow::getInstance()->pullUpWindow();
 }
 
