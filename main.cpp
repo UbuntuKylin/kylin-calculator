@@ -37,6 +37,7 @@
 
 #include "mainwindow.h"
 #include "xatom-helper.h"
+#include "common/dbusadaptor.h"
 
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -115,6 +116,18 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     a.setApplicationVersion("1.0.31");
 
+    // 连接DBus服务
+    QDBusInterface interface(KYLIN_CALCULATOR_SERVICE, 
+                             KYLIN_CALCULATOR_PATH,
+                             KYLIN_CALCULATOR_INTERFACE,
+                             QDBusConnection::sessionBus());
+    if (interface.isValid()) {
+        // 调用两次拉起主界面的method
+        qDebug() << "showMainWindow";
+        interface.call("showMainWindow");
+        interface.call("showMainWindow");
+    }
+
     // 实现VNC单例
     QStringList homePath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
     //需要给文件锁加一个DISPLAY标识  QtSingleApplication-Name改为kylin-calculator
@@ -181,5 +194,10 @@ int main(int argc, char *argv[])
 #endif
 
     MainWindow::getInstance()->show();
+
+    // 创建DBus服务
+    DbusAdaptor adaptor;
+    Q_UNUSED(adaptor);
+
     return a.exec();
 }

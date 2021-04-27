@@ -93,6 +93,7 @@ SOURCES += \
     $$PWD/common/InputSymbols.cpp                \
     $$PWD/common/xatom-helper.cpp                \
     $$PWD/common/daemonipcdbus.cpp               \
+    $$PWD/common/dbusadaptor.cpp                 \
 # calculate
     $$PWD/calculate/BigFloat/BigFloat.cpp        \
     $$PWD/calculate/cal/QStringCalculator.cpp    \
@@ -119,6 +120,7 @@ HEADERS += \
     $$PWD/common/xatom-helper.h                \
     $$PWD/common/highlight-effect.h            \
     $$PWD/common/daemonipcdbus.h               \
+    $$PWD/common/dbusadaptor.h                 \
 # calculate
     $$PWD/calculate/cal.h                      \
     $$PWD/calculate/BigFloat/BigFloat.h        \

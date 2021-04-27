@@ -39,6 +39,9 @@
 #include <QVector>
 #include <QGSettings>
 #include <QPoint>
+#include <QMenu>
+#include <QClipboard>
+// #include <QX11Info>
 
 #include "titlebar.h"
 #include "widgetstyle.h"
@@ -113,6 +116,13 @@ public:
     void changeLightTheme();
     QPoint mMovePosition;
     bool mMoveing;
+
+    // 判断字符串是否为纯数字
+    bool isDigitStr(QString str);
+
+    // 最小化状态下拉起主界面
+    void pullUpWindow();
+
 public slots:
     // 键盘响应事件
     void keyPressEvent(QKeyEvent *event);
@@ -144,6 +154,15 @@ public slots:
 
     void changeModel(QString);
 
+    // 响应右键菜单
+    void myCustomContextMenuRequested(const QPoint& pos);
+
+    // 复制计算结果到剪切板
+    void copyCalResult();
+
+    // 将剪切板内容粘贴到运算式中
+    void pasteToLabNow();
+
 private:
 
     Qt::WindowFlags winFlags;
@@ -151,6 +170,10 @@ private:
     QLabel *lab_last;
     QLabel *lab_now;
     QLabel *lab_prepare;
+
+    QMenu   *labelMenu;    // 右键菜单
+    QAction *copyAction;   // 复制
+    QAction *pasteAction;  // 粘贴
 
     QStackedWidget *stackedModelWid;
     QStackedWidget *stackedToolWod;
@@ -216,6 +239,9 @@ private:
 
     // 重绘窗口
     void paintEvent(QPaintEvent *event);
+
+    // 剪切板
+    QClipboard *clipboard = QApplication::clipboard();
 
     
 };
