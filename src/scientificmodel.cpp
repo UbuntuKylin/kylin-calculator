@@ -803,4 +803,5 @@ void ScientificModel::keyPressEvent(QKeyEvent *event)
     default:
         break;
     }
+    return QWidget::keyPressEvent(event);
 }

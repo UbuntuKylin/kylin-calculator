@@ -1171,6 +1171,7 @@ void ToolModelButton::keyPressEvent(QKeyEvent *event)
     default:
         break;
     }
+    return QWidget::keyPressEvent(event);
 }
 
 
