@@ -117,6 +117,9 @@ int main(int argc, char *argv[])
     a.setApplicationVersion("1.0.31");
     a.setWindowIcon(QIcon::fromTheme("kylin-calculator"));
 
+    // 设置不跟随系统字号大小改变
+    qApp->setProperty("noChangeSystemFontSize", true);
+
     // 连接DBus服务
     QDBusInterface interface(KYLIN_CALCULATOR_SERVICE, 
                              KYLIN_CALCULATOR_PATH,
