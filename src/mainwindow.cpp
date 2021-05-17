@@ -27,8 +27,7 @@
 #include "xatom-helper.h"
 
 MainWindow *MainWindow::getInstance()
-{   
-
+{
     static MainWindow *instance = nullptr;
     if (nullptr == instance) {
         instance = new MainWindow();
@@ -194,8 +193,8 @@ void MainWindow::setCommonUi()
 
     // 设置图标
     this->setWindowTitle(tr("Calculator"));
-    //    this->setWindowTitle("麒麟计算器");
-    this->setWindowIcon(QIcon::fromTheme("kylin-calculator"));
+    // this->setWindowTitle("麒麟计算器");
+    // this->setWindowIcon(QIcon::fromTheme("kylin-calculator"));
 
     // titleBarWid = new QWidget(this);
     // titleBarWid->setObjectName("titleBarWid");
@@ -337,6 +336,9 @@ void MainWindow::setStandardUi()
         standardOutput = new StandardOutput(this);
         standardModel  = new StandardModel(this);
 
+        standardOutput->staLabNow->setContextMenuPolicy(Qt::CustomContextMenu);
+        connect(standardOutput->staLabNow, &MainWindow::customContextMenuRequested, this, &MainWindow::myCustomContextMenuRequested);
+
         // 绑定处理函数
         for (int i = 0; i < 10; i++) {
             QObject::connect(standardModel->btnNum[i],SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
@@ -353,9 +355,6 @@ void MainWindow::setStandardUi()
         QObject::connect(standardModel->btnPer,    SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
         QObject::connect(standardModel->btnPoint,  SIGNAL(clicked(bool)),this,SLOT(btn_handler(bool)));
         QObject::connect(standardModel->btnDelete, SIGNAL(clicked(bool)),this,SLOT(delete_btn_handle(bool)));
-
-        // standardOutput->staLabNow->setContextMenuPolicy(Qt::CustomContextMenu);
-        // connect(standardOutput->staLabNow, &MainWindow::customContextMenuRequested, this, &MainWindow::myCustomContextMenuRequested);
     }
 
     installEventFilter(standardModel);
@@ -433,6 +432,9 @@ void MainWindow::setScientificUi()
     if (scientificOutput == nullptr) {
         scientificOutput = new ScientificOutput(this);
         scientificModel  = new ScientificModel(this);
+
+        scientificOutput->sciLabNow->setContextMenuPolicy(Qt::CustomContextMenu);
+        connect(scientificOutput->sciLabNow, &MainWindow::customContextMenuRequested, this, &MainWindow::myCustomContextMenuRequested);
 
         InputProcess::inputFromButton(RAD_SYMBOL);
 
@@ -558,6 +560,9 @@ void MainWindow::setToolUi()
     if (toolModelOutput == nullptr) {
         toolModelOutput = new ToolModelOutput(this);
         toolModelButton = new ToolModelButton(this);
+
+        toolModelOutput->toolLabBef->setContextMenuPolicy(Qt::CustomContextMenu);
+        connect(toolModelOutput->toolLabBef, &MainWindow::customContextMenuRequested, this, &MainWindow::myCustomContextMenuRequested);
 
         // 绑定处理函数
         for (int i = 0; i < 10; i++) {
@@ -691,6 +696,26 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             //增加标题栏帮助菜单、F1快捷键打开用户手册
             mDaemonIpcDbus->showGuide("tools/kylin-calculator");
         }
+    } else if (event->modifiers() == Qt::ControlModifier && event->key() == Qt::Key_C) {
+        qDebug() << "Ctrl + C";
+        if (this->isDigitStr(this->lab_now->text().remove(","))) {
+            this->copyCalResult();
+        }
+    } else if (event->modifiers() == Qt::ControlModifier && event->key() == Qt::Key_V) {
+        qDebug() << "Ctrl + V";
+        QString clipText = clipboard->text();
+        QString labNowStr = this->lab_now->text().remove(",");
+        /*
+        * 可以粘贴的条件
+        * 1. 剪贴板内容是纯数字
+        * 2. 当前数据为"0"或者最后一位不是数字也不是“.%!”
+        */
+        if (this->isDigitStr(clipText) && 
+            ((!(this->isDigitStr(labNowStr.right(1))) && 
+            !(QString(".%!").contains(labNowStr.right(1)))) ||
+            labNowStr == "0")) {
+            this->pasteToLabNow();
+        }
     }
 
     // QString label = this->pTitleBar->m_pFuncLabel->text();
@@ -818,35 +843,8 @@ void MainWindow::changeLightTheme()
 // 最小化状态下拉起主界面
 void MainWindow::pullUpWindow()
 {
-    // 使用wmctrl命令切换聊天窗口
-    // QString wmcmd = "wmctrl -a " + this->windowTitle();
-    // system(wmcmd.toUtf8().data());
-
-    // this->raise();
-    // this->activateWindow();
-
-    // XEvent xEvent;
-    // memset(&xEvent, 0, sizeof(XEvent));
-    // Display *display = QX11Info::display();   
-    // xEvent.type = ButtonPress;
-    // xEvent.xbutton.button = Button1;
-    // xEvent.xbutton.window = this->effectiveWinId();
-    // xEvent.xbutton.x = 100;
-    // xEvent.xbutton.y = 10;
-    // xEvent.xbutton.x_root = 100;
-    // xEvent.xbutton.y_root = 10;
-    // xEvent.xbutton.display = display;
-
-    // XSendEvent(display,this->effectiveWinId(),False,ButtonPressMask,&xEvent);
-
-    // xEvent.type = ButtonRelease;
-    // XSendEvent(display,this->effectiveWinId(),False,ButtonReleaseMask,&xEvent);
-
-    // XFlush(display);
-    
-    this->showNormal();
-    this->raise();
-    this->activateWindow();
+    qDebug() << "show MainWindow";
+    KWindowSystem::forceActiveWindow(this->winId());
     this->show();
 }
 
@@ -1147,7 +1145,7 @@ bool MainWindow::isDigitStr(QString str)
 
     // 判断是否为纯数字
     while (*s && *s >= '0' && *s <= '9') {
-        qDebug() << *s;
+        // qDebug() << *s;
         s++;
     }
     
@@ -1174,11 +1172,15 @@ void MainWindow::myCustomContextMenuRequested(const QPoint& pos)
 
     // QClipboard *clipboard = QApplication::clipboard();
     QString clipText = clipboard->text();
-    if (this->isDigitStr(clipText) == false) {
-        pasteAction->setEnabled(false);
-    }
-    else {
+
+    if (this->isDigitStr(clipText) && 
+        ((!(this->isDigitStr(labNowStr.right(1))) && 
+        !(QString(".%!").contains(labNowStr.right(1)))) ||
+        labNowStr == "0")) {
         pasteAction->setEnabled(true);
+
+    } else {
+        pasteAction->setEnabled(false);
     }
 
     labelMenu->exec(QCursor::pos());
@@ -1188,7 +1190,7 @@ void MainWindow::myCustomContextMenuRequested(const QPoint& pos)
 void MainWindow::copyCalResult()
 {
     clipboard->setText(this->lab_now->text().remove(","));
-    qDebug() << "clipboard->setText" << this->lab_now->text().remove(",");
+    // qDebug() << "clipboard->setText" << this->lab_now->text().remove(",");
 }
 
 // 将剪切板内容粘贴到运算式中

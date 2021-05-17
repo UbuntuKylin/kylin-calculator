@@ -230,7 +230,7 @@ void menuModule::initAbout()
 {
     aboutWindow = new QWidget();
     aboutWindow->setWindowFlag(Qt::Tool);
-    aboutWindow->setWindowIcon(QIcon::fromTheme("kylin-calculator"));
+    // aboutWindow->setWindowIcon(QIcon::fromTheme("kylin-calculator"));
     aboutWindow->setWindowModality(Qt::WindowModal);
     aboutWindow->setWindowModality(Qt::ApplicationModal);
     // aboutWindow->setModal(true);
@@ -262,10 +262,18 @@ void menuModule::initAbout()
 
 QHBoxLayout* menuModule::initTitleBar()
 {
-    QLabel* titleIcon = new QLabel();
-    titleIcon->setPixmap(QIcon::fromTheme("kylin-calculator").pixmap(titleIcon->size()));
-    titleIcon->setFixedSize(QSize(24,24));
-    titleIcon->setScaledContents(true);
+    // QLabel* titleIcon = new QLabel();
+    // titleIcon->setPixmap(QIcon::fromTheme("kylin-calculator").pixmap(titleIcon->size()));
+    // titleIcon->setFixedSize(QSize(24,24));
+    // titleIcon->setScaledContents(true);
+    titleIconBtn = new QPushButton();
+    titleIconBtn->setIcon(QIcon::fromTheme("kylin-calculator"));
+    titleIconBtn->setIconSize(QSize(24,24));
+    titleIconBtn->setFixedSize(QSize(24,24));
+    QString btnStyle = "QPushButton{border:0px;border-radius:4px;background:transparent;}"
+                       "QPushButton:Hover{border:0px;border-radius:4px;background:transparent;}"
+                       "QPushButton:Pressed{border:0px;border-radius:4px;background:transparent;}";
+    titleIconBtn->setStyleSheet(btnStyle);
 
     QPushButton *titleBtnClose = new QPushButton;
     titleBtnClose->setFixedSize(30,30);
@@ -282,7 +290,7 @@ QHBoxLayout* menuModule::initTitleBar()
     hlyt->setSpacing(0);
     hlyt->setContentsMargins(4,4,4,4);
     hlyt->addSpacing(4);
-    hlyt->addWidget(titleIcon); //居下显示
+    hlyt->addWidget(titleIconBtn); //居下显示
     hlyt->addSpacing(8);
     hlyt->addWidget(titleText);
     hlyt->addStretch();
@@ -294,11 +302,19 @@ QHBoxLayout* menuModule::initTitleBar()
 QVBoxLayout* menuModule::initBody()
 {
 
-    QLabel* bodyIcon = new QLabel();
-    bodyIcon->setFixedSize(96,96);
-    bodyIcon->setPixmap(QIcon::fromTheme("kylin-calculator").pixmap(bodyIcon->size()));
+    // QLabel* bodyIcon = new QLabel();
+    // bodyIcon->setFixedSize(96,96);
+    // bodyIcon->setPixmap(QIcon::fromTheme("kylin-calculator").pixmap(bodyIcon->size()));
     // bodyIcon->setStyleSheet("font-size:14px;");
     // bodyIcon->setScaledContents(true);
+    bodyIcon = new QPushButton();
+    bodyIcon->setIcon(QIcon::fromTheme("kylin-calculator"));
+    bodyIcon->setIconSize(QSize(96,96));
+    bodyIcon->setFixedSize(QSize(96,96));
+    QString btnStyle = "QPushButton{border:0px;border-radius:4px;background:transparent;}"
+                        "QPushButton:Hover{border:0px;border-radius:4px;background:transparent;}"
+                        "QPushButton:Pressed{border:0px;border-radius:4px;background:transparent;}";
+    bodyIcon->setStyleSheet(btnStyle);
 
     bodyAppName->setFixedHeight(28);
     bodyAppName->setText(tr(appShowingName.toLocal8Bit()));
@@ -335,6 +351,9 @@ void menuModule::setStyle()
     // menuButton->setObjectName("menuButton");
     // // qDebug() << "menuButton->styleSheet" << menuButton->styleSheet();
     // menuButton->setStyleSheet("QPushButton::menu-indicator{image:None;}");
+
+    
+    
 }
 
 void menuModule::initGsetting(){

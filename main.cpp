@@ -115,6 +115,7 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
     a.setApplicationVersion("1.0.31");
+    a.setWindowIcon(QIcon::fromTheme("kylin-calculator"));
 
     // 连接DBus服务
     QDBusInterface interface(KYLIN_CALCULATOR_SERVICE, 
@@ -122,9 +123,8 @@ int main(int argc, char *argv[])
                              KYLIN_CALCULATOR_INTERFACE,
                              QDBusConnection::sessionBus());
     if (interface.isValid()) {
-        // 调用两次拉起主界面的method
+        // 调用拉起主界面的method
         qDebug() << "showMainWindow";
-        interface.call("showMainWindow");
         interface.call("showMainWindow");
     }
 
