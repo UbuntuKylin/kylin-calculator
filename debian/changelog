@@ -1,3 +1,13 @@
+kylin-calculator (1.0.31kord13) v101; urgency=medium
+
+  * BUG号：无.
+  * 任务号：无.
+  * 需求号：无.
+  * 其他改动说明：
+    - 优化n次方/n次方根计算流程:禁止多次连续点击n次方/n次方根连续点击操作
+
+ -- jiangdingyuan <jiangdingyuan@kylinos.cn>  Wed, 19 May 2021 13:37:39 +0800
+
 kylin-calculator (1.0.31kord12) v101; urgency=medium
 
   * BUG号：无.

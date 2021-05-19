@@ -224,7 +224,8 @@ int InputProcess::qstrAdd(const QString &text)
 
     // trans
     if (TRANS_LIST.contains(text)) {
-        if ( (qstrNow.size() == 1 && qstrNow.left(1) == BRACKET_L) ) {
+        if ( (qstrNow.size() == 1 && qstrNow.left(1) == BRACKET_L) 
+           || qstrNow.size() >= 1 && qstrNow.right(1) == BRACKET_L) {
             return CANNOT_ADD_TRANS;
         }
         QStringList temp_trans = QString("x^(ｰ1),x^(2),x^(3),x^(,x^(1÷2),x^(1÷3),x^(1÷,x!").split(",");  /*))*/
