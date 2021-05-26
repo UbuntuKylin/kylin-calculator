@@ -1,3 +1,13 @@
+kylin-calculator (1.0.31kord14) v101; urgency=medium
+
+  * BUG号：无.
+  * 任务号：无.
+  * 需求号：无.
+  * 其他改动说明：
+    - 添加复制粘贴的翻译.
+
+ -- caoliang <caoliang@kylinos.cn>  Wed, 26 May 2021 13:37:44 +0800
+
 kylin-calculator (1.0.31kord13) v101; urgency=medium
 
   * BUG号：无.

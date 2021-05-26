@@ -32,45 +32,55 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="196"/>
+        <location filename="../src/mainwindow.cpp" line="195"/>
         <source>Calculator</source>
         <translation>计算器</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1084"/>
-        <location filename="../src/mainwindow.cpp" line="1100"/>
+        <location filename="../src/mainwindow.cpp" line="1215"/>
+        <location filename="../src/mainwindow.cpp" line="1231"/>
         <source>standard</source>
         <translation>标准</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1082"/>
+        <location filename="../src/mainwindow.cpp" line="1213"/>
         <source>calculator</source>
         <translation>计算器</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="860"/>
+        <location filename="../src/mainwindow.cpp" line="234"/>
+        <source>Copy</source>
+        <translation>复制</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="235"/>
+        <source>Paste</source>
+        <translation>粘贴</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="938"/>
         <source>input too long</source>
         <translation>输入过长</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1084"/>
-        <location filename="../src/mainwindow.cpp" line="1105"/>
+        <location filename="../src/mainwindow.cpp" line="1215"/>
+        <location filename="../src/mainwindow.cpp" line="1236"/>
         <source>scientific</source>
         <translation>科学</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1121"/>
+        <location filename="../src/mainwindow.cpp" line="1252"/>
         <source>exchange rate</source>
         <translation>汇率</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="803"/>
-        <location filename="../src/mainwindow.cpp" line="806"/>
+        <location filename="../src/mainwindow.cpp" line="870"/>
+        <location filename="../src/mainwindow.cpp" line="873"/>
         <source>Error!</source>
         <translation>错误!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="809"/>
+        <location filename="../src/mainwindow.cpp" line="876"/>
         <source>Input error!</source>
         <translation>输入错误!</translation>
     </message>
@@ -133,17 +143,17 @@
 <context>
     <name>UnitListWidget</name>
     <message>
-        <location filename="../src/toolmodel.cpp" line="1196"/>
+        <location filename="../src/toolmodel.cpp" line="1197"/>
         <source>currency</source>
         <translation>货币</translation>
     </message>
     <message>
-        <location filename="../src/toolmodel.cpp" line="1201"/>
+        <location filename="../src/toolmodel.cpp" line="1202"/>
         <source>cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/toolmodel.cpp" line="1209"/>
+        <location filename="../src/toolmodel.cpp" line="1210"/>
         <source>search</source>
         <translation>搜索</translation>
     </message>
@@ -212,13 +222,13 @@
         <translation>深色</translation>
     </message>
     <message>
-        <location filename="../src/menumodule/menumodule.cpp" line="308"/>
+        <location filename="../src/menumodule/menumodule.cpp" line="324"/>
         <source>Version: </source>
         <translation>版本号: </translation>
     </message>
     <message>
-        <location filename="../src/menumodule/menumodule.cpp" line="384"/>
-        <location filename="../src/menumodule/menumodule.cpp" line="402"/>
+        <location filename="../src/menumodule/menumodule.cpp" line="403"/>
+        <location filename="../src/menumodule/menumodule.cpp" line="421"/>
         <source>Service &amp; Support: </source>
         <translation>服务与支持团队：</translation>
     </message>

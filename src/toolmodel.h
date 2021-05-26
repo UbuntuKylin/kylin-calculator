@@ -258,6 +258,8 @@ protected:
 
 private:
     QWidget *pWidget;
+
+    QWidget *unitWid;
 };
 
 #endif // TOOLMODEL_H

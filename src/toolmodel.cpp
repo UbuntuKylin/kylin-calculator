@@ -518,21 +518,31 @@ void ToolModelOutput::initUnitList(QString listStr)
         // 筛选需要显示的货币
         QString locale = QLocale::system().name();
         if (locale == "zh_CN") {
-            it = currencyInfoCN.find(unitStrList[i]);
-            if (it != currencyInfoCN.end()) {
-                itemName = it.value();
-            }
-            else {
-                continue ;
+            if (currencyInfoCN.contains(unitStrList[i])) {
+
+                it = currencyInfoCN.find(unitStrList[i]);
+                if (it != currencyInfoCN.end()) {
+                    itemName = it.value();
+                }
+                else {
+                    continue ;
+                }
+            } else {
+                continue;
             }
         }
         else if (locale == "en_US") {
-            it = currencyInfoUS.find(unitStrList[i]);
-            if (it != currencyInfoUS.end()) {
-                itemName = it.value();
-            }
-            else {
-                continue ;
+            if (currencyInfoUS.contains(unitStrList[i])) {
+
+                it = currencyInfoUS.find(unitStrList[i]);
+                if (it != currencyInfoUS.end()) {
+                    itemName = it.value();
+                }
+                else {
+                    continue ;
+                }
+            } else {
+                continue;
             }
         }
 
@@ -670,7 +680,8 @@ void ToolModelOutput::updateRate()
         // qDebug() << strRateAll;
 
         // QString strRateAll = "{\"base\":\"CNY\",\"date\":\"2020-10-15\",\"time_last_updated\":1602720243,\"rates\":{\"CNY\":1,\"AED\":0.544676,\"ARS\":11.476237,\"AUD\":0.207097,\"BGN\":0.247315,\"BRL\":0.827556,\"BSD\":0.148334,\"CAD\":0.195039,\"CHF\":0.135726,\"CLP\":118.484436,\"COP\":563.428571,\"CZK\":3.456454,\"DKK\":0.940724,\"DOP\":8.630197,\"EGP\":2.321366,\"EUR\":0.126422,\"FJD\":0.315268,\"GBP\":0.114427,\"GTQ\":1.152767,\"HKD\":1.150917,\"HRK\":0.958357,\"HUF\":45.826534,\"IDR\":2221.384053,\"ILS\":0.502548,\"INR\":10.885823,\"ISK\":20.616798,\"JPY\":15.644062,\"KRW\":170.131068,\"KZT\":63.612903,\"MVR\":2.287933,\"MXN\":3.170424,\"MYR\":0.615439,\"NOK\":1.369261,\"NZD\":0.22308,\"PAB\":0.148334,\"PEN\":0.533837,\"PHP\":7.225576,\"PKR\":24.09776,\"PLN\":0.568725,\"PYG\":1075.636364,\"RON\":0.616233,\"RUB\":11.478878,\"SAR\":0.556857,\"SEK\":1.309479,\"SGD\":0.201673,\"THB\":4.632377,\"TRY\":1.177668,\"TWD\":4.264893,\"UAH\":4.205166,\"USD\":0.148567,\"UYU\":6.303676,\"ZAR\":2.450397}}";
-        QString strRateAll = "{\"base\":\"CNY\",\"date\":\"2021-03-11\",\"time_last_updated\":1615420801,\"rates\":{\"CNY\":1,\"AED\":0.564287,\"AFN\":11.925466,\"ALL\":15.941879,\"AMD\":80.78,\"ANG\":0.275037,\"AOA\":94.433,\"ARS\":13.919785,\"AUD\":0.199032,\"AWG\":0.275037,\"AZN\":0.261136,\"BAM\":0.252484,\"BBD\":0.307304,\"BDT\":13.035473,\"BGN\":0.252519,\"BHD\":0.057773,\"BIF\":298.750223,\"BMD\":0.153652,\"BND\":0.206603,\"BOB\":1.057767,\"BRL\":0.887713,\"BSD\":0.153652,\"BTN\":11.19463,\"BWP\":1.704798,\"BYN\":0.399818,\"BZD\":0.307304,\"CAD\":0.194177,\"CDF\":304.982306,\"CHF\":0.142806,\"CLP\":112.885499,\"COP\":555.469934,\"CRC\":94.017401,\"CUC\":0.153652,\"CUP\":3.841299,\"CVE\":14.234432,\"CZK\":3.393246,\"DJF\":27.307187,\"DKK\":0.963082,\"DOP\":8.861046,\"DZD\":20.526527,\"EGP\":2.416873,\"ERN\":2.30478,\"ETB\":6.1776,\"EUR\":0.129093,\"FJD\":0.313327,\"FKP\":0.110577,\"FOK\":0.963082,\"GBP\":0.110578,\"GEL\":0.509782,\"GGP\":0.110577,\"GHS\":0.882019,\"GIP\":0.110577,\"GMD\":7.995482,\"GNF\":1561.123152,\"GTQ\":1.18371,\"GYD\":32.529019,\"HKD\":1.1922,\"HNL\":3.702097,\"HRK\":0.972651,\"HTG\":11.682777,\"HUF\":47.54087,\"IDR\":2215.406996,\"ILS\":0.51302,\"IMP\":0.110577,\"INR\":11.194706,\"IQD\":224.6263,\"IRR\":6439.93241,\"ISK\":19.628822,\"JMD\":23.223465,\"JOD\":0.108939,\"JPY\":16.685028,\"KES\":16.846384,\"KGS\":13.029032,\"KHR\":624.11991,\"KID\":0.199031,\"KMF\":63.50956,\"KRW\":175.208429,\"KWD\":0.046039,\"KYD\":0.128043,\"KZT\":64.477847,\"LAK\":1439.550141,\"LBP\":231.630393,\"LKR\":30.131831,\"LRD\":26.726988,\"LSL\":2.338488,\"LYD\":0.694688,\"MAD\":1.386167,\"MDL\":2.706152,\"MGA\":579.07157,\"MKD\":7.980492,\"MMK\":216.743685,\"MNT\":439.246974,\"MOP\":1.227965,\"MRU\":5.534758,\"MUR\":6.125689,\"MVR\":2.365572,\"MWK\":120.496095,\"MXN\":3.240556,\"MYR\":0.633023,\"MZN\":11.359949,\"NAD\":2.338488,\"NGN\":60.844418,\"NIO\":5.365002,\"NOK\":1.300663,\"NPR\":17.911408,\"NZD\":0.214198,\"OMR\":0.059079,\"PAB\":0.153652,\"PEN\":0.567949,\"PGK\":0.539275,\"PHP\":7.455241,\"PKR\":24.104537,\"PLN\":0.591266,\"PYG\":1022.940324,\"QAR\":0.559293,\"RON\":0.630959,\"RSD\":15.192878,\"RUB\":11.351487,\"RWF\":152.594981,\"SAR\":0.576195,\"SBD\":1.208201,\"SCR\":3.255675,\"SDG\":58.58076,\"SEK\":1.307156,\"SGD\":0.206605,\"SHP\":0.110577,\"SLL\":1569.404972,\"SOS\":89.066036,\"SRD\":2.179247,\"SSP\":27.33617,\"STN\":3.162777,\"SYP\":78.666827,\"SZL\":2.338488,\"THB\":4.726832,\"TJS\":1.734593,\"TMT\":0.537566,\"TND\":0.4221,\"TOP\":0.348113,\"TRY\":1.16272,\"TTD\":1.043478,\"TVD\":0.199031,\"TWD\":4.350241,\"TZS\":356.183752,\"UAH\":4.25506,\"UGX\":562.660721,\"USD\":0.153652,\"UYU\":6.826117,\"UZS\":1615.6,\"VES\":288158.05,\"VND\":3557.170823,\"VUV\":16.617988,\"WST\":0.387134,\"XAF\":84.679413,\"XCD\":0.41486,\"XDR\":0.107598,\"XOF\":84.679413,\"XPF\":15.404918,\"YER\":38.486595,\"ZAR\":2.338623,\"ZMW\":3.372328}}";
+        // QString strRateAll = "{\"base\":\"CNY\",\"date\":\"2021-03-11\",\"time_last_updated\":1615420801,\"rates\":{\"CNY\":1,\"AED\":0.564287,\"AFN\":11.925466,\"ALL\":15.941879,\"AMD\":80.78,\"ANG\":0.275037,\"AOA\":94.433,\"ARS\":13.919785,\"AUD\":0.199032,\"AWG\":0.275037,\"AZN\":0.261136,\"BAM\":0.252484,\"BBD\":0.307304,\"BDT\":13.035473,\"BGN\":0.252519,\"BHD\":0.057773,\"BIF\":298.750223,\"BMD\":0.153652,\"BND\":0.206603,\"BOB\":1.057767,\"BRL\":0.887713,\"BSD\":0.153652,\"BTN\":11.19463,\"BWP\":1.704798,\"BYN\":0.399818,\"BZD\":0.307304,\"CAD\":0.194177,\"CDF\":304.982306,\"CHF\":0.142806,\"CLP\":112.885499,\"COP\":555.469934,\"CRC\":94.017401,\"CUC\":0.153652,\"CUP\":3.841299,\"CVE\":14.234432,\"CZK\":3.393246,\"DJF\":27.307187,\"DKK\":0.963082,\"DOP\":8.861046,\"DZD\":20.526527,\"EGP\":2.416873,\"ERN\":2.30478,\"ETB\":6.1776,\"EUR\":0.129093,\"FJD\":0.313327,\"FKP\":0.110577,\"FOK\":0.963082,\"GBP\":0.110578,\"GEL\":0.509782,\"GGP\":0.110577,\"GHS\":0.882019,\"GIP\":0.110577,\"GMD\":7.995482,\"GNF\":1561.123152,\"GTQ\":1.18371,\"GYD\":32.529019,\"HKD\":1.1922,\"HNL\":3.702097,\"HRK\":0.972651,\"HTG\":11.682777,\"HUF\":47.54087,\"IDR\":2215.406996,\"ILS\":0.51302,\"IMP\":0.110577,\"INR\":11.194706,\"IQD\":224.6263,\"IRR\":6439.93241,\"ISK\":19.628822,\"JMD\":23.223465,\"JOD\":0.108939,\"JPY\":16.685028,\"KES\":16.846384,\"KGS\":13.029032,\"KHR\":624.11991,\"KID\":0.199031,\"KMF\":63.50956,\"KRW\":175.208429,\"KWD\":0.046039,\"KYD\":0.128043,\"KZT\":64.477847,\"LAK\":1439.550141,\"LBP\":231.630393,\"LKR\":30.131831,\"LRD\":26.726988,\"LSL\":2.338488,\"LYD\":0.694688,\"MAD\":1.386167,\"MDL\":2.706152,\"MGA\":579.07157,\"MKD\":7.980492,\"MMK\":216.743685,\"MNT\":439.246974,\"MOP\":1.227965,\"MRU\":5.534758,\"MUR\":6.125689,\"MVR\":2.365572,\"MWK\":120.496095,\"MXN\":3.240556,\"MYR\":0.633023,\"MZN\":11.359949,\"NAD\":2.338488,\"NGN\":60.844418,\"NIO\":5.365002,\"NOK\":1.300663,\"NPR\":17.911408,\"NZD\":0.214198,\"OMR\":0.059079,\"PAB\":0.153652,\"PEN\":0.567949,\"PGK\":0.539275,\"PHP\":7.455241,\"PKR\":24.104537,\"PLN\":0.591266,\"PYG\":1022.940324,\"QAR\":0.559293,\"RON\":0.630959,\"RSD\":15.192878,\"RUB\":11.351487,\"RWF\":152.594981,\"SAR\":0.576195,\"SBD\":1.208201,\"SCR\":3.255675,\"SDG\":58.58076,\"SEK\":1.307156,\"SGD\":0.206605,\"SHP\":0.110577,\"SLL\":1569.404972,\"SOS\":89.066036,\"SRD\":2.179247,\"SSP\":27.33617,\"STN\":3.162777,\"SYP\":78.666827,\"SZL\":2.338488,\"THB\":4.726832,\"TJS\":1.734593,\"TMT\":0.537566,\"TND\":0.4221,\"TOP\":0.348113,\"TRY\":1.16272,\"TTD\":1.043478,\"TVD\":0.199031,\"TWD\":4.350241,\"TZS\":356.183752,\"UAH\":4.25506,\"UGX\":562.660721,\"USD\":0.153652,\"UYU\":6.826117,\"UZS\":1615.6,\"VES\":288158.05,\"VND\":3557.170823,\"VUV\":16.617988,\"WST\":0.387134,\"XAF\":84.679413,\"XCD\":0.41486,\"XDR\":0.107598,\"XOF\":84.679413,\"XPF\":15.404918,\"YER\":38.486595,\"ZAR\":2.338623,\"ZMW\":3.372328}}";
+        QString strRateAll = "{\"base\":\"CNY\",\"date\":\"2021-05-26\",\"time_last_updated\":1621987201,\"rates\":{\"CNY\":1,\"AED\":0.573,\"AFN\":12.11,\"ALL\":15.7,\"AMD\":80.98,\"ANG\":0.279,\"AOA\":101.13,\"ARS\":14.69,\"AUD\":0.201,\"AWG\":0.279,\"AZN\":0.265,\"BAM\":0.249,\"BBD\":0.312,\"BDT\":13.23,\"BGN\":0.249,\"BHD\":0.0587,\"BIF\":307.49,\"BMD\":0.156,\"BND\":0.207,\"BOB\":1.07,\"BRL\":0.829,\"BSD\":0.156,\"BTN\":11.35,\"BWP\":1.67,\"BYN\":0.39,\"BZD\":0.312,\"CAD\":0.188,\"CDF\":309.94,\"CHF\":0.14,\"CLP\":113.77,\"COP\":588.17,\"CRC\":96.15,\"CUC\":0.156,\"CUP\":4.02,\"CVE\":14.05,\"CZK\":3.25,\"DJF\":27.73,\"DKK\":0.95,\"DOP\":8.86,\"DZD\":20.81,\"EGP\":2.44,\"ERN\":2.34,\"ETB\":6.67,\"EUR\":0.127,\"FJD\":0.317,\"FKP\":0.11,\"FOK\":0.95,\"GBP\":0.11,\"GEL\":0.512,\"GGP\":0.11,\"GHS\":0.903,\"GIP\":0.11,\"GMD\":8.04,\"GNF\":1536.52,\"GTQ\":1.2,\"GYD\":33.32,\"HKD\":1.21,\"HNL\":3.74,\"HRK\":0.96,\"HTG\":14.03,\"HUF\":44.54,\"IDR\":2241.36,\"ILS\":0.508,\"IMP\":0.11,\"INR\":11.35,\"IQD\":227.36,\"IRR\":6517.53,\"ISK\":18.95,\"JMD\":23.39,\"JOD\":0.111,\"JPY\":16.98,\"KES\":16.82,\"KGS\":13,\"KHR\":634.87,\"KID\":0.201,\"KMF\":62.67,\"KRW\":175.09,\"KWD\":0.0467,\"KYD\":0.13,\"KZT\":66.6,\"LAK\":1468.49,\"LBP\":235.18,\"LKR\":30.92,\"LRD\":26.77,\"LSL\":2.16,\"LYD\":0.695,\"MAD\":1.37,\"MDL\":2.76,\"MGA\":587.26,\"MKD\":7.87,\"MMK\":246.62,\"MNT\":445.44,\"MOP\":1.25,\"MRU\":5.61,\"MUR\":6.3,\"MVR\":2.4,\"MWK\":124.7,\"MXN\":3.1,\"MYR\":0.646,\"MZN\":9.36,\"NAD\":2.16,\"NGN\":66.65,\"NIO\":5.51,\"NOK\":1.3,\"NPR\":18.16,\"NZD\":0.216,\"OMR\":0.06,\"PAB\":0.156,\"PEN\":0.595,\"PGK\":0.548,\"PHP\":7.51,\"PKR\":24.05,\"PLN\":0.572,\"PYG\":1038.95,\"QAR\":0.568,\"RON\":0.627,\"RSD\":14.97,\"RUB\":11.46,\"RWF\":156.28,\"SAR\":0.585,\"SBD\":1.22,\"SCR\":2.57,\"SDG\":62.12,\"SEK\":1.29,\"SGD\":0.207,\"SHP\":0.11,\"SLL\":1595.94,\"SOS\":90.16,\"SRD\":2.21,\"SSP\":27.8,\"STN\":3.12,\"SYP\":196.77,\"SZL\":2.16,\"THB\":4.9,\"TJS\":1.76,\"TMT\":0.544,\"TND\":0.423,\"TOP\":0.347,\"TRY\":1.31,\"TTD\":1.06,\"TVD\":0.201,\"TWD\":4.35,\"TZS\":361.85,\"UAH\":4.28,\"UGX\":554.8,\"USD\":0.156,\"UYU\":6.86,\"UZS\":1652.65,\"VES\":476692.3,\"VND\":3593.66,\"VUV\":16.82,\"WST\":0.393,\"XAF\":83.56,\"XCD\":0.421,\"XDR\":0.108,\"XOF\":83.56,\"XPF\":15.2,\"YER\":39,\"ZAR\":2.16,\"ZMW\":3.51}}";
 
         // 格式化处理汇率信息字符串键值对
         strRateList = strRateAll.split(QRegExp("[{} :,\"\n]"));
@@ -1212,6 +1223,9 @@ void UnitListWidget::setWidgetUi()
 
     // 单位列表
     unitList = new QListWidget(this);
+    unitList->setFrameShape(QListWidget::NoFrame);
+    unitList->verticalScrollBar()->setProperty("drawScrollBarGroove", false);
+    // unitList->setVerticalScrollMode(QListWidget::ScrollPerPixel);
 
     // 总体布局
     unitListLayout = new QVBoxLayout(this);
@@ -1219,8 +1233,9 @@ void UnitListWidget::setWidgetUi()
     unitListLayout->addWidget(searchEdit);
     unitListLayout->addWidget(unitList);
 
-    QWidget *unitWid = new QWidget(this);
+    unitWid = new QWidget(this);
     unitWid->setLayout(unitListLayout);
+    unitWid->setObjectName("unitWid");
 
     QVBoxLayout *unitLayout = new QVBoxLayout(this);
     unitLayout->addWidget(unitWid);
@@ -1243,12 +1258,14 @@ void UnitListWidget::setWidgetStyle()
                                  "font-family:Source Han Sans CN;color:#3D6BE5;");
 
         searchEdit->setStyleSheet("width:246px;height:32px;background:rgba(231,231,231,0.5);border-radius:4px;");
-        unitList->setStyleSheet("QListWidget::item{border-radius:4px;}"
+        unitList->setStyleSheet("QListWidget{background-color:#F8F8F8;}"
+                                "QListWidget::item{border-radius:4px;height:31px;}"
                                 "QListWidget::item:selected{background-color:#3D6BE5;color:#FFFFFF;}"
                                 "QListWidget::item:hover{background-color:#E9E9E9;}");
 
-        unitList->verticalScrollBar()->setStyleSheet("width:4px;background:#E9E9E9;border-radius:2px;border:0;");
-        this->setStyleSheet("background-color:#F8F8F8;font-size:18px;border:none;border-radius:4px;");
+
+        // unitList->verticalScrollBar()->setStyleSheet("width:4px;background:#E9E9E9;border-radius:2px;border:0;");
+        unitWid->setStyleSheet("#unitWid{background-color:#F8F8F8;border-radius:4px;}");
 
     }
     else if (WidgetStyle::themeColor == 1) {
@@ -1257,13 +1274,13 @@ void UnitListWidget::setWidgetStyle()
                                  "font-family:Source Han Sans CN;color:#EE8A18;");
 
         searchEdit->setStyleSheet("width:246px;height:32px;background:rgba(30,30,32,0.5);border-radius:4px;");
-        unitList->setStyleSheet("QListWidget::item{border-radius:4px;}"
-                               "QListWidget::item:selected{background-color:#FF800F;}"
-                               "QListWidget::item:hover{background-color:#666666;}");
+        unitList->setStyleSheet("QListWidget{background-color:#36363A;}"
+                                "QListWidget::item{border-radius:4px;height:31px;}"
+                                "QListWidget::item:selected{background-color:#FF800F;}"
+                                "QListWidget::item:hover{background-color:#666666;}");
 
-        unitList->verticalScrollBar()->setStyleSheet("width:4px;background:#47474D;border-radius:2px;border:0;");
-        this->setStyleSheet("background-color:#36363A;color:#FFFFFF;font-size:18px;border:none;border-radius:4px;");
-
+        // unitList->verticalScrollBar()->setStyleSheet("width:4px;background:#47474D;border-radius:2px;border:0;");
+        unitWid->setStyleSheet("#unitWid{background-color:#36363A;border-radius:4px;}");
 
     }
 }
@@ -1301,8 +1318,8 @@ void UnitListItem::setWidgetUi()
     unitItemLayout = new QHBoxLayout(this);
 
     // 文字对齐方式和自适应放缩
-    unitItemName->setAlignment(Qt::AlignLeft);
-    unitItemSymb->setAlignment(Qt::AlignLeft);
+    unitItemName->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    unitItemSymb->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 
 //    unitItemName->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
