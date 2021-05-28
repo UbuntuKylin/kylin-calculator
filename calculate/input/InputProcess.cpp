@@ -312,6 +312,9 @@ int InputProcess::qstrNowUpdate(const QString &text)
                         qstrNow.chop(1);
                 }
             }
+            if (qstrNow.size() && QString(qstrNow.right(1)) == POWER_SYMBOL) {
+                qstrNow.chop(1);
+            }
         }
         if (qstrNow.size() == 0)
             init();
