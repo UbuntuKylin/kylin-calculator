@@ -1,3 +1,13 @@
+kylin-calculator (1.0.31kord15) v101; urgency=medium
+
+  * BUG号：60053, 60063.
+  * 任务号：无.
+  * 需求号：无.
+  * 其他改动说明：
+    - 解决键盘输入一位数，界面显示两位数的问题.
+
+ -- caoliang <caoliang@kylinos.cn>  Fri, 11 Jun 2021 09:08:20 +0800
+
 kylin-calculator (1.0.31kord14) v101; urgency=medium
 
   * BUG号：57818, 57815.
