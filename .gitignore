@@ -53,6 +53,7 @@ compile_commands.json
 
 # VSCode
 .vscode
+.VSCode*
 
 # build
 build

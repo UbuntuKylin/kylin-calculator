@@ -44,6 +44,7 @@
 #include <QEvent>
 #include <QLocale>
 #include <QApplication>
+#include <QGraphicsDropShadowEffect>
 
 #include "widgetstyle.h"
 #include "basicbutton.h"
