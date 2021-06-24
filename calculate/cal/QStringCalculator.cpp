@@ -15,6 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+// define in .cpp now & in .h later
+#define DEBUG_MODE false
+
 #include "QStringCalculator.h"
 
 QString QStringCalculator::angelSymbol = DEG_SYMBOL;
@@ -87,7 +90,10 @@ void QStringCalculator::postfixCheck(const QString    &qstr,
 void QStringCalculator::infixToPostfix(QStringList &infixExpression,
                                        QStringList &postfixExpressions)
 {
-    qDebug() << "im in infixToPostfix";
+    if (DEBUG_MODE) {
+        qDebug() << "im in infixToPostfix";
+    }
+    
     QStack<QString> operatorList;
     while (!infixExpression.empty()) {
         QString qstr = infixExpression.at(0);
@@ -261,7 +267,10 @@ void QStringCalculator::formulaToInfixExpression(QStringList &infixExpression)
 
 QString QStringCalculator::qstrListCalculator(const QStringList &formulaList)
 {
-    qDebug() << "im in qstrListCalculator!";
+    if (DEBUG_MODE) {
+        qDebug() << "im in qstrListCalculator!";
+    }
+    
     QStringList      infixExpression;    //盛放中缀表达式
     QStringList      postfixExpressions; //盛放后缀表达式
     QStack<BigFloat> calAns;	         //计算后缀表达式的辅助容器
@@ -276,9 +285,17 @@ QString QStringCalculator::qstrListCalculator(const QStringList &formulaList)
             return ch;
         }
     }
-    qDebug () << infixExpression;
+
+    if (DEBUG_MODE) {
+        qDebug () << infixExpression;
+    }
+    
     infixToPostfix(infixExpression, postfixExpressions);
-    qDebug() << postfixExpressions;
+
+    if (DEBUG_MODE) {
+        qDebug() << postfixExpressions;
+    }
+    
     //计算后缀表达式
     calPostfix(postfixExpressions, calAns);
 
@@ -291,8 +308,11 @@ QString QStringCalculator::qstrListCalculator(const QStringList &formulaList)
 
 QString QStringCalculator::cal(const QString &qstr)
 {
-    qDebug() << "im in cal!";
-    // qDebug() << qstr;
+    if (DEBUG_MODE) {
+        qDebug() << "im in cal!";
+        qDebug() << qstr;
+    }
+    
     QString formula = qstr;
     // deg rad
     if (formula == InputSymbols::DEG_SYMBOL || formula == InputSymbols::RAD_SYMBOL) {
@@ -317,7 +337,11 @@ QString QStringCalculator::cal(const QString &qstr)
         formula = bracketCompletion(formula);
     formula = isCorrectFormula(formula).second;
     QStringList formulaList = formulaSplit(formula);
-    qDebug() << formulaList;
+
+    if (DEBUG_MODE) {
+        qDebug() << formulaList;
+    }
+    
     QString ans = qstrListCalculator(formulaList);
 
     //去掉末尾0
@@ -330,15 +354,27 @@ QString QStringCalculator::cal(const QString &qstr)
             ans.chop(1);
         }
     }
-    qDebug() << ans;
+
+    if (DEBUG_MODE) {
+        qDebug() << ans;
+    }
+    
     //科学计算显示
     while (ans.contains(SUB))
         ans.replace(ans.indexOf(SUB), 1, '-');
     if (ans.contains(POINT)) {
         if ((ans.size() - ans.indexOf(POINT) > PRECISION) || (ans.indexOf(POINT) > PRECISION)) {
-            qDebug() << ans;
+
+            if (DEBUG_MODE) {
+                qDebug() << ans;
+            }
+            
             ans = QString::number(ans.toDouble(), 'g', PRECISION);
-            qDebug() << ans;
+
+            if (DEBUG_MODE) {
+                qDebug() << ans;
+            }
+            
         }
     }
     else {
@@ -349,6 +385,9 @@ QString QStringCalculator::cal(const QString &qstr)
     while (ans.contains('-'))
         ans.replace(ans.indexOf('-'), 1, SUB[0]);
 
-    qDebug() <<"ansend"<<ans;
+    if (DEBUG_MODE) {
+        qDebug() <<"ansend"<<ans;
+    }
+    
     return ans;
 }
