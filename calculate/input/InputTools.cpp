@@ -15,6 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+// define in .cpp now & in .h later
+#define DEBUG_MODE false
+
 #include "InputTools.h"
 
 const QPair<int, QString>     InputTools::QP_QSTR_ERROR      = qMakePair(0, ERROR);
@@ -253,12 +256,19 @@ QString InputTools::bracketCompletion(const QString &qstr)
 
 QString InputTools::getFunctionOrSciNumName(const QString &qstr, const int idx)
 {
-    qDebug () << "im in getFunctionOrSciNumName!";
+    if (DEBUG_MODE) {
+        qDebug () << "im in getFunctionOrSciNumName!";
+    }
+    
     if (qstr.size() < idx + 3)
         return "";
 
     QString ans = qstr.mid(idx,4);
-    qDebug () << ans;
+
+    if (DEBUG_MODE) {
+        qDebug () << ans;
+    }
+    
     while(ans.contains(BRACKET_L) || ans.contains(BRACKET_R)) {
         ans.chop(1);
     }
@@ -279,8 +289,11 @@ QString InputTools::getFunctionOrSciNumName(const QString &qstr, const int idx)
 
 QStringList InputTools::formulaSplit(const QString &qstr)
 {
-    qDebug () << "im in formulaSplit!";
-    qDebug () << "Before formulaSplit :" <<qstr;
+    if (DEBUG_MODE) {
+        qDebug () << "im in formulaSplit!";
+        qDebug () << "Before formulaSplit :" <<qstr;
+    }
+    
     QStringList ans;
     QString formula = qstr + END;
 
@@ -340,7 +353,11 @@ QStringList InputTools::formulaSplit(const QString &qstr)
             ans.removeAt(idx);
     }
     ans.removeAt(ans.size()-1);
-    qDebug () << "After formulaSplit  :" <<ans;
+    
+    if (DEBUG_MODE) {
+        qDebug () << "After formulaSplit  :" <<ans;
+    }
+    
     return ans;
 }
 
@@ -585,7 +602,10 @@ bool InputTools::adjacencyJudgment(const QString &x, const QString &y)
 
 QPair<int, QStringList> InputTools::isCorrectFormulaList(const QStringList &formulaList)
 {
-    qDebug () << "im in InputTools::isCorrectFormulaList";
+    if (DEBUG_MODE) {
+        qDebug () << "im in InputTools::isCorrectFormulaList";
+    }
+    
     if (!formulaList.size()) {
         // qDebug() << "in isCorrectFormulaList:";
         // qDebug() << "   " << formulaList;
@@ -682,14 +702,21 @@ QPair<int, QStringList> InputTools::isCorrectFormulaList(const QStringList &form
 
 QPair<int, QString> InputTools::isCorrectFormula(const QString &qstr)
 {
-    qDebug () << "im in InputTools::isCorrectFormula";
+    if (DEBUG_MODE) {
+        qDebug () << "im in InputTools::isCorrectFormula";
+    }
+    
     if (!qstr.size())
         return qMakePair(0,ERROR);
 
     QPair<int, QString> qp = qMakePair(1, qstr);
 
     qp.second = clearANS_END_and_SCI_NUM_END(qp.second);
-    qDebug() << qp.second;
+
+    if (DEBUG_MODE) {
+        qDebug() << qp.second;
+    }
+    
     if (!allBracketMatchCorrectly(qp.second)) {
         qp.first = 2;
         qp.second = (bracketCompletion(qp.second));

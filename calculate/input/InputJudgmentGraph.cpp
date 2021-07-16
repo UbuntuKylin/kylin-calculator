@@ -15,6 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+// define in .cpp now & in .h later
+#define DEBUG_MODE false
+
 #include <cstdio>
 #include <iostream>
 
@@ -61,16 +64,26 @@ void InputJudgmentGraph::updateAllSon(QString needUpdate, int flag)
 
 void InputJudgmentGraph::print()
 {
-    qDebug() << "im in InputJudgmentGraph::print!";
+    if (DEBUG_MODE) {
+        qDebug() << "im in InputJudgmentGraph::print!";
+    }
+    
     for (int i = 0; i < node.size(); i++) {
-        qDebug() << node[i].name << node[i].status;
+        if (DEBUG_MODE) {
+            qDebug() << node[i].name << node[i].status;
+        }
+        
         for (int j = 0; j < node[i].to.size(); j++) {
             cout << node[node[i].to[j]].name.toStdString() << ' ';
         }
         cout << endl;
         cout << "***********" << endl;
     }
-    qDebug() << "end! InputJudgmentGraph::print!";
+
+    if (DEBUG_MODE) {
+        qDebug() << "end! InputJudgmentGraph::print!";
+    }
+    
     return ;
 }
 

@@ -586,7 +586,7 @@ void ToolModelOutput::unitConversion()
     strBefore.replace("÷", "/");
     strBefore.replace(SUB, "-");
 //    QString strAfter  = this->toolLabAft->text();
-    qDebug() << QString::number(toolDouRate) + "*" + strBefore;
+    // qDebug() << QString::number(toolDouRate) + "*" + strBefore;
     double douResult = calculator(calculator (strBefore) + "*" + QString::number(toolDouRate)  ).toDouble();
 
 //    double douResult  = (strBefore.toDouble() * toolDouRate);
@@ -797,7 +797,7 @@ void ToolModelOutput::unitListBefSelect(QListWidgetItem *item)
 // 选择换算后的单位列表
 void ToolModelOutput::unitListAftSelect(QListWidgetItem *item)
 {
-    qDebug() << item->text();
+    // qDebug() << item->text();
     QString rateSymbol = item->text();
     QString rateName   = rateSymbol;
 
