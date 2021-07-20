@@ -193,11 +193,12 @@ private:
     QVBoxLayout *mainLayout;
 
     QWidget *mainWid;
-    // QWidget *titleBarWid;
+    QWidget *titleBarWid = nullptr;
     QWidget *outputWid = nullptr;
     QWidget *buttonWid = nullptr;
     QWidget *funcListWid;
 
+    QVBoxLayout *mainTitleLayout;
     QVBoxLayout *mainOutputLayout;
     QVBoxLayout *mainButtonLayout;
 
@@ -206,9 +207,11 @@ private:
 
     StandardOutput *standardOutput = nullptr;
     StandardModel  *standardModel = nullptr;
+    TitleBar *standardTitle = nullptr;
 
     ScientificOutput *scientificOutput = nullptr;
     ScientificModel  *scientificModel = nullptr;
+    TitleBar *scientificTitle = nullptr;
 
     ToolModelOutput *toolModelOutput = nullptr;
     ToolModelButton *toolModelButton = nullptr;

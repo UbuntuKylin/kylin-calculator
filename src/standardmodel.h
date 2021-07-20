@@ -50,6 +50,8 @@ public:
 
     // 设置组件样式
     void setWidgetStyle(bool resetFontSize = true);
+
+    void createIntelOutput(void);
 };
 
 
@@ -83,6 +85,10 @@ public:
 
     // 格式化输入表达式
     void StaFormatInput(QString text);
+
+/* intel stand model ui */
+    void createIntelModel(void);
+    void createIntelStyle(void);
 
 public slots:
     // 键盘响应事件

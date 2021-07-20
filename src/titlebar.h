@@ -19,6 +19,8 @@
 #define TITLE_BAR
 
 #include <QWidget>
+#include <QComboBox>
+#include <QHBoxLayout>
 
 // #include "funclist.h"
 // #include "closebutton.h"
@@ -60,6 +62,29 @@ public:
     // QToolButton *m_pMenuButton;
     // 模式和功能列表按钮
     // QPushButton *funcListButton;
+
+/* snow revised it in 2021-07-17 10:18 */
+public:
+    void createInterUi(void);
+    void createInterStyle(void);
+    void paintEvent(QPaintEvent *event);
+
+    QLabel *m_Icon;
+    QPushButton *m_mode;
+    QMenu *m_menu;
+    QAction *standardMode;
+    QAction *scientificMode;
+    QHBoxLayout *hlayout;
+
+    QPushButton *m_min;
+    QPushButton *m_max;
+    QPushButton *m_close;
+
+private slots:
+    void slotModeChange(QAction *);
+
+signals:
+    void sigModeChange(QString);
 
 
 protected:

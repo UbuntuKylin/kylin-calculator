@@ -8,6 +8,8 @@ QT += \
     dbus          \
     x11extras
 
+QMAKE_CXXFLAGS += -g
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 # 适配窗口管理器圆角阴影
@@ -111,7 +113,8 @@ SOURCES += \
     $$PWD/src/basicbutton.cpp                    \
     $$PWD/src/menumodule/menumodule.cpp          \
 # pwd
-    $$PWD/main.cpp
+    $$PWD/main.cpp \
+    data_warehouse.cpp
 
 
 HEADERS += \
@@ -137,5 +140,6 @@ HEADERS += \
     $$PWD/src/standardmodel.h                  \
     $$PWD/src/toolmodel.h                      \
     $$PWD/src/basicbutton.h                    \
-    $$PWD/src/menumodule/menumodule.h
+    $$PWD/src/menumodule/menumodule.h \
+    data_warehouse.h
 

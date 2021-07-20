@@ -38,6 +38,7 @@
 #include "mainwindow.h"
 #include "xatom-helper.h"
 #include "common/dbusadaptor.h"
+#include "data_warehouse.h"
 
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -186,6 +187,8 @@ int main(int argc, char *argv[])
     // }
 
     MainWindow::getInstance();
+    DataWarehouse::getInstance();
+
 
 #ifndef __V10__
     // 添加窗管协议
@@ -196,6 +199,7 @@ int main(int argc, char *argv[])
     XAtomHelper::getInstance()->setWindowMotifHint(MainWindow::getInstance()->winId(), hints);
 #endif
 
+    /* 界面入口 */
     MainWindow::getInstance()->show();
 
     // 创建DBus服务

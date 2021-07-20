@@ -21,23 +21,167 @@
 #include <QEvent>
 #include <QMouseEvent>
 #include <QApplication>
+#include <QStringList>
 #include "titlebar.h"
 #include "mainwindow.h"
 #include "funclist.h"
 #include "xatom-helper.h"
+#include "data_warehouse.h"
+#include <QColor>
 
-TitleBar::TitleBar(QWidget *parent)
-    : QWidget(parent)
+TitleBar::TitleBar(QWidget *parent) : QWidget(parent)
 {
-    // 初始化组件
-    setWidgetUi();
-
-    // 设置组件样式
-    setWidgetStyle();
+    /* handle intel ui */
+    if (DataWarehouse::getInstance()->platform == QString("intel")) {
+        createInterUi();
+        createInterStyle();
+    } else {
+        // 初始化组件
+        setWidgetUi();
+        // 设置组件样式
+        setWidgetStyle();
+    }
 }
 
 TitleBar::~TitleBar()
 {
+
+}
+
+/* intel title ui */
+void TitleBar::createInterUi()
+{
+    this->setFixedHeight(38);
+    this->setWindowFlags(Qt::FramelessWindowHint);
+
+    this->STANDARD_LABEL = tr("Standard");
+    this->SCIENTIFIC_LABEL = tr("Scientific");
+
+    this->m_Icon = new QLabel(this);
+    this->m_Icon->setFixedSize(QSize(25 , 25));
+    this->m_Icon->setPixmap(QIcon::fromTheme("kylin-calculator").pixmap(QSize(24 , 24)));
+
+    this->m_mode = new QPushButton(this);
+    //this->m_mode->setText(tr("standard"));
+    m_mode->setIcon(QIcon::fromTheme("open-menu-symbolic"));
+    m_mode->setLayoutDirection(Qt::RightToLeft);
+    this->m_mode->setText(tr("标准"));
+    this->m_mode->setFlat(false);
+    this->m_menu = new QMenu();
+
+    standardMode = new QAction(this->m_menu);
+    standardMode->setText(tr("standard"));
+    standardMode->setCheckable(true);
+    standardMode->setChecked(true);
+    scientificMode = new QAction(this->m_menu);
+    scientificMode->setText(tr("scientific"));
+    scientificMode->setCheckable(true);
+
+    this->m_menu->addAction(standardMode);
+    this->m_menu->addAction(scientificMode);
+    this->m_mode->setMenu(this->m_menu);
+
+    this->m_min = new QPushButton();
+    this->m_min->setFixedSize(QSize(30 , 30));
+    this->m_min->setIcon(QIcon::fromTheme("window-minimize-symbolic"));
+    this->m_min->setIconSize(QSize(16 , 16));
+    this->m_min->setProperty("isWindowButton", 0x1);
+    this->m_min->setProperty("useIconHighlightEffect", 0x2);
+    this->m_min->setFlat(true);
+
+    this->m_max = new QPushButton();
+    this->m_max->setFixedSize(QSize(30 , 30));
+    this->m_max->setIcon(QIcon::fromTheme("window-maximize-symbolic"));
+    this->m_max->setIconSize(QSize(16 , 16));
+    this->m_max->setProperty("isWindowButton", 0x1);
+    this->m_max->setProperty("useIconHighlightEffect", 0x2);
+    this->m_max->setFlat(true);
+
+    this->m_close = new QPushButton();
+    this->m_close->setFixedSize(QSize(30 , 30));
+    this->m_close->setIcon(QIcon::fromTheme("window-close-symbolic"));
+    this->m_close->setIconSize(QSize(16 , 16));
+    this->m_close->setProperty("isWindowButton", 0x2);
+    this->m_close->setProperty("useIconHighlightEffect", 0x8);
+    this->m_close->setFlat(true);
+
+    this->hlayout = new QHBoxLayout();
+    this->hlayout->setMargin(0);
+
+    this->hlayout->addSpacing(16);
+    this->hlayout->addWidget(this->m_Icon);
+    this->hlayout->addSpacing(4);
+
+    this->hlayout->addWidget(this->m_mode);
+    this->hlayout->addStretch(0);
+
+    this->hlayout->addWidget(this->m_min);
+    this->hlayout->addSpacing(4);
+
+    this->hlayout->addWidget(this->m_max);
+    this->hlayout->addSpacing(4);
+
+    this->hlayout->addWidget(this->m_close);
+    this->hlayout->addSpacing(4);
+
+    connect(this->m_min , &QPushButton::clicked , this , &TitleBar::onClicked);
+    connect(this->m_close , &QPushButton::clicked , this , &TitleBar::onClicked);
+    connect(this->m_menu , &QMenu::triggered , this , &TitleBar::slotModeChange);
+
+    this->setLayout(this->hlayout);
+
+    return;
+}
+
+void TitleBar::createInterStyle(void)
+{
+    if (WidgetStyle::themeColor == 0) {
+        QPalette pal(this->palette());
+
+        /* 设置背景色 */
+        pal.setColor(QPalette::Background, Qt::black);
+        this->setAutoFillBackground(true);
+        this->setPalette(pal);
+    } else if (WidgetStyle::themeColor == 1) {
+
+    }
+
+    return;
+}
+
+void TitleBar::paintEvent(QPaintEvent *event)
+{
+    if (DataWarehouse::getInstance()->platform == QString("intel")) {
+        Q_UNUSED(event);
+
+        QColor color("#F6F6F6");
+        QPainter p(this);
+        p.setPen(Qt::NoPen);
+        p.setBrush(QBrush(color));
+        p.drawRect(rect());
+    }
+
+    return;
+}
+
+void TitleBar::slotModeChange(QAction *action)
+{
+    QString mode = action->text();
+    if (mode == tr("standard")) {
+        qDebug() << "Info : change mode to standard";
+        //this->m_mode->setText(tr("standard"));
+        this->m_mode->setText(tr("标准"));
+        this->standardMode->setChecked(true);
+        this->scientificMode->setChecked(false);
+        emit sigModeChange(QString("standard"));
+    } else if (mode == tr("scientific")) {
+        qDebug() << "Info : change mode to scientific";
+        //this->m_mode->setText(tr("scientific"));
+        this->m_mode->setText(tr("科学"));
+        this->standardMode->setChecked(false);
+        this->scientificMode->setChecked(true);
+        emit sigModeChange(QString("scientific"));
+    }
 
 }
 
@@ -279,6 +423,16 @@ void TitleBar::onClicked()
 // //            qDebug() << "funcListButton";
 //             emit iconButtonSignal();
 //         }
+
+        else if (pButton == this->m_min) {
+            pWindow->showMinimized();
+            m_min->update();
+            m_close->update();
+        }
+
+        else if (pButton == this->m_close) {
+            pWindow->close();
+        }
     }
 }
 
