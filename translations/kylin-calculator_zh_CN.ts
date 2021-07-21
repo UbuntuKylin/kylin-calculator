@@ -32,55 +32,55 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="195"/>
+        <location filename="../src/mainwindow.cpp" line="207"/>
         <source>Calculator</source>
         <translation>计算器</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1215"/>
-        <location filename="../src/mainwindow.cpp" line="1231"/>
+        <location filename="../src/mainwindow.cpp" line="1281"/>
+        <location filename="../src/mainwindow.cpp" line="1297"/>
         <source>standard</source>
         <translation>标准</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1213"/>
+        <location filename="../src/mainwindow.cpp" line="1279"/>
         <source>calculator</source>
         <translation>计算器</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="234"/>
+        <location filename="../src/mainwindow.cpp" line="249"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="235"/>
+        <location filename="../src/mainwindow.cpp" line="250"/>
         <source>Paste</source>
         <translation>粘贴</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="938"/>
+        <location filename="../src/mainwindow.cpp" line="998"/>
         <source>input too long</source>
         <translation>输入过长</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1215"/>
-        <location filename="../src/mainwindow.cpp" line="1236"/>
+        <location filename="../src/mainwindow.cpp" line="1281"/>
+        <location filename="../src/mainwindow.cpp" line="1302"/>
         <source>scientific</source>
         <translation>科学</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1252"/>
+        <location filename="../src/mainwindow.cpp" line="1318"/>
         <source>exchange rate</source>
         <translation>汇率</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="870"/>
-        <location filename="../src/mainwindow.cpp" line="873"/>
+        <location filename="../src/mainwindow.cpp" line="930"/>
+        <location filename="../src/mainwindow.cpp" line="933"/>
         <source>Error!</source>
         <translation>错误!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="876"/>
+        <location filename="../src/mainwindow.cpp" line="936"/>
         <source>Input error!</source>
         <translation>输入错误!</translation>
     </message>
@@ -93,31 +93,56 @@
     </message>
     <message>
         <location filename="../src/titlebar.cpp" line="57"/>
+        <location filename="../src/titlebar.cpp" line="215"/>
         <source>Standard</source>
         <translation>计算器—标准</translation>
     </message>
     <message>
         <location filename="../src/titlebar.cpp" line="58"/>
+        <location filename="../src/titlebar.cpp" line="216"/>
         <source>Scientific</source>
         <translation>计算器—科学</translation>
     </message>
     <message>
-        <location filename="../src/titlebar.cpp" line="59"/>
+        <location filename="../src/titlebar.cpp" line="69"/>
+        <location filename="../src/titlebar.cpp" line="188"/>
+        <source>standard </source>
+        <translation>标准 </translation>
+    </message>
+    <message>
+        <location filename="../src/titlebar.cpp" line="75"/>
+        <location filename="../src/titlebar.cpp" line="186"/>
+        <source>standard</source>
+        <translation>标准</translation>
+    </message>
+    <message>
+        <location filename="../src/titlebar.cpp" line="79"/>
+        <location filename="../src/titlebar.cpp" line="192"/>
+        <source>scientific</source>
+        <translation>科学</translation>
+    </message>
+    <message>
+        <location filename="../src/titlebar.cpp" line="194"/>
+        <source>scientific </source>
+        <translation>科学 </translation>
+    </message>
+    <message>
+        <location filename="../src/titlebar.cpp" line="217"/>
         <source>Exchange Rate</source>
         <translation>计算器—汇率</translation>
     </message>
     <message>
-        <location filename="../src/titlebar.cpp" line="84"/>
+        <location filename="../src/titlebar.cpp" line="242"/>
         <source>StayTop</source>
         <translation>置顶</translation>
     </message>
     <message>
-        <location filename="../src/titlebar.cpp" line="85"/>
+        <location filename="../src/titlebar.cpp" line="243"/>
         <source>Minimize</source>
         <translation>最小化</translation>
     </message>
     <message>
-        <location filename="../src/titlebar.cpp" line="86"/>
+        <location filename="../src/titlebar.cpp" line="244"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -143,17 +168,17 @@
 <context>
     <name>UnitListWidget</name>
     <message>
-        <location filename="../src/toolmodel.cpp" line="1197"/>
+        <location filename="../src/toolmodel.cpp" line="1208"/>
         <source>currency</source>
         <translation>货币</translation>
     </message>
     <message>
-        <location filename="../src/toolmodel.cpp" line="1202"/>
+        <location filename="../src/toolmodel.cpp" line="1213"/>
         <source>cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/toolmodel.cpp" line="1210"/>
+        <location filename="../src/toolmodel.cpp" line="1221"/>
         <source>search</source>
         <translation>搜索</translation>
     </message>
