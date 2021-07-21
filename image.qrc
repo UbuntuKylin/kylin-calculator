@@ -101,5 +101,25 @@
         <file>image/light/standard/btnPoint.png</file>
         <file>image/light/standard/btnSub.png</file>
         <file>image/light/scientific/btnClear.png</file>
+        <file>image/intelStandLight/0.png</file>
+        <file>image/intelStandLight/1.png</file>
+        <file>image/intelStandLight/2.png</file>
+        <file>image/intelStandLight/3.png</file>
+        <file>image/intelStandLight/4.png</file>
+        <file>image/intelStandLight/5.png</file>
+        <file>image/intelStandLight/6.png</file>
+        <file>image/intelStandLight/7.png</file>
+        <file>image/intelStandLight/8.png</file>
+        <file>image/intelStandLight/9.png</file>
+        <file>image/intelStandLight/ac.png</file>
+        <file>image/intelStandLight/delete.png</file>
+        <file>image/intelStandLight/add.png</file>
+        <file>image/intelStandLight/equal.png</file>
+        <file>image/intelStandLight/except.png</file>
+        <file>image/intelStandLight/per.png</file>
+        <file>image/intelStandLight/reduce.png</file>
+        <file>image/intelStandLight/ride.png</file>
+        <file>image/intelStandLight/spot.png</file>
+        <file>image/intelStandLight/arrow.jpeg</file>
     </qresource>
 </RCC>

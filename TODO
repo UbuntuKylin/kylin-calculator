@@ -1,8 +1,0 @@
-TODO:
-- The back end needs refactoring:
-build a real class for calculator data processing,
-instead of a "tool class".
-It should have numbers, operations, exception handling and so on.
-But now, they are all in strings.
-
-by jiangdingyuan Sat, 23 Jan 2021 15:53:54 +0800

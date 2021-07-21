@@ -66,8 +66,9 @@ public:
 /* snow revised it in 2021-07-17 10:18 */
 public:
     void createInterUi(void);
-    void createInterStyle(void);
+    //void createInterStyle(void);
     void paintEvent(QPaintEvent *event);
+    bool eventFilter(QObject *obj , QEvent *event);
 
     QLabel *m_Icon;
     QPushButton *m_mode;

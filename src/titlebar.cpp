@@ -34,7 +34,7 @@ TitleBar::TitleBar(QWidget *parent) : QWidget(parent)
     /* handle intel ui */
     if (DataWarehouse::getInstance()->platform == QString("intel")) {
         createInterUi();
-        createInterStyle();
+        //createInterStyle();
     } else {
         // 初始化组件
         setWidgetUi();
@@ -62,12 +62,14 @@ void TitleBar::createInterUi()
     this->m_Icon->setPixmap(QIcon::fromTheme("kylin-calculator").pixmap(QSize(24 , 24)));
 
     this->m_mode = new QPushButton(this);
-    //this->m_mode->setText(tr("standard"));
-    m_mode->setIcon(QIcon::fromTheme("open-menu-symbolic"));
+    QPixmap icon(":/image/intelStandLight/arrow.jpeg");
+    icon.scaled(24 , 24);
+    m_mode->setIcon(QIcon(icon));
     m_mode->setLayoutDirection(Qt::RightToLeft);
-    this->m_mode->setText(tr("标准"));
+    this->m_mode->setText(tr("standard "));
     this->m_mode->setFlat(false);
     this->m_menu = new QMenu();
+    this->m_menu->installEventFilter(this);
 
     standardMode = new QAction(this->m_menu);
     standardMode->setText(tr("standard"));
@@ -133,6 +135,7 @@ void TitleBar::createInterUi()
     return;
 }
 
+#if 0
 void TitleBar::createInterStyle(void)
 {
     if (WidgetStyle::themeColor == 0) {
@@ -145,9 +148,9 @@ void TitleBar::createInterStyle(void)
     } else if (WidgetStyle::themeColor == 1) {
 
     }
-
     return;
 }
+#endif
 
 void TitleBar::paintEvent(QPaintEvent *event)
 {
@@ -160,8 +163,21 @@ void TitleBar::paintEvent(QPaintEvent *event)
         p.setBrush(QBrush(color));
         p.drawRect(rect());
     }
-
     return;
+}
+
+bool TitleBar::eventFilter(QObject * obj, QEvent *event)
+{
+    if (DataWarehouse::getInstance()->platform == QString("intel")) {
+        if (event->type() == QEvent::Show && obj == this->m_menu) {
+            QPoint globalPos = this->m_mode->mapToGlobal(QPoint(0 , 0));
+            this->m_menu->move(globalPos.x() , globalPos.y() + this->m_mode->height());
+            return true;
+        }
+    } else {
+        return QObject::eventFilter(obj, event);
+    }
+        return QObject::eventFilter(obj, event);
 }
 
 void TitleBar::slotModeChange(QAction *action)
@@ -169,15 +185,13 @@ void TitleBar::slotModeChange(QAction *action)
     QString mode = action->text();
     if (mode == tr("standard")) {
         qDebug() << "Info : change mode to standard";
-        //this->m_mode->setText(tr("standard"));
-        this->m_mode->setText(tr("标准"));
+        this->m_mode->setText(tr("standard "));
         this->standardMode->setChecked(true);
         this->scientificMode->setChecked(false);
         emit sigModeChange(QString("standard"));
     } else if (mode == tr("scientific")) {
         qDebug() << "Info : change mode to scientific";
-        //this->m_mode->setText(tr("scientific"));
-        this->m_mode->setText(tr("科学"));
+        this->m_mode->setText(tr("scientific "));
         this->standardMode->setChecked(false);
         this->scientificMode->setChecked(true);
         emit sigModeChange(QString("scientific"));

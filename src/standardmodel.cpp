@@ -164,7 +164,7 @@ void StandardModel::createIntelModel(void)
         btnNum[i] = new BasicButton(this);
         btnNum[i]->setText(QString::number(i));
         btnNum[i]->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        btnNum[i]->setIcon(QIcon(":/image/standard/btnNum"+ QString::number(i) +".png"));
+        btnNum[i]->setIcon(QIcon(":/image/intelStandLight/"+ QString::number(i) +".png"));
         if (i == 0) {
             btnNum[i]->setIconSize(QSize(200, 80));
         } else {
@@ -196,15 +196,15 @@ void StandardModel::createIntelModel(void)
     btnPer->setText(btnNameList[index++]);
     btnPoint->setText(btnNameList[index++]);
 
-    btnClear->setIcon(QIcon(":/image/standard/btnClear.png"));
-    btnDiv->setIcon(QIcon(":/image/standard/btnDiv.png"));
-    btnMulti->setIcon(QIcon(":/image/standard/btnMulti.png"));
-    btnDelete->setIcon(QIcon(":/image/standard/btnDelete.png"));
-    btnSub->setIcon(QIcon(":/image/standard/btnSub.png"));
-    btnAdd->setIcon(QIcon(":/image/standard/btnAdd.png"));
-    btnEqual->setIcon(QIcon(":/image/standard/btnEqual.png"));
-    btnPer->setIcon(QIcon(":/image/standard/btnPer.png"));
-    btnPoint->setIcon(QIcon(":/image/standard/btnPoint.png"));
+    btnClear->setIcon(QIcon(":/image/intelStandLight/ac.png"));
+    btnDiv->setIcon(QIcon(":/image/intelStandLight/except.png"));
+    btnMulti->setIcon(QIcon(":/image/intelStandLight/ride.png"));
+    btnDelete->setIcon(QIcon(":/image/intelStandLight/delete.png"));
+    btnSub->setIcon(QIcon(":/image/intelStandLight/reduce.png"));
+    btnAdd->setIcon(QIcon(":/image/intelStandLight/add.png"));
+    btnEqual->setIcon(QIcon(":/image/intelStandLight/equal.png"));
+    btnPer->setIcon(QIcon(":/image/intelStandLight/per.png"));
+    btnPoint->setIcon(QIcon(":/image/intelStandLight/spot.png"));
 
     btnClear ->setIconSize(QSize(100, 80));
     btnDiv   ->setIconSize(QSize(100, 80));
@@ -261,18 +261,29 @@ void StandardModel::createIntelStyle(void)
 
     if (WidgetStyle::themeColor == 0) {
         for (int i = 0; i < 10; i++) {
-            btnNum[i]->setIcon(QIcon(":/image/light/standard/btnNum"+ QString::number(i) +".png"));
+            btnNum[i]->setIcon(QIcon(":/image/intelStandLight/"+ QString::number(i) +".png"));
+            //btnNum[i]->setIcon(QIcon(":/image/light/standard/btnNum"+ QString::number(i) +".png"));
         }
 
-        btnClear->setIcon(QIcon(":/image/light/standard/btnClear.png"));
-        btnDiv->setIcon(QIcon(":/image/light/standard/btnDiv.png"));
-        btnMulti->setIcon(QIcon(":/image/light/standard/btnMulti.png"));
-        btnDelete->setIcon(QIcon(":/image/light/standard/btnDelete.png"));
-        btnSub->setIcon(QIcon(":/image/light/standard/btnSub.png"));
-        btnAdd->setIcon(QIcon(":/image/light/standard/btnAdd.png"));
-        btnEqual->setIcon(QIcon(":/image/light/standard/btnEqual.png"));
-        btnPer->setIcon(QIcon(":/image/light/standard/btnPer.png"));
-        btnPoint->setIcon(QIcon(":/image/light/standard/btnPoint.png"));
+        btnClear->setIcon(QIcon(":/image/intelStandLight/ac.png"));
+        btnDiv->setIcon(QIcon(":/image/intelStandLight/except.png"));
+        btnMulti->setIcon(QIcon(":/image/intelStandLight/ride.png"));
+        btnDelete->setIcon(QIcon(":/image/intelStandLight/delete.png"));
+        btnSub->setIcon(QIcon(":/image/intelStandLight/reduce.png"));
+        btnAdd->setIcon(QIcon(":/image/intelStandLight/add.png"));
+        btnEqual->setIcon(QIcon(":/image/intelStandLight/equal.png"));
+        btnPer->setIcon(QIcon(":/image/intelStandLight/per.png"));
+        btnPoint->setIcon(QIcon(":/image/intelStandLight/spot.png"));
+
+        //btnClear->setIcon(QIcon(":/image/light/standard/btnClear.png"));
+        //btnDiv->setIcon(QIcon(":/image/light/standard/btnDiv.png"));
+        //btnMulti->setIcon(QIcon(":/image/light/standard/btnMulti.png"));
+        //btnDelete->setIcon(QIcon(":/image/light/standard/btnDelete.png"));
+        //btnSub->setIcon(QIcon(":/image/light/standard/btnSub.png"));
+        //btnAdd->setIcon(QIcon(":/image/light/standard/btnAdd.png"));
+        //btnEqual->setIcon(QIcon(":/image/light/standard/btnEqual.png"));
+        //btnPer->setIcon(QIcon(":/image/light/standard/btnPer.png"));
+        //btnPoint->setIcon(QIcon(":/image/light/standard/btnPoint.png"));
 
         btnStyle = "QPushButton{"
                    "width:100px;height:80px;opacity:1;"
