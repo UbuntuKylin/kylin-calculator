@@ -452,7 +452,7 @@ void MainWindow::setStandardUi()
     // 设置间距和背景样式
     /* handle intel ui */
     if (DataWarehouse::getInstance()->platform == QString("intel")) {
-        outputWid->setFixedHeight(110);
+        outputWid->setFixedHeight(115);
         buttonWid->setFixedHeight(400);
     } else {
         outputWid->setFixedHeight(270);
