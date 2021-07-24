@@ -369,7 +369,7 @@ void StandardModel::createIntelStyle(void)
 // 初始化组件
 void StandardModel::setWidgetUi()
 {
-    qDebug() << "im in StandardModel::setWidgetUi()!";
+    // qDebug() << "im in StandardModel::setWidgetUi()!";
     // 计算器按钮
     QString str_list = "C,÷,×,B,7,8,9,ｰ,4,5,6,+,1,2,3,,%,0,.,=";
     QStringList btn_name_list= str_list.split(",");
@@ -484,8 +484,8 @@ void StandardModel::setWidgetUi()
 // 设置组件样式
 void StandardModel::setWidgetStyle()
 {
-    qDebug() << "im in StandardModel::setWidgetStyle()!";
-    qDebug() << WidgetStyle::themeColor;
+    // qDebug() << "im in StandardModel::setWidgetStyle()!";
+    // qDebug() << WidgetStyle::themeColor;
     QString btnStyle;
     QString btnOpStyle;
     QString btnEqualStyle;

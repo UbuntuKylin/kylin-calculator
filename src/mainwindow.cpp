@@ -15,6 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#define DEBUG_MODE false
+
 #include <QKeyEvent>
 #include <QDebug>
 #include <QList>
@@ -132,7 +134,7 @@ void MainWindow::setWidgetUi()
 
         connect(themeData,&QGSettings::changed,this,[=]()
         {
-            qDebug() << "主题颜色" << themeData->get("style-name").toString();
+            // qDebug() << "主题颜色" << themeData->get("style-name").toString();
             if(themeData->get("style-name").toString() == "ukui-dark" || themeData->get("style-name").toString() == "ukui-black"){
                 WidgetStyle::themeColor = 1;
                 changeDarkTheme();
@@ -152,7 +154,7 @@ void MainWindow::setWidgetStyle()
 
     this->mainWid->setObjectName("mainWid");
 
-    qDebug() << "WidgetStyle::themeColor " << WidgetStyle::themeColor;
+    // qDebug() << "WidgetStyle::themeColor " << WidgetStyle::themeColor;
 
     this->mainWid->setAutoFillBackground(true);
     this->mainWid->setBackgroundRole(QPalette::Base);
@@ -185,7 +187,7 @@ void MainWindow::setWidgetStyle()
 
     }
     this->setCentralWidget(mainWid);
-    qDebug() << "/***********************************************************/";
+    // qDebug() << "/***********************************************************/";
     // qDebug() << this->styleSheet();
     // this->setStyleSheet("border-radius:6px;");
     // this->show();
@@ -757,12 +759,12 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             mDaemonIpcDbus->showGuide("tools/kylin-calculator");
         }
     } else if (event->modifiers() == Qt::ControlModifier && event->key() == Qt::Key_C) {
-        qDebug() << "Ctrl + C";
+        // qDebug() << "Ctrl + C";
         if (this->isDigitStr(this->lab_now->text().remove(","))) {
             this->copyCalResult();
         }
     } else if (event->modifiers() == Qt::ControlModifier && event->key() == Qt::Key_V) {
-        qDebug() << "Ctrl + V";
+        // qDebug() << "Ctrl + V";
         QString clipText = clipboard->text();
         QString labNowStr = this->lab_now->text().remove(",");
         /*
@@ -824,8 +826,8 @@ void MainWindow::unitCalc()
     double rate = 0.15;
     QString textAft = this->lab_prepare->text().remove(QRegExp(","));
 
-    qDebug() << "textAft--" << textAft;
-    qDebug() << "textAft.toDouble()--" << textAft.toDouble();
+    // qDebug() << "textAft--" << textAft;
+    // qDebug() << "textAft.toDouble()--" << textAft.toDouble();
     double moneyAft = textAft.toDouble() * rate;
 
     this->lab_prepare->setText(QString::number(moneyAft));
@@ -945,7 +947,8 @@ void MainWindow::updateOutput(QVector<QString> outVector)
     this->lab_now->setText(outVector[DISPLAY_ON_LABEL_NOW]);
     this->lab_prepare->setText(outVector[DISPLAY_ON_LABEL_PREPARE]);
 
-    qDebug() << "DISPLAY_ON_LABEL_NOW"      << outVector[DISPLAY_ON_LABEL_NOW]      << "\n" <<
+    qDebug() << "\n" << 
+                "DISPLAY_ON_LABEL_NOW"      << outVector[DISPLAY_ON_LABEL_NOW]      << "\n" <<
                 "LABEL_NOW_CAL_QSTR"        << outVector[LABEL_NOW_CAL_QSTR]        << "\n" <<
                 "CAL_ANS"                   << outVector[CAL_ANS]                   << "\n" <<
                 "LATEST_HISTORY"            << outVector[LATEST_HISTORY]            << "\n" <<
@@ -1021,7 +1024,7 @@ void MainWindow::btn_merge(const QString &disText)
         this->resetFontSize(this->currentModel, "48");
     }
     
-    qDebug() << "disText is " << disText;
+    // qDebug() << "disText is " << disText;
     // 格式化为用于运算的表达式
     QString calText = disText;
     calText = formatDisToCal(calText);
@@ -1041,7 +1044,7 @@ void MainWindow::btn_merge(const QString &disText)
         disHistory.push_back(resVector[LATEST_HISTORY] + '\n');
 
         //输出测试到history.txt
-        cout << disHistory[disHistory.size() - 1].toStdString() << endl;
+        // cout << disHistory[disHistory.size() - 1].toStdString() << endl;
 
         disData.clear();
         calData.clear();
@@ -1068,7 +1071,7 @@ void MainWindow::btn_merge(const QString &disText)
         // label.replace(tr("calculator"), "");
         QString label = this->currentModel;
         if (label != STANDARD && label != SCIENTIFIC) {
-            qDebug() << "disHistory[] " << disHistory[disHistory.size() - 1];
+            // qDebug() << "disHistory[] " << disHistory[disHistory.size() - 1];
             historyText = toolModelOutput->unitConvHistory(disHistory[disHistory.size() - 1]);
         }
 
@@ -1076,7 +1079,7 @@ void MainWindow::btn_merge(const QString &disText)
 
         this->lab_last->setText(historyText);
 
-        qDebug() << "historyText" << historyText;
+        // qDebug() << "historyText" << historyText;
     }
 }
 
@@ -1086,7 +1089,7 @@ void MainWindow::btn_handler(bool)
     // 获取当前输入，默认是用于显示的表达式
     BasicButton *btn = dynamic_cast<BasicButton *>(sender());
     QString disText = btn->text();
-    qDebug() << "disTextis:"<<disText;
+    // qDebug() << "disTextis:"<<disText;
     btn_merge(disText);
 
     // QString label = this->pTitleBar->m_pFuncLabel->text();

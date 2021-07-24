@@ -15,6 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+// define in .cpp now & in .h later
+#define DEBUG_MODE false
+
 #include "InputProcess.h"
 
 QVector<QString> InputProcess::res = QVector<QString>{ZERO, ZERO, EMPTY,EMPTY,EMPTY,EMPTY};
@@ -411,7 +414,10 @@ void InputProcess::labelUpdate()
 
 void InputProcess::graphNodeUpdate(const QString &text)
 {
-    qDebug() << "im in InputProcess::graphNodeUpdate";
+    if (DEBUG_MODE) {
+        qDebug() << "im in InputProcess::graphNodeUpdate";
+    }
+    
     // 1.
     if ( ( G.getStatus(STANDARD)   &&  !G.getStatus(ERROR)                                   )
       || ( G.getStatus(SCIENTIFIC) && (!G.getStatus(ERROR_INF)  || !G.getStatus(ERROR_NAN) ) ) ) {
@@ -430,7 +436,6 @@ void InputProcess::graphNodeUpdate(const QString &text)
     }
 
     if (text == EQUAL) {
-        // qDebug () << 123123123123;
         if (G.getStatus(SCIENTIFIC)) {
             if (calAns.contains(INF_SYMBOL)) {
                 G.update(ERROR_INF, false);
@@ -454,8 +459,11 @@ void InputProcess::graphNodeUpdate(const QString &text)
 
 QVector<QString> InputProcess::output(const QString &text)
 {
-    qDebug () << "im in output";
-    qDebug () << text;
+    if (DEBUG_MODE) {
+        qDebug () << "im in output";
+        qDebug () << text;
+    }
+    
     if ( ( i_qstrAddFlag       != -1 && i_qstrAddFlag       != CORRECT_QSTR_ADD        )
       || ( i_qstrNowUpdateFlag != -1 && i_qstrNowUpdateFlag != CORRECT_QSTR_NOW_UPDATE ) ) {
 
@@ -556,19 +564,30 @@ QVector<QString> InputProcess::inputFromButton(const QString &text)
     }
 
     if (!G.find(text)) {
-        qDebug() << "lalalalala"<<text;
+        if (DEBUG_MODE) {
+            qDebug() << "find text:"<<text;
+        }
+        
         res[LATEST_HISTORY].clear();
         return res;
     }
     i_qstrAddFlag = qstrAdd(text);
-    qDebug() << "AfterQstrAddFlag:" << qstrNow;
-    qDebug() << i_qstrAddFlag;
+
+    if (DEBUG_MODE) {
+        qDebug() << "AfterQstrAddFlag:" << qstrNow;
+        qDebug() << i_qstrAddFlag;
+    }
+    
     if (i_qstrAddFlag != CORRECT_QSTR_ADD) {
         return output(text);
     }
     i_qstrNowUpdateFlag = qstrNowUpdate(text);
-    qDebug() << "AfterQstrNowUpdate:" << qstrNow;
-    qDebug() <<i_qstrNowUpdateFlag;
+
+    if (DEBUG_MODE) {
+        qDebug() << "AfterQstrNowUpdate:" << qstrNow;
+        qDebug() <<i_qstrNowUpdateFlag;
+    }
+    
     if (i_qstrNowUpdateFlag != CORRECT_QSTR_NOW_UPDATE) {
         return output(text);
     }
@@ -578,7 +597,7 @@ QVector<QString> InputProcess::inputFromButton(const QString &text)
     if (i_couldBeCalFlag == COULD_BE_CAL) {
 
         calAns = QStringCalculator::cal(qstrNow);
-        qDebug () << "calAns is" << calAns;
+        // qDebug () << "calAns is" << calAns;
         i_qstrUpdateFlag = qstrUpdate(text);
         if (i_qstrUpdateFlag != CORRECT_QSTR_UPDATE) {
             return output(text);
