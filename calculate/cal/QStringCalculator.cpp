@@ -59,7 +59,7 @@ void QStringCalculator::postfixCheck(const QString    &qstr,
                 operatorList.pop();
             }
 
-            //当遇到左括号时，弹出但不加入coll3(后缀表达式中)
+            //当遇到左括号时，弹出但不加入postfixExpressions(后缀表达式中)
             operatorList.pop();
         }
     }
@@ -337,11 +337,10 @@ QString QStringCalculator::cal(const QString &qstr)
         formula = bracketCompletion(formula);
     formula = isCorrectFormula(formula).second;
     QStringList formulaList = formulaSplit(formula);
-
     if (DEBUG_MODE) {
         qDebug() << formulaList;
     }
-    
+    formulaList = isCorrectFormulaList(formulaList).second;
     QString ans = qstrListCalculator(formulaList);
 
     //去掉末尾0
