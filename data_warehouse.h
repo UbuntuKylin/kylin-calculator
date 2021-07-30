@@ -13,6 +13,12 @@ public:
     /* 990 , 9a0 , v100 , v101 , inter */
     QString platform;
 
+    /* 标识大窗口 和 小窗口 */
+    /* max , min */
+    QString winFlag;
+    // 输入最大限度
+    int maxInputNum;
+
 protected:
 
 private:

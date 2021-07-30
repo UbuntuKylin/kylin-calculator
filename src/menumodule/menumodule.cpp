@@ -241,7 +241,8 @@ void menuModule::initAbout()
     hints.functions = MWM_FUNC_ALL;
     hints.decorations = MWM_DECOR_BORDER;
     XAtomHelper::getInstance()->setWindowMotifHint(aboutWindow->winId(), hints);
-    aboutWindow->setFixedSize(420,324);
+    //aboutWindow->setFixedSize(420,324);
+    aboutWindow->resize(400,324);
     aboutWindow->setMinimumHeight(324);
     QVBoxLayout *mainlyt = new QVBoxLayout();
     QHBoxLayout *titleLyt = initTitleBar();

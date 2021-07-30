@@ -21,6 +21,8 @@
 #include <QWidget>
 #include <QComboBox>
 #include <QHBoxLayout>
+#include <QPropertyAnimation>
+
 
 // #include "funclist.h"
 // #include "closebutton.h"
@@ -52,6 +54,7 @@ public:
     QPushButton *m_pTopButton;      // 界面置顶按钮
     menuModule *menuBar;
     QPushButton *m_pMinimizeButton; // 最小化按钮
+    QPushButton *m_pMaximizeButton; // 最大化按钮
     QPushButton *m_pCloseButton;    // 关闭按钮
 
     // 模式或功能名称
@@ -86,6 +89,7 @@ private slots:
 
 signals:
     void sigModeChange(QString);
+    void sigFontUpdate(); //更新字号
 
 
 protected:
@@ -118,7 +122,7 @@ private:
 
 private:
 
-    
+    QPoint m_start;  //最大化之前窗口位置
 
     // QPoint m_start;                 // 起始点
     // QPoint m_end;                   // 结束点

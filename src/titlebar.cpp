@@ -26,8 +26,10 @@
 #include "mainwindow.h"
 #include "funclist.h"
 #include "xatom-helper.h"
+#include "InputSymbols.h"
 #include "data_warehouse.h"
 #include <QColor>
+#include <QDesktopWidget>
 
 TitleBar::TitleBar(QWidget *parent) : QWidget(parent)
 {
@@ -127,6 +129,7 @@ void TitleBar::createInterUi()
     this->hlayout->addSpacing(4);
 
     connect(this->m_min , &QPushButton::clicked , this , &TitleBar::onClicked);
+    connect(this->m_max , &QPushButton::clicked , this ,&TitleBar::onClicked);
     connect(this->m_close , &QPushButton::clicked , this , &TitleBar::onClicked);
     connect(this->m_menu , &QMenu::triggered , this , &TitleBar::slotModeChange);
 
@@ -222,6 +225,7 @@ void TitleBar::setWidgetUi()
     m_pFuncLabel = new QLabel(this);
     m_pTopButton = new QPushButton(this);
     m_pMinimizeButton = new QPushButton(this);
+    m_pMaximizeButton = new QPushButton(this);
     m_pCloseButton = new QPushButton(this);
 
     // 设置空间大小
@@ -229,18 +233,21 @@ void TitleBar::setWidgetUi()
     m_pFuncLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     m_pTopButton->setFixedSize(30, 30);
     m_pMinimizeButton->setFixedSize(30, 30);
+    m_pMaximizeButton->setFixedSize(30, 30);
     m_pCloseButton->setFixedSize(30, 30);
     
     // 设置对象名
     m_pFuncLabel->setObjectName("whiteLabel");
     m_pTopButton->setObjectName("topButton");
     m_pMinimizeButton->setObjectName("minimizeButton");
+    m_pMaximizeButton->setObjectName("maximizeButton");
     m_pCloseButton->setObjectName("closeButton");
 
     // 设置悬浮提示
     // funcListButton->setToolTip(tr("FuncList"));
     m_pTopButton->setToolTip(tr("StayTop"));
     m_pMinimizeButton->setToolTip(tr("Minimize"));
+    m_pMaximizeButton->setToolTip(tr("Maximize"));
     m_pCloseButton->setToolTip(tr("Close"));
 
     // 设置图片
@@ -264,6 +271,13 @@ void TitleBar::setWidgetUi()
     m_pMinimizeButton->setProperty("isWindowButton", 0x1);
     m_pMinimizeButton->setProperty("useIconHighlightEffect", 0x2);
     m_pMinimizeButton->setFlat(true);
+
+    m_pMaximizeButton->setIcon(QIcon::fromTheme("window-maximize-symbolic"));
+    m_pMaximizeButton->setIconSize(QSize(16, 16));
+    m_pMaximizeButton->setProperty("isWindowButton", 0x1);
+    m_pMaximizeButton->setProperty("useIconHighlightEffect", 0x2);
+    m_pMaximizeButton->setFlat(true);
+
 
     m_pCloseButton->setIcon(QIcon::fromTheme("window-close-symbolic"));
     m_pCloseButton->setIconSize (QSize(16, 16));
@@ -302,6 +316,8 @@ void TitleBar::setWidgetUi()
     pLayout->addSpacing(4);
     pLayout->addWidget(m_pMinimizeButton);
     pLayout->addSpacing(4);
+    pLayout->addWidget(m_pMaximizeButton);
+    pLayout->addSpacing(4);
     pLayout->addWidget(m_pCloseButton);
     
 
@@ -310,6 +326,7 @@ void TitleBar::setWidgetUi()
     // 设置信号和槽函数
     // connect(m_pTopButton,      SIGNAL(clicked(bool)), this, SLOT(onClicked()));
     connect(m_pMinimizeButton, SIGNAL(clicked(bool)), this, SLOT(onClicked()));
+    connect(m_pMaximizeButton, SIGNAL(clicked(bool)), this, SLOT(onClicked()));
     connect(m_pCloseButton,    SIGNAL(clicked(bool)), this, SLOT(onClicked()));
     // connect(funcListButton,    SIGNAL(clicked(bool)), this, SLOT(onClicked()));
 
@@ -442,6 +459,59 @@ void TitleBar::onClicked()
             pWindow->showMinimized();
             m_min->update();
             m_close->update();
+        }
+
+        else if(pButton == m_pMaximizeButton) {
+
+//            QPropertyAnimation *animation = new QPropertyAnimation(pWindow, "geometry");
+//            //animation->setEasingCurve(QEasingCurve :: OutBounce);
+//            animation->setDuration(10000);
+
+
+            if (DataWarehouse::getInstance()->winFlag == QString("min")) {
+                DataWarehouse::getInstance()->winFlag = QString("max");
+            } else if (DataWarehouse::getInstance()->winFlag == QString("max")) {
+                DataWarehouse::getInstance()->winFlag = QString("min");
+            }
+
+            if(DataWarehouse::getInstance()->winFlag == QString("min")){
+                pWindow->showNormal();
+                if(m_pFuncLabel->text() == STANDARD_LABEL)
+                {
+//                    animation->setEndValue(QRect(m_start.x(), m_start.y(), 432, 628));
+//                    animation->start();
+                    pWindow->resize(432,628);
+                    pWindow->move(m_start.x(),m_start.y());
+
+                }
+                else if(m_pFuncLabel->text() == SCIENTIFIC_LABEL)
+                {
+//                    animation->setEndValue(QRect(m_start.x(), m_start.y(), 864, 628));
+//                    animation->start();
+                    pWindow->resize(864,628);
+                    pWindow->move(m_start.x(),m_start.y());
+
+                }
+                else if(m_pFuncLabel->text() == EXCHANGE_RATE_LABEL)
+                {
+//                    animation->setEndValue(QRect(m_start.x(), m_start.y(), 432, 628));
+//                    animation->start();
+                    pWindow->resize(432,628);
+                    pWindow->move(m_start.x(),m_start.y());
+                }
+            }
+            else
+            {
+                m_start =  pWindow->pos();
+                pWindow->showMaximized();
+
+//                QRect screenRect = QApplication::desktop()->availableGeometry();
+//                animation->setEndValue(QRect(0, 0, screenRect.width(), screenRect.height()));
+//                animation->start();
+
+            }
+            emit sigFontUpdate();
+
         }
 
         else if (pButton == this->m_close) {

@@ -113,6 +113,7 @@ public:
 
     static const QString STANDARD;
     static const QString SCIENTIFIC;
+    static const QString EXCHANGE_RATE;
 
     static const QString CLEAN;
     static const QString BACKSPACE;

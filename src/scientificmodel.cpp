@@ -53,13 +53,13 @@ void ScientificOutput::setWidgetUi()
     this->sciLabPre->setAlignment(Qt::AlignRight | Qt::AlignTop);
     this->sciLabPre->setFont(sciLabPreFont);
     this->sciLabPre->setText("0");
-    this->sciLabPre->setFixedHeight(35);
+    //this->sciLabPre->setFixedHeight(35);
 
     QFont sciLabNowFont("SourceHanSansCN-Normal", 48, 15);
     this->sciLabNow->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     this->sciLabNow->setFont(sciLabNowFont);
     this->sciLabNow->setText("0");
-    this->sciLabNow->setFixedHeight(65);
+    //this->sciLabNow->setFixedHeight(65);
     this->sciLabNow->setContentsMargins(0, 0, 0, 0);
 
     this->sciLabLastL->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -86,7 +86,7 @@ void ScientificOutput::setWidgetUi()
     sciOutputLayout->addWidget(outputRWid);
 
     this->setLayout(sciOutputLayout);
-    this->setFixedHeight(270);
+    //this->setFixedHeight(270);
     //    this->setContentsMargins(1, 0, 1, 0);
 
     this->sciLabLastR->show();
@@ -100,8 +100,8 @@ void ScientificOutput::setWidgetUi()
 void ScientificOutput::setWidgetStyle(bool resetFontSize)
 {
     if (WidgetStyle::themeColor == 0){
-        this->sciLabLastL->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
-        this->sciLabLastR->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
+        this->sciLabLastL->setStyleSheet("color:#8C8C8C;font-size:12px;margin:0 7px 0 7px;");
+        this->sciLabLastR->setStyleSheet("color:#8C8C8C;font-size:12px;margin:0 7px 0 7px;");
         this->sciLabPre->setStyleSheet("color:#FB9119;font-size:20px;margin:0 7px 0 7px;");
         
         if (resetFontSize) {
@@ -113,8 +113,8 @@ void ScientificOutput::setWidgetStyle(bool resetFontSize)
         }
     }
     else if (WidgetStyle::themeColor == 1){
-        this->sciLabLastL->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
-        this->sciLabLastR->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
+        this->sciLabLastL->setStyleSheet("color:#8C8C8C;font-size:12px;margin:0 7px 0 7px;");
+        this->sciLabLastR->setStyleSheet("color:#8C8C8C;font-size:12px;margin:0 7px 0 7px;");
         this->sciLabPre->setStyleSheet("color:#FB9119;font-size:20px;margin:0 7px 0 7px;");
 
         if (resetFontSize) {
@@ -224,7 +224,8 @@ void ScientificModel::setWidgetUi()
     btnDiv->setIconSize(QSize(106, 62));
     btnMulti->setIconSize(QSize(106, 62));
     // 删除键按钮大小调整
-    btnDelete->setIconSize(QSize(85,  50));
+    //btnDelete->setIconSize(QSize(85,  50));
+    btnDelete->setIconSize(QSize(106,  62));
     btnSub->setIconSize(QSize(106, 62));
     btnAdd->setIconSize(QSize(106, 62));
     btnEqual->setIconSize(QSize(106, 62));
@@ -314,6 +315,7 @@ void ScientificModel::setWidgetUi()
     btnPi->setIconSize(QSize(106, 62));
     btnExp->setIconSize(QSize(106, 62));
     btnLn->setIconSize(QSize(106, 62));
+    //btnRad->setMinimumSize(106, 62);
 
     // 设置按钮自适应放缩
     btnClear->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -325,6 +327,31 @@ void ScientificModel::setWidgetUi()
     btnEqual->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     btnPer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     btnPoint->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    btnInd->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnUndo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnBracketLeft->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnBracketRight->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    btnReci->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnXPower2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnXPower3->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnYPowerX->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    btnFac->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnXSquare2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnXSquare3->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnYSquareX->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    btnSin->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnCos->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnTan->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnLog->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    btnRad->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnPi->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnExp->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnLn->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     // 将科学计算器按钮进行网格布局
     QGridLayout *btnSciLayout = new QGridLayout(this);
@@ -394,7 +421,7 @@ void ScientificModel::setWidgetUi()
     btnAllLayout->setSpacing(0);
     btnAllLayout->setMargin(0);
 
-    this->setFixedHeight(320);
+    //this->setFixedHeight(320);
     this->setLayout(btnAllLayout);
 
     connect(btnInd, &BasicButton::clicked, this, &ScientificModel::changeBtnSinDisplay);
@@ -455,21 +482,18 @@ void ScientificModel::setWidgetStyle()
         btnLn->setIcon(QIcon(":/image/light/scientific/" + btnIconList[iconIdx++] + ".png"));
 
         btnStyle = "QPushButton{"
-                   "width:106px;height:62px;opacity:1;"
                    "background-color:#F3F3F3;border-radius:4px;"
                    "font-size:42px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                    "}"
                    "QPushButton:hover{background-color:#E8E8E8;}";
 
         btnOpStyle = "QPushButton{"
-                     "width:106px;height:62px;opacity:1;"
                      "background-color:#F5F5F8;border-radius:4px;"
                      "font-size:35px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                      "}"
                      "QPushButton:hover{background-color:#E8E8E8;}";
 
         btnEqualStyle = "QPushButton{"
-                        "width:106px;height:126px;opacity:1;"
                         "background-color:#E64A19;border-radius:4px;"
                         "font-size:48px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                         "}"
@@ -527,20 +551,17 @@ void ScientificModel::setWidgetStyle()
         btnLn->setIcon(QIcon(":/image/scientific/" + btnIconList[iconIdx++] + ".png"));
 
         btnStyle = "QPushButton{"
-                   "width:106px;height:62px;opacity:0.95;"
                    "background-color:#27292C;border-radius:4px;"
                    "font-size:42px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                    "}"
                    "QPushButton:hover{background-color:#474747;}";
 
         btnOpStyle = "QPushButton{"
-                     "width:106px;height:62px;opacity:1;"
                      "background-color:#222E36;border-radius:4px;"
                      "font-size:35px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;}"
                      "QPushButton:hover{background-color:#474747;}";
 
         btnEqualStyle = "QPushButton{"
-                        "width:106px;height:126px;opacity:1;"
                         "background-color:#E64A19;border-radius:4px;"
                         "font-size:48px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                         "}"

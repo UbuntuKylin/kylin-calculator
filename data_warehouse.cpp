@@ -28,12 +28,15 @@ void DataWarehouse::init(void)
     this->platform.clear();
     getPlatForm();
 
+    this->winFlag = QString("min");
+    this->maxInputNum = 41;
+
     return;
 }
 
 void DataWarehouse::getPlatForm(void)
 {
-    this->platform = QString("intel");
-    qDebug() << "Info : check platform is inter";
+    //this->platform = QString("intel");
+    //qDebug() << "Info : check platform is inter";
     return;
 }

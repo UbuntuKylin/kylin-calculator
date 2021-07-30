@@ -52,7 +52,7 @@ void StandardOutput::setWidgetUi()
     this->staLabPre->setAlignment(Qt::AlignRight | Qt::AlignTop);
     this->staLabPre->setFont(staLabPreFont);
     this->staLabPre->setText("");
-    this->staLabPre->setFixedHeight(35);
+    //this->staLabPre->setFixedHeight(35);
     this->staLabPre->show();
 
     if (DataWarehouse::getInstance()->platform == QString("intel")) {
@@ -68,7 +68,7 @@ void StandardOutput::setWidgetUi()
         this->staLabNow->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
         this->staLabNow->setFont(staLabNowFont);
         this->staLabNow->setText("0");
-        this->staLabNow->setFixedHeight(65);
+        //this->staLabNow->setFixedHeight(65);
         this->staLabNow->show();
     }
 
@@ -87,7 +87,7 @@ void StandardOutput::setWidgetUi()
         staOutputLayout->setSpacing(0);
 
         this->setLayout(staOutputLayout);
-        this->setFixedHeight(102);
+        //this->setFixedHeight(102);
 
         return;
     }
@@ -101,7 +101,7 @@ void StandardOutput::setWidgetUi()
     staOutputLayout->setSpacing(0);
 
     this->setLayout(staOutputLayout);
-    this->setFixedHeight(270);
+    //this->setFixedHeight(270);
     //    this->setContentsMargins(1, 0, 1, 0);
 }
 
@@ -114,7 +114,7 @@ void StandardOutput::setWidgetStyle(bool resetFontSize)
     }
 
     if (WidgetStyle::themeColor == 0) {
-        this->staLabLast->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
+        this->staLabLast->setStyleSheet("color:#8C8C8C;font-size:12px;margin:0 7px 0 7px;");
         this->staLabPre->setStyleSheet("color:#FB9119;font-size:20px;margin:0 7px 0 7px;");
 
 
@@ -127,7 +127,7 @@ void StandardOutput::setWidgetStyle(bool resetFontSize)
         }
     }
     else if (WidgetStyle::themeColor == 1) {
-        this->staLabLast->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
+        this->staLabLast->setStyleSheet("color:#8C8C8C;font-size:12px;margin:0 7px 0 7px;");
         this->staLabPre->setStyleSheet("color:#FB9119;font-size:20px;margin:0 7px 0 7px;");
 
         if (resetFontSize) {
@@ -158,7 +158,7 @@ void StandardModel::createIntelModel(void)
 {
     qDebug() << "Info : create intel stand mode ui...";
 
-    this->setFixedSize(400 , 400);
+    //this->setFixedSize(400 , 400);
 
     for (int i = 0 ; i < 10 ; i++) {
         btnNum[i] = new BasicButton(this);
@@ -286,21 +286,18 @@ void StandardModel::createIntelStyle(void)
         //btnPoint->setIcon(QIcon(":/image/light/standard/btnPoint.png"));
 
         btnStyle = "QPushButton{"
-                   "width:100px;height:80px;opacity:1;"
                    "background-color:#FFFFFF;border-radius:0px;"
                    "font-size:42px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                    "}"
                    "QPushButton:pressed{background-color:#F6F6F6;}";
 
         btnOpStyle = "QPushButton{"
-                     "width:100px;height:80px;opacity:1;"
                      "background-color:#FFFFFF;border-radius:0px;"
                      "font-size:35px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                      "}"
                      "QPushButton:pressed{background-color:#F6F6F6;}";
 
         btnEqualStyle = "QPushButton{"
-                        "width:100px;height:80px;opacity:1;"
                         "background-color:#FB7054;border-radius:0px;"
                         "font-size:48px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                         "}"
@@ -477,7 +474,7 @@ void StandardModel::setWidgetUi()
     // 设置间距和背景样式
     btnLayout->setSpacing(2);
     btnLayout->setMargin(1);
-    this->setFixedHeight(320);
+    //this->setFixedHeight(320);
     this->setLayout(btnLayout);
 }
 
@@ -509,21 +506,18 @@ void StandardModel::setWidgetStyle()
 
 
         btnStyle = "QPushButton{"
-                   "width:106px;height:62px;opacity:1;"
                    "background-color:#F3F3F3;border-radius:4px;"
                    "font-size:42px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                    "}"
                    "QPushButton:hover{background-color:#E8E8E8;}";
 
         btnOpStyle = "QPushButton{"
-                     "width:106px;height:62px;opacity:1;"
                      "background-color:#F5F5F8;border-radius:4px;"
                      "font-size:35px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                      "}"
                      "QPushButton:hover{background-color:#E8E8E8;}";
 
         btnEqualStyle = "QPushButton{"
-                        "width:106px;height:126px;opacity:1;"
                         "background-color:#E64A19;border-radius:4px;"
                         "font-size:48px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                         "}"
@@ -547,20 +541,17 @@ void StandardModel::setWidgetStyle()
         btnPoint->setIcon(QIcon(":/image/standard/btnPoint.png"));
 
         btnStyle = "QPushButton{"
-                   "width:106px;height:62px;opacity:0.95;"
                    "background-color:#27292C;border-radius:4px;"
                    "font-size:42px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                    "}"
                    "QPushButton:hover{background-color:#474747;}";
 
         btnOpStyle = "QPushButton{"
-                     "width:106px;height:62px;opacity:1;"
                      "background-color:#222E36;border-radius:4px;"
                      "font-size:35px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;}"
                      "QPushButton:hover{background-color:#474747;}";
 
         btnEqualStyle = "QPushButton{"
-                        "width:106px;height:126px;opacity:1;"
                         "background-color:#E64A19;border-radius:4px;"
                         "font-size:48px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                         "}"

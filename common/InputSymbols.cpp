@@ -63,6 +63,7 @@ const QString InputSymbols::ROOT        = "root";
 
 const QString InputSymbols::STANDARD    = "standard";
 const QString InputSymbols::SCIENTIFIC  = "scientific";
+const QString InputSymbols::EXCHANGE_RATE = "exchange rate";
 
 const QString InputSymbols::CLEAN       = "C";
 const QString InputSymbols::BACKSPACE   = "B";
