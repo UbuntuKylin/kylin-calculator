@@ -391,7 +391,7 @@ void menuModule::refreshThemeBySystemConf()
 
 void menuModule::setThemeDark()
 {
-    qDebug()<<"set theme dark";
+    // qDebug()<<"set theme dark";
     if(aboutWindow)
     {
         QPalette palette(this->palette());
