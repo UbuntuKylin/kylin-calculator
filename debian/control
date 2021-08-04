@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Kylin Team <team+kylin@tracker.debian.org>
 Uploaders: caoliang <caoliang@kylinos.cn>,
            jiangdingyuan <jiangdingyuan@kylinos.cn>
-Build-Depends: debhelper,
+Build-Depends: debhelper-compat (= 12),
                qtbase5-dev,
                qt5-qmake,
                qtchooser,
@@ -16,7 +16,7 @@ Build-Depends: debhelper,
                libqt5x11extras5-dev,
                libgsettings-qt-dev,
                libukui-log4qt-dev
-Standards-Version: 4.5.0
+Standards-Version: 4.5.1
 Rules-Requires-Root: no
 Homepage: https://github.com/ubuntukylin/kylin-calculator
 Vcs-Browser: https://github.com/ubuntukylin/kylin-calculator
