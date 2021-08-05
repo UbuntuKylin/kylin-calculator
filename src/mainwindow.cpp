@@ -167,9 +167,10 @@ void MainWindow::setWidgetStyle()
 
     if (WidgetStyle::themeColor == 0) {
         if (DataWarehouse::getInstance()->platform == QString("intel")) {
-            this->pTitleBar->setStyleSheet(QString("background-color:#F6F6F6"));
-            this->outputWid->setStyleSheet(QString("background-color:#F6F6F6"));
-            this->buttonWid->setStyleSheet(QString("background-color:#F6F6F6"));
+            this->mainWid->setStyleSheet("#mainWid{background-color:#EDEDED;}");
+            this->pTitleBar->setStyleSheet("background-color:#EDEDED");
+            this->outputWid->setStyleSheet(QString("background-color:#EDEDED"));
+            this->buttonWid->setStyleSheet(QString("background-color:#EDEDED"));
         }
         // this->mainWid->setStyleSheet("#mainWid{background-color:#FFFFFF;}");
         // titleBarWid->setStyleSheet("#titleBarWid{background-color:#FFFFFF;}");
@@ -223,6 +224,7 @@ void MainWindow::setCommonUi()
     // menuBar里面的一些需要被触发的槽
     if (DataWarehouse::getInstance()->platform == QString("intel")) {
         connect(pTitleBar , &TitleBar::sigModeChange , this , &MainWindow::changeModel);
+        connect(pTitleBar , &TitleBar::sigFontUpdate , this ,&MainWindow::fontUpdate);
     } else {
         connect(pTitleBar->menuBar ,  SIGNAL(menuModuleClose()) , pTitleBar->window() , SLOT(close()));
         connect(pTitleBar->menuBar ,  SIGNAL(menuModuleChanged(QString)) , this , SLOT(changeModel(QString)));
@@ -352,8 +354,10 @@ void MainWindow::setStandardUi()
     if (DataWarehouse::getInstance()->platform == QString("intel")) {
 
         //this->setFixedSize(400, 550);
-        this->setMinimumSize(400,500);
-        this->resize(400, 500);
+        this->setMinimumSize(400,510);
+        if (DataWarehouse::getInstance()->winFlag == QString("min")) {
+            this->resize(400, 510);
+        }
 
     } else {
         this->setMinimumSize(432,628);
@@ -455,9 +459,10 @@ void MainWindow::setStandardUi()
         standardModel->createIntelStyle();
     } else {
         standardModel->setWidgetStyle();
-        standardOutput->setWidgetStyle();
+
     }
 
+    standardOutput->setWidgetStyle();
     mainOutputLayout->addWidget(standardOutput);
     mainButtonLayout->addWidget(standardModel);
 
@@ -476,9 +481,6 @@ void MainWindow::setStandardUi()
 //    } else {
 //        outputWid->setFixedHeight(270);
 //    }
-//    outputWid->setStyleSheet("#outputWid{background-color:#131314;border-radius:4px;}");
-
-//    buttonWid->setStyleSheet("#buttonWid{background-color:#262628;border-radius:4px;}");
     //buttonWid->setFixedHeight(320);
 
     //funcListWid->setGeometry(QRect(187, 40, 20, 170));
@@ -487,9 +489,21 @@ void MainWindow::setStandardUi()
 // 科学计算界面布局
 void MainWindow::setScientificUi()
 {
-    // 固定窗口大小
-    //this->setFixedSize(864, 628);
-    this->setMinimumSize(864,628);
+    if (DataWarehouse::getInstance()->platform == QString("intel")) {
+
+        //this->setFixedSize(400, 550);
+        this->setMinimumSize(1200,625);
+        if (DataWarehouse::getInstance()->winFlag == QString("min")) {
+            this->resize(1200,625);
+        }
+    }
+    else
+    {
+        // 固定窗口大小
+        //this->setFixedSize(864, 628);
+        this->setMinimumSize(864,628);
+    }
+
 
     // 设置当前模式
     this->currentModel = SCIENTIFIC;
@@ -599,7 +613,14 @@ void MainWindow::setScientificUi()
         }
     }
 
-    scientificModel->setWidgetStyle();
+
+    if (DataWarehouse::getInstance()->platform == QString("intel")) {
+        scientificModel->createIntelStyle();
+    } else {
+        scientificModel->setWidgetStyle();
+
+    }
+
     scientificModel->updateBtnSinDisplay();
     scientificModel->updateBtnRadDisplay();
     scientificOutput->setWidgetStyle();
@@ -614,9 +635,7 @@ void MainWindow::setScientificUi()
     
     // 设置间距和背景样式
     //outputWid->setFixedHeight(270);
-//    outputWid->setStyleSheet("#outputWid{background-color:#18181A;margin-top:1px;border-radius:4px;}");
 
-//    buttonWid->setStyleSheet("#buttonWid{background-color:#262628;border-radius:4px;}");
     //buttonWid->setFixedHeight(320);
 
     //funcListWid->setGeometry(QRect(640, 40, 20, 170));
@@ -993,7 +1012,7 @@ void MainWindow::updateOutput(QVector<QString> outVector)
         QString fontSizeStr = QString::number(lab_now->fontInfo().pixelSize() - 8);
 
         // 不同模式下需要判断的距离阈值不一样
-        while ((this->currentModel == STANDARD      && dif > -10) ||
+        while ((this->currentModel == STANDARD      && dif > -12) ||
                (this->currentModel == SCIENTIFIC    && dif > -12) ||
                (this->currentModel == EXCHANGE_RATE && dif > -20)) {
             this->resetFontSize(this->currentModel, fontSizeStr);
@@ -1017,37 +1036,24 @@ void MainWindow::fontUpdate()
         QRect screenRect = QApplication::desktop()->availableGeometry();
         width = screenRect.width();
     }
-//    else
-//    {
-//        if(this->currentModel == STANDARD || this->currentModel == EXCHANGE_RATE)
-//        {
-//            width = 432;
-//        }
-//        else {
-//            width = 864;
-//        }
-//    }
-
     if (lab_now->fontInfo().pixelSize() > 16) {
         QFont labFont = lab_now->font();
         QFontMetrics fontMts(labFont);
         int dif = fontMts.width(lab_now->text()) - width;
-
         QString fontSizeStr = QString::number(lab_now->fontInfo().pixelSize() - 8);
-
         // 不同模式下需要判断的距离阈值不一样
-        while ((this->currentModel == STANDARD      && dif > -10) ||
-               (this->currentModel == SCIENTIFIC    && dif > -10) ||
+        while ((this->currentModel == STANDARD      && dif > -12) ||
+               (this->currentModel == SCIENTIFIC    && dif > -12) ||
                (this->currentModel == EXCHANGE_RATE && dif > -20)) {
             this->resetFontSize(this->currentModel, fontSizeStr);
             labFont.setPixelSize(labFont.pixelSize() - 8);
             QFontMetrics fontMts(labFont);
             dif = fontMts.width(lab_now->text()) - width;
             fontSizeStr = QString::number(labFont.pixelSize() - 8);
-//            qDebug() << "fontMts.width(lab_now->text()): " << fontMts.width(lab_now->text());
-//            qDebug() << "width: " << width;
-//            qDebug() << "fontSizeStr: " << fontSizeStr;
-//            qDebug() << "dif: " << dif;
+            qDebug() << "fontMts.width(lab_now->text()): " << fontMts.width(lab_now->text());
+            qDebug() << "width: " << width;
+            qDebug() << "fontSizeStr: " << fontSizeStr;
+            qDebug() << "dif: " << dif;
 
         }
     }
@@ -1256,6 +1262,17 @@ void MainWindow::changeModel(QString label)
         if (label == STANDARD) {
             if (DataWarehouse::getInstance()->platform != QString("intel")) {
                 this->pTitleBar->setFuncLabel(pTitleBar->STANDARD_LABEL);
+
+            }
+            else if(DataWarehouse::getInstance()->winFlag == QString("max")
+                    && DataWarehouse::getInstance()->platform == QString("intel"))
+            {
+                DataWarehouse::getInstance()->winFlag = QString("min");
+                this->showNormal();
+                this->pTitleBar->m_max->setIcon(QIcon::fromTheme("window-maximize-symbolic"));
+                this->resize(400,510);
+                QRect availableGeometry = QApplication::desktop()->availableGeometry();
+                this->move((availableGeometry.width() - 400)/2, (availableGeometry.height() - 510)/2);
             }
             calData += STANDARD;
             InputProcess::inputFromButton(STANDARD);

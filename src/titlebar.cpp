@@ -56,19 +56,19 @@ void TitleBar::createInterUi()
     this->setFixedHeight(38);
     this->setWindowFlags(Qt::FramelessWindowHint);
 
-    this->STANDARD_LABEL = tr("Standard");
-    this->SCIENTIFIC_LABEL = tr("Scientific");
+    this->STANDARD_LABEL = tr("standard");
+    this->SCIENTIFIC_LABEL = tr("scientific");
 
     this->m_Icon = new QLabel(this);
     this->m_Icon->setFixedSize(QSize(25 , 25));
     this->m_Icon->setPixmap(QIcon::fromTheme("kylin-calculator").pixmap(QSize(24 , 24)));
 
     this->m_mode = new QPushButton(this);
-    QPixmap icon(":/image/intelStandLight/arrow.jpeg");
+    QPixmap icon(":/image/intelStandLight/ic-open.svg");
     icon.scaled(24 , 24);
     m_mode->setIcon(QIcon(icon));
     m_mode->setLayoutDirection(Qt::RightToLeft);
-    this->m_mode->setText(tr("standard "));
+    this->m_mode->setText(tr("standard"));
     this->m_mode->setFlat(false);
     this->m_menu = new QMenu();
     this->m_menu->installEventFilter(this);
@@ -160,7 +160,7 @@ void TitleBar::paintEvent(QPaintEvent *event)
     if (DataWarehouse::getInstance()->platform == QString("intel")) {
         Q_UNUSED(event);
 
-        QColor color("#F6F6F6");
+        QColor color("#EDEDED");
         QPainter p(this);
         p.setPen(Qt::NoPen);
         p.setBrush(QBrush(color));
@@ -172,11 +172,26 @@ void TitleBar::paintEvent(QPaintEvent *event)
 bool TitleBar::eventFilter(QObject * obj, QEvent *event)
 {
     if (DataWarehouse::getInstance()->platform == QString("intel")) {
-        if (event->type() == QEvent::Show && obj == this->m_menu) {
-            QPoint globalPos = this->m_mode->mapToGlobal(QPoint(0 , 0));
-            this->m_menu->move(globalPos.x() , globalPos.y() + this->m_mode->height());
-            return true;
+        if(obj == this->m_menu)
+        {
+            QPixmap icon;
+            if(event->type() == QEvent::Hide)
+            {
+                icon.load(":/image/intelStandLight/ic-open.svg");
+                icon.scaled(24 , 24);
+                m_mode->setIcon(QIcon(icon));
+            }
+            if (event->type() == QEvent::Show) {
+                QPoint globalPos = this->m_mode->mapToGlobal(QPoint(0 , 0));
+                this->m_menu->move(globalPos.x() , globalPos.y() + this->m_mode->height());
+                icon.load(":/image/intelStandLight/ic-close.svg");
+                icon.scaled(24 , 24);
+                m_mode->setIcon(QIcon(icon));
+                return true;
+            }
+
         }
+
     } else {
         return QObject::eventFilter(obj, event);
     }
@@ -188,13 +203,13 @@ void TitleBar::slotModeChange(QAction *action)
     QString mode = action->text();
     if (mode == tr("standard")) {
         qDebug() << "Info : change mode to standard";
-        this->m_mode->setText(tr("standard "));
+        this->m_mode->setText(tr("standard"));
         this->standardMode->setChecked(true);
         this->scientificMode->setChecked(false);
         emit sigModeChange(QString("standard"));
     } else if (mode == tr("scientific")) {
         qDebug() << "Info : change mode to scientific";
-        this->m_mode->setText(tr("scientific "));
+        this->m_mode->setText(tr("scientific"));
         this->standardMode->setChecked(false);
         this->scientificMode->setChecked(true);
         emit sigModeChange(QString("scientific"));
@@ -454,11 +469,62 @@ void TitleBar::onClicked()
 // //            qDebug() << "funcListButton";
 //             emit iconButtonSignal();
 //         }
-
         else if (pButton == this->m_min) {
             pWindow->showMinimized();
             m_min->update();
             m_close->update();
+        }
+        else if(pButton == this->m_max)
+        {
+            if (DataWarehouse::getInstance()->winFlag == QString("min")) {
+                DataWarehouse::getInstance()->winFlag = QString("max");
+            } else if (DataWarehouse::getInstance()->winFlag == QString("max")) {
+                DataWarehouse::getInstance()->winFlag = QString("min");
+            }
+
+            if(DataWarehouse::getInstance()->winFlag == QString("min")){
+                pWindow->showNormal();
+                pWindow->resize(1200,625);
+                pWindow->move(m_start.x(),m_start.y());
+                this->m_max->setIcon(QIcon::fromTheme("window-maximize-symbolic"));
+//                if(m_mode->text() == STANDARD_LABEL)
+//                {
+//                    //animation->setEndValue(QRect(m_start.x(), m_start.y(), 432, 628));
+//                  //animation->start();
+//                    pWindow->resize(400,510);
+//                    pWindow->move(m_start.x(),m_start.y());
+
+//                }
+//                else if(m_mode->text() == SCIENTIFIC_LABEL)
+//                {
+//                    //animation->setEndValue(QRect(m_start.x(), m_start.y(), 864, 628));
+//                    //animation->start();
+//                    pWindow->resize(1200,625);
+//                    qDebug() << DataWarehouse::getInstance()->winFlag;
+//                    qDebug() << "w: " << pWindow->width();
+//                    pWindow->move(m_start.x(),m_start.y());
+
+//                }
+//                else if(m_mode->text() == EXCHANGE_RATE_LABEL)
+//                {
+//                    //animation->setEndValue(QRect(m_start.x(), m_start.y(), 432, 628));
+//                    //animation->start();
+//                    pWindow->resize(432,628);
+//                    pWindow->move(m_start.x(),m_start.y());
+//                }
+            }
+            else
+            {
+                m_start =  pWindow->pos();
+                pWindow->showMaximized();
+                this->m_max->setIcon(QIcon::fromTheme("window-restore-symbolic"));
+
+//                QRect screenRect = QApplication::desktop()->availableGeometry();
+//                animation->setEndValue(QRect(0, 0, screenRect.width(), screenRect.height()));
+//                animation->start();
+
+            }
+            emit sigFontUpdate();
         }
 
         else if(pButton == m_pMaximizeButton) {
@@ -466,6 +532,7 @@ void TitleBar::onClicked()
 //            QPropertyAnimation *animation = new QPropertyAnimation(pWindow, "geometry");
 //            //animation->setEasingCurve(QEasingCurve :: OutBounce);
 //            animation->setDuration(10000);
+
 
 
             if (DataWarehouse::getInstance()->winFlag == QString("min")) {
