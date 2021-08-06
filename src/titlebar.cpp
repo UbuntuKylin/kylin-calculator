@@ -36,7 +36,7 @@ TitleBar::TitleBar(QWidget *parent) : QWidget(parent)
     /* handle intel ui */
     if (DataWarehouse::getInstance()->platform == QString("intel")) {
         createInterUi();
-        //createInterStyle();
+        createInterStyle();
     } else {
         // 初始化组件
         setWidgetUi();
@@ -69,7 +69,7 @@ void TitleBar::createInterUi()
     m_mode->setIcon(QIcon(icon));
     m_mode->setLayoutDirection(Qt::RightToLeft);
     this->m_mode->setText(tr("standard"));
-    this->m_mode->setFlat(false);
+    this->m_mode->setFlat(true);
     this->m_menu = new QMenu();
     this->m_menu->installEventFilter(this);
 
@@ -138,36 +138,42 @@ void TitleBar::createInterUi()
     return;
 }
 
-#if 0
 void TitleBar::createInterStyle(void)
 {
+    /* 跟随主题变动 , 暂不需要手动设置 */
     if (WidgetStyle::themeColor == 0) {
-        QPalette pal(this->palette());
-
-        /* 设置背景色 */
-        pal.setColor(QPalette::Background, Qt::black);
-        this->setAutoFillBackground(true);
-        this->setPalette(pal);
-    } else if (WidgetStyle::themeColor == 1) {
-
+        this->m_mode->setStyleSheet("QPushButton::menu-indicator{image:None;}");
     }
-    return;
+    else if (WidgetStyle::themeColor == 1) {
+        this->m_mode->setStyleSheet("QPushButton::menu-indicator{image:None;}");
+    }
 }
-#endif
+
+#if 0
 
 void TitleBar::paintEvent(QPaintEvent *event)
 {
     if (DataWarehouse::getInstance()->platform == QString("intel")) {
         Q_UNUSED(event);
-
-        QColor color("#EDEDED");
-        QPainter p(this);
-        p.setPen(Qt::NoPen);
-        p.setBrush(QBrush(color));
-        p.drawRect(rect());
+        if (WidgetStyle::themeColor == 0) {
+            QColor color("#EDEDED");
+            QPainter p(this);
+            p.setPen(Qt::NoPen);
+            p.setBrush(QBrush(color));
+            p.drawRect(rect());
+        } else {
+            /* 黑色模式 */
+            QColor color("#262626");
+            QPainter p(this);
+            p.setPen(Qt::NoPen);
+            p.setBrush(QBrush(color));
+            p.drawRect(rect());
+        }
     }
     return;
 }
+
+#endif
 
 bool TitleBar::eventFilter(QObject * obj, QEvent *event)
 {
@@ -334,7 +340,9 @@ void TitleBar::setWidgetUi()
     pLayout->addWidget(m_pMaximizeButton);
     pLayout->addSpacing(4);
     pLayout->addWidget(m_pCloseButton);
-    
+
+    /* 主线版本 放大功能暂时不上  , 暂时隐藏按钮 */
+    this->m_pMaximizeButton->hide();
 
     this->setLayout(pLayout);
 

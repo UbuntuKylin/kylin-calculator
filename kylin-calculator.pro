@@ -16,6 +16,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 LIBS += -lpthread
 LIBS += -lX11
 
+# 链接ukui统一接口库
+LIBS += -lukui-com4c -lukui-com4cxx
+
 # 配置gsettings
 CONFIG += link_pkgconfig
 PKGCONFIG += gsettings-qt

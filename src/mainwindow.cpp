@@ -155,6 +155,7 @@ void MainWindow::setWidgetUi()
 // 设置组件样式
 void MainWindow::setWidgetStyle()
 {
+#if 0
     this->mainWid->setObjectName("mainWid");
 
     // qDebug() << "WidgetStyle::themeColor " << WidgetStyle::themeColor;
@@ -190,6 +191,8 @@ void MainWindow::setWidgetStyle()
         // buttonWid->setStyleSheet("#buttonWid{background-color:#131314;border-radius:4px;}");
 
     }
+#endif
+
     this->setCentralWidget(mainWid);
     // qDebug() << "/***********************************************************/";
     // qDebug() << this->styleSheet();
@@ -898,22 +901,37 @@ void MainWindow::changeDarkTheme()
     QString label = this->currentModel;
 
     this->setWidgetStyle();
-    pTitleBar->setWidgetStyle();
     funcList->setWidgetStyle();
 
-    if (label.contains(STANDARD)) {
-        standardModel->setWidgetStyle();
-        standardOutput->setWidgetStyle(false);
-    }
-    else if (label.contains(SCIENTIFIC)) {
-        scientificModel->setWidgetStyle();
-        scientificOutput->setWidgetStyle(false);
-    }
-    else if (label.contains(EXCHANGE_RATE)) {
-        toolModelButton->setWidgetStyle();
-        toolModelOutput->setWidgetStyle(false);
-        toolModelOutput->unitListBef->setWidgetStyle();
-        toolModelOutput->unitListAft->setWidgetStyle();
+    /* 根据平台加载不同的样式 */
+    if (DataWarehouse::getInstance()->platform == QString("intel")) {
+        pTitleBar->createInterStyle();
+
+        if (label.contains(STANDARD)) {
+            standardModel->createIntelStyle();
+            standardOutput->setWidgetStyle(false);
+        }
+        else if (label.contains(SCIENTIFIC)) {
+            scientificModel->createIntelStyle();
+            scientificOutput->setWidgetStyle(false);
+        }
+    } else {
+        pTitleBar->setWidgetStyle();
+
+        if (label.contains(STANDARD)) {
+            standardModel->setWidgetStyle();
+            standardOutput->setWidgetStyle(false);
+        }
+        else if (label.contains(SCIENTIFIC)) {
+            scientificModel->setWidgetStyle();
+            scientificOutput->setWidgetStyle(false);
+        }
+        else if (label.contains(EXCHANGE_RATE)) {
+            toolModelButton->setWidgetStyle();
+            toolModelOutput->setWidgetStyle(false);
+            toolModelOutput->unitListBef->setWidgetStyle();
+            toolModelOutput->unitListAft->setWidgetStyle();
+        }
     }
 }
 
@@ -927,22 +945,38 @@ void MainWindow::changeLightTheme()
     QString label = this->currentModel;
 
     this->setWidgetStyle();
-    pTitleBar->setWidgetStyle();
     funcList->setWidgetStyle();
 
-    if (label.contains(STANDARD)) {
-        standardModel->setWidgetStyle();
-        standardOutput->setWidgetStyle(false);
-    }
-    else if (label.contains(SCIENTIFIC)) {
-        scientificModel->setWidgetStyle();
-        scientificOutput->setWidgetStyle(false);
-    }
-    else if (label.contains(EXCHANGE_RATE)) {
-        toolModelButton->setWidgetStyle();
-        toolModelOutput->setWidgetStyle(false);
-        toolModelOutput->unitListBef->setWidgetStyle();
-        toolModelOutput->unitListAft->setWidgetStyle();
+    /* 根据不同的平台加载不同的样式 */
+
+    if (DataWarehouse::getInstance()->platform == QString("intel")) {
+        pTitleBar->createInterStyle();
+
+        if (label.contains(STANDARD)) {
+            standardModel->createIntelStyle();
+            standardOutput->setWidgetStyle(false);
+        }
+        else if (label.contains(SCIENTIFIC)) {
+            scientificModel->createIntelStyle();
+            scientificOutput->setWidgetStyle(false);
+        }
+    } else {
+        pTitleBar->setWidgetStyle();
+
+        if (label.contains(STANDARD)) {
+            standardModel->setWidgetStyle();
+            standardOutput->setWidgetStyle(false);
+        }
+        else if (label.contains(SCIENTIFIC)) {
+            scientificModel->setWidgetStyle();
+            scientificOutput->setWidgetStyle(false);
+        }
+        else if (label.contains(EXCHANGE_RATE)) {
+            toolModelButton->setWidgetStyle();
+            toolModelOutput->setWidgetStyle(false);
+            toolModelOutput->unitListBef->setWidgetStyle();
+            toolModelOutput->unitListAft->setWidgetStyle();
+        }
     }
 }
 

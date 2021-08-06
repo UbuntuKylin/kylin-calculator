@@ -36,7 +36,11 @@ void DataWarehouse::init(void)
 
 void DataWarehouse::getPlatForm(void)
 {
-    this->platform = QString("intel");
-    //qDebug() << "Info : check platform is inter";
+    QString platform = QString(KDKGetPrjCodeName().c_str());
+    if (platform == QString("V10SP1-Intel")) {
+        this->platform = QString("intel");
+    }
+    qDebug() << "Info : check run platform is " << this->platform;
+
     return;
 }

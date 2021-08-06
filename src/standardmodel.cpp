@@ -125,7 +125,8 @@ void StandardOutput::setWidgetStyle(bool resetFontSize)
         }
         else {
             QString fontSizeStr = QString::number(staLabNow->font().pixelSize());
-            this->staLabNow->setStyleSheet("color:#272A2D;font-size:" + fontSizeStr + "px;font-weight:15px;margin:0 0 5px 7px;");
+
+            this->staLabNow->setStyleSheet(QString("color:#272A2D;font-size:") + fontSizeStr + QString("px;font-weight:15px;margin:0 0 5px 7px;"));
         }
     }
     else if (WidgetStyle::themeColor == 1) {
@@ -137,7 +138,7 @@ void StandardOutput::setWidgetStyle(bool resetFontSize)
         }
         else {
             QString fontSizeStr = QString::number(staLabNow->font().pixelSize());
-            this->staLabNow->setStyleSheet("color:#FFFFFF;font-size:" + fontSizeStr + "px;font-weight:15px;margin:0 0 5px 7px;");
+            this->staLabNow->setStyleSheet(QString("color:#FFFFFF;font-size:") + fontSizeStr + QString("px;font-weight:15px;margin:0 0 5px 7px;"));
         }
     }
 }
@@ -277,16 +278,6 @@ void StandardModel::createIntelStyle(void)
         btnPer->setIcon(QIcon(":/image/intelStandLight/per.svg"));
         btnPoint->setIcon(QIcon(":/image/intelStandLight/spot.svg"));
 
-        //btnClear->setIcon(QIcon(":/image/light/standard/btnClear.svg"));
-        //btnDiv->setIcon(QIcon(":/image/light/standard/btnDiv.svg"));
-        //btnMulti->setIcon(QIcon(":/image/light/standard/btnMulti.svg"));
-        //btnDelete->setIcon(QIcon(":/image/light/standard/btnDelete.svg"));
-        //btnSub->setIcon(QIcon(":/image/light/standard/btnSub.svg"));
-        //btnAdd->setIcon(QIcon(":/image/light/standard/btnAdd.svg"));
-        //btnEqual->setIcon(QIcon(":/image/light/standard/btnEqual.svg"));
-        //btnPer->setIcon(QIcon(":/image/light/standard/btnPer.svg"));
-        //btnPoint->setIcon(QIcon(":/image/light/standard/btnPoint.svg"));
-
         btnStyle = "QPushButton{"
                    "background-color:#FFFFFF;border-radius:0px;"
                    "font-size:42px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
@@ -306,21 +297,20 @@ void StandardModel::createIntelStyle(void)
                         "QPushButton:pressed{background-color:#EA5E42;}";
     }
     else if (WidgetStyle::themeColor == 1) {
-/* 暗色主题的设计稿还未给出 */
-#if 0
+        /* 暗色主题的设计稿还未给出 */
         for (int i = 0; i < 10; i++) {
-            btnNum[i]->setIcon(QIcon(":/image/standard/btnNum"+ QString::number(i) +".svg"));
+            btnNum[i]->setIcon(QIcon(":/image/intelStandLight/"+ QString::number(i) +".svg"));
         }
 
-        btnClear->setIcon(QIcon(":/image/standard/btnClear.svg"));
-        btnDiv->setIcon(QIcon(":/image/standard/btnDiv.svg"));
-        btnMulti->setIcon(QIcon(":/image/standard/btnMulti.svg"));
-        btnDelete->setIcon(QIcon(":/image/standard/btnDelete.svg"));
-        btnSub->setIcon(QIcon(":/image/standard/btnSub.svg"));
-        btnAdd->setIcon(QIcon(":/image/standard/btnAdd.svg"));
-        btnEqual->setIcon(QIcon(":/image/standard/btnEqual.svg"));
-        btnPer->setIcon(QIcon(":/image/standard/btnPer.svg"));
-        btnPoint->setIcon(QIcon(":/image/standard/btnPoint.svg"));
+        btnClear->setIcon(QIcon(":/image/intelStandLight/ac.svg"));
+        btnDiv->setIcon(QIcon(":/image/intelStandLight/except.svg"));
+        btnMulti->setIcon(QIcon(":/image/intelStandLight/ride.svg"));
+        btnDelete->setIcon(QIcon(":/image/intelStandLight/delete.svg"));
+        btnSub->setIcon(QIcon(":/image/intelStandLight/reduce.svg"));
+        btnAdd->setIcon(QIcon(":/image/intelStandLight/add.svg"));
+        btnEqual->setIcon(QIcon(":/image/intelStandLight/equal.svg"));
+        btnPer->setIcon(QIcon(":/image/intelStandLight/per.svg"));
+        btnPoint->setIcon(QIcon(":/image/intelStandLight/spot.svg"));
 
         btnStyle = "QPushButton{"
                    "width:100px;height:80px;opacity:0.95;"
@@ -341,7 +331,6 @@ void StandardModel::createIntelStyle(void)
                         "font-size:48px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                         "}"
                         "QPushButton:hover{background-color:#E45E4C;}";
-#endif
     }
 
     /* 设置按钮风格 */
