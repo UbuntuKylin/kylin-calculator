@@ -141,11 +141,18 @@ void TitleBar::createInterUi()
 void TitleBar::createInterStyle(void)
 {
     /* 跟随主题变动 , 暂不需要手动设置 */
+    QPixmap icon;
     if (WidgetStyle::themeColor == 0) {
         this->m_mode->setStyleSheet("QPushButton::menu-indicator{image:None;}");
+        icon.load(":/image/intelStandLight/ic-open.svg");
+        icon.scaled(24 , 24);
+        m_mode->setIcon(QIcon(icon));
     }
     else if (WidgetStyle::themeColor == 1) {
         this->m_mode->setStyleSheet("QPushButton::menu-indicator{image:None;}");
+        icon.load(":/image/intelStandDark/ic-open.svg");
+        icon.scaled(24 , 24);
+        m_mode->setIcon(QIcon(icon));
     }
 }
 
@@ -183,15 +190,28 @@ bool TitleBar::eventFilter(QObject * obj, QEvent *event)
             QPixmap icon;
             if(event->type() == QEvent::Hide)
             {
-                icon.load(":/image/intelStandLight/ic-open.svg");
-                icon.scaled(24 , 24);
+                if (WidgetStyle::themeColor == 0) {
+                    icon.load(":/image/intelStandLight/ic-open.svg");
+                    icon.scaled(24 , 24);
+                } else {
+                    icon.load(":/image/intelStandDark/ic-open.svg");
+                    icon.scaled(24 , 24);
+                }
+
                 m_mode->setIcon(QIcon(icon));
             }
             if (event->type() == QEvent::Show) {
                 QPoint globalPos = this->m_mode->mapToGlobal(QPoint(0 , 0));
                 this->m_menu->move(globalPos.x() , globalPos.y() + this->m_mode->height());
-                icon.load(":/image/intelStandLight/ic-close.svg");
-                icon.scaled(24 , 24);
+
+                if (WidgetStyle::themeColor == 0) {
+                    icon.load(":/image/intelStandLight/ic-close.svg");
+                    icon.scaled(24 , 24);
+                } else {
+                    icon.load(":/image/intelStandDark/ic-close.svg");
+                    icon.scaled(24 , 24);
+                }
+
                 m_mode->setIcon(QIcon(icon));
                 return true;
             }

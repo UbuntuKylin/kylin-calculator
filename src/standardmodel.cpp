@@ -299,18 +299,18 @@ void StandardModel::createIntelStyle(void)
     else if (WidgetStyle::themeColor == 1) {
         /* 暗色主题的设计稿还未给出 */
         for (int i = 0; i < 10; i++) {
-            btnNum[i]->setIcon(QIcon(":/image/intelStandLight/"+ QString::number(i) +".svg"));
+            btnNum[i]->setIcon(QIcon(":/image/intelStandDark/"+ QString::number(i) +".svg"));
         }
 
-        btnClear->setIcon(QIcon(":/image/intelStandLight/ac.svg"));
-        btnDiv->setIcon(QIcon(":/image/intelStandLight/except.svg"));
-        btnMulti->setIcon(QIcon(":/image/intelStandLight/ride.svg"));
-        btnDelete->setIcon(QIcon(":/image/intelStandLight/delete.svg"));
-        btnSub->setIcon(QIcon(":/image/intelStandLight/reduce.svg"));
-        btnAdd->setIcon(QIcon(":/image/intelStandLight/add.svg"));
-        btnEqual->setIcon(QIcon(":/image/intelStandLight/equal.svg"));
-        btnPer->setIcon(QIcon(":/image/intelStandLight/per.svg"));
-        btnPoint->setIcon(QIcon(":/image/intelStandLight/spot.svg"));
+        btnClear->setIcon(QIcon(":/image/intelStandDark/ac.svg"));
+        btnDiv->setIcon(QIcon(":/image/intelStandDark/except.svg"));
+        btnMulti->setIcon(QIcon(":/image/intelStandDark/ride.svg"));
+        btnDelete->setIcon(QIcon(":/image/intelStandDark/delete.svg"));
+        btnSub->setIcon(QIcon(":/image/intelStandDark/reduce.svg"));
+        btnAdd->setIcon(QIcon(":/image/intelStandDark/add.svg"));
+        btnEqual->setIcon(QIcon(":/image/intelStandDark/equal.svg"));
+        btnPer->setIcon(QIcon(":/image/intelStandDark/per.svg"));
+        btnPoint->setIcon(QIcon(":/image/intelStandDark/spot.svg"));
 
         btnStyle = "QPushButton{"
                    "width:100px;height:80px;opacity:0.95;"

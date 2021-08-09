@@ -993,50 +993,50 @@ void ScientificModel::createIntelStyle()
     }
     else if (WidgetStyle::themeColor == 1) {
         for (int i = 0; i < 10; i++) {
-            btnNum[i]->setIcon(QIcon(":/image/intelScientific/"+ QString::number(i) +".svg"));
+            btnNum[i]->setIcon(QIcon(":/image/intelScientificDark/"+ QString::number(i) +".svg"));
         }
 
         // btnDZero->setIcon(QIcon(":/image/standard/btnNum00.png"));
 
-        btnClear->setIcon(QIcon(":/image/intelScientific/btnClear.svg"));
-        btnDiv->setIcon(QIcon(":/image/intelScientific/btnDiv.svg"));
-        btnMulti->setIcon(QIcon(":/image/intelScientific/btnMulti.svg"));
-        btnDelete->setIcon(QIcon(":/image/intelScientific/btnDelete.svg"));
-        btnSub->setIcon(QIcon(":/image/intelScientific/btnSub.svg"));
-        btnAdd->setIcon(QIcon(":/image/intelScientific/btnAdd.svg"));
-        btnEqual->setIcon(QIcon(":/image/intelScientific/btnEqual.svg"));
-        btnPer->setIcon(QIcon(":/image/intelScientific/btnPer.svg"));
-        btnPoint->setIcon(QIcon(":/image/intelScientific/btnPoint.svg"));
+        btnClear->setIcon(QIcon(":/image/intelScientificDark/btnClear.svg"));
+        btnDiv->setIcon(QIcon(":/image/intelScientificDark/btnDiv.svg"));
+        btnMulti->setIcon(QIcon(":/image/intelScientificDark/btnMulti.svg"));
+        btnDelete->setIcon(QIcon(":/image/intelScientificDark/btnDelete.svg"));
+        btnSub->setIcon(QIcon(":/image/intelScientificDark/btnSub.svg"));
+        btnAdd->setIcon(QIcon(":/image/intelScientificDark/btnAdd.svg"));
+        btnEqual->setIcon(QIcon(":/image/intelScientificDark/btnEqual.svg"));
+        btnPer->setIcon(QIcon(":/image/intelScientificDark/btnPer.svg"));
+        btnPoint->setIcon(QIcon(":/image/intelScientificDark/btnPoint.svg"));
 
         QString btnIconStr = "btn2nd,btnAns,btnLbra,btnRbra,btnReci,btnXPower2,btnXPower3,btnYPowerX,btnFac,btnXSquare2,btnXSquare3,btnYSquareX,btnSin,btnCos,btnTan,btnLog,btnRad,btnPi,btnE,btnLn";
         QStringList btnIconList = btnIconStr.split(",");
         int iconIdx = 0;
 
 
-        btnInd->setIcon(QIcon(":/image/intelScientific/" + btnIconList[iconIdx++] + ".svg"));
-        btnUndo->setIcon(QIcon(":/image/intelScientific/" + btnIconList[iconIdx++] + ".svg"));
-        btnBracketLeft->setIcon(QIcon(":/image/intelScientific/" + btnIconList[iconIdx++] + ".svg"));
-        btnBracketRight->setIcon(QIcon(":/image/intelScientific/" + btnIconList[iconIdx++] + ".svg"));
+        btnInd->setIcon(QIcon(":/image/intelScientificDark/" + btnIconList[iconIdx++] + ".svg"));
+        btnUndo->setIcon(QIcon(":/image/intelScientificDark/" + btnIconList[iconIdx++] + ".svg"));
+        btnBracketLeft->setIcon(QIcon(":/image/intelScientificDark/" + btnIconList[iconIdx++] + ".svg"));
+        btnBracketRight->setIcon(QIcon(":/image/intelScientificDark/" + btnIconList[iconIdx++] + ".svg"));
 
-        btnReci->setIcon(QIcon(":/image/intelScientific/" + btnIconList[iconIdx++] + ".svg"));
-        btnXPower2->setIcon(QIcon(":/image/intelScientific/" + btnIconList[iconIdx++] + ".svg"));
-        btnXPower3->setIcon(QIcon(":/image/intelScientific/" + btnIconList[iconIdx++] + ".svg"));
-        btnYPowerX->setIcon(QIcon(":/image/intelScientific/" + btnIconList[iconIdx++] + ".svg"));
+        btnReci->setIcon(QIcon(":/image/intelScientificDark/" + btnIconList[iconIdx++] + ".svg"));
+        btnXPower2->setIcon(QIcon(":/image/intelScientificDark/" + btnIconList[iconIdx++] + ".svg"));
+        btnXPower3->setIcon(QIcon(":/image/intelScientificDark/" + btnIconList[iconIdx++] + ".svg"));
+        btnYPowerX->setIcon(QIcon(":/image/intelScientificDark/" + btnIconList[iconIdx++] + ".svg"));
 
-        btnFac->setIcon(QIcon(":/image/intelScientific/" + btnIconList[iconIdx++] + ".svg"));
-        btnXSquare2->setIcon(QIcon(":/image/intelScientific/" + btnIconList[iconIdx++] + ".svg"));
-        btnXSquare3->setIcon(QIcon(":/image/intelScientific/" + btnIconList[iconIdx++] + ".svg"));
-        btnYSquareX->setIcon(QIcon(":/image/intelScientific/" + btnIconList[iconIdx++] + ".svg"));
+        btnFac->setIcon(QIcon(":/image/intelScientificDark/" + btnIconList[iconIdx++] + ".svg"));
+        btnXSquare2->setIcon(QIcon(":/image/intelScientificDark/" + btnIconList[iconIdx++] + ".svg"));
+        btnXSquare3->setIcon(QIcon(":/image/intelScientificDark/" + btnIconList[iconIdx++] + ".svg"));
+        btnYSquareX->setIcon(QIcon(":/image/intelScientificDark/" + btnIconList[iconIdx++] + ".svg"));
 
-        btnSin->setIcon(QIcon(":/image/intelScientific/" + btnIconList[iconIdx++] + ".svg"));
-        btnCos->setIcon(QIcon(":/image/intelScientific/" + btnIconList[iconIdx++] + ".svg"));
-        btnTan->setIcon(QIcon(":/image/intelScientific/" + btnIconList[iconIdx++] + ".svg"));
-        btnLog->setIcon(QIcon(":/image/intelScientific/" + btnIconList[iconIdx++] + ".svg"));
+        btnSin->setIcon(QIcon(":/image/intelScientificDark/" + btnIconList[iconIdx++] + ".svg"));
+        btnCos->setIcon(QIcon(":/image/intelScientificDark/" + btnIconList[iconIdx++] + ".svg"));
+        btnTan->setIcon(QIcon(":/image/intelScientificDark/" + btnIconList[iconIdx++] + ".svg"));
+        btnLog->setIcon(QIcon(":/image/intelScientificDark/" + btnIconList[iconIdx++] + ".svg"));
 
-        btnRad->setIcon(QIcon(":/image/intelScientific/" + btnIconList[iconIdx++] + ".svg"));
-        btnPi->setIcon(QIcon(":/image/intelScientific/" + btnIconList[iconIdx++] + ".svg"));
-        btnExp->setIcon(QIcon(":/image/intelScientific/" + btnIconList[iconIdx++] + ".svg"));
-        btnLn->setIcon(QIcon(":/image/intelScientific/" + btnIconList[iconIdx++] + ".svg"));
+        btnRad->setIcon(QIcon(":/image/intelScientificDark/" + btnIconList[iconIdx++] + ".svg"));
+        btnPi->setIcon(QIcon(":/image/intelScientificDark/" + btnIconList[iconIdx++] + ".svg"));
+        btnExp->setIcon(QIcon(":/image/intelScientificDark/" + btnIconList[iconIdx++] + ".svg"));
+        btnLn->setIcon(QIcon(":/image/intelScientificDark/" + btnIconList[iconIdx++] + ".svg"));
 
         btnStyle = "QPushButton{"
                    "background-color:#27292C;border-radius:4px;"
@@ -1177,9 +1177,9 @@ void ScientificModel::updateBtnSinDisplay()
         }
         else if (WidgetStyle::themeColor == 1) {
             if (DataWarehouse::getInstance()->platform == QString("intel")) {
-                btnSin->setIcon(QIcon(":/image/intelScientific/btnSin.svg"));
-                btnCos->setIcon(QIcon(":/image/intelScientific/btnCos.svg"));
-                btnTan->setIcon(QIcon(":/image/intelScientific/btnTan.svg"));
+                btnSin->setIcon(QIcon(":/image/intelScientificDark/btnSin.svg"));
+                btnCos->setIcon(QIcon(":/image/intelScientificDark/btnCos.svg"));
+                btnTan->setIcon(QIcon(":/image/intelScientificDark/btnTan.svg"));
             } else {
                 btnSin->setIcon(QIcon(":/image/scientific/btnSin.png"));
                 btnCos->setIcon(QIcon(":/image/scientific/btnCos.png"));
@@ -1206,9 +1206,9 @@ void ScientificModel::updateBtnSinDisplay()
         }
         else if (WidgetStyle::themeColor == 1) {
             if (DataWarehouse::getInstance()->platform == QString("intel")) {
-                btnSin->setIcon(QIcon(":/image/intelScientific/btnAsin.svg"));
-                btnCos->setIcon(QIcon(":/image/intelScientific/btnAcos.svg"));
-                btnTan->setIcon(QIcon(":/image/intelScientific/btnAtan.svg"));
+                btnSin->setIcon(QIcon(":/image/intelScientificDark/btnAsin.svg"));
+                btnCos->setIcon(QIcon(":/image/intelScientificDark/btnAcos.svg"));
+                btnTan->setIcon(QIcon(":/image/intelScientificDark/btnAtan.svg"));
             } else {
                 btnSin->setIcon(QIcon(":/image/scientific/btnAsin.png"));
                 btnCos->setIcon(QIcon(":/image/scientific/btnAcos.png"));
@@ -1252,7 +1252,7 @@ void ScientificModel::updateBtnRadDisplay()
         }
         else if (WidgetStyle::themeColor == 1) {
             if (DataWarehouse::getInstance()->platform == QString("intel")) {
-                btnRad->setIcon(QIcon(":/image/intelScientific/btnRad.svg"));
+                btnRad->setIcon(QIcon(":/image/intelScientificDark/btnRad.svg"));
             } else {
                 btnRad->setIcon(QIcon(":/image/scientific/btnRad.png"));
             }
@@ -1275,7 +1275,7 @@ void ScientificModel::updateBtnRadDisplay()
         }
         else if (WidgetStyle::themeColor == 1) {
             if (DataWarehouse::getInstance()->platform == QString("intel")) {
-                btnRad->setIcon(QIcon(":/image/intelScientific/btnDeg.svg"));
+                btnRad->setIcon(QIcon(":/image/intelScientificDark/btnDeg.svg"));
             } else {
                 btnRad->setIcon(QIcon(":/image/scientific/btnDeg.png"));
             }
