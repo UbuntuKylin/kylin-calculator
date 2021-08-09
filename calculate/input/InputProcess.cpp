@@ -538,9 +538,10 @@ QVector<QString> InputProcess::inputFromButton(const QString &text)
     if ( text == STANDARD
       || text == SCIENTIFIC
       || text == DEG_SYMBOL
-      || text == RAD_SYMBOL ) {
+      || text == RAD_SYMBOL
+      || text == EXCHANGE_RATE   ) {
 
-        if (text == STANDARD) {
+        if (text == STANDARD || text == EXCHANGE_RATE) {
             G.updateAllSon(SCIENTIFIC, 0);
             init();
             G.updateAllSon(STANDARD, 1);

@@ -15,7 +15,8 @@ Build-Depends: debhelper-compat (= 12),
                libgsl-dev,
                libqt5x11extras5-dev,
                libgsettings-qt-dev,
-               libukui-log4qt-dev
+               libukui-log4qt-dev,
+               libukui-common-dev
 Standards-Version: 4.5.1
 Rules-Requires-Root: no
 Homepage: https://github.com/ubuntukylin/kylin-calculator

@@ -32,6 +32,7 @@
 
 #include "basicbutton.h"
 #include "widgetstyle.h"
+#include "data_warehouse.h"
 
 class ScientificOutput : public QWidget
 {
@@ -55,6 +56,8 @@ public:
 
     // 设置组件样式
     void setWidgetStyle(bool resetFontSize = true);
+
+    //void createIntelOutput(void);
 
 };
 
@@ -134,6 +137,10 @@ public:
 
     // 设置组件样式
     void setWidgetStyle();
+
+    /* intel stand model ui */
+    void createIntelModel(void);
+    void createIntelStyle(void);
     
     // 切换三角函数和反三角函数显示
     void changeBtnSinDisplay();

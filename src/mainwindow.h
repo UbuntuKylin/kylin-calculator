@@ -117,6 +117,9 @@ public:
     QPoint mMovePosition;
     bool mMoveing;
 
+    // 屏幕大小
+    //const QRect screenRect;
+
     // 判断字符串是否为纯数字
     bool isDigitStr(QString str);
 
@@ -151,6 +154,8 @@ public slots:
 
     // 汇率换算事件
     void unitConversion();
+
+    void fontUpdate();
 
     void changeModel(QString);
 
@@ -193,11 +198,12 @@ private:
     QVBoxLayout *mainLayout;
 
     QWidget *mainWid;
-    // QWidget *titleBarWid;
+    QWidget *titleBarWid = nullptr;
     QWidget *outputWid = nullptr;
     QWidget *buttonWid = nullptr;
     QWidget *funcListWid;
 
+    QVBoxLayout *mainTitleLayout;
     QVBoxLayout *mainOutputLayout;
     QVBoxLayout *mainButtonLayout;
 
@@ -206,9 +212,11 @@ private:
 
     StandardOutput *standardOutput = nullptr;
     StandardModel  *standardModel = nullptr;
+    TitleBar *standardTitle = nullptr;
 
     ScientificOutput *scientificOutput = nullptr;
     ScientificModel  *scientificModel = nullptr;
+    TitleBar *scientificTitle = nullptr;
 
     ToolModelOutput *toolModelOutput = nullptr;
     ToolModelButton *toolModelButton = nullptr;
@@ -217,7 +225,8 @@ private:
 
     // 保存当前计算器模式
     QString currentModel;
-    const QString EXCHANGE_RATE = "exchange rate";
+    //QString currentModel;
+
 
     QString dis_data;
     QString result;
@@ -242,6 +251,7 @@ private:
 
     // 剪切板
     QClipboard *clipboard = QApplication::clipboard();
+
 
     
 };

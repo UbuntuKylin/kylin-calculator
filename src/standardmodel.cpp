@@ -16,14 +16,14 @@
  */
 
 #include "standardmodel.h"
+#include "data_warehouse.h"
 
 StandardOutput::StandardOutput(QWidget *parent)
 {
-    // 初始化组件
-    this->setWidgetUi();
-
-    // 设置组件样式
-    this->setWidgetStyle();
+        // 初始化组件
+        this->setWidgetUi();
+        // 设置组件样式
+        this->setWidgetStyle();
 }
 
 // 初始化组件
@@ -52,21 +52,48 @@ void StandardOutput::setWidgetUi()
     this->staLabPre->setAlignment(Qt::AlignRight | Qt::AlignTop);
     this->staLabPre->setFont(staLabPreFont);
     this->staLabPre->setText("");
-    this->staLabPre->setFixedHeight(35);
+    //this->staLabPre->setFixedHeight(35);
     this->staLabPre->show();
 
-    QFont staLabNowFont("SourceHanSansCN-Normal", 48, 15);
-    this->staLabNow->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-    this->staLabNow->setFont(staLabNowFont);
-    this->staLabNow->setText("0");
-    this->staLabNow->setFixedHeight(65);
-    this->staLabNow->show();
+    if (DataWarehouse::getInstance()->platform == QString("intel")) {
+        QFont staLabNowFont("OPPOSans" , 48 , 15);
+//        staLabNowFont.setBold(true);
+        staLabNowFont.setPixelSize(48);
+        this->staLabNow->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+        this->staLabNow->setFont(staLabNowFont);
+        this->staLabNow->setText("0");
+        this->staLabNow->setMinimumHeight(100);
+        this->staLabNow->show();
+    } else {
+        QFont staLabNowFont("SourceHanSansCN-Normal", 48, 15);
+        this->staLabNow->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+        this->staLabNow->setFont(staLabNowFont);
+        this->staLabNow->setText("0");
+        //this->staLabNow->setFixedHeight(65);
+        this->staLabNow->show();
 
-    this->staLabNow->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    }
+    this->staLabLast->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     this->staLabPre->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     this->staLabNow->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     QVBoxLayout *staOutputLayout = new QVBoxLayout();
+
+    /* intel output ui */
+    if (DataWarehouse::getInstance()->platform == QString("intel")) {
+        this->staLabLast->hide();
+        this->staLabPre->hide();
+
+        staOutputLayout->addWidget(this->staLabNow);
+        staOutputLayout->setSpacing(0);
+        //staOutputLayout->setMargin(2);
+
+        this->setLayout(staOutputLayout);
+        //this->setFixedHeight(102);
+
+        return;
+    }
+
     staOutputLayout->addWidget(this->staLabLast);
     staOutputLayout->addWidget(this->staLabPre);
     staOutputLayout->addWidget(this->staLabNow);
@@ -76,15 +103,20 @@ void StandardOutput::setWidgetUi()
     staOutputLayout->setSpacing(0);
 
     this->setLayout(staOutputLayout);
-    this->setFixedHeight(270);
+    //this->setFixedHeight(270);
     //    this->setContentsMargins(1, 0, 1, 0);
 }
 
 // 设置组件样式
 void StandardOutput::setWidgetStyle(bool resetFontSize)
 {
+    /* handle intel ui */
+//    if (DataWarehouse::getInstance()->platform == QString("intel")) {
+//        return;
+//    }
+
     if (WidgetStyle::themeColor == 0) {
-        this->staLabLast->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
+        this->staLabLast->setStyleSheet("color:#8C8C8C;font-size:12px;margin:0 7px 0 7px;");
         this->staLabPre->setStyleSheet("color:#FB9119;font-size:20px;margin:0 7px 0 7px;");
 
 
@@ -93,11 +125,12 @@ void StandardOutput::setWidgetStyle(bool resetFontSize)
         }
         else {
             QString fontSizeStr = QString::number(staLabNow->font().pixelSize());
-            this->staLabNow->setStyleSheet("color:#272A2D;font-size:" + fontSizeStr + "px;font-weight:15px;margin:0 0 5px 7px;");
+
+            this->staLabNow->setStyleSheet(QString("color:#272A2D;font-size:") + fontSizeStr + QString("px;font-weight:15px;margin:0 0 5px 7px;"));
         }
     }
     else if (WidgetStyle::themeColor == 1) {
-        this->staLabLast->setStyleSheet("color:#8C8C8C;font-size:20px;margin:0 7px 0 7px;");
+        this->staLabLast->setStyleSheet("color:#8C8C8C;font-size:12px;margin:0 7px 0 7px;");
         this->staLabPre->setStyleSheet("color:#FB9119;font-size:20px;margin:0 7px 0 7px;");
 
         if (resetFontSize) {
@@ -105,7 +138,7 @@ void StandardOutput::setWidgetStyle(bool resetFontSize)
         }
         else {
             QString fontSizeStr = QString::number(staLabNow->font().pixelSize());
-            this->staLabNow->setStyleSheet("color:#FFFFFF;font-size:" + fontSizeStr + "px;font-weight:15px;margin:0 0 5px 7px;");
+            this->staLabNow->setStyleSheet(QString("color:#FFFFFF;font-size:") + fontSizeStr + QString("px;font-weight:15px;margin:0 0 5px 7px;"));
         }
     }
 }
@@ -113,11 +146,212 @@ void StandardOutput::setWidgetStyle(bool resetFontSize)
 StandardModel::StandardModel(QWidget *parent)
     : QWidget(parent)
 {
-    // 初始化组件
-    this->setWidgetUi();
+    if (DataWarehouse::getInstance()->platform == QString("intel")) {
+        this->createIntelModel();
+        this->createIntelStyle();
+    } else {
+        // 初始化组件
+        this->setWidgetUi();
+        // 设置组件样式
+        this->setWidgetStyle();
+    }
+}
 
-    // 设置组件样式
-    this->setWidgetStyle();
+void StandardModel::createIntelModel(void)
+{
+    qDebug() << "Info : create intel stand mode ui...";
+
+    //this->setFixedSize(400 , 400);
+
+    for (int i = 0 ; i < 10 ; i++) {
+        btnNum[i] = new BasicButton(this);
+        btnNum[i]->setText(QString::number(i));
+        btnNum[i]->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        btnNum[i]->setIcon(QIcon(":/image/intelStandLight/"+ QString::number(i) +".svg"));
+        if (i == 0) {
+            btnNum[i]->setIconSize(QSize(200, 80));
+        } else {
+            btnNum[i]->setIconSize(QSize(100, 80));
+        }
+    }
+
+    btnClear  = new BasicButton(this);   /* 清除键 */
+    btnPer    = new BasicButton(this);   /* 百分号 */
+    btnDelete = new BasicButton(this);   /* 删除键 */
+    btnDiv   = new BasicButton(this);    /* 除号 */
+    btnMulti = new BasicButton(this);    /* 乘号 */
+    btnSub   = new BasicButton(this);    /* 减号 */
+    btnAdd   = new BasicButton(this);    /* 加号 */
+    btnEqual = new BasicButton(this);    /* 等号 */
+    btnPoint = new BasicButton(this);    /* 小数点 */
+
+    // 设置按钮的显示文本
+    QString btnList = "C,÷,×,B,ｰ,+,=,%,.";
+    QStringList btnNameList= btnList.split(",");
+    int index = 0;
+    btnClear->setText(btnNameList[index++]);
+    btnDiv->setText(btnNameList[index++]);
+    btnMulti->setText(btnNameList[index++]);
+    btnDelete->setText(btnNameList[index++]);
+    btnSub->setText(btnNameList[index++]);
+    btnAdd->setText(btnNameList[index++]);
+    btnEqual->setText(btnNameList[index++]);
+    btnPer->setText(btnNameList[index++]);
+    btnPoint->setText(btnNameList[index++]);
+
+    btnClear->setIcon(QIcon(":/image/intelStandLight/ac.svg"));
+    btnDiv->setIcon(QIcon(":/image/intelStandLight/except.svg"));
+    btnMulti->setIcon(QIcon(":/image/intelStandLight/ride.svg"));
+    btnDelete->setIcon(QIcon(":/image/intelStandLight/delete.svg"));
+    btnSub->setIcon(QIcon(":/image/intelStandLight/reduce.svg"));
+    btnAdd->setIcon(QIcon(":/image/intelStandLight/add.svg"));
+    btnEqual->setIcon(QIcon(":/image/intelStandLight/equal.svg"));
+    btnPer->setIcon(QIcon(":/image/intelStandLight/per.svg"));
+    btnPoint->setIcon(QIcon(":/image/intelStandLight/spot.svg"));
+
+    btnClear ->setIconSize(QSize(100, 80));
+    btnDiv   ->setIconSize(QSize(100, 80));
+    btnMulti ->setIconSize(QSize(100, 80));
+    btnDelete->setIconSize(QSize(100, 80));
+    btnSub   ->setIconSize(QSize(100, 80));
+    btnAdd   ->setIconSize(QSize(100, 80));
+    btnEqual ->setIconSize(QSize(100, 80));
+    btnPer   ->setIconSize(QSize(100, 80));
+    btnPoint ->setIconSize(QSize(100, 80));
+
+    // 设置按钮自适应放缩
+    btnClear->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnDiv->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnMulti->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnDelete->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnSub->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnAdd->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnEqual->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnPer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnPoint->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+        // 将按钮进行网格布局
+    QGridLayout *btnLayout = new QGridLayout();
+    btnLayout->addWidget(btnClear, 0, 0, 1, 1);
+    btnLayout->addWidget(btnPer, 0, 1, 1, 1);
+    btnLayout->addWidget(btnDelete, 0, 2, 1, 1);
+    btnLayout->addWidget(btnAdd, 0, 3, 1, 1);
+    btnLayout->addWidget(btnSub, 1, 3, 1, 1);
+    btnLayout->addWidget(btnMulti, 2, 3, 1, 1);
+    btnLayout->addWidget(btnDiv, 3, 3, 1, 1);
+    btnLayout->addWidget(btnPoint, 4, 2, 1, 1);
+    btnLayout->addWidget(btnEqual, 4, 3, 1, 1);
+
+    // 数字按钮布局
+    btnLayout->addWidget(btnNum[0], 4, 0, 1, 2);
+    for (int i = 1; i < 10; i++) {
+        btnLayout->addWidget(btnNum[i], 3 - (i - 1)/3, (i - 1) % 3, 1, 1);
+    }
+
+    // 设置间距和背景样式
+    btnLayout->setSpacing(2);
+    btnLayout->setMargin(1);
+    this->setLayout(btnLayout);
+}
+
+void StandardModel::createIntelStyle(void)
+{
+    qDebug() << "change intel stand mode ui style...";
+
+    QString btnStyle;
+    QString btnOpStyle;
+    QString btnEqualStyle;
+
+    if (WidgetStyle::themeColor == 0) {
+        for (int i = 0; i < 10; i++) {
+            btnNum[i]->setIcon(QIcon(":/image/intelStandLight/"+ QString::number(i) +".svg"));
+            //btnNum[i]->setIcon(QIcon(":/image/light/standard/btnNum"+ QString::number(i) +".svg"));
+        }
+
+        btnClear->setIcon(QIcon(":/image/intelStandLight/ac.svg"));
+        btnDiv->setIcon(QIcon(":/image/intelStandLight/except.svg"));
+        btnMulti->setIcon(QIcon(":/image/intelStandLight/ride.svg"));
+        btnDelete->setIcon(QIcon(":/image/intelStandLight/delete.svg"));
+        btnSub->setIcon(QIcon(":/image/intelStandLight/reduce.svg"));
+        btnAdd->setIcon(QIcon(":/image/intelStandLight/add.svg"));
+        btnEqual->setIcon(QIcon(":/image/intelStandLight/equal.svg"));
+        btnPer->setIcon(QIcon(":/image/intelStandLight/per.svg"));
+        btnPoint->setIcon(QIcon(":/image/intelStandLight/spot.svg"));
+
+        btnStyle = "QPushButton{"
+                   "background-color:#FFFFFF;border-radius:0px;"
+                   "font-size:42px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
+                   "}"
+                   "QPushButton:pressed{background-color:#F6F6F6;}";
+
+        btnOpStyle = "QPushButton{"
+                     "background-color:#FFFFFF;border-radius:0px;"
+                     "font-size:35px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
+                     "}"
+                     "QPushButton:pressed{background-color:#F6F6F6;}";
+
+        btnEqualStyle = "QPushButton{"
+                        "background-color:#FB7054;border-radius:0px;"
+                        "font-size:48px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
+                        "}"
+                        "QPushButton:pressed{background-color:#EA5E42;}";
+    }
+    else if (WidgetStyle::themeColor == 1) {
+        /* 暗色主题的设计稿还未给出 */
+        for (int i = 0; i < 10; i++) {
+            btnNum[i]->setIcon(QIcon(":/image/intelStandDark/"+ QString::number(i) +".svg"));
+        }
+
+        btnClear->setIcon(QIcon(":/image/intelStandDark/ac.svg"));
+        btnDiv->setIcon(QIcon(":/image/intelStandDark/except.svg"));
+        btnMulti->setIcon(QIcon(":/image/intelStandDark/ride.svg"));
+        btnDelete->setIcon(QIcon(":/image/intelStandDark/delete.svg"));
+        btnSub->setIcon(QIcon(":/image/intelStandDark/reduce.svg"));
+        btnAdd->setIcon(QIcon(":/image/intelStandDark/add.svg"));
+        btnEqual->setIcon(QIcon(":/image/intelStandDark/equal.svg"));
+        btnPer->setIcon(QIcon(":/image/intelStandDark/per.svg"));
+        btnPoint->setIcon(QIcon(":/image/intelStandDark/spot.svg"));
+
+        btnStyle = "QPushButton{"
+                   "width:100px;height:80px;opacity:0.95;"
+                   "background-color:#27292C;border-radius:4px;"
+                   "font-size:42px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
+                   "}"
+                   "QPushButton:hover{background-color:#474747;}";
+
+        btnOpStyle = "QPushButton{"
+                     "width:100px;height:80px;opacity:1;"
+                     "background-color:#222E36;border-radius:4px;"
+                     "font-size:35px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;}"
+                     "QPushButton:hover{background-color:#474747;}";
+
+        btnEqualStyle = "QPushButton{"
+                        "width:200px;height:80px;opacity:1;"
+                        "background-color:#E64A19;border-radius:4px;"
+                        "font-size:48px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
+                        "}"
+                        "QPushButton:hover{background-color:#E45E4C;}";
+    }
+
+    /* 设置按钮风格 */
+    for (int i = 0 ; i < 10 ; i++) {
+        btnNum[i]->setStyleSheet(btnStyle);
+    }
+
+    // 设置按钮样式standardModel
+    btnClear->setStyleSheet(btnStyle);
+    btnPer->setStyleSheet(btnStyle);
+    btnDelete->setStyleSheet(btnStyle);
+    btnPoint->setStyleSheet(btnStyle);
+
+    btnDiv->setStyleSheet(btnOpStyle);
+    btnMulti->setStyleSheet(btnOpStyle);
+    btnSub->setStyleSheet(btnOpStyle);
+    btnAdd->setStyleSheet(btnOpStyle);
+
+    btnEqual->setStyleSheet(btnEqualStyle);
+
+    return;
 }
 
 // 初始化组件
@@ -231,7 +465,7 @@ void StandardModel::setWidgetUi()
     // 设置间距和背景样式
     btnLayout->setSpacing(2);
     btnLayout->setMargin(1);
-    this->setFixedHeight(320);
+    //this->setFixedHeight(320);
     this->setLayout(btnLayout);
 }
 
@@ -263,21 +497,18 @@ void StandardModel::setWidgetStyle()
 
 
         btnStyle = "QPushButton{"
-                   "width:106px;height:62px;opacity:1;"
                    "background-color:#F3F3F3;border-radius:4px;"
                    "font-size:42px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                    "}"
                    "QPushButton:hover{background-color:#E8E8E8;}";
 
         btnOpStyle = "QPushButton{"
-                     "width:106px;height:62px;opacity:1;"
                      "background-color:#F5F5F8;border-radius:4px;"
                      "font-size:35px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                      "}"
                      "QPushButton:hover{background-color:#E8E8E8;}";
 
         btnEqualStyle = "QPushButton{"
-                        "width:106px;height:126px;opacity:1;"
                         "background-color:#E64A19;border-radius:4px;"
                         "font-size:48px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                         "}"
@@ -301,20 +532,17 @@ void StandardModel::setWidgetStyle()
         btnPoint->setIcon(QIcon(":/image/standard/btnPoint.png"));
 
         btnStyle = "QPushButton{"
-                   "width:106px;height:62px;opacity:0.95;"
                    "background-color:#27292C;border-radius:4px;"
                    "font-size:42px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                    "}"
                    "QPushButton:hover{background-color:#474747;}";
 
         btnOpStyle = "QPushButton{"
-                     "width:106px;height:62px;opacity:1;"
                      "background-color:#222E36;border-radius:4px;"
                      "font-size:35px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;}"
                      "QPushButton:hover{background-color:#474747;}";
 
         btnEqualStyle = "QPushButton{"
-                        "width:106px;height:126px;opacity:1;"
                         "background-color:#E64A19;border-radius:4px;"
                         "font-size:48px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                         "}"

@@ -1,3 +1,12 @@
+kylin-calculator (1.0.31kord17) v101; urgency=medium
+
+  * BUG号：无
+  * 任务号：43294 【EDU V2.0】【计算器】UI界面优化
+  * 需求号：7227 【计算器】UI界面优化 
+  * 其他改动说明：无
+
+ -- jishengjie <jishengjie@kylinos.cn>  Mon, 09 Aug 2021 09:08:20 +0800
+
 kylin-calculator (1.0.31kord16) v101; urgency=medium
 
   * BUG号：69563
@@ -6,7 +15,7 @@ kylin-calculator (1.0.31kord16) v101; urgency=medium
   * 其他改动说明：
     - 【创新院】【计算器】使用计算器科学模式，输入“（—”后输入一个数字，应用自动闪退
 
- -- jiangdingyuan <jiangdingyuan@kylinos.cn> Tue, 27 Jul 2021 14:15:33 +0800
+ -- jiangdingyuan <jiangdingyuan@kylinos.cn>  Tue, 27 Jul 2021 09:08:20 +0800
 
 kylin-calculator (1.0.31kord15) v101; urgency=medium
 

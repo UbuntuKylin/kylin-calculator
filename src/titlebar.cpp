@@ -21,23 +21,225 @@
 #include <QEvent>
 #include <QMouseEvent>
 #include <QApplication>
+#include <QStringList>
 #include "titlebar.h"
 #include "mainwindow.h"
 #include "funclist.h"
 #include "xatom-helper.h"
+#include "InputSymbols.h"
+#include "data_warehouse.h"
+#include <QColor>
+#include <QDesktopWidget>
 
-TitleBar::TitleBar(QWidget *parent)
-    : QWidget(parent)
+TitleBar::TitleBar(QWidget *parent) : QWidget(parent)
 {
-    // 初始化组件
-    setWidgetUi();
-
-    // 设置组件样式
-    setWidgetStyle();
+    /* handle intel ui */
+    if (DataWarehouse::getInstance()->platform == QString("intel")) {
+        createInterUi();
+        createInterStyle();
+    } else {
+        // 初始化组件
+        setWidgetUi();
+        // 设置组件样式
+        setWidgetStyle();
+    }
 }
 
 TitleBar::~TitleBar()
 {
+
+}
+
+/* intel title ui */
+void TitleBar::createInterUi()
+{
+    this->setFixedHeight(38);
+    this->setWindowFlags(Qt::FramelessWindowHint);
+
+    this->STANDARD_LABEL = tr("standard");
+    this->SCIENTIFIC_LABEL = tr("scientific");
+
+    this->m_Icon = new QLabel(this);
+    this->m_Icon->setFixedSize(QSize(25 , 25));
+    this->m_Icon->setPixmap(QIcon::fromTheme("kylin-calculator").pixmap(QSize(24 , 24)));
+
+    this->m_mode = new QPushButton(this);
+    QPixmap icon(":/image/intelStandLight/ic-open.svg");
+    icon.scaled(24 , 24);
+    m_mode->setIcon(QIcon(icon));
+    m_mode->setLayoutDirection(Qt::RightToLeft);
+    this->m_mode->setText(tr("standard"));
+    this->m_mode->setFlat(true);
+    this->m_menu = new QMenu();
+    this->m_menu->installEventFilter(this);
+
+    standardMode = new QAction(this->m_menu);
+    standardMode->setText(tr("standard"));
+    standardMode->setCheckable(true);
+    standardMode->setChecked(true);
+    scientificMode = new QAction(this->m_menu);
+    scientificMode->setText(tr("scientific"));
+    scientificMode->setCheckable(true);
+
+    this->m_menu->addAction(standardMode);
+    this->m_menu->addAction(scientificMode);
+    this->m_mode->setMenu(this->m_menu);
+
+    this->m_min = new QPushButton();
+    this->m_min->setFixedSize(QSize(30 , 30));
+    this->m_min->setIcon(QIcon::fromTheme("window-minimize-symbolic"));
+    this->m_min->setIconSize(QSize(16 , 16));
+    this->m_min->setProperty("isWindowButton", 0x1);
+    this->m_min->setProperty("useIconHighlightEffect", 0x2);
+    this->m_min->setFlat(true);
+
+    this->m_max = new QPushButton();
+    this->m_max->setFixedSize(QSize(30 , 30));
+    this->m_max->setIcon(QIcon::fromTheme("window-maximize-symbolic"));
+    this->m_max->setIconSize(QSize(16 , 16));
+    this->m_max->setProperty("isWindowButton", 0x1);
+    this->m_max->setProperty("useIconHighlightEffect", 0x2);
+    this->m_max->setFlat(true);
+
+    this->m_close = new QPushButton();
+    this->m_close->setFixedSize(QSize(30 , 30));
+    this->m_close->setIcon(QIcon::fromTheme("window-close-symbolic"));
+    this->m_close->setIconSize(QSize(16 , 16));
+    this->m_close->setProperty("isWindowButton", 0x2);
+    this->m_close->setProperty("useIconHighlightEffect", 0x8);
+    this->m_close->setFlat(true);
+
+    this->hlayout = new QHBoxLayout();
+    this->hlayout->setMargin(0);
+
+    this->hlayout->addSpacing(16);
+    this->hlayout->addWidget(this->m_Icon);
+    this->hlayout->addSpacing(4);
+
+    this->hlayout->addWidget(this->m_mode);
+    this->hlayout->addStretch(0);
+
+    this->hlayout->addWidget(this->m_min);
+    this->hlayout->addSpacing(4);
+
+    this->hlayout->addWidget(this->m_max);
+    this->hlayout->addSpacing(4);
+
+    this->hlayout->addWidget(this->m_close);
+    this->hlayout->addSpacing(4);
+
+    connect(this->m_min , &QPushButton::clicked , this , &TitleBar::onClicked);
+    connect(this->m_max , &QPushButton::clicked , this ,&TitleBar::onClicked);
+    connect(this->m_close , &QPushButton::clicked , this , &TitleBar::onClicked);
+    connect(this->m_menu , &QMenu::triggered , this , &TitleBar::slotModeChange);
+
+    this->setLayout(this->hlayout);
+
+    return;
+}
+
+void TitleBar::createInterStyle(void)
+{
+    /* 跟随主题变动 , 暂不需要手动设置 */
+    QPixmap icon;
+    if (WidgetStyle::themeColor == 0) {
+        this->m_mode->setStyleSheet("QPushButton::menu-indicator{image:None;}");
+        icon.load(":/image/intelStandLight/ic-open.svg");
+        icon.scaled(24 , 24);
+        m_mode->setIcon(QIcon(icon));
+    }
+    else if (WidgetStyle::themeColor == 1) {
+        this->m_mode->setStyleSheet("QPushButton::menu-indicator{image:None;}");
+        icon.load(":/image/intelStandDark/ic-open.svg");
+        icon.scaled(24 , 24);
+        m_mode->setIcon(QIcon(icon));
+    }
+}
+
+#if 0
+
+void TitleBar::paintEvent(QPaintEvent *event)
+{
+    if (DataWarehouse::getInstance()->platform == QString("intel")) {
+        Q_UNUSED(event);
+        if (WidgetStyle::themeColor == 0) {
+            QColor color("#EDEDED");
+            QPainter p(this);
+            p.setPen(Qt::NoPen);
+            p.setBrush(QBrush(color));
+            p.drawRect(rect());
+        } else {
+            /* 黑色模式 */
+            QColor color("#262626");
+            QPainter p(this);
+            p.setPen(Qt::NoPen);
+            p.setBrush(QBrush(color));
+            p.drawRect(rect());
+        }
+    }
+    return;
+}
+
+#endif
+
+bool TitleBar::eventFilter(QObject * obj, QEvent *event)
+{
+    if (DataWarehouse::getInstance()->platform == QString("intel")) {
+        if(obj == this->m_menu)
+        {
+            QPixmap icon;
+            if(event->type() == QEvent::Hide)
+            {
+                if (WidgetStyle::themeColor == 0) {
+                    icon.load(":/image/intelStandLight/ic-open.svg");
+                    icon.scaled(24 , 24);
+                } else {
+                    icon.load(":/image/intelStandDark/ic-open.svg");
+                    icon.scaled(24 , 24);
+                }
+
+                m_mode->setIcon(QIcon(icon));
+            }
+            if (event->type() == QEvent::Show) {
+                QPoint globalPos = this->m_mode->mapToGlobal(QPoint(0 , 0));
+                this->m_menu->move(globalPos.x() , globalPos.y() + this->m_mode->height());
+
+                if (WidgetStyle::themeColor == 0) {
+                    icon.load(":/image/intelStandLight/ic-close.svg");
+                    icon.scaled(24 , 24);
+                } else {
+                    icon.load(":/image/intelStandDark/ic-close.svg");
+                    icon.scaled(24 , 24);
+                }
+
+                m_mode->setIcon(QIcon(icon));
+                return true;
+            }
+
+        }
+
+    } else {
+        return QObject::eventFilter(obj, event);
+    }
+        return QObject::eventFilter(obj, event);
+}
+
+void TitleBar::slotModeChange(QAction *action)
+{
+    QString mode = action->text();
+    if (mode == tr("standard")) {
+        qDebug() << "Info : change mode to standard";
+        this->m_mode->setText(tr("standard"));
+        this->standardMode->setChecked(true);
+        this->scientificMode->setChecked(false);
+        emit sigModeChange(QString("standard"));
+    } else if (mode == tr("scientific")) {
+        qDebug() << "Info : change mode to scientific";
+        this->m_mode->setText(tr("scientific"));
+        this->standardMode->setChecked(false);
+        this->scientificMode->setChecked(true);
+        emit sigModeChange(QString("scientific"));
+    }
 
 }
 
@@ -64,6 +266,7 @@ void TitleBar::setWidgetUi()
     m_pFuncLabel = new QLabel(this);
     m_pTopButton = new QPushButton(this);
     m_pMinimizeButton = new QPushButton(this);
+    m_pMaximizeButton = new QPushButton(this);
     m_pCloseButton = new QPushButton(this);
 
     // 设置空间大小
@@ -71,18 +274,21 @@ void TitleBar::setWidgetUi()
     m_pFuncLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     m_pTopButton->setFixedSize(30, 30);
     m_pMinimizeButton->setFixedSize(30, 30);
+    m_pMaximizeButton->setFixedSize(30, 30);
     m_pCloseButton->setFixedSize(30, 30);
     
     // 设置对象名
     m_pFuncLabel->setObjectName("whiteLabel");
     m_pTopButton->setObjectName("topButton");
     m_pMinimizeButton->setObjectName("minimizeButton");
+    m_pMaximizeButton->setObjectName("maximizeButton");
     m_pCloseButton->setObjectName("closeButton");
 
     // 设置悬浮提示
     // funcListButton->setToolTip(tr("FuncList"));
     m_pTopButton->setToolTip(tr("StayTop"));
     m_pMinimizeButton->setToolTip(tr("Minimize"));
+    m_pMaximizeButton->setToolTip(tr("Maximize"));
     m_pCloseButton->setToolTip(tr("Close"));
 
     // 设置图片
@@ -106,6 +312,13 @@ void TitleBar::setWidgetUi()
     m_pMinimizeButton->setProperty("isWindowButton", 0x1);
     m_pMinimizeButton->setProperty("useIconHighlightEffect", 0x2);
     m_pMinimizeButton->setFlat(true);
+
+    m_pMaximizeButton->setIcon(QIcon::fromTheme("window-maximize-symbolic"));
+    m_pMaximizeButton->setIconSize(QSize(16, 16));
+    m_pMaximizeButton->setProperty("isWindowButton", 0x1);
+    m_pMaximizeButton->setProperty("useIconHighlightEffect", 0x2);
+    m_pMaximizeButton->setFlat(true);
+
 
     m_pCloseButton->setIcon(QIcon::fromTheme("window-close-symbolic"));
     m_pCloseButton->setIconSize (QSize(16, 16));
@@ -144,14 +357,19 @@ void TitleBar::setWidgetUi()
     pLayout->addSpacing(4);
     pLayout->addWidget(m_pMinimizeButton);
     pLayout->addSpacing(4);
+    pLayout->addWidget(m_pMaximizeButton);
+    pLayout->addSpacing(4);
     pLayout->addWidget(m_pCloseButton);
-    
+
+    /* 主线版本 放大功能暂时不上  , 暂时隐藏按钮 */
+    this->m_pMaximizeButton->hide();
 
     this->setLayout(pLayout);
 
     // 设置信号和槽函数
     // connect(m_pTopButton,      SIGNAL(clicked(bool)), this, SLOT(onClicked()));
     connect(m_pMinimizeButton, SIGNAL(clicked(bool)), this, SLOT(onClicked()));
+    connect(m_pMaximizeButton, SIGNAL(clicked(bool)), this, SLOT(onClicked()));
     connect(m_pCloseButton,    SIGNAL(clicked(bool)), this, SLOT(onClicked()));
     // connect(funcListButton,    SIGNAL(clicked(bool)), this, SLOT(onClicked()));
 
@@ -279,6 +497,121 @@ void TitleBar::onClicked()
 // //            qDebug() << "funcListButton";
 //             emit iconButtonSignal();
 //         }
+        else if (pButton == this->m_min) {
+            pWindow->showMinimized();
+            m_min->update();
+            m_close->update();
+        }
+        else if(pButton == this->m_max)
+        {
+            if (DataWarehouse::getInstance()->winFlag == QString("min")) {
+                DataWarehouse::getInstance()->winFlag = QString("max");
+            } else if (DataWarehouse::getInstance()->winFlag == QString("max")) {
+                DataWarehouse::getInstance()->winFlag = QString("min");
+            }
+
+            if(DataWarehouse::getInstance()->winFlag == QString("min")){
+                pWindow->showNormal();
+                pWindow->resize(1200,625);
+                pWindow->move(m_start.x(),m_start.y());
+                this->m_max->setIcon(QIcon::fromTheme("window-maximize-symbolic"));
+//                if(m_mode->text() == STANDARD_LABEL)
+//                {
+//                    //animation->setEndValue(QRect(m_start.x(), m_start.y(), 432, 628));
+//                  //animation->start();
+//                    pWindow->resize(400,510);
+//                    pWindow->move(m_start.x(),m_start.y());
+
+//                }
+//                else if(m_mode->text() == SCIENTIFIC_LABEL)
+//                {
+//                    //animation->setEndValue(QRect(m_start.x(), m_start.y(), 864, 628));
+//                    //animation->start();
+//                    pWindow->resize(1200,625);
+//                    qDebug() << DataWarehouse::getInstance()->winFlag;
+//                    qDebug() << "w: " << pWindow->width();
+//                    pWindow->move(m_start.x(),m_start.y());
+
+//                }
+//                else if(m_mode->text() == EXCHANGE_RATE_LABEL)
+//                {
+//                    //animation->setEndValue(QRect(m_start.x(), m_start.y(), 432, 628));
+//                    //animation->start();
+//                    pWindow->resize(432,628);
+//                    pWindow->move(m_start.x(),m_start.y());
+//                }
+            }
+            else
+            {
+                m_start =  pWindow->pos();
+                pWindow->showMaximized();
+                this->m_max->setIcon(QIcon::fromTheme("window-restore-symbolic"));
+
+//                QRect screenRect = QApplication::desktop()->availableGeometry();
+//                animation->setEndValue(QRect(0, 0, screenRect.width(), screenRect.height()));
+//                animation->start();
+
+            }
+            emit sigFontUpdate();
+        }
+
+        else if(pButton == m_pMaximizeButton) {
+
+//            QPropertyAnimation *animation = new QPropertyAnimation(pWindow, "geometry");
+//            //animation->setEasingCurve(QEasingCurve :: OutBounce);
+//            animation->setDuration(10000);
+
+
+
+            if (DataWarehouse::getInstance()->winFlag == QString("min")) {
+                DataWarehouse::getInstance()->winFlag = QString("max");
+            } else if (DataWarehouse::getInstance()->winFlag == QString("max")) {
+                DataWarehouse::getInstance()->winFlag = QString("min");
+            }
+
+            if(DataWarehouse::getInstance()->winFlag == QString("min")){
+                pWindow->showNormal();
+                if(m_pFuncLabel->text() == STANDARD_LABEL)
+                {
+//                    animation->setEndValue(QRect(m_start.x(), m_start.y(), 432, 628));
+//                    animation->start();
+                    pWindow->resize(432,628);
+                    pWindow->move(m_start.x(),m_start.y());
+
+                }
+                else if(m_pFuncLabel->text() == SCIENTIFIC_LABEL)
+                {
+//                    animation->setEndValue(QRect(m_start.x(), m_start.y(), 864, 628));
+//                    animation->start();
+                    pWindow->resize(864,628);
+                    pWindow->move(m_start.x(),m_start.y());
+
+                }
+                else if(m_pFuncLabel->text() == EXCHANGE_RATE_LABEL)
+                {
+//                    animation->setEndValue(QRect(m_start.x(), m_start.y(), 432, 628));
+//                    animation->start();
+                    pWindow->resize(432,628);
+                    pWindow->move(m_start.x(),m_start.y());
+                }
+            }
+            else
+            {
+                m_start =  pWindow->pos();
+                pWindow->showMaximized();
+
+//                QRect screenRect = QApplication::desktop()->availableGeometry();
+//                animation->setEndValue(QRect(0, 0, screenRect.width(), screenRect.height()));
+//                animation->start();
+
+            }
+            emit sigFontUpdate();
+
+        }
+
+        else if (pButton == this->m_close) {
+            pWindow->close();
+        }
     }
 }
 

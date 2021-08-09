@@ -19,6 +19,10 @@
 #define TITLE_BAR
 
 #include <QWidget>
+#include <QComboBox>
+#include <QHBoxLayout>
+#include <QPropertyAnimation>
+
 
 // #include "funclist.h"
 // #include "closebutton.h"
@@ -50,6 +54,7 @@ public:
     QPushButton *m_pTopButton;      // 界面置顶按钮
     menuModule *menuBar;
     QPushButton *m_pMinimizeButton; // 最小化按钮
+    QPushButton *m_pMaximizeButton; // 最大化按钮
     QPushButton *m_pCloseButton;    // 关闭按钮
 
     // 模式或功能名称
@@ -60,6 +65,31 @@ public:
     // QToolButton *m_pMenuButton;
     // 模式和功能列表按钮
     // QPushButton *funcListButton;
+
+/* snow revised it in 2021-07-17 10:18 */
+public:
+    void createInterUi(void);
+    void createInterStyle(void);
+    //void paintEvent(QPaintEvent *event);
+    bool eventFilter(QObject *obj , QEvent *event);
+
+    QLabel *m_Icon;
+    QPushButton *m_mode;
+    QMenu *m_menu;
+    QAction *standardMode;
+    QAction *scientificMode;
+    QHBoxLayout *hlayout;
+
+    QPushButton *m_min;
+    QPushButton *m_max;
+    QPushButton *m_close;
+
+private slots:
+    void slotModeChange(QAction *);
+
+signals:
+    void sigModeChange(QString);
+    void sigFontUpdate(); //更新字号
 
 
 protected:
@@ -92,7 +122,7 @@ private:
 
 private:
 
-    
+    QPoint m_start;  //最大化之前窗口位置
 
     // QPoint m_start;                 // 起始点
     // QPoint m_end;                   // 结束点

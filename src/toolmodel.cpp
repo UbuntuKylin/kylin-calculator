@@ -61,7 +61,7 @@ void ToolModelOutput::setWidgetUi()
 
     toolUpdateWid = new QWidget(this);
     toolUpdateWid->setLayout(toolUpdateLayout);
-
+    toolUpdateWid->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Expanding);
     // 换算前单位标识
     toolLabUnitBef = new QLabel(this);
     toolLabIconBef = new QLabel(this);
@@ -70,10 +70,12 @@ void ToolModelOutput::setWidgetUi()
     toolUnitBefLayout->addWidget(toolLabUnitBef);
     toolUnitBefLayout->addWidget(toolLabIconBef);
     toolUnitBefLayout->setMargin(0);
-    toolUnitBefLayout->setContentsMargins(10, 0, 0, 0);
+    //toolUnitBefLayout->setContentsMargins(10, 0, 0, 0);
 
     toolUnitBefWid = new QPushButton(this);
     toolUnitBefWid->setLayout(toolUnitBefLayout);
+    toolUnitBefWid->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Expanding);
+
 
     // 换算后单位标识
     toolLabUnitAft = new QLabel(this);
@@ -83,11 +85,13 @@ void ToolModelOutput::setWidgetUi()
     toolUnitAftLayout->addWidget(toolLabUnitAft);
     toolUnitAftLayout->addWidget(toolLabIconAft);
     toolUnitAftLayout->setMargin(0);
-    toolUnitAftLayout->setContentsMargins(10, 0, 0, 0);
+
+    //toolUnitAftLayout->setContentsMargins(10, 0, 0, 0);
 
     toolUnitAftWid = new QPushButton(this);
     toolUnitAftWid->setLayout(toolUnitAftLayout);
-    toolUnitAftWid->setFixedSize(106, 66);
+    toolUnitAftWid->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Expanding);
+    //toolUnitAftWid->setFixedSize(106, 66);
 
     // 汇率刷新
     toolLabUpdate->setText(tr("Rate update"));
@@ -105,7 +109,7 @@ void ToolModelOutput::setWidgetUi()
     toolLabTime->setText("2020.09.03 09:30");
     toolLabRate->setText("1 CNY = 0.15 USD");
 
-    toolUpdateWid->setFixedSize(106, 133);
+    //toolUpdateWid->setFixedSize(106, 133);
 
     connect(toolIconUpdate, &QToolButton::clicked, this, &ToolModelOutput::updateRate);
 
@@ -114,16 +118,20 @@ void ToolModelOutput::setWidgetUi()
     // toolRateNameBef = "人民币";
     toolRateSymbBef = "CNY";
     toolLabUnitBef->setText(toolRateNameBef + "\n" + toolRateSymbBef);
+    toolLabUnitBef->setAlignment(Qt::AlignCenter);
+
+
 
     toolLabIconBef->setFixedSize(10, 10);
 
-    toolUnitBefWid->setFixedSize(106, 66);
+    //toolUnitBefWid->setFixedSize(106, 66);
 
     // 换算后单位标识
     toolRateNameAft = tr("US Dollar");
     // toolRateNameAft = "美元";
     toolRateSymbAft = "USD";
     toolLabUnitAft->setText(toolRateNameAft + "\n" + toolRateSymbAft);
+    toolLabUnitAft->setAlignment(Qt::AlignCenter);
 
     toolLabIconAft->setFixedSize(10, 10);
 
@@ -135,6 +143,9 @@ void ToolModelOutput::setWidgetUi()
     this->toolLabBef = new QLabel(this);
     this->toolLabAft = new QLabel(this);
 
+    this->toolLabAft->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    this->toolLabBef->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    this->toolLabAft->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     // toolLabHis->setWordWrap(true);
     // toolLabBef->setWordWrap(true);
     // toolLabAft->setWordWrap(true);
@@ -143,7 +154,7 @@ void ToolModelOutput::setWidgetUi()
     this->toolLabHis->setAlignment(Qt::AlignRight | Qt::AlignTop);
     this->toolLabHis->setFont(toolLabHisFont);
     this->toolLabHis->setText("");
-    this->toolLabHis->setFixedHeight(133);
+    //this->toolLabHis->setFixedHeight(133);
     this->toolLabHis->setContentsMargins(0, 0, 20, 0);
     this->toolLabHis->show();
 
@@ -151,7 +162,7 @@ void ToolModelOutput::setWidgetUi()
     this->toolLabBef->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     this->toolLabBef->setFont(toolLabBefFont);
     this->toolLabBef->setText("0");
-    this->toolLabBef->setFixedHeight(66);
+    //this->toolLabBef->setFixedHeight(66);
     this->toolLabBef->setContentsMargins(0, 0, 20, 0);
     this->toolLabBef->show();
 
@@ -159,7 +170,7 @@ void ToolModelOutput::setWidgetUi()
     this->toolLabAft->setAlignment(Qt::AlignRight | Qt::AlignBottom);
     this->toolLabAft->setFont(toolLabAftFont);
     this->toolLabAft->setText("0");
-    this->toolLabAft->setFixedHeight(66);
+    //this->toolLabAft->setFixedHeight(66);
     this->toolLabAft->setContentsMargins(0, 0, 20, 0);
     this->toolLabAft->show();
 
@@ -169,21 +180,20 @@ void ToolModelOutput::setWidgetUi()
     toolOutputLayout->addWidget(toolUpdateWid, 0, 0, 1, 1);
     toolOutputLayout->addWidget(toolUnitBefWid, 1, 0, 1, 1);
     toolOutputLayout->addWidget(toolUnitAftWid, 2, 0, 1, 1);
-    toolOutputLayout->addWidget(toolLabHis, 0, 1, 1, 1);
-    toolOutputLayout->addWidget(toolLabBef, 1, 1, 1, 1);
-    toolOutputLayout->addWidget(toolLabAft, 2, 1, 1, 1);
+    toolOutputLayout->addWidget(toolLabHis, 0, 1, 1, 3);
+    toolOutputLayout->addWidget(toolLabBef, 1, 1, 1, 3);
+    toolOutputLayout->addWidget(toolLabAft, 2, 1, 1, 3);
+
 
     toolOutputLayout->setSpacing(2);
     toolOutputLayout->setContentsMargins(1, 1, 1, 0);
 
     this->setLayout(toolOutputLayout);
-    this->setFixedHeight(270);
+    //this->setFixedHeight(270);
 
     // 数据单位列表
     this->unitListBef  = new UnitListWidget(this->parentWidget(), this->toolUnitBefWid);
     this->unitListAft  = new UnitListWidget(this->parentWidget(), this->toolUnitAftWid);
-    unitListBef->setGeometry(QRect(80, 60, 280, 410));
-    unitListAft->setGeometry(QRect(80, 130, 280, 410));
 
     // QString strUnitList = "人民币,美元,欧元,英镑,日元,韩元,澳大利亚元";
     // initUnitList(strUnitList);
@@ -446,8 +456,8 @@ void ToolModelOutput::setWidgetStyle(bool resetFontSize)
                                       "QPushButton:hover{background-color:#F3F3F3;}");
 
         // 数据输出界面
-        this->toolLabHis->setStyleSheet("color:#8C8C8C;font-size:20px;font-weight:15px;line-height:50px;");
-        this->toolLabAft->setStyleSheet("color:#272A2D;font-size:48px;font-weight:15px;line-height:50px;");
+        this->toolLabHis->setStyleSheet("color:#8C8C8C;font-size:12px;font-weight:15px;line-height:50px;");
+        this->toolLabAft->setStyleSheet("color:#272A2D;font-size:40px;font-weight:15px;line-height:50px;");
 
         if (resetFontSize) {
             this->toolLabBef->setStyleSheet("color:#272A2D;font-size:48px;font-weight:15px;");
@@ -478,8 +488,8 @@ void ToolModelOutput::setWidgetStyle(bool resetFontSize)
                                       "QPushButton:hover{background-color:#18181A;}");
 
         // 数据输出界面
-        this->toolLabHis->setStyleSheet("color:#8C8C8C;font-size:20px;font-weight:15px;line-height:50px;");
-        this->toolLabAft->setStyleSheet("color:#FFFFFF;font-size:48px;font-weight:15px;line-height:50px;");
+        this->toolLabHis->setStyleSheet("color:#8C8C8C;font-size:12px;font-weight:15px;line-height:50px;");
+        this->toolLabAft->setStyleSheet("color:#FFFFFF;font-size:40px;font-weight:15px;line-height:50px;");
 
         if (resetFontSize) {
             this->toolLabBef->setStyleSheet("color:#FFFFFF;font-size:48px;font-weight:15px;");
@@ -761,6 +771,10 @@ void ToolModelOutput::unitListBefShow()
 {
     if (unitListBef->isHidden()) {
         // unitListAft->hide();
+        int b_x = toolUnitBefWid->x() + toolUnitBefWid->width();
+        int b_y = toolUnitBefWid->y();
+        unitListBef->setGeometry(QRect(b_x, b_y, 280, 410));
+
         unitListBef->show();
         unitListBef->raise();
         unitListBef->setFocus();
@@ -778,6 +792,9 @@ void ToolModelOutput::unitListAftShow()
 {
     if (unitListAft->isHidden()) {
         // unitListBef->hide();
+        int a_x = toolUnitAftWid->x() + toolUnitAftWid->width();
+        int a_y = toolUnitAftWid->y();
+        unitListAft->setGeometry(QRect(a_x, a_y, 280, 410));
         unitListAft->show();
         unitListAft->raise();
         unitListAft->setFocus();
@@ -999,7 +1016,7 @@ void ToolModelButton::setWidgetUi()
     btnLayout->setSpacing(2);
     btnLayout->setMargin(1);
 
-    this->setFixedHeight(320);
+    //this->setFixedHeight(320);
     this->setLayout(btnLayout);
 
 }
@@ -1030,21 +1047,18 @@ void ToolModelButton::setWidgetStyle()
 
 
         btnStyle = "QPushButton{"
-                   "width:106px;height:62px;opacity:1;"
                    "background-color:#F3F3F3;border-radius:4px;"
                    "font-size:42px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                    "}"
                    "QPushButton:hover{background-color:#E8E8E8;}";
 
         btnOpStyle = "QPushButton{"
-                     "width:106px;height:62px;opacity:1;"
                      "background-color:#F5F5F8;border-radius:4px;"
                      "font-size:35px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                      "}"
                      "QPushButton:hover{background-color:#E8E8E8;}";
 
         btnEqualStyle = "QPushButton{"
-                        "width:106px;height:126px;opacity:1;"
                         "background-color:#E64A19;border-radius:4px;"
                         "font-size:48px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                         "}"
@@ -1068,20 +1082,17 @@ void ToolModelButton::setWidgetStyle()
         btnPoint->setIcon(QIcon(":/image/standard/btnPoint.png"));
 
         btnStyle = "QPushButton{"
-                   "width:106px;height:62px;opacity:0.95;"
                    "background-color:#27292C;border-radius:4px;"
                    "font-size:42px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                    "}"
                    "QPushButton:hover{background-color:#474747;}";
 
         btnOpStyle = "QPushButton{"
-                     "width:106px;height:62px;opacity:1;"
                      "background-color:#222E36;border-radius:4px;"
                      "font-size:35px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;}"
                      "QPushButton:hover{background-color:#474747;}";
 
         btnEqualStyle = "QPushButton{"
-                        "width:106px;height:126px;opacity:1;"
                         "background-color:#E64A19;border-radius:4px;"
                         "font-size:48px;font-family:HelveticaNeueLTPro-UltLt;color:#FFFFFF;"
                         "}"
@@ -1209,6 +1220,7 @@ void UnitListWidget::setWidgetUi()
 //    unitTitle->setText("货币");
     unitTitle->setAlignment(Qt::AlignCenter);
     unitTitle->setFixedHeight(20);
+    //unitTitle->resize(this->width(),20);
 
     btnCancel->setText(tr("cancel"));
 //    btnCancel->setText("取消");
@@ -1244,6 +1256,7 @@ void UnitListWidget::setWidgetUi()
     this->setContentsMargins(0, 0, 0, 0);
     this->setFixedHeight(410);
     this->setFixedWidth(280);
+    //this->resize(280,410);
 
     btnCancel->raise();
     searchEdit->hide();
