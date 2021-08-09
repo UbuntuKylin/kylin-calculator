@@ -1,3 +1,13 @@
+kylin-calculator (1.0.31kord16) v101; urgency=medium
+
+  * BUG号：69563
+  * 任务号：无.
+  * 需求号：无.
+  * 其他改动说明：
+    - 【创新院】【计算器】使用计算器科学模式，输入“（—”后输入一个数字，应用自动闪退
+
+ -- jiangdingyuan <jiangdingyuan@kylinos.cn> Tue, 27 Jul 2021 14:15:33 +0800
+
 kylin-calculator (1.0.31kord15) v101; urgency=medium
 
   * BUG号：60053, 60063.
