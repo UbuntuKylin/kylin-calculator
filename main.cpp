@@ -186,9 +186,16 @@ int main(int argc, char *argv[])
     //     qDebug() << "加载中文失败";
     // }
 
-    MainWindow::getInstance();
+    /* 注意 : 数据仓库需在界面前进行实例 , 界面实例时会访问数据仓库中的数据 */
     DataWarehouse::getInstance();
 
+    /* 判断是否带有 --plug , 带有该参为 intel 小插件方式启动 */
+    if (argc >= 2) {
+        if (QString(argv[1]) == QString("--plug")) {
+            qDebug() << "Info : start model is intel plug";
+            DataWarehouse::getInstance()->intelPlug = true;
+        }
+    }
 
 #ifndef __V10__
     // 添加窗管协议
@@ -200,6 +207,7 @@ int main(int argc, char *argv[])
 #endif
 
     /* 界面入口 */
+    MainWindow::getInstance();
     MainWindow::getInstance()->show();
 
     // 创建DBus服务
