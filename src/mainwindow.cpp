@@ -450,14 +450,23 @@ void MainWindow::setStandardUi()
     // 添加界面布局
     // outputWid->setLayout(staOutputLayout);
     // buttonWid->setLayout(standardLayout);
+
+    /* 不同平台 标题栏 处理 */
     if (DataWarehouse::getInstance()->platform == QString("intel")) {
         if (this->pTitleBar != nullptr) {
-            this->pTitleBar->m_min->hide();
-            this->pTitleBar->m_max->hide();
-            this->pTitleBar->m_close->hide();
+            if (DataWarehouse::getInstance()->intelPlug) {
+                this->pTitleBar->m_min->hide();
+                this->pTitleBar->m_max->hide();
+                this->pTitleBar->m_close->hide();
+                /* 启动时只执行一次 , 后续模式切换 不在走该分支 */
+                DataWarehouse::getInstance()->intelPlug = false;
+            } else {
+                this->pTitleBar->m_max->hide();
+            }
         }
     }
 
+    /* 不同平台 按钮 风格处理 */
     if (DataWarehouse::getInstance()->platform == QString("intel")) {
         standardModel->createIntelStyle();
     } else {
@@ -465,15 +474,14 @@ void MainWindow::setStandardUi()
 
     }
 
+    /* 不同平台 采用相同的显示屏 */
     standardOutput->setWidgetStyle();
+
     mainOutputLayout->addWidget(standardOutput);
     mainButtonLayout->addWidget(standardModel);
 
     standardOutput->show();
     standardModel->show();
-
-
-
 
     // 设置间距和背景样式
     /* handle intel ui */
