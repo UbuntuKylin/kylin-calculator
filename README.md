@@ -1,9 +1,10 @@
 ## 麒麟计算器
 
 ### 项目运行方式  
+```bash
 chmod 777 ./run  
 ./run kylin-calculator
-
+```
 
 
 ### 更新历史
